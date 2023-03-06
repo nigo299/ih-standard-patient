@@ -11,6 +11,9 @@
   "lint-staged": {
     "*": [
       "pretty-quick --staged"
+    ],
+    "*.ts?(x)": [
+      "eslint"
     ]
   },
   "devDependencies": {
