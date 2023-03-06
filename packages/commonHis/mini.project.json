@@ -1,0 +1,26 @@
+{
+  "miniprogramRoot": "dist/ali",
+  "scripts": {},
+  "exclude": [
+    "src/**",
+    "node_modules",
+    "node_modules/**",
+    "babel.config.js",
+    "package-lock.json",
+    "package.json",
+    "project.config.json",
+    "remax.config.js",
+    "app.json",
+    ".miniu/**",
+    "miniu_dist/**"
+  ],
+  "precompileWatch": {
+    "selfWatch": true,
+    "restart": true,
+    "exclude": ["dist/**", "*.md"],
+    "ignoreBuiltInExts": false
+  },
+  "component2": true,
+  "enableAppxNg": true,
+  "enableHMR": false
+}

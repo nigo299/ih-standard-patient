@@ -1,0 +1,19 @@
+@import '../../styles/index.less';
+.page {
+  padding: 10px 20px;
+}
+
+.item {
+  position: relative;
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    border-bottom: 1px solid #e0e0e0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    content: '';
+  }
+}

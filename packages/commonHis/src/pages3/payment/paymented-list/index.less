@@ -1,0 +1,78 @@
+@import '../../../styles/index.less';
+.page {
+  padding: 20px;
+  min-height: calc(100vh - 40px);
+  background: #eff4fc;
+}
+
+.items {
+  width: 710px;
+  height: 285px;
+  padding: 27px 20px;
+  background: #ffffff;
+  border-radius: 20px;
+}
+
+.item {
+  line-height: 60px;
+  font-size: 36px;
+  color: #999;
+  font-weight: bold;
+}
+
+.name {
+  color: #666 !important;
+  font-size: 46px !important;
+}
+
+.itemText {
+  .item();
+  color: #333;
+  margin-left: 5px;
+  white-space: nowrap;
+}
+
+.price {
+  .item();
+  color: #d95e38;
+}
+
+.label {
+  color: inherit;
+  font-size: inherit;
+}
+
+.statusName {
+  padding: 18px 28px;
+  border-radius: 36px;
+  font-size: 30px;
+  white-space: nowrap;
+  color: #999999;
+  background: rgba(153, 153, 153, 0.2);
+}
+
+.fill {
+  .statusName();
+  color: #d95e38;
+  background: rgba(217, 94, 56, 0.2);
+}
+
+.success {
+  color: @theme-color;
+  background: rgba(@theme-color, 0.2);
+}
+
+.warn {
+  color: #00923f;
+  background: rgba(255, 157, 70, 0.2);
+}
+
+.bizName {
+  width: 100px;
+  height: 51px;
+  color: #d2a951;
+  font-size: 30px;
+  font-weight: 400;
+  margin-left: 22px;
+  background: linear-gradient(-90deg, #fff3c2, #ffffff);
+}

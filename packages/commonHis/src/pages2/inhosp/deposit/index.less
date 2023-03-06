@@ -1,0 +1,130 @@
+@import '../../../styles/index.less';
+.banner {
+  width: 100%;
+  height: 376px;
+  padding-top: 10px;
+  background: @theme-color;
+  position: relative;
+}
+.bannerft {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  z-index: 3;
+}
+.card {
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  width: 670px;
+  height: 268px;
+  image {
+    width: 100%;
+    height: 100%;
+  }
+  > div {
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+.avatar {
+  width: 83px;
+  height: 83px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+.userInfo {
+  color: #fff;
+  padding: 10px 40px;
+  font-size: 30px;
+}
+
+.userDesc {
+  line-height: 40px !important;
+}
+.userName {
+  font-size: 34px;
+  font-weight: bold;
+}
+.contentWrap {
+  padding: 20px;
+}
+
+.numbers {
+  margin-top: 5px;
+}
+
+.cashInput {
+  height: 98px;
+  width: 100%;
+  margin-top: 38px;
+  background: #eeeeee;
+  border-radius: 20px;
+  text-align: center;
+  padding: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  color: @theme-color;
+  box-sizing: border-box;
+}
+
+.cardInner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  color: #fff2aa;
+}
+
+.btn {
+  width: 47%;
+  height: 122px;
+  margin-top: 38px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #999999;
+  border-radius: 20px;
+}
+.active {
+  border: 2px solid @theme-color2;
+  color: @theme-color2;
+}
+.hospital {
+  position: absolute;
+  left: 20px;
+  top: 40px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #333;
+}
+.dep {
+  position: absolute;
+  left: 20px;
+  top: 85px;
+  font-size: 26px;
+  font-weight: 400;
+  color: #333;
+}
+.cash {
+  position: absolute;
+  right: 20px;
+  top: 113px;
+  font-weight: bold;
+
+  color: @theme-color2;
+  font-size: 54px;
+}
+.desc {
+  position: absolute;
+  right: 20px;
+  top: 188px;
+  font-size: 26px;
+  color: @theme-color2;
+}
+
+.subBtn {
+  margin-top: 92px;
+}

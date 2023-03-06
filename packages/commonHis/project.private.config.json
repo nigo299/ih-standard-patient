@@ -1,0 +1,42 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages3/home/index",
+          "pathName": "pages3/home/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages3/inhosp/home/index",
+          "pathName": "pages3/inhosp/home/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages3/usercenter/add-user/index",
+          "pathName": "pages3/usercenter/add-user/index",
+          "query": "patientType=0&jumpPage=home",
+          "scene": null
+        },
+        {
+          "name": "pages2/usercenter/add-user/index",
+          "pathName": "pages2/usercenter/add-user/index",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
+}

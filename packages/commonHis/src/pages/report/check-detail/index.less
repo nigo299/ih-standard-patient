@@ -1,0 +1,93 @@
+@import '../../../styles/index.less';
+.page {
+  padding: 22px 20px;
+}
+
+.wrap {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 2px 2px 20px rgba(39, 128, 217, 0.15);
+  margin-bottom: 20px;
+}
+.user {
+  height: 100px;
+  background: @theme-color;
+  border-radius: 20px 20px 0px 0px;
+  padding: 0px 39px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list {
+  padding: 20px;
+}
+.item:not(:last-child) {
+  margin-bottom: 30px;
+}
+.label {
+  width: 128px;
+  color: #666;
+  height: 32px;
+  text-align: justify;
+  &::after {
+    width: 100%;
+    display: inline-block;
+    content: '';
+  }
+}
+.separator {
+  padding: 0 8px;
+  color: #666;
+}
+.txt {
+  color: #333;
+}
+.title {
+  padding: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #333333;
+  line-height: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
+}
+.content {
+  padding: 0 20px 47px;
+}
+
+.grey {
+  background: #f1f5f7;
+}
+
+.color {
+  color: @theme-color;
+}
+.flag {
+  width: 16px;
+  height: 30px;
+  margin-left: 8px;
+}
+.info {
+  padding: 29px 22px;
+}
+.infoTitle {
+  display: flex;
+  font-size: 30px;
+  margin: 10px 0;
+  color: #666;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.infoContent {
+  font-size: 30px;
+  color: #333;
+  line-height: 40px;
+  word-break: break-all;
+  font-weight: bold;
+  margin-bottom: 56px;
+}

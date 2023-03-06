@@ -1,0 +1,65 @@
+diff --git a/node_modules/webpack/lib/Compilation.js b/node_modules/webpack/lib/Compilation.js
+index 6329174..a673ddd 100644
+--- a/node_modules/webpack/lib/Compilation.js
++++ b/node_modules/webpack/lib/Compilation.js
+@@ -2188,6 +2188,7 @@ class Compilation extends Tapable {
+ 							};
+ 						}
+ 					}
++					assetInfo.name = chunk.name;
+ 					this.emitAsset(file, source, assetInfo);
+ 					chunk.files.push(file);
+ 					this.hooks.chunkAsset.call(chunk, file);
+diff --git a/node_modules/webpack/lib/Compiler.js b/node_modules/webpack/lib/Compiler.js
+index 376aa28..0be44a6 100644
+--- a/node_modules/webpack/lib/Compiler.js
++++ b/node_modules/webpack/lib/Compiler.js
+@@ -357,8 +357,11 @@ class Compiler extends Tapable {
+ 
+ 			asyncLib.forEachLimit(
+ 				compilation.getAssets(),
++        //   .filter(({info}) => {
++				// 	return !this.filesModified || this.filesModified.some((file) => file.includes(info.name))
++				// }),
+ 				15,
+-				({ name: file, source }, callback) => {
++				({ name: file, source, info }, callback) => {
+ 					let targetFile = file;
+ 					const queryStringIdx = targetFile.indexOf("?");
+ 					if (queryStringIdx >= 0) {
+@@ -488,11 +491,18 @@ class Compiler extends Tapable {
+ 			);
+ 		};
+ 
+-		this.hooks.emit.callAsync(compilation, err => {
+-			if (err) return callback(err);
+-			outputPath = compilation.getPath(this.outputPath);
+-			this.outputFileSystem.mkdirp(outputPath, emitFiles);
+-		});
++    const emit = () => {
++      outputPath = compilation.getPath(this.outputPath);
++      this.outputFileSystem.mkdirp(outputPath, emitFiles);
++    }
++    if (this.filesModified) {
++      emit();
++    } else {
++      this.hooks.emit.callAsync(compilation, err => {
++      	if (err) return callback(err);
++        emit();
++      });
++    }
+ 	}
+ 
+ 	emitRecords(callback) {
+diff --git a/node_modules/webpack/lib/Watching.js b/node_modules/webpack/lib/Watching.js
+index dc66db1..5082c02 100644
+--- a/node_modules/webpack/lib/Watching.js
++++ b/node_modules/webpack/lib/Watching.js
+@@ -133,6 +133,7 @@ class Watching {
+ 				}
+ 				this.compiler.fileTimestamps = fileTimestamps;
+ 				this.compiler.contextTimestamps = contextTimestamps;
++				this.compiler.filesModified = filesModified;
+ 				this.compiler.removedFiles = removedFiles;
+ 				if (!this.suspended) {
+ 					this._invalidate();

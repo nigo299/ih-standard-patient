@@ -1,0 +1,100 @@
+@import '../../../styles/index.less';
+.user {
+  height: 100px;
+  padding: 0 20px 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 34px;
+  background-color: @theme-color;
+}
+.name {
+  font-weight: bold;
+  color: #fff;
+}
+.toggle {
+  color: #fff;
+  font-size: 26px;
+  border-radius: 20px;
+  border: 1px solid #fff;
+  padding: 4px 16px;
+}
+.body {
+  padding: 20px;
+}
+
+.card {
+  box-shadow: 2px 2px 20px rgba(39, 128, 217, 0.15);
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.title {
+  height: 76px;
+  padding: 0 21px;
+  border-bottom: 1px solid #e2e2e2;
+  font-size: 30px;
+  line-height: 72px;
+  font-weight: bold;
+  position: relative;
+}
+.titleBefore {
+  display: block;
+  left: 0;
+  width: 8px;
+  height: 24px;
+  background: #427ed2;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+}
+.lists {
+  padding: 0 20px;
+}
+.item {
+  padding: 29px 0px 39px;
+  border-bottom: 1px solid #e2e2e2;
+  display: flex;
+  font-size: 30px;
+  align-items: center;
+  justify-content: space-between;
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.left {
+  flex: 1;
+}
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.reportName {
+  max-width: 90%;
+  color: #333;
+  font-weight: bold;
+  // line-height: 1;
+  margin-bottom: 20px;
+}
+.reportDate {
+  color: #999;
+  line-height: 1;
+}
+.status {
+  font-size: 24px;
+  font-weight: bold;
+  color: #d95e38;
+  margin-right: 15px;
+}
+.arrow {
+  width: 22px;
+  height: 41px;
+}
+.notext {
+  padding: 40px;
+  text-align: center;
+  font-size: #ccc;
+  color: #999;
+}

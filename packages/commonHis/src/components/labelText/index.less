@@ -1,0 +1,31 @@
+.wrap {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 30px;
+  font-weight: bold;
+  color: #333333;
+  border-bottom: 1px solid #e2e2e2;
+}
+.hideBorder {
+  border-bottom: none;
+}
+
+.label {
+  font-weight: normal;
+  color: #666;
+  min-width: 4em;
+  height: 30px;
+  text-align: justify;
+  &::after {
+    width: 100%;
+    display: inline-block;
+    content: '';
+  }
+}
+.content {
+  word-break: break-all;
+  margin-left: 50px;
+  text-align: right;
+}

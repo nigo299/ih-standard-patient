@@ -1,0 +1,326 @@
+@import '../../styles/index.less';
+
+.bannerImg {
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 256px !important;
+  > div {
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 256px !important;
+  }
+  image {
+    width: 100%;
+    height: 256px;
+  }
+  overflow: hidden;
+}
+
+.tabBar {
+}
+
+.logo {
+  position: absolute;
+  top: 25px;
+  left: 34px;
+  width: 428px;
+  height: 89px;
+}
+
+.microsite {
+  position: absolute;
+  top: 130px;
+  left: 30px;
+  width: 143px;
+  height: 50px;
+  background: @assist-color;
+  border-radius: 25px;
+  font-weight: bold;
+  color: white;
+  font-size: 24px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.content {
+  position: absolute;
+  top: 235px;
+  width: 100%;
+  padding: 65px 30px 0 30px;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  background: #fafafa;
+
+  .toSearch {
+    position: absolute;
+    top: -32px;
+    width: 690px;
+    height: 68px;
+    background: #ffffff;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    font-size: 26px;
+    color: #999999;
+    .searchIcon {
+      font-size: 32px;
+      margin: 18px;
+    }
+  }
+}
+
+.nav {
+  font-size: 24px;
+  // font-weight: 300;
+}
+
+.navImg {
+  width: 131px;
+  height: 131px;
+}
+
+.navWrap {
+  position: relative;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.navNewImg {
+  position: absolute;
+  top: 5px;
+  right: 18px;
+  width: 53px;
+  height: 26px;
+}
+
+.navLsnlImg {
+  position: absolute;
+  top: -10px;
+  left: 80px;
+  width: 113px;
+  height: 33px;
+}
+
+.navTitle {
+  margin: 12px 0 13px 0;
+  color: @black-300;
+  font-size: 34px;
+  font-weight: bold;
+}
+
+.subNav {
+  margin-top: 50px;
+}
+
+.subNavWrap {
+  position: relative;
+  width: 330px;
+  height: 248px;
+  padding: 29px 0 0 34px;
+  background: #ffffff;
+  box-shadow: 0px 4px 0px 0px #deefff;
+  border-radius: 20px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.subNavTitle {
+  font-size: 32px;
+  font-weight: bold;
+  color: @theme-color;
+  z-index: 2;
+}
+
+.subNavSubTitle {
+  margin-top: 16px;
+  font-size: 22px;
+  color: #666;
+  z-index: 2;
+}
+
+.subNavImg {
+  position: absolute;
+  right: 29px;
+  bottom: 37px;
+  width: 113.3px;
+  height: 87.3px;
+  z-index: 2;
+}
+
+.subNavImg3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 330px;
+  height: 116px;
+}
+
+.subNavWrap2 {
+  position: relative;
+  width: 330px;
+  height: 114px;
+  padding: 23px 0 0 35px;
+  margin-bottom: 20px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.subNavImg2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 330px;
+  height: 114px;
+}
+
+.patTitle {
+  margin: 35px 0;
+  font-size: 34px;
+  font-weight: 500;
+  color: @black;
+}
+
+.cardNav {
+  margin: 10px 0 24px 0;
+  border-radius: 20px;
+  background: #ffffff;
+}
+
+.card {
+  position: relative;
+  width: 158px;
+  border-radius: 20px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.cardImg {
+  margin-top: 34px;
+  width: 80px;
+  height: 80px;
+}
+
+.card:nth-child(5),
+.card:nth-child(6),
+.card:nth-child(7),
+.card:nth-child(8) {
+  .cardImg {
+    margin-top: 0;
+  }
+}
+
+.cardTitle {
+  margin: 24px 0 38px 0;
+  font-size: 26px;
+  color: #333333;
+  text-align: center;
+}
+
+.copyRight {
+  margin-top: 50px;
+}
+
+.switchApp {
+  position: absolute;
+  top: 21px;
+  right: 32px;
+  width: 113px;
+  height: 70px;
+  font-size: 24px;
+  color: @theme-color;
+  font-weight: bold;
+  background: #ffffff;
+  border-radius: 35px;
+  line-height: 29px !important;
+  z-index: 2;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.switchImg {
+  width: 21px !important;
+  height: 25px !important;
+  margin-right: 5px;
+}
+
+.navLeftConfig {
+  position: relative;
+  width: 330px;
+  height: 248px;
+  border-radius: 20px;
+  .navLeftConfigItem {
+    padding: 30px 35px;
+    z-index: 2;
+  }
+  .navConfigBk {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 330px;
+    height: 249px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+.navRightConfig {
+  width: 330px;
+  height: 248px;
+}
+.doctorRecordTitle {
+  margin: 40px 0;
+}
+.doctorRecordWrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 30px;
+  .doctorRecordItem {
+    flex-shrink: 0;
+    padding: 16px;
+    width: 287px;
+    height: 132px;
+    background: #ffffff;
+    border-radius: 20px;
+    margin-right: 20px;
+  }
+  .doctorRecordImg {
+    width: 60px;
+    height: 60px;
+    margin-right: 12px;
+  }
+  .doctorRecordName {
+    font-size: 30px;
+    color: #333333;
+    width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+  }
+  .doctorRecordJob {
+    margin-top: 12px;
+    font-size: 24px;
+    color: #333333;
+    width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .doctorRecordDept {
+    margin-top: 9px;
+    font-size: 20px;
+    color: #999999;
+    width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+  }
+}

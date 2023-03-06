@@ -1,0 +1,165 @@
+@import '../../styles/index.less';
+.page {
+  position: relative;
+}
+
+.header {
+  height: 349px;
+  padding: 15px 20px 0 20px;
+  margin-bottom: 38px;
+  background: #aad4ff;
+}
+
+.search {
+  width: 546px;
+  height: 86px;
+  padding: 0 33px 0 10px;
+  font-weight: bold;
+  color: #cccccc;
+  font-size: 36px;
+  background: #feffff;
+  border-radius: 42px;
+}
+
+.searchImg {
+  width: 50px;
+  height: 50px;
+  margin-right: 4px;
+}
+
+.switch {
+  width: 139px;
+  height: 86px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #feffff;
+  background: #579fe6;
+  border-radius: 42px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.switchImg {
+  width: 26px;
+  height: 30px;
+  margin-right: 8px;
+}
+
+.add {
+  height: 218px;
+  padding: 24px 20px 12px 20px;
+  margin-top: 30px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background: linear-gradient(0deg, @theme-color, #68a8ea);
+}
+
+.addName {
+  font-weight: bold;
+  color: #fff9c7;
+  font-size: 48px;
+}
+
+.addText {
+  margin: 15px 0 17px 0;
+  font-size: 36px;
+  color: #fff9c7;
+}
+
+.qrcode {
+  width: 120px;
+  height: 120px;
+  // padding: 7px;
+  // background: white;
+}
+
+.qrcodeImg {
+  width: 100%;
+  height: 100%;
+}
+
+.qrcodeText {
+  margin-top: 23px;
+  font-size: 30px;
+  color: #ffffff;
+}
+
+.addBtn {
+  width: 266px;
+  height: 68px;
+  font-size: 32px;
+  font-weight: bold;
+  color: @theme-color;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.addBtn2 {
+  color: @theme-color;
+  font-size: 42px;
+  font-weight: bold;
+  width: 426px;
+  height: 98px;
+  background: #fff9c7;
+  box-shadow: 0px 9px 0px 0px #eade7d;
+  border-radius: 49px;
+  animation: scaleDraw 3s ease-in-out 3s infinite;
+}
+
+.layout {
+  padding: 34px 20px;
+}
+
+.rightImg {
+  width: 124px;
+  height: 120px;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modalBtn {
+  width: 426px;
+  height: 98px;
+  margin-top: 200px;
+  color: @theme-color;
+  font-size: 42px;
+  font-weight: bold;
+  background: #fff9c7;
+  box-shadow: 1px 1px 60px 1px rgb(234, 222, 125);
+  border-radius: 49px;
+  animation: scaleDraw 3s ease-in-out 3s infinite;
+}
+
+.modalText {
+  margin-top: 85px;
+  font-size: 46px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+@keyframes scaleDraw {
+  0% {
+    transform: scale(1); /*开始为原始大小*/
+  }
+  25% {
+    transform: scale(1.1); /*放大1.1倍*/
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+}
