@@ -1,8 +1,8 @@
 {
-  "name": "commonHis",
+  "name": "40070",
   "private": true,
   "version": "1.0.0",
-  "description": "重庆沙坪坝区妇幼保健院",
+  "description": "渝中妇幼医院",
   "main": "index.js",
   "keywords": [],
   "scripts": {
@@ -51,7 +51,9 @@
     "uuid": "^8.3.2",
     "vconsole": "^3.9.5",
     "weixin-js-sdk": "^1.6.0",
-    "wx-ci": "^1.0.6"
+    "wx-ci": "^1.0.6",
+    "commonHis": "*",
+    "plugins": "*"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

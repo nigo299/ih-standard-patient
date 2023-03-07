@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "web": "lerna run web",
+    "web": "lerna run --scope 40070 web",
     "postinstall": "patch-package"
   },
   "lint-staged": {

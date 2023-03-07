@@ -1,0 +1,9 @@
+{
+  "name": "plugins",
+  "private": true,
+  "version": "1.0.7",
+  "description": "plugins",
+  "main": "index.js",
+  "keywords": [],
+  "author": "plugins"
+}
