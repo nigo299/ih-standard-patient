@@ -1,19 +1,21 @@
 import * as memFs from 'mem-fs';
 import * as editor from 'mem-fs-editor';
 import * as path from 'path';
+import * as fs from 'fs-extra';
 
 const store = memFs.create();
-const fs = editor.create(store);
+const mfs = editor.create(store);
 
-fs.copyTpl(
-  path.resolve(__dirname, '../templates/default/package.json.tmpl'),
-  path.resolve(__dirname, 'packages.json'),
+fs.copy(
+  path.resolve(__dirname, '../templates/default'),
+  path.resolve(__dirname, 'default'),
   {
-    hisId: 333,
-    hisName: 'aaa',
+    filter: (src) => {
+      return !src.includes('tmpl');
+    },
   },
 );
 
-fs.commit(() => {
+mfs.commit(() => {
   console.log('done');
 });
