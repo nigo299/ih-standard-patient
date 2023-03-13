@@ -1,15 +1,14 @@
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
-export const THEME_COLOR = '#2780D9';
+export const THEME_COLOR = '#FD92C3';
 export const THEME_COLOR2 = '#FF9743';
 export const IMAGE_DOMIN = `${
-  isDev
-    ? '/images'
-    : PLATFORM === 'web'
-    ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
+  isDev ? '/images' : process.env.REMAX_APP_IMAGE_DOMIN
+  // : PLATFORM === 'web'
+  // ? process.env.REMAX_APP_IMAGE_DOMIN
+  // : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
 }`;
-export const HOSPITAL_NAME = '重庆沙坪坝区妇幼保健院';
+export const HOSPITAL_NAME = '重庆市渝中区妇幼';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
   hisId: 40064,
@@ -27,7 +26,7 @@ export const REQUEST_QUERY = {
 export const NUCLEIC_INVESTIGATION = PLATFORM === 'ali' ? false : false;
 // 预检分诊小程序appid
 export const NUCLEIC_APPID =
-  PLATFORM === 'ali' ? '2021003128602151' : 'wx3ff25d8c71ecd5db';
+  PLATFORM === 'ali' ? 'xxxxxxxxxxx' : 'xxxxxxxxxxxx';
 export const NUCLEIC_HID = 9;
 // 是否需要订单详情中电子发票
 export const ORDER_INVOICE = false;
