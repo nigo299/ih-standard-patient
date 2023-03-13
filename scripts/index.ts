@@ -32,19 +32,21 @@ const prompt = [
   },
 ];
 
-inquirer.prompt(prompt).then((answers: { hisId: string; hisName: string }) => {
+inquirer.prompt(prompt).then((answers) => {
   const { hisId } = answers;
   const templatePath = path.resolve(__dirname, '../templates/default');
   const targetPath = path.resolve(__dirname, `../packages/${hisId}`);
-  fs.copy(templatePath, targetPath, {
+  fs.copySync(templatePath, targetPath, {
     filter: (src) => {
       return !src.includes('tmpl');
     },
   });
 
-  mfs.copyTpl(`${templatePath}/**/*.tmpl`, targetPath, answers);
+  mfs.copyTpl(`${templatePath}/**/*.tmpl`, targetPath, answers, undefined, {
+    processDestinationPath: (n) => n.replace('.tmpl', ''),
+  });
 
   mfs.commit(() => {
-    console.log('done');
+    console.log('生成医院仓库完成，医院仓库为：', `pacakges/${hisId}`);
   });
 });
