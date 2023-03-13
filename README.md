@@ -12,6 +12,24 @@
 - 通用功能统一迭代，不再需要多个医院仓库修改相同的功能逻辑或bug
 - 支持各家医院的个性化ui及逻辑
 
+### 仓库结构
+
+```bash
+├── README.md
+├── commitlint.config.js
+├── lerna.json
+├── package.json
+├── packages    # 医院相关的开发模块
+│   ├── 40070   # 独立的医院项目，文件名即为医院Id
+│   ├── commonHis  # 通用的医院模板
+│   └── plugins    # 实现多仓库时配置的webpack、babel插件等
+├── patches   # 对node_modules的源码改动
+├── scripts   # monorepo的执行脚本，目前包括了生产新医院的代码
+├── templates # 生成新医院的时需要使用的模板代码
+└── yarn.lock
+
+```
+
 ## 新医院开发
 
 ### 医院新增
