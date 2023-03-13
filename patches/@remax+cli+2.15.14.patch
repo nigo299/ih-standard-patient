@@ -1,12 +1,13 @@
 diff --git a/node_modules/@remax/cli/lib/build/ProjectPath.js b/node_modules/@remax/cli/lib/build/ProjectPath.js
-index dd48203..eedb3a2 100644
+index dd48203..abd2fe0 100644
 --- a/node_modules/@remax/cli/lib/build/ProjectPath.js
 +++ b/node_modules/@remax/cli/lib/build/ProjectPath.js
-@@ -70,6 +70,11 @@ class ProjectPath {
+@@ -70,6 +70,12 @@ class ProjectPath {
              if (fs.existsSync(extFile)) {
                  return shared_1.slash(extFile);
              }
-+            const otherExtFile = extFile.replace(/packages\/([^/]*)\/src/, 'packages/commonHis/src')
++            const reg = path.sep === "/" ? /packages\/([^/]*)\/src/ : /packages\\([^/]*)\\src/
++            const otherExtFile = extFile.replace(reg, `packages${sep}commonHis${sep}src`)
 +            if (fs.existsSync(otherExtFile)) {
 +                return shared_1.slash(otherExtFile);
 +            }
