@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 
-module.exports = class TestWebpackPlugin {
+module.exports = class DynamicImportPlugin {
   constructor() {
     this.commonHisSrcPath = this.getCommonHisSrcPath();
     this.tryExt = ['ts', 'tsx'];
