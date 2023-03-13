@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "ts-node scripts/index.ts",
+    "add": "ts-node scripts/index.ts",
     "web": "lerna run --scope 40070 web",
     "postinstall": "patch-package"
   },
