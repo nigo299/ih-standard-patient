@@ -55,7 +55,7 @@ module.exports = class DynamicImportPlugin {
     }
     return this.tryExt.some((ext) => {
       if (
-        fs.existsSync(`${pathDir}${ext}`) ||
+        fs.existsSync(`${pathDir}.${ext}`) ||
         fs.existsSync(path.resolve(pathDir, `index.${ext}`))
       ) {
         return true;
