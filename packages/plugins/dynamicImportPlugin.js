@@ -20,6 +20,9 @@ module.exports = class DynamicImportPlugin {
             }
             const regText = /(.*packages.*src).*/;
             if (result.request.includes('@/') && regText.test(result.context)) {
+              if (result.request.includes('@/config')) {
+                console.log('result', result);
+              }
               const pathDir = result.context.match(regText);
               const rootPath = pathDir[1];
               if (rootPath) {
@@ -52,7 +55,7 @@ module.exports = class DynamicImportPlugin {
   tryExist(pathDir) {
     return this.tryExt.some((ext) => {
       if (
-        fs.existsSync(path.resolve(pathDir, ext)) ||
+        fs.existsSync(`${pathDir}${ext}`) ||
         fs.existsSync(path.resolve(pathDir, `index.${ext}`))
       ) {
         return true;
