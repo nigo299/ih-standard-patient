@@ -9,8 +9,8 @@ import {
   showToast,
   Icon,
   RichText,
-  navigateToMiniProgram,
-  PartTitle,
+  // navigateToMiniProgram,
+  // PartTitle,
 } from '@kqinfo/ui';
 import {
   IMAGE_DOMIN,
@@ -39,7 +39,7 @@ import styles from './index.less';
 import useApi from '@/apis/common';
 import Dialog from 'commonHis/src/components/dialog';
 import storage from '@/utils/storage';
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 
 export interface NavType {
   title: string;
@@ -150,20 +150,20 @@ export default () => {
     // },
   ];
 
-  const showDoctorRecords = useMemo(() => {
-    // configType
-    //   configType: "DOCTOR"
-    // doctorRecordInfo: {showCount: 5}
-    // doctorRecordInfoList: []
-    if (configData) {
-      const findData = configData.find((d) => d.configType === 'DOCTOR');
-      const doctors = findData?.doctorRecordInfoList || [];
-      // return new Array(10).fill(doctors[0]);
-      return doctors;
-    } else {
-      return [];
-    }
-  }, [configData]);
+  // const showDoctorRecords = useMemo(() => {
+  //   // configType
+  //   //   configType: "DOCTOR"
+  //   // doctorRecordInfo: {showCount: 5}
+  //   // doctorRecordInfoList: []
+  //   if (configData) {
+  //     const findData = configData.find((d) => d.configType === 'DOCTOR');
+  //     const doctors = findData?.doctorRecordInfoList || [];
+  //     // return new Array(10).fill(doctors[0]);
+  //     return doctors;
+  //   } else {
+  //     return [];
+  //   }
+  // }, [configData]);
 
   // const {
   //   data: { data: article },
@@ -195,14 +195,15 @@ export default () => {
       {
         title: '体检预约',
         subTitle: '',
-        url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/signin/list/index',
+        // url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/signin/list/index',
+        url: '',
         image: `${IMAGE_DOMIN}/home/tjyy.png`,
         patientId: true,
       },
       {
         title: '满意度调查',
         subTitle: '',
-        url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+        url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/feedback/feedback-add/index',
         image: `${IMAGE_DOMIN}/home/myddc.png`,
       },
 
