@@ -355,7 +355,7 @@ export default () => {
       process.env.REMAX_APP_PLATFORM === 'production'
     ) {
       window.location.href =
-        'https://tihs.cqkqinfo.com/patients/p40064-his/#/pages/home/index';
+        'https://tihs.cqkqinfo.com/patients/p40070-his/#/pages/home/index';
     }
 
     // getCardProdiles();

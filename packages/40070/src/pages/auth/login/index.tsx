@@ -49,7 +49,7 @@ export default memo(() => {
   const jumpToUrl = useCallback(() => {
     if (isHealth === '1' || storage.get('isHealth') === '1') {
       window.location.replace(
-        `https://healthmall.cqkqinfo.com/H5App-p40064/#/pages/index/index?openId=${storage.get(
+        `https://healthmall.cqkqinfo.com/H5App-p40070/#/pages/index/index?openId=${storage.get(
           'openid',
         )}`,
       );
