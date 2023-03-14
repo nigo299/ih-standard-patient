@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = class DynamicImportPlugin {
   constructor(opts) {
-    this.opts = opts;
+    this.opts = opts || {};
     this.commonHisSrcPath = this.getCommonHisSrcPath();
     this.tryExt = ['ts', 'tsx'];
   }
@@ -22,8 +22,9 @@ module.exports = class DynamicImportPlugin {
             const regText = /(.*packages.*src).*/;
             if (result.request.includes('@/') && regText.test(result.context)) {
               const pathDir = result.context.match(regText);
-              const rootPath = pathDir[1].replace('commonHis', this.opts.hisId);
-              if (rootPath) {
+              let rootPath = pathDir[1];
+              if (rootPath && this.opts.hisId) {
+                rootPath = rootPath.replace('commonHis', this.opts.hisId);
                 const newPath = path.resolve(
                   rootPath,
                   result.request.replace('@/', ''),
