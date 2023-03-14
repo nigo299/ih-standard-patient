@@ -16,7 +16,11 @@ module.exports = {
     }),
   ],
   configWebpack({ config }) {
-    config.plugin('DynamicImportPlugin').use(DynamicImportPlugin);
+    config.plugin('DynamicImportPlugin').use(
+      new DynamicImportPlugin({
+        hisId: '40070',
+      }),
+    );
     config.resolve.alias.merge({
       react: path.resolve(__dirname, '../../node_modules/react'),
     });

@@ -2,7 +2,8 @@ const fs = require('fs-extra');
 const path = require('path');
 
 module.exports = class DynamicImportPlugin {
-  constructor() {
+  constructor(opts) {
+    this.opts = opts;
     this.commonHisSrcPath = this.getCommonHisSrcPath();
     this.tryExt = ['ts', 'tsx'];
   }
@@ -21,7 +22,7 @@ module.exports = class DynamicImportPlugin {
             const regText = /(.*packages.*src).*/;
             if (result.request.includes('@/') && regText.test(result.context)) {
               const pathDir = result.context.match(regText);
-              const rootPath = pathDir[1];
+              const rootPath = pathDir[1].replace('commonHis', this.opts.hisId);
               if (rootPath) {
                 const newPath = path.resolve(
                   rootPath,
