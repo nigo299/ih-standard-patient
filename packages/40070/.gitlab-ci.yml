@@ -5,3 +5,4 @@ include:
 
 variables:
   HIS_ID: 40070
+  ENABLE_H5: 'true'
