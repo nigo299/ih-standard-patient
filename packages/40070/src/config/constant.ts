@@ -2,6 +2,8 @@ export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
 export const THEME_COLOR = '#FD92C3';
 export const THEME_COLOR2 = '#FF9743';
+export const STEP_COLOR = '#F2F2F2';
+export const STEP_ITEMS = ['选择科室', '选择医生', '选择时间'];
 export const IMAGE_DOMIN = `${
   isDev ? '/images' : process.env.REMAX_APP_IMAGE_DOMIN
   // : PLATFORM === 'web'
