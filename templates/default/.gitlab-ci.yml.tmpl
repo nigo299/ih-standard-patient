@@ -1,0 +1,10 @@
+include:
+  - project: 'fe-his-groups/apps/common'
+    ref: main
+    file: '.gitlab-ci-template.yml'
+
+variables:
+  HIS_ID: <%= hisId %>
+  ENABLE_H5: 'true'
+  WORK_DIR: 'packages/<%= hisId %>'
+  DIST_PATH: 'packages/<%= hisId %>/dist'
