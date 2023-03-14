@@ -44,6 +44,9 @@ inquirer.prompt(prompt).then((answers) => {
 
   mfs.copyTpl(`${templatePath}/**/*.tmpl`, targetPath, answers, undefined, {
     processDestinationPath: (n) => n.replace('.tmpl', ''),
+    globOptions: {
+      dot: true,
+    },
   });
 
   mfs.commit(() => {
