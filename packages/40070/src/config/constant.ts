@@ -6,13 +6,13 @@ export const IMAGE_DOMIN = `${
   isDev ? '/images' : process.env.REMAX_APP_IMAGE_DOMIN
   // : PLATFORM === 'web'
   // ? process.env.REMAX_APP_IMAGE_DOMIN
-  // : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
+  // : 'https://tihs.cqkqinfo.com/patients/p40070-his/images'
 }`;
 export const HOSPITAL_NAME = '重庆市渝中区妇幼';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
-  hisId: 40064,
-  platformId: PLATFORM === 'ali' ? 4006402 : 4006401,
+  hisId: 40070,
+  platformId: PLATFORM === 'ali' ? 4007002 : 4007001,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10
