@@ -7,7 +7,7 @@ import setNavigationBar from '@/utils/setNavigationBar';
 import globalState from '@/stores/global';
 import styles from './app.less';
 import classNames from 'classnames';
-import reload from './utils/reload';
+import reload from '@/utils/reload';
 import CustomerReported from '@/components/customerReported';
 
 export default (props: { error: string }) => {

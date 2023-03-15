@@ -126,7 +126,7 @@ const subPackages = [
 
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
 import { AppConfig as AliAppConfig } from 'remax/ali';
-import { THEME_COLOR } from './config/constant';
+import { THEME_COLOR } from '@/config/constant';
 
 export const wechat: WechatAppConfig = {
   pages,
