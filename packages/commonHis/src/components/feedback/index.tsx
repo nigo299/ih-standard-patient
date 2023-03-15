@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'remax/one';
-import WxOpenLaunchWeapp from '../wxOpenLaunchWeapp';
+import WxOpenLaunchWeapp from '@/components/wxOpenLaunchWeapp';
 import styles from './index.less';
 export default ({
   path,

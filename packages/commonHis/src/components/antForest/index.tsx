@@ -3,7 +3,7 @@ import { Space } from '@kqinfo/ui';
 import { View, Image } from 'remax/one';
 import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
-import Mask from '../mask';
+import Mask from '@/components/mask';
 
 export default () => {
   const [show, setShow] = useState(false);

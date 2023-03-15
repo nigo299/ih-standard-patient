@@ -7,7 +7,7 @@ import { setClipboardData, showToast } from '@kqinfo/ui';
 import styles from './index.less';
 import dayjs from 'dayjs';
 import storage from '@/utils/storage';
-import Feedback from '../feedback';
+import Feedback from '@/components/feedback';
 
 export default ({
   dept,

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { FormItem, Exceed, Space } from '@kqinfo/ui';
 import classNames from 'classnames';
-import Mask from '../mask';
+import Mask from '@/components/mask';
 import { View, Image } from 'remax/one';
 import styles from './index.less';
 import { IMAGE_DOMIN } from '@/config/constant';
