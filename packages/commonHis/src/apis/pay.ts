@@ -1,4 +1,4 @@
-import request from './utils/request';
+import request from '@/apis/utils/request';
 import createApiHooks from 'create-api-hooks';
 import { H5_PAY } from '@/config/constant';
 

@@ -1,4 +1,4 @@
-import request from './utils/request';
+import request from '@/apis/utils/request';
 import createApiHooks from 'create-api-hooks';
 import storage from '@/utils/storage';
 
@@ -420,7 +420,7 @@ export default {
       patHisId?: string;
       queueType: string; //visitation-就诊队列；examine-检查队列；inspect-检验队列；medicine-取药队列
     }) =>
-      request.get<{ data: { recordList: QueueInfo[] } } & API.ResponseDataType>(
+      request.get<{ data: { recordList: any[] } } & API.ResponseDataType>(
         '/api/intelligent/ihis/queue/info',
         {
           params,
