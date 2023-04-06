@@ -1,0 +1,37 @@
+.banner2 {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.swiper {
+  height: 200px;
+  width: 100%;
+}
+
+.warp {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.dotsWarp {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  .dotsItem {
+    width: 12px;
+    height: 12px;
+    background: #e9e9e9;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+
+    &.active {
+      background: #ff9743;
+    }
+  }
+}
