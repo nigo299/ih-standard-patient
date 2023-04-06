@@ -1,19 +1,19 @@
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
-export const THEME_COLOR = '#2780D9';
+export const THEME_COLOR = '#CF000E';
 export const THEME_COLOR2 = '#FF9743';
 export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
     : PLATFORM === 'web'
     ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
+    : 'https://tihs.cqkqinfo.com/patients/p40009-his/images'
 }`;
-export const HOSPITAL_NAME = '重庆沙坪坝区妇幼保健院';
-export const HOSPITAL_TEL = '023-43780184';
+export const HOSPITAL_NAME = '重庆松山医院';
+export const HOSPITAL_TEL = '023-63110120';
 export const REQUEST_QUERY = {
-  hisId: 40064,
-  platformId: PLATFORM === 'ali' ? 4006402 : 4006401,
+  hisId: 40009,
+  platformId: PLATFORM === 'ali' ? 4000902 : 4000903,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10
@@ -24,7 +24,7 @@ export const REQUEST_QUERY = {
       : 2, // 1公众号  2支付宝小程序 7微信小程序 10 医保线上App
 };
 // 是否需要开启问卷调查
-export const NUCLEIC_INVESTIGATION = PLATFORM === 'ali' ? false : false;
+export const NUCLEIC_INVESTIGATION = false;
 // 预检分诊小程序appid
 export const NUCLEIC_APPID =
   PLATFORM === 'ali' ? '2021003128602151' : 'wx3ff25d8c71ecd5db';
@@ -32,7 +32,7 @@ export const NUCLEIC_HID = 9;
 // 是否需要订单详情中电子发票
 export const ORDER_INVOICE = false;
 // 是否开启二级科室
-export const CHILDREN_DEPTLIST = false;
+export const CHILDREN_DEPTLIST = true;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
   process.env.REMAX_APP_PLATFORM === 'app' ? false : false;
@@ -41,18 +41,18 @@ export const PAYMENT_SELECTALL_PAY = false;
 // 是否启用H5支付(flase为立即缴费小程序支付)
 export const H5_PAY = false;
 // 是否有支付宝小程序
-export const IS_ALIPAY = false;
+export const IS_ALIPAY = true;
 // 支付宝小程序appid
-export const APPID = PLATFORM === 'ali' ? '' : '';
+export const APPID = PLATFORM === 'ali' ? '2021002125656335' : '';
 // 是否开启意见反馈（小桥医助小程序）
-export const IS_FEEDBACL = PLATFORM === 'web';
+export const IS_FEEDBACL = PLATFORM !== 'ali' && true;
 
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {
-  longitude: 106.46,
-  latitude: 29.56,
+  longitude: 106.504711,
+  latitude: 29.619515,
   name: HOSPITAL_NAME,
-  address: '天陈路2号附3号世源大厦C栋',
+  address: '两江幸福广场D区对面',
 };
 export const WEB_ADDRESS = `https://mapapi.qq.com/web/mapComponents/locationMarker/v/index.html?marker=coord:${ADDRESS.latitude},${ADDRESS.longitude};title:${HOSPITAL_NAME};addr:${ADDRESS.address}&key=TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU&referer=myapp&ch=uri-api&ADTAG=uri-api.myapp`;
 

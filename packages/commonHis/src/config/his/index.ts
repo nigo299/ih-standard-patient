@@ -1,5 +1,6 @@
 import HisBase from './hisBase';
 import His40007 from './his4007';
+import His40009 from './his40009';
 
 let cacheHis: typeof HisBase | null = null;
 
@@ -10,6 +11,9 @@ export const getHisConfig = () => {
     case '40007':
       cacheHis = His40007;
       return His40007;
+    case '40009':
+      cacheHis = His40009;
+      return His40009;
     default: {
       cacheHis = HisBase;
       return HisBase;
