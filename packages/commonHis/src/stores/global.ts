@@ -81,6 +81,7 @@ export default createContainer(() => {
             signature,
             timestamp,
             nonceStr: noncestr,
+            openTagList: ['wx-open-launch-weapp'],
           },
         });
         setInitWechat(true);
