@@ -24,6 +24,7 @@ import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
 import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/cascade-picker';
 import styles from './index.less';
+import { getHisConfig } from '@/config/his';
 
 export default () => {
   /** 0成人 1儿童 */
@@ -31,6 +32,7 @@ export default () => {
     patientType: '0' | '1';
     jumpPage: string;
   }>();
+  const { config } = getHisConfig();
   const { getPatientList } = patientState.useContainer();
   const [addressOptions, setAddressOptions] = useState<CascadePickerOption[]>(
     [],
@@ -272,7 +274,7 @@ export default () => {
                   <FormItem
                     label={'地区'}
                     name={'birthPlace'}
-                    initialValue={'重庆市-市辖区-沙坪坝区'}
+                    initialValue={config.defaultAddress}
                     rules={[{ required: true }]}
                     after={
                       <Icon
@@ -315,7 +317,7 @@ export default () => {
                   <FormItem
                     label={'地区'}
                     name={'birthPlace'}
-                    initialValue={'重庆市-市辖区-沙坪坝区'}
+                    initialValue={config.defaultAddress}
                     rules={[{ required: true }]}
                     after={
                       <Icon

@@ -18,6 +18,7 @@ import useGetParams from '@/utils/useGetParams';
 import useApi from '@/apis/usercenter';
 import { IMAGE_DOMIN } from '@/config/constant';
 import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/cascade-picker';
+import { useHisConfig } from '@/hooks';
 
 export default () => {
   const { patientId, patientAddress = '' } = useGetParams<{
@@ -27,6 +28,7 @@ export default () => {
   const [addressOptions, setAddressOptions] = useState<CascadePickerOption[]>(
     [],
   );
+  const { config } = useHisConfig();
   const [form] = Form.useForm();
   usePageEvent('onShow', () => {
     getAddressOptions().then((options) => setAddressOptions(options));
@@ -68,7 +70,7 @@ export default () => {
           <FormItem
             label={'地址'}
             name={'birthPlace'}
-            initialValue={'重庆市-市辖区-沙坪坝区'}
+            initialValue={config.defaultAddress}
             rules={[{ required: true }]}
             after={
               <Image

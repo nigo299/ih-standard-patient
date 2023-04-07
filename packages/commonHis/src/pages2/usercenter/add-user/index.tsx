@@ -39,6 +39,7 @@ import reportCmPV from '@/alipaylog/reportCmPV';
 import dayjs from 'dayjs';
 import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/cascade-picker';
 import useGetParams from '@/utils/useGetParams';
+import { useHisConfig } from '@/hooks';
 
 interface CardType {
   birthday: string;
@@ -63,6 +64,7 @@ export default memo(() => {
   const { ocrInfo, clearOcrInfo, faceInfo, setFaceInfo, getPatientList } =
     patientState.useContainer();
   const { user, getUserInfo } = globalState.useContainer();
+  const { config } = useHisConfig();
   const [addressOptions, setAddressOptions] = useState<CascadePickerOption[]>(
     [],
   );
@@ -725,7 +727,7 @@ export default memo(() => {
                       <FormItem
                         label={'地址'}
                         name={'birthPlace'}
-                        initialValue={'重庆市-市辖区-沙坪坝区'}
+                        initialValue={config.defaultAddress}
                         rules={[{ required: true }]}
                         after={
                           <Image
