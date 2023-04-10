@@ -384,7 +384,7 @@ export default () => {
       </Space>
       <Space className={styles.footer}>
         <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>1</ColorText>个项目
+          已选择<ColorText>{resourceId?.length}</ColorText>个项目
         </Space>
         <Button
           className={styles.button}
