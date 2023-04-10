@@ -1,0 +1,122 @@
+@import '@/styles/index.less';
+.page {
+  position: relative;
+  height: calc(100vh - 30px);
+  padding: 30px 20px 0 20px;
+}
+
+.content {
+  padding: 20px;
+}
+
+.card {
+  position: relative;
+  // margin: 0 20px 20px 20px;
+  margin-bottom: 20px;
+  padding: 30px;
+  background: rgba(@theme-color, 0.1);
+  border-radius: 20px;
+  font-size: 30px;
+  color: #333;
+  line-height: 60px;
+  font-weight: bold;
+}
+
+.cardImg {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 199px;
+  height: 217px;
+}
+
+.right {
+  position: absolute;
+  left: 465px;
+}
+
+.name {
+  line-height: 60px;
+}
+
+.text {
+  color: @theme-color;
+  line-height: 60px;
+}
+
+.text2 {
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.active {
+  color: #fff !important;
+  background: @theme-color;
+}
+
+.add {
+  margin-top: 25px;
+  height: 160px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.addImg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 15px;
+}
+
+.addText {
+  font-weight: bold;
+  color: #cccccc;
+  font-size: 28px;
+}
+
+.addWrap {
+  position: relative;
+  width: 47px;
+  height: 47px;
+  margin-bottom: 15px;
+  background: @theme-color;
+  border-radius: 50%;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 24px;
+    background: white;
+    border-radius: 20px;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 8px;
+    background: white;
+    border-radius: 20px;
+  }
+}
+
+.button {
+  position: absolute;
+  left: 0;
+  bottom: 95px;
+  width: calc(100% - 40px);
+  padding: 0 20px;
+}
+
+// .button2{
+//   position: inherit;
+//   bottom: 0;
+//   margin-top: 5px;
+// }

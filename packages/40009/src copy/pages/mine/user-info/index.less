@@ -1,0 +1,139 @@
+@import '@/styles/index.less';
+.page {
+  padding: 30px 20px;
+}
+
+.item {
+  position: relative;
+  padding: 35px 23px 35px 26px;
+  font-size: 30px;
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 23px;
+    width: calc(100% - 49px);
+    height: 10px;
+    border-bottom: 2px solid #e2e2e2;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    content: '';
+  }
+  &:nth-child(1) {
+    padding-top: 29px;
+    padding-bottom: 19px;
+  }
+  &:nth-child(3),
+  &:nth-child(4) {
+    &::before {
+      border-bottom: none;
+    }
+  }
+}
+
+.item2 {
+  &:active {
+    opacity: 0.7 !important;
+  }
+}
+
+.avatar {
+  width: 102px;
+  height: 102px;
+  border-radius: 50%;
+}
+
+.title {
+  color: #333333;
+}
+
+.button {
+  margin-top: 94px;
+}
+
+.text {
+  color: @theme-color2;
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.text2 {
+  color: #999999;
+}
+
+.rightIcon {
+  font-size: 36px;
+  margin-left: 22px;
+}
+
+.modal {
+  width: 640px;
+  height: 416px;
+  background: #ffffff;
+  border-radius: 20px;
+}
+
+.modalTitle {
+  margin-top: 69px;
+  color: #333333;
+  font-size: 36px;
+}
+
+.modalWrap {
+  margin: 46px 0 64px 0;
+  padding: 0 37px;
+}
+
+.modalInput {
+  padding-left: 15px;
+  width: 566px;
+  height: 90px;
+  background: #f3f3f3;
+  border-radius: 20px;
+}
+
+.modalBtns {
+  position: relative;
+  height: 110px;
+  &::before {
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    border-top: 2px solid #e0e0e0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    content: '';
+  }
+}
+.modalBtn,
+.modalBtn2 {
+  color: #333;
+  height: 110px;
+  width: 100%;
+  font-size: 34px;
+  &:active {
+    background: rgba(#999, 0.3);
+    border-bottom-left-radius: 20px;
+  }
+}
+
+.modalBtn2 {
+  position: relative;
+  color: @theme-color;
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 108px;
+    border-left: 1px solid #e0e0e0;
+    -webkit-transform: scaleX(0.5);
+    transform: scaleX(0.5);
+    content: '';
+  }
+  &:active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 20px;
+  }
+}

@@ -1,0 +1,170 @@
+@import '@/styles/index.less';
+.card {
+  height: 525px;
+  padding: 0 20px 20px 20px;
+  background: @theme-color;
+}
+
+.head {
+  position: relative;
+  width: 710px;
+  height: 207px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+.tag {
+  position: absolute;
+  top: 80px;
+  right: -20px;
+  width: 111px;
+  height: 60px;
+  font-weight: bold;
+  color: #d2a951;
+  font-size: 30px;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  background: linear-gradient(90deg, #fff3c2, #ffffff);
+}
+
+.imgs {
+  position: relative;
+  width: 178px;
+  height: 208px;
+  margin-right: 20px;
+  background: #d8ecff;
+  border-radius: 20px;
+}
+
+.tagImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 112px;
+  height: 112px;
+}
+
+.img {
+  width: 170px;
+  height: 180px;
+}
+
+.deptName {
+  color: #fff9c7;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+.deptName2 {
+  margin: 15px 0 25px 0;
+  color: #ffffff;
+  font-size: 36px;
+}
+
+.deptSkill {
+  color: #ffffff;
+  font-size: 30px;
+}
+
+.date {
+  margin: 40px 0 35px 0;
+}
+
+.dateText {
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 41px;
+}
+
+.dateText2 {
+  color: #fff9c7;
+  font-size: 41px;
+}
+
+.item {
+  width: 164px;
+  height: 155px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.weekData {
+  font-weight: bold;
+  color: #666666;
+  font-size: 36px;
+}
+
+.scheduleDate {
+  margin: 10px 0;
+  font-weight: bold;
+  color: #666666;
+  font-size: 40px;
+}
+
+.status {
+  font-weight: bold;
+  color: #999999;
+
+  font-size: 30px;
+}
+
+.status1 {
+  color: #00923f;
+}
+
+.status2 {
+  color: #d95e38;
+}
+
+.active {
+  background: #fff9c7;
+  .weekData,
+  .scheduleDate,
+  .status {
+    color: @theme-color !important;
+  }
+}
+
+.sheet {
+  width: 750px;
+  height: 1030px;
+  background: #ffffff;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.sheetHead {
+  padding: 20px 20px 50px 25px;
+}
+
+.sheetTitle {
+  color: @theme-color;
+  font-size: 46px;
+  font-weight: bold;
+}
+
+.sheetBtn {
+  width: 164px;
+  height: 100px;
+}
+
+.sheetText {
+  padding: 36px 40px 60px 40px;
+  color: #333333;
+  line-height: 60px;
+  font-size: 40px;
+}
+
+.sheet2 {
+  width: 750px;
+  height: 1076px;
+  overflow: auto;
+  background: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.sheet2Head {
+  min-height: 110px;
+  padding: 20px 20px 0 40px;
+}

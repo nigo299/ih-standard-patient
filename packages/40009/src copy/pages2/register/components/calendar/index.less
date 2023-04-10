@@ -1,0 +1,66 @@
+@import '@/styles/index.less';
+.wrap {
+  border-radius: 20px;
+  width: 710px;
+  overflow: hidden;
+}
+
+.notice {
+  height: 46px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 40px;
+}
+
+.tab {
+  color: #333;
+  background-color: white;
+  border: 1px solid @theme-color;
+}
+.tabItem {
+  font-size: 24px;
+}
+
+.tabItem2 {
+  .tabItem();
+  color: #333;
+}
+
+.calenderItem {
+  height: 86px;
+  width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-weight: 400 !important;
+}
+.calenderDisable {
+  color: #cccccc;
+}
+
+.activeItemCls {
+  background: rgba(@theme-color2, 0.15) !important;
+  border-radius: 32px;
+  color: @theme-color2;
+  line-height: 1;
+}
+
+.dots {
+  position: static;
+}

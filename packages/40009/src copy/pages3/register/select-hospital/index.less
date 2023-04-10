@@ -1,0 +1,39 @@
+@import '@/styles/index.less';
+.page {
+  height: calc(100vh - 150px);
+  padding: 50px 20px 100px 20px;
+  background: #eff4fc;
+}
+.lists {
+  height: 80vh;
+  width: 100%;
+  text-align: center;
+  overflow: scroll;
+}
+
+.itemWrap {
+  height: 224px;
+  background: #feffff;
+  border-radius: 20px;
+}
+
+.active {
+  background: @theme-color;
+  .name {
+    color: #fff;
+  }
+  .address {
+    color: #fff9c7;
+  }
+}
+
+.name {
+  color: #333333;
+  font-size: 46px;
+  font-weight: bold;
+}
+
+.address {
+  color: #999999;
+  font-size: 36px;
+}

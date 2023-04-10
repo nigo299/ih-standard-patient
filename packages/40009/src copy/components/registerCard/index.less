@@ -1,0 +1,66 @@
+@import '@/styles/index.less';
+
+.pannel {
+  margin: 0 auto;
+  width: 712px;
+  height: 327px;
+  background-size: contain;
+}
+
+.hospitalName {
+  margin-top: 20px;
+  font-size: 40px;
+  color: #666;
+  font-weight: bold;
+}
+
+.payName {
+  margin: 12px 0 5px 0;
+  font-size: 30px;
+  font-weight: 400;
+  color: #333;
+}
+
+.tip {
+  margin-top: 13px;
+  font-size: 26px;
+  color: #37a9d2;
+  text-decoration: underline;
+}
+
+.qrcode {
+  width: 158px;
+  height: 156px;
+  margin-right: 15px;
+  z-index: 9;
+  img {
+    width: 158px;
+    height: 156px !important;
+    visibility: inherit !important;
+  }
+}
+
+.text {
+  height: 156px;
+  line-height: 156px;
+}
+
+.barCode {
+  font-size: 24px;
+  background: none !important;
+  svg {
+    > rect:nth-child(1) {
+      fill: none !important;
+    }
+  }
+}
+
+.barCodeWeb {
+  height: 170px;
+  width: 220px;
+  margin-bottom: -10px;
+}
+
+.barCodeShow {
+  opacity: 0;
+}

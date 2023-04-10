@@ -1,0 +1,81 @@
+@import '@/styles/index.less';
+.page {
+  position: relative;
+}
+.banner {
+  width: 100%;
+  height: 148px;
+  background: @theme-color;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.warp {
+  padding: 20px;
+}
+.card {
+  position: relative;
+  width: 710px;
+  height: 181px;
+  > image:nth-child(1) {
+    width: 100%;
+    height: 100%;
+  }
+  > div {
+    display: block;
+    margin: 0;
+    width: 710px;
+    height: 181px;
+  }
+}
+.cardInner {
+  padding: 26px 26px 40px 20px;
+  position: relative;
+  color: #333333;
+}
+.sj {
+  position: absolute;
+  height: 46px;
+  width: 46px;
+  top: 20px;
+  left: 20px;
+}
+.date {
+  font-size: 30px;
+  font-weight: 400;
+}
+.patName {
+  font-size: 36px;
+  color: @theme-color;
+  font-weight: bold;
+}
+
+.table {
+  margin-bottom: 30px;
+}
+.patInfo {
+  margin-left: 36px;
+  font-size: 26px;
+  color: @theme-color;
+}
+.desc {
+  margin-top: 50px;
+  font-size: 30px;
+  color: #333333;
+}
+.tbHead {
+  background: rgba(@theme-color, 0.1);
+  font-size: 30px;
+  font-weight: 400;
+  color: #af362a;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border: none;
+}
+.tbr {
+  color: #333 !important;
+  font-size: 26px;
+  &:not(:last-child) {
+    border-bottom: 1px solid #ebeced;
+  }
+}

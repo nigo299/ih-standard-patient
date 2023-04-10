@@ -1,0 +1,128 @@
+@import '@/styles/index.less';
+.main {
+  background: #eff4fc;
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.top {
+  width: 100%;
+  height: 316px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(0deg, #eff4fc, @theme-color);
+  z-index: -1;
+}
+
+.box {
+  padding: 20px;
+  position: relative;
+}
+
+.content {
+  height: 560px;
+  background: linear-gradient(0deg, #ffffff, #d9efff);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.user {
+  display: flex;
+}
+
+.avatar {
+  width: 146px;
+  height: 170px;
+  background: #a5cdf2;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.avatarImg {
+  width: 140px;
+  height: 170px;
+}
+
+.userName {
+  font-size: 46px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.titleContent {
+  display: flex;
+  align-items: center;
+  font-size: 36px;
+}
+
+.titleLabel {
+  color: #999;
+}
+
+.changeBtn {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  width: 211px;
+  height: 66px;
+  background: linear-gradient(90deg, #fff3c2, #ffffff);
+  display: flex;
+  align-items: center;
+  border-radius: 50px 0 0 50px;
+  color: #d2a951;
+  padding-right: 12px;
+}
+
+.switchImg {
+  width: 26px;
+  height: 30px;
+  margin-right: 8px;
+  margin-left: 14px;
+}
+
+.mainContent {
+  margin-top: 54px;
+}
+
+.mainBox {
+  width: 325px;
+  height: 310px;
+  background: rgba(39, 128, 217, 0.2);
+  color: @theme-color;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.mainBox2 {
+  .mainBox();
+  color: #d95e38;
+  background: rgba(255, 157, 70, 0.2);
+}
+
+.text {
+  font-weight: 400;
+  font-size: 30px;
+}
+
+.text2 {
+  margin: 44px;
+  font-size: 70px;
+}
+
+.text3 {
+  font-size: 36px;
+}
+
+.cards {
+  padding: 30px 20px;
+  margin: 30px 0;
+  border-radius: 20px;
+  background: white;
+}
