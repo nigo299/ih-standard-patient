@@ -86,7 +86,7 @@ export default () => {
       new: true,
     },
     {
-      title: '门诊缴费123',
+      title: '门诊缴费',
       subTitle: () => (
         <View style={{ color: '#666' }}>
           手机缴费<Text style={{ color: '#FF9743' }}>不用等</Text>
