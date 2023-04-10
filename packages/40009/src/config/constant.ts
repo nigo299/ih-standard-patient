@@ -2,6 +2,8 @@ export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
 export const THEME_COLOR = '#CF000E';
 export const THEME_COLOR2 = '#FF9743';
+export const STEP_COLOR = '#80CFD6';
+export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
 export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
@@ -45,7 +47,7 @@ export const IS_ALIPAY = true;
 // 支付宝小程序appid
 export const APPID = PLATFORM === 'ali' ? '2021002125656335' : '';
 // 是否开启意见反馈（小桥医助小程序）
-export const IS_FEEDBACL = PLATFORM !== 'ali' && true;
+export const IS_FEEDBACL = PLATFORM !== 'ali';
 
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {

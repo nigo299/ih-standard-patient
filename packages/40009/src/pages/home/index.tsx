@@ -224,7 +224,7 @@ export default () => {
             subTitle: '前面还有多少人',
             url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
             image: `${IMAGE_DOMIN}/home/pdjd.png`,
-            open: false,
+            // open: true,
           },
           {
             title: '医保政策',

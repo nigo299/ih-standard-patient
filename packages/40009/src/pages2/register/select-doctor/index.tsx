@@ -4,15 +4,15 @@ import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace, PreviewImage } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
-import { DeptInfo, Calendar } from '../components';
+import { DeptInfo, Calendar } from 'commonHis/src/pages2/register/components';
 import {
   NoData,
+  Radio,
   Shadow,
   Exceed,
   Space,
   showToast,
   Loading,
-  Radio,
 } from '@kqinfo/ui';
 import dayjs from 'dayjs';
 import useGetParams from '@/utils/useGetParams';
@@ -50,7 +50,6 @@ export default () => {
     },
     needInit: !!deptId,
   });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [doctorType, setDoctorType] = useState<DoctorType>(DoctorType.all);
   const [date, setDate] = useEffectState(
     useMemo(() => {
@@ -59,14 +58,13 @@ export default () => {
         newDate =
           scheduleList?.find(
             ({ scheduleDate, status }) =>
-              scheduleDate !== dayjs().format('YYYY-MM-DD') && status === 1,
+              scheduleDate === dayjs().add(1, 'd').format('YYYY-MM-DD') &&
+              status === 1,
           )?.scheduleDate || scheduleList?.[1]?.scheduleDate;
       } else if (type === 'day') {
         newDate = dayjs().format('YYYY-MM-DD');
       } else {
-        newDate = scheduleList?.find(
-          ({ status }) => status === 1,
-        )?.scheduleDate;
+        newDate = scheduleList?.[0]?.scheduleDate;
       }
       return dayjs(newDate);
     }, [scheduleList, type]),
@@ -144,7 +142,7 @@ export default () => {
       return (
         <View
           className={styles.hasSource}
-          style={{ color: nowActive ? '#f371a9' : '#333', fontWeight: 400 }}
+          style={{ color: nowActive ? '#FF9743' : '#333', fontWeight: 400 }}
         >
           有号
         </View>
@@ -160,22 +158,18 @@ export default () => {
   const renderCanChoose = (day: dayjs.Dayjs) => {
     if (type === 'reserve') {
       return scheduleList?.some(
-        ({ scheduleDate, status }) =>
+        ({ scheduleDate }) =>
           scheduleDate !== dayjs().format('YYYY-MM-DD') &&
-          day.isSame(scheduleDate) &&
-          status === 1,
+          day.isSame(scheduleDate),
       );
     } else if (type === 'day') {
       return scheduleList?.some(
-        ({ scheduleDate, status }) =>
+        ({ scheduleDate }) =>
           scheduleDate === dayjs().format('YYYY-MM-DD') &&
-          day.isSame(scheduleDate) &&
-          status === 1,
+          day.isSame(scheduleDate),
       );
     } else {
-      return scheduleList?.some(
-        ({ scheduleDate, status }) => day.isSame(scheduleDate) && status === 1,
-      );
+      return scheduleList?.some(({ scheduleDate }) => day.isSame(scheduleDate));
     }
   };
 
@@ -217,7 +211,7 @@ export default () => {
           renderDot={renderDate}
           renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
           current={date}
-          limit={14}
+          limit={21}
           showDoctor
           deptId={deptId}
           onChange={(
@@ -272,6 +266,7 @@ export default () => {
               title = '',
               level = '',
               sourceType = '',
+              extFields = [],
             } = item;
             return (
               <Shadow key={index}>
@@ -314,18 +309,22 @@ export default () => {
                           alignItems="center"
                           justify="center"
                         >
-                          <View className={styles.restPriceAfter} />¥
-                          {(registerFee / 100).toFixed(2)}
+                          {extFields.doctorInitialRegFee === '0'
+                            ? ''
+                            : `¥${(
+                                extFields?.doctorInitialRegFee / 100
+                              ).toFixed(2)}`}
                         </Space>
                         <Space
                           className={styles.restNum}
                           alignItems="center"
                           justify="center"
                         >
-                          {item.status === 0 && '停诊'}
+                          {/* {item.status === 0 && '停诊'}
                           {item.status === 1 &&
-                            `余号: ${leftSource > 0 ? leftSource : 0}`}
-                          {item.status === 2 && '满诊'}
+                            `￥${leftSource > 0 ? leftSource : 0}.00`}
+                          {item.status === 2 && '满诊'} */}
+                          ¥{(registerFee / 100).toFixed(2)}
                         </Space>
                       </View>
                     </View>
