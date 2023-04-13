@@ -29,7 +29,7 @@ import showTabBar from '@/utils/showTabBar';
 import globalState from '@/stores/global';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import Dialog from '@/components/dialog';
-import useApi from '@/apis/common';
+import useApi from 'commonHis/src/apis/common';
 export interface NavType {
   title: string;
   subTitle?: React.ReactNode | string;

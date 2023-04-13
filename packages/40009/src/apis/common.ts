@@ -1,4 +1,4 @@
-import request from './utils/request';
+import request from '@/apis/utils/request';
 import createApiHooks from 'create-api-hooks';
 import storage from '@/utils/storage';
 
