@@ -3,7 +3,7 @@ import { View, navigateTo } from 'remax/one';
 import { Calendar, Tab, NoticeBar, Shadow } from '@kqinfo/ui';
 import { Props } from '@kqinfo/ui/lib/calendar';
 import styles from './index.less';
-import { THEME_COLOR2 } from '@/config/constant';
+import { THEME_COLOR2,HOSPITAL_NAME } from '@/config/constant';
 const weeks = ['日', '一', '二', '三', '四', '五', '六'];
 
 export default ({
@@ -29,7 +29,7 @@ export default ({
             'linear-gradient(90deg, rgba(255,151,67,0.2), rgba(255,151,67,0.01))'
           }
         >
-          热烈庆祝重庆沙坪坝区妇幼保健院智慧医院开通啦!
+          热烈庆祝{HOSPITAL_NAME}智慧医院开通啦!
         </NoticeBar>
         <View className={styles.filter}>
           <View>

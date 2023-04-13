@@ -4,7 +4,12 @@ import { usePageEvent } from 'remax/macro';
 import openLocation from '@/utils/openLocation';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Space, BackgroundImg, showToast, Icon, RichText } from '@kqinfo/ui';
-import { IMAGE_DOMIN, HOSPITAL_NAME, PLATFORM } from '@/config/constant';
+import {
+  IMAGE_DOMIN,
+  HOSPITAL_NAME,
+  PLATFORM,
+  IS_FEEDBACL,
+} from '@/config/constant';
 import {
   CopyRight,
   TabBar,
@@ -48,6 +53,19 @@ export default () => {
   const [registerMode, setRegisterMode] = useState('');
   const [noticeInfo, setNoticeInfo] = useState<string>('');
   const { clearCountdownTimer } = useDownCount();
+  const {
+    data: { data: configList },
+  } = useApi.查询配置列表({
+    params: {
+      status: 1,
+      whereShowCode: 'SY_DB',
+      whereUse: 'GZH',
+    },
+    initValue: {
+      data: { data: [] },
+    },
+    needInit: IS_FEEDBACL,
+  });
   const {
     data: { data: infoData },
   } = useApi.注意事项内容查询({
@@ -247,6 +265,8 @@ export default () => {
             subTitle: '',
             url: '/pages2/nucleic/select-combo/index?type=1',
             image: `${IMAGE_DOMIN}/home/hsjc.png`,
+            onClick: () =>
+              (window.location.href = 'https://cqkuanren.mike-x.com/aN5Im'),
           },
           {
             title: '就医指南',
@@ -535,7 +555,11 @@ export default () => {
           }}
         />
         <View className={styles.copyRight}>
-          <CopyRight clear />
+          <CopyRight
+            clear
+            hospitalId={configList?.[0]?.hospitalId}
+            subHospitalId={configList?.[0]?.subHospitalId}
+          />
         </View>
       </Space>
       <RegisterNotice

@@ -30,6 +30,14 @@ export interface LoginType extends API.ResponseDataType {
     username: string;
     openid: string;
   };
+  code: number;
+  msg: string | undefined;
+}
+export interface NewLoginType extends LoginType {
+  data: {
+    username: string;
+    openid: string;
+  };
 }
 
 export interface UserType {
@@ -142,6 +150,17 @@ export default {
           },
         },
       );
+    },
+  ),
+  用户手机被占用后继续绑定: createApiHooks(
+    (params: {
+      username?: string;
+      identityNumber?: string;
+      identityType?: string;
+      phone: string;
+      validateCode: string;
+    }) => {
+      return request.post<NewLoginType>(`/api/oauth/again-bind-user`, params);
     },
   ),
   获取用户信息: createApiHooks((params) => {
