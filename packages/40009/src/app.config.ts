@@ -20,11 +20,11 @@ const pages = [
   'pages/microsite/doctor-summary/index', // 医生介绍
   'pages/microsite/hospital-article/index', // 医院动态
   'pages/microsite/article-detail/index', // 文章详情
-  // 'pages/medical/order-item/index', // 医保费用确认支付以及明细
-  // 'pages/medical/order-detail/index', // 医保支付详情
-  // 'pages/pay/index', // 收银台
-  // 'pages/waiting/index', // 支付结果等待页
-  // 'pages/webview/index', // 第三方业务链接
+  'pages/medical/order-item/index', // 医保费用确认支付以及明细
+  'pages/medical/order-detail/index', // 医保支付详情
+  'pages/pay/index', // 收银台
+  'pages/waiting/index', // 支付结果等待页
+  'pages/webview/index', // 第三方业务链接
   'pages/maintain/index', // 系统维护
   // 'pages/sign/userList/index', // 取药签到选择就诊人
   // 'pages/sign/sign/index', // 取药签到
