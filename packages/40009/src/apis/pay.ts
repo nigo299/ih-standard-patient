@@ -1,4 +1,4 @@
-import request from '@/apis/utils/request';
+import request from './utils/request';
 import createApiHooks from 'create-api-hooks';
 import { H5_PAY } from '@/config/constant';
 
@@ -51,7 +51,6 @@ export interface MedInsureWechatType extends API.ResponseDataType {
     userCardType: string;
     userCardNo: string;
   };
-  code: number;
 }
 
 export interface ThridPayType extends API.ResponseDataType {
@@ -92,26 +91,12 @@ export default {
       totalAmount: string;
       callUrl: string;
       bizChannel: string;
-      scenes?: string;
-      orderId?: string;
     }) => {
       return request.post<MedInsureAlipayType>(
         '/api/ihis/user/user/medInsure/auth/alipay',
         params,
-        {
-          headers: {
-            'x-showLoading': 'false',
-          },
-        },
       );
     },
-  ),
-  门诊医保异常用户申请退费接口: createApiHooks(
-    (params: { orderId: string; payAuthNo: string }) =>
-      request.post<ThridPayType>(
-        '/api/intelligent/api/op/apply-refund-order',
-        params,
-      ),
   ),
   微信医保渠道免密授权URL获取: createApiHooks(
     (params: {
@@ -130,16 +115,10 @@ export default {
       /** 授权获得的authCode */
       qrcode: string;
       bizChannel: string;
-      orderId?: string;
     }) => {
       return request.post<MedInsureWechatType>(
         '/api/ihis/user/user/medInsure/auth/wechat',
         params,
-        {
-          headers: {
-            'x-showLoading': 'false',
-          },
-        },
       );
     },
   ),
@@ -150,10 +129,20 @@ export default {
       /** 业务类型（支付业务唯一ID：10-预约挂号；11-门诊缴费；12-住院服务；13-当班挂号） */
       uniqueCode: number;
     }) =>
-      request.post<ThridPayType>('/api/intelligent/medical/thrid/pay', params, {
-        headers: {
-          'x-showLoading': 'false',
-        },
-      }),
+      request.post<ThridPayType>('/api/intelligent/medical/thrid/pay', params),
+  ),
+  挂号医保异常用户申请退费接口: createApiHooks(
+    (params: { orderId: string; payAuthNo: string }) =>
+      request.post<ThridPayType>(
+        '/api/intelligent/api/register/apply-refund-order',
+        params,
+      ),
+  ),
+  门诊医保异常用户申请退费接口: createApiHooks(
+    (params: { orderId: string; payAuthNo: string }) =>
+      request.post<ThridPayType>(
+        '/api/intelligent/api/op/apply-refund-order',
+        params,
+      ),
   ),
 };

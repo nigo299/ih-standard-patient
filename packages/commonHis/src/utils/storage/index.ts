@@ -30,7 +30,8 @@ export type keys =
   | 'medicalCancel'
   | 'isHealth'
   | 'waitPayListParams'
-  | 'createOpOrderParams';
+  | 'createOpOrderParams'
+  | 'canApplyRefund';
 
 const prefixKey = (key: string) => {
   return `fe-his-${REQUEST_QUERY.hisId}-` + key;

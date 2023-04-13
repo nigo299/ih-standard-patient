@@ -1,4 +1,4 @@
-import request from '@/apis/utils/request';
+import request from './utils/request';
 import createApiHooks from 'create-api-hooks';
 export interface WaitpayType {
   date: string;
@@ -23,20 +23,6 @@ export interface WaitpayType {
   deptId: string;
   medicalFlag: string;
   patHisNo: string;
-  itemList: {
-    itemName: string;
-    itemNum: string;
-    itemPrice: string;
-    itemUnit: string;
-    totalFee: string;
-  }[];
-  hisSerilNo: string;
-  patientInfo: {
-    patientName: string;
-    patientSex: string;
-    patientAge: number;
-    encryptIdNo: string;
-  };
 }
 export interface PaymentWaitpayListType extends API.ResponseDataType {
   data: WaitpayType[];
@@ -101,7 +87,6 @@ export interface PaymentOrderType {
   totalRealFee: number;
   userId: string;
 }
-
 export interface CreateoporderType extends API.ResponseDataType {
   data: PaymentOrderType;
 }
@@ -143,8 +128,8 @@ export interface OrderDetailType {
   errorMsg: string;
   hisName: string;
   hisOrderNo: string;
+  medicalChannel: string;
   hisOrderTime: string;
-  hisSerialNo: string;
   patientSex: 'M' | 'F';
   patientAge: number;
   itemList: Array<{
@@ -182,18 +167,16 @@ export interface OrderDetailType {
   status: string;
   statusName: string;
   systemType: number;
+  /** 是否是异常单 */
+  isAbnormal: 0 | 1;
+  /** 能否申请退费 */
+  canApplyRefund: 0 | 1;
   totalFee: number;
   guideInfo: string;
   totalRealFee: number;
   deptName: string;
   doctorName: string;
   preSettlementResult: string;
-  patientInfo: {
-    patientName: string;
-    patientSex: string;
-    patientAge: number;
-    encryptIdNo: string;
-  };
 }
 
 interface PaymentOrderDetailType extends API.ResponseDataType {
