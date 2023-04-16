@@ -48,6 +48,8 @@ export const IS_ALIPAY = true;
 export const APPID = PLATFORM === 'ali' ? '2021002125656335' : '';
 // 是否开启意见反馈（小桥医助小程序）
 export const IS_FEEDBACL = PLATFORM !== 'ali';
+// 是否开启挂号科室选择界面智能导诊功能
+export const IS_DEPT = PLATFORM !== 'ali';
 
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {

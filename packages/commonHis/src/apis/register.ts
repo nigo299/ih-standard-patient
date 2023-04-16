@@ -65,6 +65,8 @@ export interface ScheduledoctorType {
   /** 0停诊 1有号 2无号 */
   status: 0 | 1 | 2;
   totalSource: number;
+  /** 拓展透传字段，用来传递一些特定的值 */
+  extFields: any[];
 }
 
 export interface RegisterScheduleDoctorListType extends API.ResponseDataType {

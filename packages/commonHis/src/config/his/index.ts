@@ -23,5 +23,5 @@ export const getHisConfig = () => {
 
 export const getHisId = () => {
   // TODO 调整获取hisId的方式
-  return '40007';
+  return '40009';
 };

@@ -1,4 +1,4 @@
-@import '../../../styles/index.less';
+@import '@/styles/index.less';
 .wrap {
   padding-top: 20px;
   padding-bottom: 120px;
@@ -14,7 +14,7 @@
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 2px 2px 20px rgba(39, 128, 217, 0.15);
-  padding: 40px 20px 22px 0;
+  padding: 40px 20px 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -22,14 +22,29 @@
   position: relative;
   margin-bottom: 20px;
 }
+.itemFoot {
+  height: 80px;
+  border-top: 1px solid #e2e2e2;
+  align-items: center;
+}
+.footPrice {
+  font-size: 30px;
+  color: #ea5328;
+}
+.linkBtn {
+  font-size: 30px;
+  font-weight: 400;
+  text-decoration: underline;
+  color: @theme-color;
+}
 .checkBoxWrap {
-  padding: 0 40px 0 20px;
+  padding: 0 40px 0 0;
 }
 
 .select {
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: 10px;
   background: @theme-color;
 }
 
@@ -47,13 +62,6 @@
   border-radius: 50%;
   background-color: #e2e2e2;
 }
-.price {
-  font-size: 30px;
-  color: #d95e38;
-  position: absolute;
-  right: 20px;
-  top: 35px;
-}
 .infoWrap {
   flex: 1;
   display: flex;
@@ -67,6 +75,7 @@
   color: #333;
   font-weight: bold;
   margin-bottom: 22px;
+  font-size: 34px;
 }
 .td {
   display: flex;
@@ -85,8 +94,8 @@
   padding: 40px 0 40px 40px;
 }
 .arrow {
-  width: 22px;
-  height: 41px;
+  width: 21px;
+  height: 35px;
 }
 
 .tipText {
@@ -108,11 +117,12 @@
   right: 0;
   box-sizing: border-box;
   border-top: 1px solid #e2e2e2;
-  height: 98px;
+  height: 158px;
   display: flex;
-  align-items: center;
+  //align-items: center;
   justify-content: space-between;
   font-size: 36px;
+  padding: 10px;
 }
 
 .choose {
@@ -136,12 +146,15 @@
 
 .btn {
   font-size: 36px;
-  width: 250px;
+  width: 350px;
   height: 98px;
   border-radius: 0;
   line-height: 98px;
+  margin-bottom: 20px;
 }
-
+.btn2 {
+  width: 100% !important;
+}
 .selectAll,
 .mr9 {
   margin-right: 9px;
@@ -152,4 +165,31 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 360px;
+}
+
+.table {
+  background: transparent;
+}
+
+.tableWrap {
+  background: linear-gradient(180deg, rgba(@theme-color, 0.05), #ffffff);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.tableFooter {
+  font-size: 30px;
+  font-weight: 400;
+  color: #333333;
+  padding: 40px 10px;
+}
+
+.authBtn {
+  margin-top: 600px;
+  max-width: 80vw;
+  min-width: 80vw;
+}
+.titleCls {
+  font-weight: bold;
+  margin: 0 0 20px 0;
 }
