@@ -10,6 +10,7 @@ import {
   ReInput,
   TransferChange,
   BackgroundImg,
+  Modal,
 } from '@kqinfo/ui';
 import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
 import { useDownCount } from 'parsec-hooks';
@@ -84,6 +85,7 @@ export default memo(() => {
   }, [clearCountdownTimer]);
   return (
     <BackgroundImg img={`${IMAGE_DOMIN}/auth/bg.png`} className={styles.page}>
+      <Modal />
       <Space vertical className={styles.content}>
         <Image
           src={`${IMAGE_DOMIN}/auth/logo.png`}
@@ -97,24 +99,69 @@ export default memo(() => {
         <Form
           form={form}
           className={styles.form}
-          onFinish={(values: any) => {
-            useAuthApi.注册
-              .request({
-                phone: values['phone'],
-                validateCode: values['validateCode'],
-              })
-              .then((res) => {
-                if (res.code === 0 && res.data.openid) {
-                  storage.set('openid', res.data.openid);
-                  showToast({
-                    icon: 'success',
-                    title: '登录成功!',
-                  }).then(() => {
-                    jumpToUrl();
-                    getPatientList();
-                  });
-                }
+          // onFinish={(values: any) => {
+          //   useAuthApi.注册
+          //     .request({
+          //       phone: values['phone'],
+          //       validateCode: values['validateCode'],
+          //     })
+          //     .then((res) => {
+          //       if (res.code === 0 && res.data.openid) {
+          //         storage.set('openid', res.data.openid);
+          //         showToast({
+          //           icon: 'success',
+          //           title: '登录成功!',
+          //         }).then(() => {
+          //           jumpToUrl();
+          //           getPatientList();
+          //         });
+          //       }
+          //     });
+          // }}
+          onFinish={async (values: any) => {
+            const { code, data, msg } = await useAuthApi.注册.request({
+              phone: values['phone'],
+              validateCode: values['validateCode'],
+            });
+            if (code === 0 && data.openid) {
+              storage.set('openid', data.openid);
+              showToast({
+                icon: 'success',
+                title: '登录成功!',
+              }).then(() => {
+                jumpToUrl();
+                getPatientList();
               });
+            } else if (msg?.includes('该手机号已绑定')) {
+              Modal.show({
+                title: '温馨提示',
+                content:
+                  '该手机号已被其他用户占用，若确认该手机号为您本人使用，请点击【继续注册】',
+                okText: '继续注册',
+                onOk: () =>
+                  new Promise((resolve, reject) => {
+                    useAuthApi.用户手机被占用后继续绑定
+                      .request({
+                        phone: values['phone'],
+                        validateCode: values['validateCode'],
+                      })
+                      .then((res) => {
+                        if (res.code === 0 && res.data.openid) {
+                          storage.set('openid', res.data.openid);
+                          showToast({
+                            icon: 'success',
+                            title: '登录成功!',
+                          }).then(() => {
+                            resolve('');
+                            jumpToUrl();
+                            getPatientList();
+                          });
+                        }
+                      })
+                      .catch(reject);
+                  }),
+              });
+            }
           }}
         >
           <FormItem

@@ -9,7 +9,7 @@ export default (props: { step: number }) => (
     type="dashed"
     items={STEP_ITEMS}
     current={props.step}
-    // defaultColor={STEP_COLOR}
+    defaultColor={STEP_COLOR}
     onChoose={(i) => {
       const delta = props.step - i;
       if (delta > 0) {

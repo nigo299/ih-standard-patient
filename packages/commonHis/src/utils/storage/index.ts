@@ -31,6 +31,7 @@ export type keys =
   | 'isHealth'
   | 'waitPayListParams'
   | 'createOpOrderParams'
+  | 'patientId'
   | 'canApplyRefund';
 
 const prefixKey = (key: string) => {
