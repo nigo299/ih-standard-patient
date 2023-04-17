@@ -51,9 +51,11 @@ export default ({
       {IS_FEEDBACL ? (
         <Space alignItems="center">
           {`由凯桥信息提供技术支持 |`}
-          <Feedback
-            path={`pages/chat/index?subhospitalId=${subHospitalId}&hospitalId=${hospitalId}`}
-          />
+          {subHospitalId && hospitalId && (
+            <Feedback
+              path={`pages/chat/index?subhospitalId=${subHospitalId}&hospitalId=${hospitalId}`}
+            />
+          )}
         </Space>
       ) : (
         <View>由凯桥信息提供技术支持</View>
