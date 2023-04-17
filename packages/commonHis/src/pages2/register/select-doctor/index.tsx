@@ -34,8 +34,8 @@ enum DoctorType {
 }
 
 export default () => {
-  const { showPrice } = useHisConfig();
-  console.log(showPrice);
+  const { config } = useHisConfig();
+  console.log(config);
 
   const { setDeptDetail } = registerState.useContainer();
   const { deptId, type = 'default' } = useGetParams<{
@@ -312,7 +312,7 @@ export default () => {
                       <View className={styles.left}>
                         <View className={styles.name}>{name}</View>
                       </View>
-                      {!!showPrice ? (
+                      {!!config?.showPrice ? (
                         <ShowPrice
                           leftSource={leftSource}
                           extFields={extFields}
