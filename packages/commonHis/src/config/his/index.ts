@@ -1,6 +1,8 @@
 import HisBase from './hisBase';
 import His40007 from './his40007';
 import His40009 from './his40009';
+import { HIS_ID } from '@/config/constant';
+
 let cacheHis: InstanceType<typeof HisBase> | null = null;
 export const getHisConfig = () => {
   if (cacheHis !== null) return cacheHis;
@@ -19,6 +21,5 @@ export const getHisConfig = () => {
   }
 };
 export const getHisId = () => {
-  // TODO 调整获取hisId的方式
-  return '40009';
+  return HIS_ID;
 };
