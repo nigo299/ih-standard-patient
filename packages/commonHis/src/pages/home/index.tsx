@@ -37,7 +37,7 @@ import showTabBar from '@/utils/showTabBar';
 import styles from './index.less';
 // import useApi from '@/apis/microsite';
 import useApi from '@/apis/common';
-import Dialog from '../../components/dialog';
+import Dialog from '@/components/dialog';
 import storage from '@/utils/storage';
 import dayjs from 'dayjs';
 

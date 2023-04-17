@@ -4,7 +4,7 @@ import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace, PreviewImage } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
-import { DeptInfo, Calendar } from '../components';
+import { DeptInfo, Calendar } from '@/pages2/register/components';
 import {
   NoData,
   Shadow,
@@ -23,8 +23,8 @@ import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import { useHisConfig } from '@/hooks';
-import ShowPrice from './components/show-price';
-import ShowSource from './components/show-source';
+import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
+import ShowSource from '@/pages2/register/select-doctor/components/show-source';
 enum DoctorType {
   all = '仅展示有号',
   normal = '急诊号',

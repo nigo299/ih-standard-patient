@@ -4,7 +4,7 @@ import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
-import { DeptInfo } from '../components';
+import { DeptInfo } from '@/pages2/register/components';
 import { NoData, Shadow, Exceed } from '@kqinfo/ui';
 import registerState from '@/stores/register';
 import useApi from '@/apis/register';
@@ -83,7 +83,7 @@ export default () => {
                         : '暂无'
                     }`}
                   </Exceed>
-                  {/* 
+                  {/*
                 <View className={styles.registerFee}>
                   ¥{(item?.regFee / 100).toFixed(2)}
                 </View> */}

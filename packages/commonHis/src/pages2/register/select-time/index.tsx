@@ -4,7 +4,7 @@ import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
-import { DoctorInfo, Calendar } from '../components';
+import { DoctorInfo, Calendar } from '@/pages2/register/components';
 import { Button, Space, showToast, Loading } from '@kqinfo/ui';
 import useGetParams from '@/utils/useGetParams';
 import Items from './items';
