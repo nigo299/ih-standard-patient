@@ -24,8 +24,8 @@ import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import classNames from 'classnames';
 import { useHisConfig } from '@/hooks';
-import ShowPrice from './components/ShowPrice';
-import ShowSource from './components/ShowSource';
+import ShowPrice from './components/show-price';
+import ShowSource from './components/show-source';
 enum DoctorType {
   all = '仅展示有号',
   normal = '急诊号',

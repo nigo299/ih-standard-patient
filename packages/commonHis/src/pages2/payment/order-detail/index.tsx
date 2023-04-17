@@ -1,8 +1,14 @@
 import React from 'react';
 import { useHisConfig } from '@/hooks';
-import BatchDetail from './components/BatchDetail';
-import SingleDetail from './components/SingleDetail';
+import BatchDetail from './components/batch-detail';
+import SingleDetail from './components/single-detail';
+
 export default () => {
   const { config } = useHisConfig();
-  return !!config?.isBatchPay ? <BatchDetail /> : <SingleDetail />;
+  switch (config?.batchPayType) {
+    case 0:
+      return <SingleDetail />;
+    case 1:
+      return <BatchDetail />;
+  }
 };

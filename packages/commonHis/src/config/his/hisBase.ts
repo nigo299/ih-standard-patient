@@ -6,6 +6,8 @@ export default class BaseHis {
     this.hisId = hisId;
     this.config = {
       defaultAddress: '重庆市-市辖区-沙坪坝区',
+      showPrice: false,
+      batchPayType: 1,
     };
   }
 }
@@ -15,5 +17,5 @@ type StaticConfig = {
   /** 0:展示号源数量与价格，1:展示原价与现价 */
   showPrice?: boolean;
   /** 控制门诊缴费是否支持合单支付，（order-list、order-detail对应不同的ui与逻辑） */
-  isBatchPay?: boolean;
+  batchPayType: number;
 };
