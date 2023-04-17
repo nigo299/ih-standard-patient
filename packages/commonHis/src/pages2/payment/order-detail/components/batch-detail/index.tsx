@@ -33,7 +33,7 @@ import {
 } from '@/config/constant';
 import { decrypt, formDate, returnUrl } from '@/utils';
 import useCommApi from '@/apis/common';
-import styles from './index.less';
+import styles from '@/pages2/payment/order-detail/components/batch-detail/index.less';
 import useRegisterApi, { MedicalPayType } from '@/apis/register';
 import CustomerReported from '@/components/customerReported';
 import storage from '@/utils/storage';

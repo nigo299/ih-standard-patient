@@ -34,7 +34,7 @@ import {
 import usePayApi from '@/apis/pay';
 import { formDate, getBrowserUa, getUrlParams } from '@/utils';
 import useCommApi from '@/apis/common';
-import styles from './index.less';
+import styles from '@/pages2/payment/order-detail/components/single-detail/index.less';
 import { MedicalPayType } from '@/apis/register';
 import storage from '@/utils/storage';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';

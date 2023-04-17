@@ -34,7 +34,7 @@ import { IMAGE_DOMIN, PLATFORM, PAY_TYPE } from '@/config/constant';
 import { decrypt, formDate, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Tip } from '@/components';
-import styles from './index.less';
+import styles from '@/pages2/payment/order-list/components/batch-pay/index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import storage from '@/utils/storage';
 import socialPayAuth from '@/utils/socialPayAuth';

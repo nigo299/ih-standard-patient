@@ -37,7 +37,7 @@ import {
 import { decrypt, formDate, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Tip } from '@/components';
-import styles from './index.less';
+import styles from '@/pages2/payment/order-list/components/single-pay/index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import storage from '@/utils/storage';
 import socialPayAuth from '@/utils/socialPayAuth';

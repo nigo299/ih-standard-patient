@@ -347,7 +347,8 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles,
+      bindcardProdiles.childrenMaxAge,
+      bindcardProdiles.isFace,
       btnSubType,
       faceInfo,
       form,

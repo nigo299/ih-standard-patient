@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { View } from 'remax/one';
 import { Space } from '@kqinfo/ui';
-import styles from './index.less';
+import styles from '@/pages2/register/select-doctor/components/show-source/index.less';
 
 type RestProps = {
   leftSource: number;
