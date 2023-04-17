@@ -1,7 +1,7 @@
 declare namespace API {
   export interface ResponseDataType {
     code: number;
-    msg?: string;
+    msg?: string | undefined;
   }
   export interface ResponseModel {
     data: ResponseDataType;

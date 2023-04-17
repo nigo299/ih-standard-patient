@@ -8,7 +8,6 @@ import styles from './index.less';
 import dayjs from 'dayjs';
 import storage from '@/utils/storage';
 import Feedback from '@/components/feedback';
-
 export default ({
   dept,
   clear,
@@ -32,7 +31,6 @@ export default ({
         }`,
       }).then(() => showToast({ title: '复制成功', icon: 'success' }));
     }
-
     if (result >= 5 && clear) {
       setCount(0);
       storage.clear();
@@ -60,7 +58,6 @@ export default ({
       ) : (
         <View>由凯桥信息提供技术支持</View>
       )}
-
       <View>Copyright©2010-{dayjs().format('YYYY')}</View>
     </Space>
   );

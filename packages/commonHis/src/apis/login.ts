@@ -30,14 +30,6 @@ export interface LoginType extends API.ResponseDataType {
     username: string;
     openid: string;
   };
-  code: number;
-  msg: string | undefined;
-}
-export interface NewLoginType extends LoginType {
-  data: {
-    username: string;
-    openid: string;
-  };
 }
 
 export interface UserType {
@@ -172,7 +164,7 @@ export default {
       phone: string;
       validateCode: string;
     }) => {
-      return request.post<NewLoginType>(`/api/oauth/again-bind-user`, params);
+      return request.post<LoginType>(`/api/oauth/again-bind-user`, params);
     },
   ),
 
