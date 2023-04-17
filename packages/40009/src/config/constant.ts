@@ -13,9 +13,10 @@ export const IMAGE_DOMIN = `${
 }`;
 export const HOSPITAL_NAME = '重庆松山医院';
 export const HOSPITAL_TEL = '023-63110120';
+export const HIS_ID = '40009';
 export const REQUEST_QUERY = {
-  hisId: 40009,
-  platformId: PLATFORM === 'ali' ? 4000902 : 4000903,
+  hisId: HIS_ID,
+  platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}03`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10
