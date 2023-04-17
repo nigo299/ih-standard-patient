@@ -23,7 +23,7 @@ import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import classNames from 'classnames';
-import { getHisConfig } from '@/config/his/index';
+import { useHisConfig } from '@/hooks';
 import ShowPrice from './components/ShowPrice';
 import ShowSource from './components/ShowSource';
 enum DoctorType {
@@ -34,8 +34,9 @@ enum DoctorType {
 }
 
 export default () => {
-  const His = getHisConfig();
-  const his = new His();
+  const { showPrice } = useHisConfig();
+  console.log(showPrice);
+
   const { setDeptDetail } = registerState.useContainer();
   const { deptId, type = 'default' } = useGetParams<{
     deptId: string;
@@ -311,7 +312,7 @@ export default () => {
                       <View className={styles.left}>
                         <View className={styles.name}>{name}</View>
                       </View>
-                      {!!his.showPrice ? (
+                      {!!showPrice ? (
                         <ShowPrice
                           leftSource={leftSource}
                           extFields={extFields}
