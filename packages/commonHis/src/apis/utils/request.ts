@@ -1,5 +1,11 @@
 import { navigateTo } from 'remax/one';
-import { axios, showToast, showLoading, hideLoading } from '@kqinfo/ui';
+import {
+  axios,
+  showToast,
+  showLoading,
+  hideLoading,
+  showModal,
+} from '@kqinfo/ui';
 import { REQUEST_QUERY, PLATFORM } from '@/config/constant';
 import storage from '@/utils/storage';
 import { getCurrentPageUrl, jsonToQueryString, reLaunchUrl } from '@/utils';
@@ -15,7 +21,7 @@ const instance = axios.create({
     process.env.REMAX_APP_PLATFORM === 'development'
       ? {
           'Content-Type': 'application/json;charset=UTF-8',
-          'ih-version': '3.17.77',
+          'ih-version': '3.17.77', //todo in-version是否有影响
         }
       : {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -82,6 +88,40 @@ instance.interceptors.response.use(
         });
         return Promise.reject(response);
       }
+      // 需要完善就诊人信息
+      if (data.code === 2001) {
+        showModal({
+          title: '提示',
+          content: '请完善就诊人相关信息',
+        }).then((res) => {
+          if (res.confirm) {
+            // TODO 根据实际情况来获取patientId
+            let patientId = storage.get('patientId');
+            if (typeof response.config?.data === 'string') {
+              console.log('response.config', response.config);
+              try {
+                const res = JSON.parse(response?.config?.data);
+                if (res.patientId) {
+                  patientId = res.patientId;
+                }
+                console.log('res', res);
+              } catch (err) {
+                console.log('err', err);
+              }
+            }
+            if (patientId) {
+              navigateTo({
+                url: `/pages2/usercenter/add-user/index?patientId=${patientId}`,
+              });
+            } else {
+              navigateTo({
+                url: `/pages2/usercenter/user-list/index`,
+              });
+            }
+          }
+        });
+        return Promise.reject(response);
+      }
       if (data.code === 999 || data.msg?.includes('token为空')) {
         // 需要授权
         storage.del('login_access_token');
@@ -144,5 +184,4 @@ instance.interceptors.response.use(
     return Promise.reject(e);
   },
 );
-
 export default instance;

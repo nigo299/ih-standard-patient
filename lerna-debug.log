@@ -1,0 +1,16 @@
+0 silly argv {
+0 silly argv   _: [ 'run' ],
+0 silly argv   scope: '40070',
+0 silly argv   lernaVersion: '6.5.1',
+0 silly argv   '$0': 'node_modules\\lerna\\dist\\cli.js',
+0 silly argv   script: 'web'
+0 silly argv }
+1 notice cli v6.5.1
+2 verbose rootPath D:\object\object\commonHis\monorepo
+3 error Error: Invalid package name "40009": name must be a string
+3 error     at invalidPackageName (D:\object\object\commonHis\monorepo\node_modules\lerna\node_modules\npm-package-arg\npa.js:89:15)
+3 error     at Result.setName (D:\object\object\commonHis\monorepo\node_modules\lerna\node_modules\npm-package-arg\npa.js:124:11)
+3 error     at new Result (D:\object\object\commonHis\monorepo\node_modules\lerna\node_modules\npm-package-arg\npa.js:114:23)
+3 error     at Function.resolve (D:\object\object\commonHis\monorepo\node_modules\lerna\node_modules\npm-package-arg\npa.js:61:15)
+3 error     at new Package (D:\object\object\commonHis\monorepo\node_modules\lerna\dist\cli.js:862:58)
+3 error     at D:\object\object\commonHis\monorepo\node_modules\lerna\dist\cli.js:1375:28

@@ -4,7 +4,12 @@ import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { CopyRight, Step, WhiteSpace } from '@/components';
-import { CHILDREN_DEPTLIST, IMAGE_DOMIN } from '@/config/constant';
+import {
+  CHILDREN_DEPTLIST,
+  IMAGE_DOMIN,
+  IS_DEPT,
+  PLATFORM,
+} from '@/config/constant';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
 import styles from './index.less';
@@ -37,23 +42,26 @@ export default () => {
           className={styles.banner}
           src={`${IMAGE_DOMIN}/register/banner.png`}
           onTap={() => {
-            showToast({
-              icon: 'none',
-              title: '功能暂未开放!',
-            });
-            // if (process.env.REMAX_APP_PLATFORM === 'app') {
-            //   navigateTo({
-            //     url: '/pages/home/index',
-            //   });
-            // } else if (PLATFORM === 'web') {
-            //   window.location.href =
-            //     'https://miying.qq.com/guide-h5/home?appid=wxab8f6386222bc56a';
-            // } else {
-            //   showToast({
-            //     icon: 'none',
-            //     title: '功能暂未开放!',
-            //   });
-            // }
+            if (!!IS_DEPT) {
+              if (process.env.REMAX_APP_PLATFORM === 'app') {
+                navigateTo({
+                  url: '/pages/home/index',
+                });
+              } else if (PLATFORM === 'web') {
+                window.location.href =
+                  'https://miying.qq.com/guide-h5/home?appid=wxab8f6386222bc56a';
+              } else {
+                showToast({
+                  icon: 'none',
+                  title: '功能暂未开放!',
+                });
+              }
+            } else {
+              showToast({
+                icon: 'none',
+                title: '功能暂未开放!',
+              });
+            }
           }}
         />
       </Space>

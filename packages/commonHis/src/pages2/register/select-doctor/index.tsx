@@ -4,8 +4,16 @@ import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace, PreviewImage } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
-import { DeptInfo, Calendar } from '../components';
-import { NoData, Shadow, Exceed, Space, showToast, Loading } from '@kqinfo/ui';
+import { DeptInfo, Calendar } from '@/pages2/register/components';
+import {
+  NoData,
+  Shadow,
+  Exceed,
+  Space,
+  showToast,
+  Loading,
+  Radio,
+} from '@kqinfo/ui';
 import dayjs from 'dayjs';
 import useGetParams from '@/utils/useGetParams';
 import { useEffectState } from 'parsec-hooks';
@@ -14,8 +22,9 @@ import useMicrositeApi from '@/apis/microsite';
 import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
-import classNames from 'classnames';
-
+import { useHisConfig } from '@/hooks';
+import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
+import ShowSource from '@/pages2/register/select-doctor/components/show-source';
 enum DoctorType {
   all = '仅展示有号',
   normal = '急诊号',
@@ -24,6 +33,9 @@ enum DoctorType {
 }
 
 export default () => {
+  const { config } = useHisConfig();
+  console.log(config);
+
   const { setDeptDetail } = registerState.useContainer();
   const { deptId, type = 'default' } = useGetParams<{
     deptId: string;
@@ -224,7 +236,7 @@ export default () => {
           type={type}
         />
         <WhiteSpace />
-        {/* <Space className={styles.radiosWrap} flexWrap="nowrap">
+        <Space className={styles.radiosWrap} flexWrap="nowrap">
           <Radio.Group
             value={doctorType}
             className={styles.radios}
@@ -248,7 +260,7 @@ export default () => {
               </Radio>
             ))}
           </Radio.Group>
-        </Space> */}
+        </Space>
         {scheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         )?.status === 1 ? (
@@ -264,6 +276,7 @@ export default () => {
               title = '',
               level = '',
               sourceType = '',
+              extFields = { doctorInitialRegFee: '0' },
             } = item;
             return (
               <Shadow key={index}>
@@ -287,7 +300,10 @@ export default () => {
                   }}
                 >
                   <PreviewImage
-                    url={image || `${IMAGE_DOMIN}/register/doctor.png`}
+                    url={
+                      (image !== 'null' && image) ||
+                      `${IMAGE_DOMIN}/register/doctor.png`
+                    }
                     className={styles.photo}
                   />
                   <View className={styles.doctorInfo}>
@@ -295,31 +311,22 @@ export default () => {
                       <View className={styles.left}>
                         <View className={styles.name}>{name}</View>
                       </View>
-                      <View
-                        className={classNames(styles.rests, {
-                          [styles.disable]:
-                            leftSource === 0 || item.status === 2,
-                        })}
-                      >
-                        <Space
-                          className={styles.restPrice}
-                          alignItems="center"
-                          justify="center"
-                        >
-                          <View className={styles.restPriceAfter} />¥
-                          {(registerFee / 100).toFixed(2)}
-                        </Space>
-                        <Space
-                          className={styles.restNum}
-                          alignItems="center"
-                          justify="center"
-                        >
-                          {item.status === 0 && '停诊'}
-                          {item.status === 1 &&
-                            `余号: ${leftSource > 0 ? leftSource : 0}`}
-                          {item.status === 2 && '满诊'}
-                        </Space>
-                      </View>
+                      {config.registerDoctorTagType ===
+                        'ORIGINAL_AND_CURRENT_PRICE' && (
+                        <ShowPrice
+                          leftSource={leftSource}
+                          extFields={extFields as any}
+                          registerFee={registerFee}
+                        />
+                      )}
+
+                      {config.registerDoctorTagType === 'SOURCE_AND_PRICE' && (
+                        <ShowSource
+                          leftSource={leftSource}
+                          item={item}
+                          registerFee={registerFee}
+                        />
+                      )}
                     </View>
                     <View className={styles.subtitle}>
                       {`${deptName} | ${title || ''}`}

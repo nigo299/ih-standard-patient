@@ -101,6 +101,7 @@ export interface PaymentOrderType {
   totalRealFee: number;
   userId: string;
 }
+
 export interface CreateoporderType extends API.ResponseDataType {
   data: PaymentOrderType;
 }
@@ -134,7 +135,7 @@ interface PaymentOrderListType extends API.ResponseDataType {
   data: PaymentpayOrderType[];
 }
 
-interface OrderDetailType {
+export interface OrderDetailType {
   agtOrdNum: string;
   bizName: string;
   bizType: string;

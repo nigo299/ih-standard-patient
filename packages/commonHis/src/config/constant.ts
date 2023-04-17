@@ -48,7 +48,6 @@ export const IS_ALIPAY = false;
 export const APPID = PLATFORM === 'ali' ? '' : '';
 // 是否开启意见反馈（小桥医助小程序）
 export const IS_FEEDBACL = PLATFORM === 'web';
-
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {
   longitude: 106.46,
@@ -57,21 +56,18 @@ export const ADDRESS = {
   address: '天陈路2号附3号世源大厦C栋',
 };
 export const WEB_ADDRESS = `https://mapapi.qq.com/web/mapComponents/locationMarker/v/index.html?marker=coord:${ADDRESS.latitude},${ADDRESS.longitude};title:${HOSPITAL_NAME};addr:${ADDRESS.address}&key=TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU&referer=myapp&ch=uri-api&ADTAG=uri-api.myapp`;
-
 export const IDTYPES = [
   { dictValue: '身份证', sortNo: 1, dictKey: '1' },
   { dictValue: '港澳证件', sortNo: 2, dictKey: '2' },
   { dictValue: '台湾证件', sortNo: 3, dictKey: '3' },
   { dictValue: '护照', sortNo: 4, dictKey: '4' },
 ];
-
 /**
  * 前后端业务类型映射关系
  * @type 1：预约挂号缴费 2：当天挂号缴费 3：住院押金缴费 4：门诊缴费 5 : 就诊卡充值 6 : 取号
  * 支付成功需要跳转的详情页
  * @detail
  */
-
 export const PAY_TYPE = {
   DBGH: {
     title: '当天挂号缴费',

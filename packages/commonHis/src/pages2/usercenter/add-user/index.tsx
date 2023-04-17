@@ -347,12 +347,10 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles?.childrenMaxAge,
-      bindcardProdiles?.isFace,
+      bindcardProdiles.childrenMaxAge,
+      bindcardProdiles.isFace,
       btnSubType,
-      faceInfo?.idNo,
-      faceInfo?.name,
-      faceInfo?.success,
+      faceInfo,
       form,
       getPatientList,
       handleAdd,
@@ -361,7 +359,7 @@ export default memo(() => {
       pageRoute,
       selectCard,
       setFaceInfo,
-      user?.phone,
+      user.phone,
     ],
   );
 

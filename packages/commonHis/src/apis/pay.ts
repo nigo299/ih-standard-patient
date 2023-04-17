@@ -51,6 +51,7 @@ export interface MedInsureWechatType extends API.ResponseDataType {
     userCardType: string;
     userCardNo: string;
   };
+  code: number;
 }
 
 export interface ThridPayType extends API.ResponseDataType {
@@ -104,6 +105,13 @@ export default {
         },
       );
     },
+  ),
+  门诊医保异常用户申请退费接口: createApiHooks(
+    (params: { orderId: string; payAuthNo: string }) =>
+      request.post<ThridPayType>(
+        '/api/intelligent/api/op/apply-refund-order',
+        params,
+      ),
   ),
   微信医保渠道免密授权URL获取: createApiHooks(
     (params: {

@@ -156,6 +156,18 @@ export default {
       // }
     );
   }),
+  用户手机被占用后继续绑定: createApiHooks(
+    (params: {
+      username?: string;
+      identityNumber?: string;
+      identityType?: string;
+      phone: string;
+      validateCode: string;
+    }) => {
+      return request.post<LoginType>(`/api/oauth/again-bind-user`, params);
+    },
+  ),
+
   修改用户手机号: createApiHooks(
     (params: { validateCode: string; phone: string }) => {
       return request.post<API.ResponseDataType>(
