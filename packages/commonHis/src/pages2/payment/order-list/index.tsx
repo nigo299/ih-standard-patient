@@ -4,10 +4,10 @@ import BatchPay from './components/batch-pay';
 import SinglePay from './components/single-pay';
 export default () => {
   const { config } = useHisConfig();
-  switch (config?.batchPayType) {
-    case 0:
-      return <SinglePay />;
-    case 1:
-      return <BatchPay />;
+  if (config.clinicPayBatchType === 'BATCH') {
+    return <BatchPay />;
+  }
+  if (config.clinicPayBatchType === 'SINGLE') {
+    return <SinglePay />;
   }
 };

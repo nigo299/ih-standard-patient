@@ -5,10 +5,12 @@ import SingleDetail from './components/single-detail';
 
 export default () => {
   const { config } = useHisConfig();
-  switch (config?.batchPayType) {
-    case 0:
-      return <SingleDetail />;
-    case 1:
-      return <BatchDetail />;
+
+  if (config.clinicPayBatchType === 'BATCH') {
+    return <BatchDetail />;
+  }
+
+  if (config.clinicPayBatchType === 'SINGLE') {
+    return <SingleDetail />;
   }
 };

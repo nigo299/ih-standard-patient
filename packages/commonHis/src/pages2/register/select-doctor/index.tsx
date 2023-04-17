@@ -22,10 +22,9 @@ import useMicrositeApi from '@/apis/microsite';
 import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
-import classNames from 'classnames';
 import { useHisConfig } from '@/hooks';
-import ShowPrice from './components/ShowPrice';
-import ShowSource from './components/ShowSource';
+import ShowPrice from './components/show-price';
+import ShowSource from './components/show-source';
 enum DoctorType {
   all = '仅展示有号',
   normal = '急诊号',
@@ -312,13 +311,16 @@ export default () => {
                       <View className={styles.left}>
                         <View className={styles.name}>{name}</View>
                       </View>
-                      {!!config?.showPrice ? (
+                      {config.registerDoctorTagType ===
+                        'ORIGINAL_AND_CURRENT_PRICE' && (
                         <ShowPrice
                           leftSource={leftSource}
-                          extFields={extFields}
+                          extFields={extFields as any}
                           registerFee={registerFee}
                         />
-                      ) : (
+                      )}
+
+                      {config.registerDoctorTagType === 'SOURCE_AND_PRICE' && (
                         <ShowSource
                           leftSource={leftSource}
                           item={item}

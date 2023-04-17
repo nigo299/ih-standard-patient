@@ -10,7 +10,6 @@ export const getHisConfig = () => {
       cacheHis = new His40007();
       return new His40007();
     case '40009':
-      console.log(new His40009());
       cacheHis = new His40009();
       return new His40009();
     default: {
