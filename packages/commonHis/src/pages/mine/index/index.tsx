@@ -24,8 +24,9 @@ import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
-
+import { useHisConfig } from '@/hooks';
 export default () => {
+  const { userCenterSpecialJudge } = useHisConfig();
   const { getPatientList, bindPatientList } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
@@ -367,7 +368,11 @@ export default () => {
       </View>
       <View className={styles.card2}>
         <PartTitle className={styles.partTitle}>我的订单</PartTitle>
-        <Space alignItems="center" className={styles.navs}>
+        <Space
+          justify="space-between"
+          alignItems="center"
+          className={styles.navs}
+        >
           {mineMainNavConfig.map((nav) => (
             <Space
               key={nav.title}
@@ -396,6 +401,10 @@ export default () => {
                   title: '功能暂未开放!',
                   icon: 'none',
                 });
+                return;
+              }
+              if (typeof userCenterSpecialJudge === 'function') {
+                userCenterSpecialJudge(list, selectPatient);
                 return;
               }
               navigateTo({ url: list.url });

@@ -13,7 +13,7 @@ export const IMAGE_DOMIN = `${
 }`;
 export const HOSPITAL_NAME = '重庆医科大学附属口腔医院';
 export const HOSPITAL_TEL = '023-88860111';
-export const HIS_ID = '40009';
+export const HIS_ID = '2219';
 export const REQUEST_QUERY = {
   hisId: HIS_ID,
   platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}01`,
