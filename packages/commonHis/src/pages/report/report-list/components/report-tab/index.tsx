@@ -4,6 +4,7 @@ import { Tab } from '@kqinfo/ui';
 type RestProps = {
   current?: string | number | undefined;
   tabIndex: string | number;
+  patCardNo?: string;
   onChange?: ((current: string | number) => void) | undefined;
   setTabIndex: (tabIndex: string | number) => void;
 };

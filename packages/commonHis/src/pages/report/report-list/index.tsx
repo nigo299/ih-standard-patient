@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { View, Image, redirectTo, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Exceed, Tab, Loading } from '@kqinfo/ui';
+import { Exceed, Loading } from '@kqinfo/ui';
 import { IMAGE_DOMIN, THEME_COLOR, THEME_COLOR2 } from '@/config/constant';
 import useGetParams from '@/utils/useGetParams';
 import useApi from '@/apis/report';
