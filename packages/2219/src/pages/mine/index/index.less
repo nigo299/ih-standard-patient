@@ -1,0 +1,354 @@
+@import '@/styles/index.less';
+.page {
+  // min-height: 100vh;
+  padding-bottom: 130px;
+  padding-bottom: constant(130 + safe-area-inset-bottom) px; /*兼容 IOS<11.2*/
+  padding-bottom: env(130 + s afe-area-inset-bottom) px; /*兼容 IOS>11.2*/
+  background: #f7f7f7;
+}
+.page2 {
+  padding-bottom: 360px;
+}
+.users {
+  position: relative;
+  height: 133px;
+  padding: 0 24px;
+  font-weight: 400;
+  color: #ffffff;
+  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  background: @theme-color;
+  // &:active {
+  //   opacity: 0.75;
+  // }
+}
+.userAvatar {
+  position: absolute;
+  bottom: -48px;
+  z-index: 1;
+  width: 124px;
+  height: 124px;
+}
+.userImg {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.userTag {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 54px;
+  height: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffa415;
+  border-radius: 14px 14px 14px 0;
+  background: #fff;
+  border: 1px solid #ffa414;
+}
+.userWrap {
+  margin-bottom: 20px;
+}
+.userMobile {
+  margin-left: 150px;
+  font-size: 32px;
+}
+.userText {
+  margin-right: 10px;
+  font-size: 22px;
+}
+.card1 {
+  position: relative;
+  padding: 90px 30px 0 30px;
+  background: #ffffff;
+}
+.addWrap {
+  margin: 40px 0 75px 0;
+  &:active {
+    opacity: 0.7;
+  }
+}
+.addBtn {
+  width: 96px;
+  height: 96px;
+  // margin-left: 11px;
+  margin-right: 23px;
+  padding-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 58px;
+  color: @assist-color;
+  background: #ffffff;
+  border: 1px dashed @assist-color;
+  border-radius: 50%;
+}
+.addText {
+  margin-bottom: 18px;
+  font-size: 26px;
+  font-weight: bold;
+  color: @assist-color;
+}
+.addText2 {
+  font-size: 22px;
+  color: #999;
+}
+.cardText {
+  width: 100px;
+  height: 44px;
+  background: rgba(30, 172, 202, 0);
+  border: 1px solid #cccccc;
+  border-radius: 22px;
+  font-size: 26px;
+  color: #666666;
+  &:active {
+    opacity: 0.7;
+  }
+}
+.cardText2 {
+  font-size: 30px;
+  margin-left: 6px;
+  margin-bottom: 5px;
+}
+.card2 {
+  height: 296px;
+  background: #ffffff;
+}
+.partTitle {
+  margin-left: 30px;
+}
+.navs {
+  margin: 40px 0;
+  padding: 0 30px;
+}
+.box {
+  width: 206px;
+  height: 190px;
+  background: #ffffff;
+  border: 1px solid #efefef;
+  border-radius: 20px;
+  &:active {
+    opacity: 0.7;
+  }
+}
+.boxImg {
+  width: 100px;
+  height: 100px;
+}
+.boxText {
+  margin-top: 22px;
+  color: #333;
+  font-size: 28px;
+}
+.lists {
+  margin-top: 20px;
+  padding: 0 30px;
+  background: white;
+}
+.list {
+  height: 100px;
+  font-size: 30px;
+  color: #333333;
+  &:active {
+    opacity: 0.75;
+  }
+}
+.list:nth-child(1) {
+  position: relative;
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    border-bottom: 2px solid #e2e2e2;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    content: '';
+  }
+}
+.listLeft {
+  width: 49px;
+  height: 49px;
+  margin-right: 17px;
+  font-size: 30px;
+  background: @theme-color;
+  border-radius: 50%;
+}
+.listLeftImg {
+  width: 50px;
+  height: 50px;
+}
+.rightIcon {
+  font-size: 36px;
+}
+.patients {
+  width: calc(100vw - 50px);
+  overflow: auto;
+  margin: 28px 0;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+.patientWrap {
+  width: 121px;
+  height: 153px;
+}
+.patientRound {
+  height: 124px;
+  width: 124px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.patient {
+  width: 100px;
+  height: 100px;
+  font-weight: bold;
+  text-align: center;
+  color: #333333;
+  font-size: 24px;
+  background: #f4f4f4;
+  border-radius: 50%;
+}
+.patientWrapActive {
+  transition: all 0.3s;
+  .patientRound {
+    background: rgba(#f6f6f6, 0.3);
+    border: 4px solid rgba(#f3bbba, 0.3);
+  }
+  .patient {
+    color: white;
+    background: @theme-color;
+  }
+}
+.defaultText {
+  font-size: 20px;
+  font-weight: 400;
+  color: @theme-color;
+}
+.addRound {
+  width: 96px;
+  height: 96px;
+  padding-bottom: 12px;
+  font-weight: bold;
+  font-size: 58px;
+  color: @theme-color;
+  background: #ffffff;
+  border: 1px dashed @theme-color;
+  border-radius: 50%;
+  &:active {
+    opacity: 0.7;
+  }
+}
+.addRoundText {
+  white-space: nowrap;
+  font-size: 20px;
+  color: #666;
+}
+.card3 {
+  width: 720px;
+  height: 226px;
+  margin-bottom: 45px;
+}
+.swiper {
+  width: 720px;
+  :global {
+    .swiper-slide-active {
+      width: calc(100% - 26px) !important;
+    }
+  }
+}
+.mediCard {
+  width: 654px;
+  height: 226px;
+  padding: 24px 21px 15px 33px;
+  background: rgba(@theme-color, 0.12);
+  border-radius: 20px;
+}
+.mediaTag {
+  width: 126px;
+  height: 32px;
+  font-size: 17px;
+  font-weight: 400;
+  color: @theme-color;
+  background: rgba(30, 172, 202, 0);
+  border: 1px solid rgba(@theme-color, 0.2);
+  border-radius: 16px;
+}
+.mediaWrap {
+  margin-top: 13px;
+}
+.mediItem {
+  font-weight: bold;
+  color: #333333;
+  font-size: 30px;
+}
+.mediaQrcode {
+  width: 122px;
+  height: 116px;
+  background: #ffffff;
+}
+.mediaQrcodeImg {
+  width: 108px !important;
+  height: 108px !important;
+}
+.mediaQrcode2 {
+  .mediaQrcode();
+  background: inherit;
+  .imediaQrcodeImg {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+.mediaQrcodeText {
+  margin-top: 8px;
+  font-size: 22px;
+  color: #666;
+}
+.healthCard {
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 654px;
+  height: 226px;
+  > div {
+    display: block;
+    margin: 0;
+    width: 654px;
+    height: 226px;
+  }
+  image {
+    width: 654px;
+    height: 226px;
+  }
+  overflow: hidden;
+}
+.healthPropmt {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  color: white;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.healthWrap {
+  padding: 61px 22px 13px 38px;
+}
+.logo {
+  width: 33px;
+  height: 33px;
+}
+.hospitalName {
+  margin-left: 10px;
+  font-size: 26px;
+  font-weight: bold;
+  color: @theme-color;
+}
