@@ -24,7 +24,7 @@ import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
-import userCenterSpecialJudge from '@/pages/mine/index/utils/userCenterSpecialJudge';
+import { handleMineNavTap } from '@/pages/mine/index/utils';
 export default () => {
   const { getPatientList, bindPatientList } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
@@ -402,11 +402,9 @@ export default () => {
                 });
                 return;
               }
-              if (typeof userCenterSpecialJudge === 'function') {
-                userCenterSpecialJudge(list, selectPatient);
-                return;
-              }
-              navigateTo({ url: list.url });
+              handleMineNavTap(list, {
+                patientInfo: selectPatient,
+              });
             }}
           >
             <Space alignItems="center">
