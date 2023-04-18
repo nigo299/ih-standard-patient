@@ -2,12 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { View, Image, redirectTo, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Exceed, Tab, Loading } from '@kqinfo/ui';
+import { Exceed, Loading } from '@kqinfo/ui';
 import { IMAGE_DOMIN, THEME_COLOR, THEME_COLOR2 } from '@/config/constant';
 import useGetParams from '@/utils/useGetParams';
 import useApi from '@/apis/report';
 import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
+import ReportTab from '@/pages/report/report-list/components/report-tab';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -91,15 +92,12 @@ export default () => {
           切换就诊人
         </View>
       </View>
-      <Tab
-        current={tabIndex}
-        type={'card'}
-        onChange={setTabIndex}
-        tabs={[
-          { content: '检验报告', index: 1 },
-          { content: '检查报告', index: 2 },
-        ]}
+      <ReportTab
+        tabIndex={tabIndex}
+        setTabIndex={setTabIndex}
+        patCardNo={patCardNo}
       />
+
       <View className={styles.body}>
         <View className={styles.card}>
           <View className={styles.lists}>
