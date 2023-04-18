@@ -120,7 +120,7 @@ export default () => {
           线上快速<Text style={{ color: '#F371A9' }}>预约挂号</Text>
         </View>
       ),
-      url: '/pages2/register/department/index?type=default',
+      url: '/pages2/register/department/index?type=reserve',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
       // open: process.env.REMAX_APP_PLATFORM === 'production' && true,
