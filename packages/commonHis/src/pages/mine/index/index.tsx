@@ -367,11 +367,7 @@ export default () => {
       </View>
       <View className={styles.card2}>
         <PartTitle className={styles.partTitle}>我的订单</PartTitle>
-        <Space
-          justify="space-between"
-          alignItems="center"
-          className={styles.navs}
-        >
+        <Space justify="flex-start" alignItems="center" className={styles.navs}>
           {mineMainNavConfig.map((nav) => (
             <Space
               key={nav.title}
