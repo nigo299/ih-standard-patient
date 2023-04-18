@@ -24,7 +24,7 @@ import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
-
+import { handleMineNavTap } from '@/pages/mine/index/utils';
 export default () => {
   const { getPatientList, bindPatientList } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
@@ -367,7 +367,11 @@ export default () => {
       </View>
       <View className={styles.card2}>
         <PartTitle className={styles.partTitle}>我的订单</PartTitle>
-        <Space alignItems="center" className={styles.navs}>
+        <Space
+          justify="space-between"
+          alignItems="center"
+          className={styles.navs}
+        >
           {mineMainNavConfig.map((nav) => (
             <Space
               key={nav.title}
@@ -398,7 +402,9 @@ export default () => {
                 });
                 return;
               }
-              navigateTo({ url: list.url });
+              handleMineNavTap(list, {
+                patientInfo: selectPatient,
+              });
             }}
           >
             <Space alignItems="center">

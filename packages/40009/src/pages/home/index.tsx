@@ -24,7 +24,7 @@ import { useDownCount, useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import setPageStyle from '@/utils/setPageStyle';
 import { useLockFn } from 'ahooks';
-import Banner from './banner';
+import Banner from '@/pages/home/banner';
 import showTabBar from '@/utils/showTabBar';
 import globalState from '@/stores/global';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
