@@ -8,6 +8,7 @@ import useGetParams from '@/utils/useGetParams';
 import useApi from '@/apis/report';
 import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
+import ReportTab from '@/pages/report/report-list/components/report-tab';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -91,15 +92,12 @@ export default () => {
           切换就诊人
         </View>
       </View>
-      <Tab
-        current={tabIndex}
-        type={'card'}
-        onChange={setTabIndex}
-        tabs={[
-          { content: '检验报告', index: 1 },
-          { content: '检查报告', index: 2 },
-        ]}
+      <ReportTab
+        tabIndex={tabIndex}
+        setTabIndex={setTabIndex}
+        patCardNo={patCardNo}
       />
+
       <View className={styles.body}>
         <View className={styles.card}>
           <View className={styles.lists}>

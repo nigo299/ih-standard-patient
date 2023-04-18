@@ -24,9 +24,8 @@ import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
-import { useHisConfig } from '@/hooks';
+import userCenterSpecialJudge from '@/pages/mine/index/utils/userCenterSpecialJudge';
 export default () => {
-  const { userCenterSpecialJudge } = useHisConfig();
   const { getPatientList, bindPatientList } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
