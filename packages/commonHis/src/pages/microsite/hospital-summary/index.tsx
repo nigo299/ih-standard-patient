@@ -65,7 +65,7 @@ export default () => {
         <Shadow card>
           <Space alignItems="center" className={styles.cardWrap}>
             <PreviewImage
-              url={`${IMAGE_DOMIN}/logo.jpg`}
+              url={`${IMAGE_DOMIN}/auth/logo.png`}
               className={styles.logo}
             />
             <Text className={styles.cardTitle}>
