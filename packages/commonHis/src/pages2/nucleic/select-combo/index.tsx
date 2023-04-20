@@ -238,7 +238,7 @@ export default () => {
       </Mask>
       <Space className={styles.top} alignItems="flex-start">
         <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/logo.jpg`} className={styles.logo} />
+          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
           <View>核酸检测</View>
         </Space>
       </Space>

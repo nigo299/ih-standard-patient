@@ -28,7 +28,7 @@ export default () => {
       homeUrl={'/pages/home/index'}
       agreementUrl={'/pages/auth/agreement/index'}
       aliScopes={['auth_user', 'hospital_order', 'mfrstre', 'nhsamp']}
-      logo={`${IMAGE_DOMIN}/logo.jpg`}
+      logo={`${IMAGE_DOMIN}/auth/logo.png`}
       onAuthorization={async ({ code, authCode, ...res }) => {
         const { data } = await useApi.通过code登录.request({
           code: code || authCode,
