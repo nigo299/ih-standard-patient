@@ -1,12 +1,42 @@
 @import '@/styles/index.less';
-
-.page {
-  padding: 20px 0;
+.header {
+  height: 120px;
+  background: @theme-color;
+  margin-top: -1px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  // margin-bottom: -74px;
 }
+
+.banner {
+  width: 710px;
+  height: 147px;
+  margin: 0 auto 20px;
+}
+
+.title {
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  width: 27px;
+  height: 32px;
+  margin-right: 6px;
+}
+
+.noData {
+  text-align: center;
+  color: #ccc;
+  padding-top: 60px;
+}
+
 .list {
   position: relative;
   height: 98px;
-  padding: 0 20px;
+  padding: 0 20px 0 55px;
   color: #999;
   font-size: 30px;
   font-weight: bold;
@@ -34,4 +64,23 @@
       background: @theme-color;
     }
   }
+}
+
+.menu {
+  height: 71vh;
+}
+
+.leftItem {
+  font-weight: bold;
+  color: #666666;
+}
+
+.rightItem {
+  min-height: 13.06667vw;
+  font-weight: bold;
+  color: #333333;
+}
+
+.leftActive {
+  color: @theme-color;
 }

@@ -1,72 +1,148 @@
-import React, { useCallback } from 'react';
-import { View, navigateTo } from 'remax/one';
+import React, { useMemo, useState } from 'react';
+import { View, navigateTo, Image, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Space, Icon, Search } from '@kqinfo/ui';
 import { WhiteSpace } from '@/components';
-import useApi from '@/apis/microsite';
-import registerState from '@/stores/register';
-import styles from './index.less';
+import { IMAGE_DOMIN } from '@/config/constant';
 
+import {
+  NoData,
+  Shadow,
+  Exceed,
+  DropDownMenuItem,
+  DropDownMenu,
+} from '@kqinfo/ui';
+
+import globalState from '@/stores/global';
+import useApi from '@/apis/register';
+import useGetParams from '@/utils/useGetParams';
+import styles from './index.less';
+import Search from '@/pages2/register/search-doctor/search';
+import regsiterState from '@/stores/register';
 export default () => {
-  const { setDeptDetail } = registerState.useContainer();
-  const {
-    data: {
-      data: { deptList },
-    },
-  } = useApi.获取科室列表({
+  // const { deptDetail } = registerState.useContainer();
+  const { setSearchQ } = globalState.useContainer();
+  const { deptId, scheduleDate, type } = useGetParams<{
+    deptId: string;
+    scheduleDate: string;
+    type: 'reserve' | 'day';
+  }>();
+  const { deptList, getDeptList } = regsiterState.useContainer();
+  const { data, request } = useApi.查询科室医生列表({
     initValue: {
       data: {
-        deptList: [],
+        recordList: [],
       },
     },
-    needInit: true,
-  });
-  const handleDeptClick = useCallback(
-    async (deptId: string) => {
-      const { data, code } = await useApi.获取科室详情.request({
-        deptId,
-      });
-      if (code === 0) {
-        setDeptDetail(data);
-        navigateTo({
-          url: '/pages2/register/dept-summary/index',
-        });
-      }
+    params: {
+      deptId,
     },
-    [setDeptDetail],
-  );
+    needInit: false,
+  });
+  const [selectDept, setSelectDept] = useState(deptList[0]?.no || '');
+  const options1 = useMemo(() => {
+    if (deptList?.length !== 0) {
+      return deptList.map((item) => {
+        return {
+          text: item.name,
+          value: item.no,
+        };
+      });
+    }
+  }, []);
   usePageEvent('onShow', () => {
+    request({ deptId: selectDept || '' }).then((data) => {
+      console.log(data);
+    });
+    if (deptList.length === 0) {
+      getDeptList(type);
+    } else {
+      console.log(deptList, '213');
+    }
     setNavigationBar({
-      title: '医生介绍',
+      title: '选择医生',
     });
   });
   return (
-    <View className={styles.page}>
-      <Search
-        onConfirm={(val) => {
-          navigateTo({
-            url: `/pages2/register/search-doctor/index?q=${val}`,
-          });
-        }}
-        placeholder={'输入医生姓名进行搜索'}
-        showBtn
-        style={{ flex: 0 }}
-      />
-      {deptList?.length >= 1 &&
-        deptList.map((dept) => (
-          <Space
-            justify="space-between"
-            alignItems="center"
-            key={dept.deptId}
-            className={styles.list}
-            onTap={() => handleDeptClick(dept.deptId)}
-          >
-            <View>{dept.deptName}</View>
-            <Icon name={'kq-right'} color={'#ccc'} size={20} />
-          </Space>
-        ))}
-      <WhiteSpace />
+    <View>
+      {/* <Step step={3} /> */}
+      <View className={styles.content}>
+        <View className={styles.header}>
+          <Search
+            onConfirm={(val) => {
+              if (val) {
+                setSearchQ(val);
+                navigateTo({
+                  url: `/pages2/register/search-doctor/index?type=${type}`,
+                });
+              }
+            }}
+            placeholder={'输入科室名称进行搜索'}
+            showBtn
+            style={{ flex: 0 }}
+            btnStyle={{ color: 'black' }}
+          />
+        </View>
+        <WhiteSpace />
+        <DropDownMenu
+          showModal={false}
+          style={{ backgroundColor: 'transparent', color: 'black' }}
+        >
+          <DropDownMenuItem
+            value={selectDept}
+            onChange={(v) => {
+              setSelectDept(v);
+              request({ deptId: v });
+              console.log(v);
+            }}
+            options={options1}
+          />
+        </DropDownMenu>
+        <WhiteSpace />
+        <View className={styles.docInfo}>
+          为您共查找到
+          <Text className={styles.docNum}>
+            {data?.data?.recordList?.length}
+          </Text>
+          位医生
+        </View>
+        <WhiteSpace />
+        {data?.data?.recordList?.length > 0 &&
+          data.data.recordList?.map((item) => (
+            <Shadow key={item.doctorId}>
+              <View
+                className={styles.item}
+                onTap={() => {
+                  navigateTo({
+                    url: `/pages2/register/doctor-summary/index?deptId=${item.deptId}&doctorId=${item.doctorId}&reg=true&scheduleDate=${scheduleDate}&type=${type}`,
+                  });
+                }}
+              >
+                <Image
+                  className={styles.avatar}
+                  src={
+                    item.image && item.image !== 'null'
+                      ? item.image
+                      : `${IMAGE_DOMIN}/register/doctor.png`
+                  }
+                />
+                <View className={styles.info}>
+                  <View className={styles.name}>{item.name}</View>
+                  <View className={styles.title}>{item.level}</View>
+                  <Exceed clamp={1} className={styles.intro}>
+                    {`简介: ${
+                      item?.specialty && item?.specialty !== 'null'
+                        ? item?.specialty
+                        : '暂无'
+                    }`}
+                  </Exceed>
+                </View>
+              </View>
+            </Shadow>
+          ))}
+
+        <NoData />
+      </View>
     </View>
   );
 };
