@@ -545,14 +545,10 @@ export default () => {
           ))}
         </Space>
         <Banner
-          onTap={() => {
-            handleNavClick({
-              title: '核酸检测',
-              subTitle: '',
-              image: '',
-              url: '/pages2/nucleic/select-combo/index?type=1',
-            });
-          }}
+          CommonImg={
+            configData?.find((item) => item.configType === 'BANNER')
+              ?.bannerInfo || []
+          }
         />
         <View className={styles.copyRight}>
           <CopyRight
