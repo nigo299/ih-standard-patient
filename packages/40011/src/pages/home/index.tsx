@@ -235,13 +235,13 @@ export default () => {
         image: `${IMAGE_DOMIN}/home/wgw.png`,
         patientId: true,
       },
-      {
-        title: '核酸检测',
-        subTitle: '快速核酸检测开单',
-        url: '/pages2/nucleic/select-combo/index?type=1',
-        image: `${IMAGE_DOMIN}/home/hsjc.png`,
-        titleColor: '#2EBDC7',
-      },
+      // {
+      //   title: '核酸检测',
+      //   subTitle: '快速核酸检测开单',
+      //   url: '/pages2/nucleic/select-combo/index?type=1',
+      //   image: `${IMAGE_DOMIN}/home/hsjc.png`,
+      //   titleColor: '#2EBDC7',
+      // },
       {
         title: '来院导航',
         subTitle: '导航来院不迷路',
@@ -256,14 +256,14 @@ export default () => {
         image: `${IMAGE_DOMIN}/home/yytj.png`,
         url: '',
       },
-      {
-        title: '满意度调查',
-        subTitle: '',
-        url: '',
-        image: `${IMAGE_DOMIN}/home/myddc.png`,
-        onClick: () =>
-          (window.location.href = 'https://wj.qq.com/s2/5190318/2a67/'),
-      },
+      // {
+      //   title: '满意度调查',
+      //   subTitle: '',
+      //   url: '',
+      //   image: `${IMAGE_DOMIN}/home/myddc.png`,
+      //   onClick: () =>
+      //     (window.location.href = 'https://wj.qq.com/s2/5190318/2a67/'),
+      // },
       {
         title: '',
         subTitle: '',
