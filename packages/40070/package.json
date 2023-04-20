@@ -6,7 +6,7 @@
   "main": "index.js",
   "keywords": [],
   "scripts": {
-    "web": "env-cmd -f .env remax build -w -t web",
+    "web": "remax build -w -t web",
     "app": "env-cmd -f .env.test.app  remax build -w -t web -m",
     "wechat": "env-cmd -f .env remax build -w -t wechat -m",
     "ali": "env-cmd -f .env remax build -w ali -m",
