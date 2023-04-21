@@ -90,6 +90,9 @@ export default () => {
       noticeMethod: 'WBK',
     },
   });
+  const {
+    data: { data: configData },
+  } = useApi.获取首页配置信息({});
   const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const homeMainNavConfig = [
     {
@@ -545,14 +548,10 @@ export default () => {
           ))}
         </Space>
         <Banner
-          onTap={() => {
-            handleNavClick({
-              title: '核酸检测',
-              subTitle: '',
-              image: '',
-              url: '/pages2/nucleic/select-combo/index?type=1',
-            });
-          }}
+          CommonImg={
+            configData?.find((item) => item.configType === 'BANNER')
+              ?.bannerInfo || []
+          }
         />
         <View className={styles.copyRight}>
           <CopyRight
@@ -565,6 +564,7 @@ export default () => {
       <RegisterNotice
         show={show}
         close={() => setShow(false)}
+        content={infoData2?.[0]?.noticeInfo || ''}
         confirm={() => {
           if (
             registerMode.includes('reserve') &&
