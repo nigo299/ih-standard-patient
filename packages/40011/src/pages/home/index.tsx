@@ -384,11 +384,11 @@ export default () => {
         className={styles.bannerImg}
         isPreviewImage
       >
-        <Image
+        {/* <Image
           src={`${IMAGE_DOMIN}/auth/logo.png`}
           mode="aspectFill"
           className={styles.logo}
-        />
+        /> */}
         <Space
           className={styles.microsite}
           justify="center"
