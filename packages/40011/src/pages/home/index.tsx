@@ -385,7 +385,7 @@ export default () => {
         isPreviewImage
       >
         <Image
-          src={`${IMAGE_DOMIN}/home/logo.png`}
+          src={`${IMAGE_DOMIN}/auth/logo.png`}
           mode="aspectFill"
           className={styles.logo}
         />
