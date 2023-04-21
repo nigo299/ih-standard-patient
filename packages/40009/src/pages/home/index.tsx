@@ -90,6 +90,9 @@ export default () => {
       noticeMethod: 'WBK',
     },
   });
+  const {
+    data: { data: configData },
+  } = useApi.获取首页配置信息({});
   const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const homeMainNavConfig = [
     {
@@ -561,6 +564,7 @@ export default () => {
       <RegisterNotice
         show={show}
         close={() => setShow(false)}
+        content={infoData2?.[0]?.noticeInfo || ''}
         confirm={() => {
           if (
             registerMode.includes('reserve') &&
