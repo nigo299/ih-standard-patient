@@ -118,7 +118,7 @@ export default () => {
     },
     {
       label: '项目类别',
-      text: '检验项目',
+      text: orderDetail?.chargeType,
     },
   ];
 
@@ -179,7 +179,7 @@ export default () => {
         );
       }
     });
-  }, [getWaitList, orderDetail, orderDetail?.hisSerilNo]);
+  }, [getWaitList, orderDetail]);
 
   useEffect(() => {
     if (leftNum && leftNum !== 0) {
@@ -286,20 +286,7 @@ export default () => {
         },
       });
     }
-  }, [
-    leftNum,
-    list,
-    orderDetail?.hisOrderNo,
-    orderDetail?.patCardNo,
-    orderDetail?.patientAge,
-    orderDetail?.patientInfo?.encryptIdNo,
-    orderDetail?.patientInfo?.patientAge,
-    orderDetail?.patientInfo?.patientName,
-    orderDetail?.patientInfo?.patientSex,
-    orderDetail?.patientName,
-    orderDetail?.patientSex,
-    setOrderInfo,
-  ]);
+  }, [leftNum, list, orderDetail, setOrderInfo]);
 
   usePageEvent('onShow', () => {
     setNavigationBar({

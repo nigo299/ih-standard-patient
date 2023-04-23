@@ -48,6 +48,7 @@ export interface WaitDetialType {
   age: string;
   gender: 'M' | 'F';
   hisOrderNo: string;
+  chargeType: string;
   itemList: Array<{
     itemCatName: string;
     itemName: string;
@@ -146,6 +147,7 @@ export interface OrderDetailType {
   hisOrderTime: string;
   hisSerialNo: string;
   patientSex: 'M' | 'F';
+  chargeType: string;
   patientAge: number;
   itemList: Array<{
     itemCatName: string;

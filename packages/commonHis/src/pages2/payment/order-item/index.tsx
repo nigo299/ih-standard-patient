@@ -82,7 +82,7 @@ export default () => {
     },
     {
       label: '项目类别',
-      text: waitOpDetail?.payName || '检查项目',
+      text: waitOpDetail?.chargeType,
     },
   ];
   usePageEvent('onShow', () => {

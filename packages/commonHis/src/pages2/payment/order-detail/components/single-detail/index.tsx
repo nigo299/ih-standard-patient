@@ -109,7 +109,7 @@ export default () => {
     },
     {
       label: '项目类别',
-      text: '检验项目',
+      text: orderDetail?.chargeType,
     },
   ];
 
