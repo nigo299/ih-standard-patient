@@ -9,6 +9,7 @@ import {
   showToast,
   Icon,
   RichText,
+  NoticeBar,
   // navigateToMiniProgram,
   // PartTitle,
 } from '@kqinfo/ui';
@@ -93,6 +94,14 @@ export default () => {
   } = useApi.注意事项内容查询({
     params: {
       noticeType: 'GHXZ',
+      noticeMethod: 'WBK',
+    },
+  });
+  const {
+    data: { data: homeNotice },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'SYGG',
       noticeMethod: 'WBK',
     },
   });
@@ -439,6 +448,13 @@ export default () => {
           />
           <Text>搜索医生</Text>
         </View>
+        {!!homeNotice?.length && (
+          <NoticeBar title="温馨提示" className={styles.notice}>
+            {homeNotice.map((i) => (
+              <RichText nodes={i.noticeInfo} key={i.id} />
+            ))}
+          </NoticeBar>
+        )}
         <Space justify="space-between" className={styles.nav}>
           {homeMainNavConfig.map((nav) => (
             <Space
