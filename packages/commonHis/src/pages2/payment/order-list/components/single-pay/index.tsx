@@ -391,7 +391,7 @@ export default () => {
                   </View>
                   <View className={styles.td}>
                     <FormItem
-                      label="检查项目"
+                      label="项目名称"
                       labelWidth={'4em'}
                       className={styles.label}
                       onTap={(event) =>
