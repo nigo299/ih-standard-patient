@@ -36,6 +36,10 @@ export default () => {
     scheduleDate: string;
     type: 'reserve' | 'day' | 'default';
   }>();
+
+  /** 当前是否是门诊医生，门诊缴费医生不能关注 */
+  const isClinicDoctor = sourceType === '1';
+
   const {
     request: doctorDetailRequest,
     data: { data: doctorDetail },
@@ -57,7 +61,7 @@ export default () => {
       doctorId,
       deptId,
     },
-    needInit: !!doctorId && !!deptId,
+    needInit: !!doctorId && !!deptId && !isClinicDoctor,
   });
   const {
     request: doctorScheduleRequest,
@@ -315,6 +319,7 @@ export default () => {
               url: `/pages2/register/doctor-summary/index?deptId=${deptId}&doctorId=${doctorId}`,
             })
           }
+          showAttention={!isClinicDoctor}
           onAttentionTap={handleAttentionClick}
           isAttention={!!favoriteStatus}
           onShareTap={() => ({

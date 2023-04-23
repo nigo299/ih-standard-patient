@@ -9,6 +9,7 @@ import { PreviewImage } from '@/components';
 export interface Props {
   isAttention?: boolean;
   onAttentionTap?: () => void;
+  showAttention?: boolean;
   onShareTap?: () => { title: string; path: string };
   onDetailTap: () => void;
   tag?: string;
@@ -23,6 +24,7 @@ export default ({
   doctorImg,
   doctorName,
   doctorTitle,
+  showAttention = true,
   tag,
   isAttention,
   hospitalName,
@@ -57,25 +59,28 @@ export default ({
                 justify="space-between"
                 alignItems="center"
               >
-                <Space
-                  vertical
-                  alignItems="center"
-                  onTap={(e) => {
-                    e.stopPropagation();
-                    onAttentionTap && onAttentionTap();
-                  }}
-                  className={classNames(styles.share, {
-                    [styles.attention]: isAttention,
-                  })}
-                >
-                  <Image
-                    src={`${IMAGE_DOMIN}/register/${
-                      isAttention ? 'ygz' : 'wgz'
-                    }.png`}
-                    className={styles.rightImg}
-                  />
-                  <View>{isAttention ? '已关注' : '关注'}</View>
-                </Space>
+                {showAttention && (
+                  <Space
+                    vertical
+                    alignItems="center"
+                    onTap={(e) => {
+                      e.stopPropagation();
+                      onAttentionTap && onAttentionTap();
+                    }}
+                    className={classNames(styles.share, {
+                      [styles.attention]: isAttention,
+                    })}
+                  >
+                    <Image
+                      src={`${IMAGE_DOMIN}/register/${
+                        isAttention ? 'ygz' : 'wgz'
+                      }.png`}
+                      className={styles.rightImg}
+                    />
+                    <View>{isAttention ? '已关注' : '关注'}</View>
+                  </Space>
+                )}
+
                 <Platform platform={['wechat']}>
                   <Button
                     wechat-openType="share"
