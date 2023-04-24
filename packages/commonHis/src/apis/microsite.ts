@@ -156,6 +156,7 @@ export default {
         data: {
           recordList: {
             id: number;
+            typeName: string;
           }[];
         };
       }>(`/api/kaiqiao/his/article/type/page`, { params });

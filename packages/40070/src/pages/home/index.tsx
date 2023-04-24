@@ -36,10 +36,11 @@ import { useLockFn } from 'ahooks';
 import Banner from '@/pages/home/banner';
 import showTabBar from '@/utils/showTabBar';
 import styles from './index.less';
-// import useApi from '@/apis/microsite';
+import useMicrositeApi from '@/apis/microsite';
 import useApi from '@/apis/common';
 import Dialog from 'commonHis/src/components/dialog';
 import storage from '@/utils/storage';
+
 // import dayjs from 'dayjs';
 
 export interface NavType {
@@ -238,8 +239,28 @@ export default () => {
         subTitle: '惠民公卫项目',
         url: '',
         image: `${IMAGE_DOMIN}/home/hmgwxm.png`,
-        onClick: () => {
-          console.log('惠民公卫');
+        onClick: async () => {
+          const res = await useMicrositeApi.分页查询文章类型.request();
+          if (res.code === 0 && Array.isArray(res.data?.recordList)) {
+            const findType = res.data?.recordList.find(
+              (i) => i.typeName === '惠民公卫项目',
+            );
+            if (findType) {
+              const ariticleListData =
+                await useMicrositeApi.获取文章列表.request({
+                  pageNum: 1,
+                  numPerPage: 3,
+                  type: findType.id,
+                  state: 'ONLINE',
+                });
+              const artitle = ariticleListData?.data?.recordList || [];
+              if (artitle[0]) {
+                navigateTo({
+                  url: `/pages/microsite/article-detail/index?id=${artitle[0]?.id}`,
+                });
+              }
+            }
+          }
         },
       },
     ];
