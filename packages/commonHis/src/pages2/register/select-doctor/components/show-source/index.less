@@ -1,13 +1,82 @@
 @import '@/styles/index.less';
+.content {
+  padding: 24px 20px;
+}
+.radiosWrap {
+  overflow: hidden;
+}
+.radios {
+  flex-wrap: nowrap !important;
+  overflow: auto;
+}
+.radios::-webkit-scrollbar {
+  display: none;
+}
+.radio {
+  display: inline-block;
+  line-height: 85px;
+}
+.doctor {
+  display: flex;
+  width: 710px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+.photo {
+  width: 118px;
+  height: 118px;
+  margin-right: 26px;
+  border-radius: 50%;
+  background-size: cover !important;
+  background-position: initial !important;
+}
+.doctorInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.doctorText {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #999999;
+  margin-top: 10px;
+}
+.name {
+  font-size: 34px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #333333;
+  display: flex;
+  align-items: center;
+}
+.price {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  margin-left: 16px;
+  color: #d95e38;
+}
+.subtitle {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  margin-top: 16px;
+  color: #333333;
+}
+.left {
+  padding-top: 18px;
+  flex: 1;
+}
 .rests {
   width: 280px;
   border: 1px solid @theme-color;
   border-radius: 10px;
   height: 72px;
   display: flex;
-}
-.disable {
-  border: 1px solid #b4b4b4;
 }
 .restPrice {
   width: 124px;
@@ -36,4 +105,11 @@
   background-color: @theme-color;
   font-weight: bold;
   color: #ffffff;
+}
+.disable {
+  border: 1px solid #b4b4b4;
+}
+.disable > .restNum {
+  color: #fff;
+  background: #b4b4b4;
 }

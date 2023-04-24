@@ -5,8 +5,9 @@ export default class His40009 extends HisBase {
     super('40009');
     this.config = Object.assign(this.config, {
       showPrice: true,
-      registerDoctorTagType: 'SOURCE_AND_PRICE',
+      registerDoctorTagType: 'ORIGINAL_AND_CURRENT_PRICE',
       clinicPayBatchType: 'SINGLE',
+      showMedicalModal: true,
     });
   }
 }

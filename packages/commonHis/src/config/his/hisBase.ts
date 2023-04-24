@@ -8,6 +8,7 @@ export default class BaseHis {
       defaultAddress: '重庆市-市辖区-沙坪坝区',
       registerDoctorTagType: 'SOURCE_AND_PRICE',
       clinicPayBatchType: 'BATCH',
+      showMedicalModal: false,
     };
   }
 }
@@ -18,4 +19,6 @@ type StaticConfig = {
   registerDoctorTagType: 'SOURCE_AND_PRICE' | 'ORIGINAL_AND_CURRENT_PRICE';
   /** 控制门诊缴费是否支持合单支付: BATCH: 合单支付， SINGLE: 单笔支付，（order-list、order-detail对应不同的ui与逻辑） */
   clinicPayBatchType: 'SINGLE' | 'BATCH';
+  /** 支付界面是否显示医保支付弹窗 */
+  showMedicalModal: boolean;
 };
