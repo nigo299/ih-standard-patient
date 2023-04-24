@@ -10,7 +10,7 @@ export const IMAGE_DOMIN = `${
   // ? process.env.REMAX_APP_IMAGE_DOMIN
   // : 'https://tihs.cqkqinfo.com/patients/p40070-his/images'
 }`;
-export const HOSPITAL_NAME = '重庆市渝中区妇幼';
+export const HOSPITAL_NAME = '重庆市渝中区妇幼保健院';
 export const HOSPITAL_TEL = '023-43780184';
 export const HIS_ID = '40070';
 export const REQUEST_QUERY = {
