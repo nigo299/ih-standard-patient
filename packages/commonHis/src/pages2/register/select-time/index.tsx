@@ -3,7 +3,7 @@ import { View, navigateTo, Image, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, STEP_ITEMS } from '@/config/constant';
 import { DoctorInfo, Calendar } from '@/pages2/register/components';
 import { Button, Space, showToast, Loading } from '@kqinfo/ui';
 import useGetParams from '@/utils/useGetParams';
@@ -296,7 +296,7 @@ export default () => {
   });
   return (
     <View>
-      <Step step={4} />
+      <Step step={STEP_ITEMS.findIndex((i) => i === '选择时间') + 1} />
       {(loading || loading2) && <Loading type="top" />}
       <View className={styles.content}>
         <DoctorInfo

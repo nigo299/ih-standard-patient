@@ -7,6 +7,7 @@ import { CopyRight, Step, WhiteSpace } from '@/components';
 import {
   CHILDREN_DEPTLIST,
   IMAGE_DOMIN,
+  STEP_ITEMS,
   IS_DEPT,
   PLATFORM,
 } from '@/config/constant';
@@ -35,7 +36,7 @@ export default () => {
   });
   return (
     <View>
-      <Step step={2} />
+      <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
       <View className={styles.header} />
       <Space justify="center">
         <Image

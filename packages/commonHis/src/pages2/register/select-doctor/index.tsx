@@ -3,7 +3,7 @@ import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace, PreviewImage } from '@/components';
-import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
+import { IMAGE_DOMIN, HOSPITAL_NAME, STEP_ITEMS } from '@/config/constant';
 import { DeptInfo, Calendar } from '@/pages2/register/components';
 import {
   NoData,
@@ -201,7 +201,7 @@ export default () => {
   });
   return (
     <View>
-      <Step step={3} />
+      <Step step={STEP_ITEMS.findIndex((i) => i === '选择医生') + 1} />
       {(loading || loading2) && <Loading type="top" />}
       <View className={styles.content}>
         <DeptInfo
