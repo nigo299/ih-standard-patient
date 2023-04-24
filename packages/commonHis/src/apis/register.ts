@@ -571,7 +571,7 @@ export default {
       orderId: string;
       cancelReason: string;
       payAuthNo?: string;
-      extFields: any;
+      extFields?: any;
     }) => {
       return request.post<API.ResponseDataType>(
         `/api/intelligent/api/register/cancel-order`,
