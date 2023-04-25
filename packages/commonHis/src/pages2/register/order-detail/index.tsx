@@ -310,6 +310,7 @@ export default () => {
         orderId,
         cancelReason: cancelVal || cancelValStorage || '',
         payAuthNo: payAuthNo || '',
+        extFields: orderDetail?.extFields || '',
       });
       if (code === 0) {
         setLoading(false);

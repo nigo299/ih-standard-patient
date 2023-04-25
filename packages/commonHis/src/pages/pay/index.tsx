@@ -9,7 +9,7 @@ import useRegisterApi from '@/apis/register';
 import setNavigationBar from '@/utils/setNavigationBar';
 import useLoginApi from '@/apis/login';
 import usePatientApi from '@/apis/usercenter';
-import { Button, Shadow, Space, showToast } from '@kqinfo/ui';
+import { Button, Shadow, Space, showModal, showToast } from '@kqinfo/ui';
 import payState, { OrderInfoType } from '@/stores/pay';
 // import globalState from '@/stores/global';
 import { PAY_TYPE, HOSPITAL_NAME, PLATFORM, APPID } from '@/config/constant';
@@ -21,12 +21,14 @@ import storage from '@/utils/storage';
 import { useLockFn } from 'ahooks';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
+import { useHisConfig } from '@/hooks';
 
 export default () => {
   const { mode = '', hidden = '0' } = useGetParams<{
     mode: string;
     hidden: string;
   }>();
+  const { config } = useHisConfig();
   const {
     orderInfo: {
       deptName,
@@ -171,6 +173,7 @@ export default () => {
           reLaunch({
             url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
           });
+          return;
         });
       } else if (result.resultCode === '6001') {
         // 取消支付
@@ -311,6 +314,15 @@ export default () => {
         title: '支付数据丢失, 请重新下单!',
       }).then(() => {
         reLaunchUrl('/pages/home/index');
+      });
+      return;
+    }
+    if (mode === 'medical' && config.showMedicalModal) {
+      showModal({
+        title: '提示',
+        content: '医保移动支付仅支持患者本人电子医保凭证使用!',
+        showCancel: false,
+        confirmText: '我知道了',
       });
     }
     if (bizType === 'YYGH' || bizType === 'DBGH') {

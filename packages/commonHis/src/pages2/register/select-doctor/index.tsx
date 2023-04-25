@@ -2,18 +2,10 @@ import React, { useState, useMemo } from 'react';
 import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Step, WhiteSpace, PreviewImage } from '@/components';
+import { Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME, STEP_ITEMS } from '@/config/constant';
 import { DeptInfo, Calendar } from '@/pages2/register/components';
-import {
-  NoData,
-  Shadow,
-  Exceed,
-  Space,
-  showToast,
-  Loading,
-  Radio,
-} from '@kqinfo/ui';
+import { NoData, Space, Loading, Radio } from '@kqinfo/ui';
 import dayjs from 'dayjs';
 import useGetParams from '@/utils/useGetParams';
 import { useEffectState } from 'parsec-hooks';
@@ -266,82 +258,22 @@ export default () => {
         )?.status === 1 ? (
           newDoctorList?.length >= 1 &&
           newDoctorList?.map((item, index) => {
-            const {
-              leftSource,
-              image,
-              name,
-              deptName,
-              registerFee,
-              doctorSkill,
-              title = '',
-              level = '',
-              sourceType = '',
-              extFields = { doctorInitialRegFee: '0' },
-            } = item;
-            return (
-              <Shadow key={index}>
-                <View
-                  className={styles.doctor}
-                  onTap={() => {
-                    if (item.leftSource > 0) {
-                      navigateTo({
-                        url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${
-                          item.doctorId
-                        }&scheduleDate=${date.format(
-                          'YYYY-MM-DD',
-                        )}&doctorName=${name}&sourceType=${sourceType}&type=${type}&level=${level}&title=${title}`,
-                      });
-                    } else {
-                      showToast({
-                        icon: 'none',
-                        title: '当前医生暂无号源!',
-                      });
-                    }
-                  }}
-                >
-                  <PreviewImage
-                    url={
-                      (image !== 'null' && image) ||
-                      `${IMAGE_DOMIN}/register/doctor.png`
-                    }
-                    className={styles.photo}
-                  />
-                  <View className={styles.doctorInfo}>
-                    <View style={{ display: 'flex' }}>
-                      <View className={styles.left}>
-                        <View className={styles.name}>{name}</View>
-                      </View>
-                      {config.registerDoctorTagType ===
-                        'ORIGINAL_AND_CURRENT_PRICE' && (
-                        <ShowPrice
-                          leftSource={leftSource}
-                          extFields={extFields as any}
-                          registerFee={registerFee}
-                        />
-                      )}
-
-                      {config.registerDoctorTagType === 'SOURCE_AND_PRICE' && (
-                        <ShowSource
-                          leftSource={leftSource}
-                          item={item}
-                          registerFee={registerFee}
-                        />
-                      )}
-                    </View>
-                    <View className={styles.subtitle}>
-                      {`${deptName} | ${title || ''}`}
-                    </View>
-                    <Exceed clamp={1} className={styles.doctorText}>
-                      {`擅长: ${
-                        doctorSkill && doctorSkill !== 'null'
-                          ? doctorSkill
-                          : '暂无'
-                      }`}
-                    </Exceed>
-                  </View>
-                </View>
-              </Shadow>
-            );
+            if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
+              return (
+                <ShowPrice
+                  data={{ item, date, deptId, type }}
+                  key={item.doctorId}
+                />
+              );
+            }
+            if (config.registerDoctorTagType === 'SOURCE_AND_PRICE') {
+              return (
+                <ShowSource
+                  data={{ item, date, deptId, type }}
+                  key={item.doctorId}
+                />
+              );
+            }
           })
         ) : (
           <NoData />
