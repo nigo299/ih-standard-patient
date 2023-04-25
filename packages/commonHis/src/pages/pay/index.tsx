@@ -140,6 +140,7 @@ export default () => {
           reLaunch({
             url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
           });
+          return;
         });
       } else {
         // 支付失败
@@ -173,6 +174,7 @@ export default () => {
           reLaunch({
             url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
           });
+          return;
         });
       } else if (result.resultCode === '6001') {
         // 取消支付
@@ -313,6 +315,7 @@ export default () => {
         title: '支付数据丢失, 请重新下单!',
       }).then(() => {
         reLaunchUrl('/pages/home/index');
+        return;
       });
     }
     if (mode === 'medical' && config.showMedicalModal) {
