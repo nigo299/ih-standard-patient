@@ -310,7 +310,7 @@ export default () => {
         orderId,
         cancelReason: cancelVal || cancelValStorage || '',
         payAuthNo: payAuthNo || '',
-        extFields: JSON.stringify(orderDetail?.extFields) || '',
+        extFields: orderDetail?.extFields || '',
       });
       if (code === 0) {
         setLoading(false);
@@ -638,7 +638,7 @@ export default () => {
             继续支付
           </Button>
         )}
-        {orderDetail?.canCancelFlag === 1 && (
+        {orderDetail?.canCancelFlag === 0 && (
           <Button
             type={'primary'}
             ghost
