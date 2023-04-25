@@ -83,7 +83,7 @@ export default () => {
             if (patientFullIdNo !== data.userCardNo) {
               showModal({
                 title: '提示',
-                content: `非本人暂不支持医保在线支付, 请重新选择就诊人`,
+                content: `${patientFullIdNo}patientFullIdno,${data?.userCardNo}userCardNo`,
                 showCancel: false,
               }).then(({ confirm }) => {
                 if (confirm) {
