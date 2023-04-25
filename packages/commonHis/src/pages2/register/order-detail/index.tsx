@@ -306,11 +306,12 @@ export default () => {
       setCancelVal('');
       setLoading(true);
       setShowInfo(false);
+      const extFields = JSON.parse(orderDetail?.extFields || '{}');
       const { code, msg } = await useApi.取消锁号.request({
         orderId,
         cancelReason: cancelVal || cancelValStorage || '',
         payAuthNo: payAuthNo || '',
-        extFields: orderDetail?.extFields || '',
+        extFields,
       });
       if (code === 0) {
         setLoading(false);
