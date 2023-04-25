@@ -9,10 +9,9 @@ import useRegisterApi from '@/apis/register';
 import setNavigationBar from '@/utils/setNavigationBar';
 import useLoginApi from '@/apis/login';
 import usePatientApi from '@/apis/usercenter';
-import { Button, Shadow, Space, showToast } from '@kqinfo/ui';
+import { Button, Shadow, Space, showModal, showToast } from '@kqinfo/ui';
 import payState, { OrderInfoType } from '@/stores/pay';
 // import globalState from '@/stores/global';
-import showModal from '@/utils/showModal';
 import { PAY_TYPE, HOSPITAL_NAME, PLATFORM, APPID } from '@/config/constant';
 import { ListItem } from '@/components';
 import classNames from 'classnames';
@@ -304,12 +303,6 @@ export default () => {
     setNavigationBar({
       title: '收银台',
     });
-    if (mode === 'medical' && config.showMedicalModal) {
-      showModal({
-        title: '提示',
-        content: '医保移动支付仅支持患者本人电子医保凭证使用!',
-      });
-    }
     const medinsurePayOrderInfo = storage.get('medinsurePayOrderInfo');
     if (medinsurePayOrderInfo && !payOrderId) {
       setOrderInfo(JSON.parse(medinsurePayOrderInfo) as OrderInfoType);
@@ -320,6 +313,14 @@ export default () => {
         title: '支付数据丢失, 请重新下单!',
       }).then(() => {
         reLaunchUrl('/pages/home/index');
+      });
+    }
+    if (mode === 'medical' && config.showMedicalModal) {
+      showModal({
+        title: '提示',
+        content: '医保移动支付仅支持患者本人电子医保凭证使用!',
+        showCancel: false,
+        confirmText: '我知道了',
       });
     }
     if (bizType === 'YYGH' || bizType === 'DBGH') {

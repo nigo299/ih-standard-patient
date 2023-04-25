@@ -260,12 +260,18 @@ export default () => {
           newDoctorList?.map((item, index) => {
             if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
               return (
-                <ShowPrice data={{ item, date, deptId, type }} key={index} />
+                <ShowPrice
+                  data={{ item, date, deptId, type }}
+                  key={item.doctorId}
+                />
               );
             }
             if (config.registerDoctorTagType === 'SOURCE_AND_PRICE') {
               return (
-                <ShowSource data={{ item, date, deptId, type }} key={index} />
+                <ShowSource
+                  data={{ item, date, deptId, type }}
+                  key={item.doctorId}
+                />
               );
             }
           })
