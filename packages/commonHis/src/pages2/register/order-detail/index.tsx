@@ -638,7 +638,7 @@ export default () => {
             继续支付
           </Button>
         )}
-        {orderDetail?.canCancelFlag === 0 && (
+        {orderDetail?.canCancelFlag === 1 && (
           <Button
             type={'primary'}
             ghost
