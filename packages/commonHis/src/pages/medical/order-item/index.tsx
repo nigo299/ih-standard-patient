@@ -80,6 +80,8 @@ export default () => {
           });
           setSloading(false);
           if (code === 0 && data?.payAuthNo) {
+            console.log(patientFullIdNo, 'patientFullIdNo');
+            console.log(data.userCardNo, 'data.userCardNo');
             if (patientFullIdNo !== data.userCardNo) {
               showModal({
                 title: '提示',
