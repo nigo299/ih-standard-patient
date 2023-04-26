@@ -31,7 +31,7 @@ export default ({
             'linear-gradient(90deg, rgba(255,151,67,0.2), rgba(255,151,67,0.01))'
           }
         >
-          {config.defaultScrollBarText}
+          {config.registerNoticeText}
         </NoticeBar>
         <View className={styles.filter}>
           <View>
