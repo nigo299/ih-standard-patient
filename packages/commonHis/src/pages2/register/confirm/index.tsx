@@ -15,6 +15,7 @@ import {
   Tip,
   NucleicQrcode,
   AntForest,
+  RegisterNotice,
 } from '@/components';
 import {
   Shadow,
@@ -42,6 +43,7 @@ import payState, { OrderInfoType } from '@/stores/pay';
 import patientState from '@/stores/patient';
 import styles from './index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
+import useCommonApi from 'commonHis/src/apis/common';
 
 export default () => {
   const {
@@ -69,10 +71,20 @@ export default () => {
     visitEndTime: string;
     visitPeriod: string;
   }>();
+  const [visible, setVisible] = useEffectState(false);
   const { getPatientList } = patientState.useContainer();
   const [show, setShow] = useState(false);
   const [payFlag, setPayFlag] = useState(false);
   const { data: hospitialConfigData } = usePatientApi.获取医院挷卡配置信息({
+    needInit: true,
+  });
+  const {
+    data: { data: infoData },
+  } = useCommonApi.注意事项内容查询({
+    params: {
+      noticeType: 'GHXY',
+      noticeMethod: 'WBK',
+    },
     needInit: true,
   });
   const {
@@ -582,13 +594,17 @@ export default () => {
           [styles.buttonAli]: PLATFORM === 'ali',
         })}
         onTap={() => {
-          // 0元支付
-          if (Number(confirmInfo?.totalFee) === 0) {
-            handleRegisterConfim();
+          if (infoData?.[0]?.noticeInfo) {
+            setVisible(true);
           } else {
-            socialPayAuth().then(() => {
+            // 0元支付
+            if (Number(confirmInfo?.totalFee) === 0) {
               handleRegisterConfim();
-            });
+            } else {
+              socialPayAuth().then(() => {
+                handleRegisterConfim();
+              });
+            }
           }
         }}
         loading={payFlag}
@@ -601,6 +617,20 @@ export default () => {
         show={show}
         close={() => clearTimer()}
         nucleicJumpParams={nucleicJumpParams}
+      />
+      <RegisterNotice
+        show={visible}
+        close={() => setVisible(false)}
+        content={infoData?.[0]?.noticeInfo || ''}
+        confirm={() => {
+          if (Number(confirmInfo?.totalFee) === 0) {
+            handleRegisterConfim();
+          } else {
+            socialPayAuth().then(() => {
+              handleRegisterConfim();
+            });
+          }
+        }}
       />
     </View>
   );
