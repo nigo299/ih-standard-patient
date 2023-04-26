@@ -43,7 +43,7 @@ import payState, { OrderInfoType } from '@/stores/pay';
 import patientState from '@/stores/patient';
 import styles from './index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
-import useCommonApi from 'commonHis/src/apis/common';
+import useCommonApi from '@/apis/common';
 
 export default () => {
   const {
