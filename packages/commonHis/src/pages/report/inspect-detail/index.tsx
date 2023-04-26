@@ -11,6 +11,7 @@ import styles from './index.less';
 import { ListItem } from '@/components';
 import monitor from '@/alipaylog/monitor';
 import AntFoestToast from '@/components/antFoestToast';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { reportId, patientId, patCardNo } = useGetParams<{
@@ -126,7 +127,7 @@ export default () => {
       <View className={styles.wrap}>
         <View className={styles.user}>
           <Text>{detailData?.patientName}</Text>
-          <Text>{`${detailData?.patSex === 'F' ? '女' : '男'} | ${
+          <Text>{`${PatGender[detailData?.patSex] || ''} | ${
             detailData?.patAge || '暂无'
           }岁`}</Text>
         </View>

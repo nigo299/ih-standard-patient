@@ -15,6 +15,7 @@ import { returnUrl } from '@/utils';
 import BigNumber from 'bignumber.js';
 import payState from '@/stores/pay';
 import { analyzeIDCard } from '@/utils';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -72,7 +73,7 @@ export default () => {
           deptName: deptName,
           doctorName: '',
           patientName: `${patientName} | ${
-            analyzeIDCard(idNo)?.analyzeSex === 'M' ? '男' : '女'
+            PatGender[analyzeIDCard(idNo)?.analyzeSex as string] || ''
           } | ${analyzeIDCard(idNo)?.analyzeAge || '未知'}岁`,
           patCardNo: patCardNo,
           totalFee: Number(new BigNumber(payCash).times(100)),
