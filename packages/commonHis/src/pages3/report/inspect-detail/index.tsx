@@ -8,6 +8,7 @@ import patientState from '@/stores/patient';
 import useApi from '@/apis/report';
 import useGetParams from '@/utils/useGetParams';
 import styles from './index.less';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -93,7 +94,7 @@ export default () => {
             {detailData?.patientName || '-'}
           </View>
           <View className={styles.headText}>
-            <Text>{`性别:   ${detailData?.patSex === 'M' ? '男' : '女'}`}</Text>
+            <Text>{`性别:   ${PatGender[detailData?.patSex] || ''}`}</Text>
             <Text className={styles.headText2}>{`年龄:   ${
               detailData?.patAge || ''
             }岁`}</Text>

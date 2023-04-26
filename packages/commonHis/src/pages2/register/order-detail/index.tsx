@@ -49,6 +49,7 @@ import RegisterCard from '@/components/registerCard';
 import AntFoestToast from '@/components/antFoestToast';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import CustomerReported from '@/components/customerReported';
+import { PatGender } from '@/config/dict';
 
 const cancelItems = [
   { value: '不想去', checked: false },
@@ -221,7 +222,7 @@ export default () => {
           deptName: deptName,
           doctorName: doctorName,
           patientName: `${patientName} | ${
-            patientSex === 'M' ? '男' : '女'
+            PatGender[patientSex] || ''
           } | ${patientAge}岁`,
           patCardNo,
           patientFullIdNo: decrypt(encryptPatientIdNo),

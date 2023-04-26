@@ -40,6 +40,7 @@ import dayjs from 'dayjs';
 import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/cascade-picker';
 import useGetParams from '@/utils/useGetParams';
 import { useHisConfig } from '@/hooks';
+import { PatGender } from '@/config/dict';
 
 interface CardType {
   birthday: string;
@@ -199,7 +200,7 @@ export default memo(() => {
                 setIsBrithday(false);
               }
               form.setFieldsValue({
-                patientSexed: options[0]?.patientSex === 'M' ? '男' : '女',
+                patientSexed: PatGender[options[0]?.patientSex] || '',
                 patientSex: options[0]?.patientSex,
                 brithdayed: options[0]?.birthday?.slice(0, 10),
                 addressed: options[0]?.address,
@@ -848,7 +849,7 @@ export default memo(() => {
                       setSelectCard(current);
                       form.setFieldsValue({
                         patientSex: current.patientSex,
-                        patientSexed: current.patientSex === 'M' ? '男' : '女',
+                        patientSexed: PatGender[current.patientSex] || '',
                         birthday: current.birthday,
                         brithdayed: current.birthday,
                         addressed: current.address,

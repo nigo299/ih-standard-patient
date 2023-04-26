@@ -16,6 +16,7 @@ import useApi from '@/apis/common';
 import useCaseHisState from './useCaseHisState';
 import usePreScptState from './usePreScptState';
 import { navigateTo } from 'remax/one';
+import { PatGender } from '@/config/dict';
 const recordTypes: any = {
   OPD: '门诊',
   IPD: '住院',
@@ -280,7 +281,7 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
         {
           title: '就诊人',
           content: `${detail?.patName || '-'} | ${
-            detail?.patSex === 'M' ? '男' : '女'
+            PatGender[detail?.patSex] || ''
           } ｜ ${detail?.patAge}`,
         },
         { title: '就诊科室', content: detail?.essentialInfo?.deptName || '-' },
@@ -298,7 +299,7 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
         {
           title: '就诊人',
           content: `${detail?.patName || '-'} | ${
-            detail?.patSex === 'M' ? '男' : '女'
+            PatGender[detail?.patSex] || ''
           } ｜ ${detail?.patAge}`,
         },
         {

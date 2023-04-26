@@ -9,6 +9,7 @@ import { ListItem, ListTitle, RegisterCardOld } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME, HOSPITAL_TEL } from '@/config/constant';
 import { formDate } from '@/utils';
 import styles from './index.less';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { orderId } = useGetParams<{ orderId: string }>();
@@ -29,7 +30,7 @@ export default () => {
     },
     {
       label: '性别',
-      text: orderDetail?.patientSex === 'M' ? '男' : '女',
+      text: PatGender[orderDetail?.patientSex] || '',
     },
     {
       label: '年龄',

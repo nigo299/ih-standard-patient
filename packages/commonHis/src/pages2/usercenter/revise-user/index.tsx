@@ -8,6 +8,7 @@ import useGetParams from '@/utils/useGetParams';
 import styles from './index.less';
 import { WhiteSpace, Tip } from '@/components';
 import { IDTYPES, IMAGE_DOMIN } from '@/config/constant';
+import { PatGender } from '@/config/dict';
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
   const [form] = Form.useForm();
@@ -84,7 +85,7 @@ export default () => {
             <View>{userInfo?.birthday?.slice(0, 10)}</View>
           </FormItem>
           <FormItem label={'性别'} name="sex">
-            <View>{userInfo?.patientSex === 'M' ? '男' : '女'}</View>
+            <View>{PatGender[userInfo?.patientSex] || ''}</View>
           </FormItem>
           <FormItem
             label={'手机号'}

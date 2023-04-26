@@ -9,6 +9,7 @@ import patientState from '@/stores/patient';
 import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import classNames from 'classnames';
+import { PatGender } from '@/config/dict';
 
 export default memo(() => {
   const { pageRoute } = useGetParams<{
@@ -86,7 +87,7 @@ export default memo(() => {
                     color: 'inherit',
                   }}
                 />
-                {`${patient.patientSex === 'M' ? '男' : '女'} | ${
+                {`${PatGender[patient.patientSex] || ''} | ${
                   patient.patientAge
                 }岁`}
               </Space>

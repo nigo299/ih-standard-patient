@@ -102,7 +102,7 @@ export default () => {
           患者提前<Text style={{ color: '#FF9743' }}>预约号源</Text>
         </View>
       ),
-      url: '/pages2/register/department/index?type=reserve',
+      url: '/pages2/register/department/index?type=default',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
     },

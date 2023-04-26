@@ -11,6 +11,7 @@ import { MediCardOld, HealthCardOld } from './compoents';
 import useGetParams from '@/utils/useGetParams';
 import styles from './index.less';
 import classNames from 'classnames';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -41,7 +42,7 @@ export default () => {
     },
     {
       label: '性别',
-      text: userInfo?.patientSex === 'M' ? '男' : '女',
+      text: PatGender[userInfo?.patientSex] || '',
     },
     {
       label: '身份证号',

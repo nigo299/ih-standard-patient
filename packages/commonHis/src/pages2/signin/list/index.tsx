@@ -12,6 +12,7 @@ import classNames from 'classnames';
 
 import { 待签到列表查询 } from '@/apis/sign';
 import styles from './index.less';
+import { PatGender } from '@/config/dict';
 
 // interface RecordType {
 //   beginTime: string;
@@ -135,7 +136,7 @@ export default () => {
               <View className={styles.top}>
                 <View className={styles.name}>{userInfo?.patientName}</View>
                 <View className={styles.sex}>
-                  {userInfo?.patientSex === 'M' ? '男' : '女'}
+                  {PatGender[userInfo?.patientSex] || ''}
                 </View>
                 |<View className={styles.age}>{userInfo?.patientAge}</View>
                 <View className={styles.type}>

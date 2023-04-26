@@ -12,6 +12,7 @@ import {
 import styles from './index.less';
 import useApi from '@/apis/common';
 import useGetParams from '@/utils/useGetParams';
+import { PatGender } from '@/config/dict';
 const acountTypes: any = {
   YB: '医保',
   ZF: '自费',
@@ -68,7 +69,7 @@ export default () => {
         {
           title: '就诊人',
           content: `${detail?.patName || '-'} | ${
-            detail?.patSex === 'M' ? '男' : '女'
+            PatGender[detail?.patSex] || ''
           } ｜ ${detail?.patAge}`,
         },
         { title: '就诊号', content: detail?.essentialInfo?.patCardNo || '-' },
@@ -89,7 +90,7 @@ export default () => {
         {
           title: '就诊人',
           content: `${detail?.patName || '-'} | ${
-            detail?.patSex === 'M' ? '男' : '女'
+            PatGender[detail?.patSex] || ''
           } ｜ ${detail?.patAge}`,
         },
         {
