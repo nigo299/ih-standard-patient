@@ -71,7 +71,7 @@ export default () => {
     visitEndTime: string;
     visitPeriod: string;
   }>();
-  const [visible, setVisible] = useEffectState(false);
+  const [visible, setVisible] = useState(false);
   const { getPatientList } = patientState.useContainer();
   const [show, setShow] = useState(false);
   const [payFlag, setPayFlag] = useState(false);
