@@ -14,7 +14,6 @@ export default class BaseHis {
       showTodayRegisterSourceInReserve: false,
       showCalenderInTodayRegister: true,
       showSelectTypeInTodayRegister: true,
-      showNucleicText: false,
     };
   }
 }
@@ -35,6 +34,4 @@ type StaticConfig = {
   showCalenderInTodayRegister: boolean;
   /** 当日挂号是否显示按日期挂号和按医生挂号组件*/
   showSelectTypeInTodayRegister: boolean;
-  /** 核酸选择套餐界面是否展示提示文字*/
-  showNucleicText: boolean;
 };

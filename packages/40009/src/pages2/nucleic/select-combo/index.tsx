@@ -38,8 +38,6 @@ interface NucleType {
 }
 export default () => {
   const { type } = useGetParams<{ type: string }>();
-  const platformTitle = PLATFORM === 'ali' ? '支付宝小程序' : '微信公众号';
-  const platformPayTitle = PLATFORM === 'ali' ? '支付宝支付' : '微信支付';
   const { getPatientList, defaultPatientInfo } = patientState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -132,66 +130,10 @@ export default () => {
             />
           </View>
           <Space flex="auto" vertical className={styles.popupWrap}>
-            <View className={styles.bold}>亲爱的市民朋友：</View>
+            <View className={styles.bold}>温馨提示：</View>
             <View className={styles.popupText}>
-              自助核酸检测服务为我院针对新冠筛查人群提供的在线预约服务，请仔细阅读本须知：
-            </View>
-            <View className={styles.bold}>
-              1.我院检测时间：24小时采集（
-              <ColorText>
-                咨询服务电话：023-65748366；咨询时间：8:00-17:30
-              </ColorText>
-              ）
-            </View>
-            <View className={styles.bold}>2.核酸报告时限：</View>
-
-            <View className={styles.popupText}>
-              ①8:01-12:00 采样的标本，报告时限为 18:00 前；
-            </View>
-
-            <View className={styles.popupText}>
-              ②12:01-17:00 采样的标本，报告时限为 24:00 前；
-            </View>
-
-            <View className={styles.popupText}>
-              ③17:01-22:00 采样的标本，报告时限为次日 8:00前；
-            </View>
-
-            <View className={styles.popupText}>
-              ④22:01-8:00 采样的标本,报告时限为次日 14：00前。
-            </View>
-
-            <View className={styles.popupText}>
-              <ColorText>
-                *因核酸检测标本存在复查、审核等情况，若您有出行计划请等核酸报告出具后再行安排；我院同时承接大规模核酸采集任务，疫情期间报告时限以实际出具时间为准，谢谢您的理解与配合。
-              </ColorText>
-            </View>
-
-            <View className={styles.bold}>3.核酸结果查看：</View>
-
-            <View className={styles.popupText}>
-              电子报告：关注“重庆沙坪坝区妇幼保健院”微信公众号，绑定就诊人信息，实时查看门诊报告结果
-              纸质报告：请于门诊工作时间内凭检测者本人身份证前往重庆沙坪坝区妇幼保健院A栋门诊一楼大厅，在自助机上打印报告。
-            </View>
-            <View className={styles.bold}>4.核酸采集流程</View>
-            <View className={styles.bold}>愿检尽检人群：</View>
-            <View className={styles.popupText}>
-              {platformTitle}
-              选择“自助核酸检测开单”——选择检测类别（单检/混检）——线上预约缴费（仅支持
-              {platformPayTitle}
-              ）——现场出示缴费凭证（就诊人登记号/二维码）——核酸采集点打印条码——采样
-            </View>
-            <View className={styles.bold}>应检尽检人群（无码/黄码人群）：</View>
-            <View className={styles.popupText}>
-              {platformTitle}
-              选择“自助核酸检测开单”——选择检测类别（单检无码/黄码）——线上预约缴费（仅支持
-              {platformPayTitle}
-              ）——现场出示缴费凭证（就诊人登记号/二维码）——发热门诊采集点打印条码——采样
-            </View>
-            <View className={styles.bold}>5.温馨提示：</View>
-            <View className={styles.popupText}>
-              为了做好疫情防控，请您配合工作人员测量体温，出示“健康码”、“行程码”，扫描“场所码”，全程有序排队，佩戴口罩，保持1米社交距离，避免人群聚集。
-              因出国需要双语报告者请主动告知工作人员。
+              核酸采集点工作时间：8:00-17:30； 核酸挂号缴费时间：8:00-17:00。
+              号源每日08:00更新，如有需求，请提前预约。
             </View>
           </Space>
           <Space className={styles.popupBtns}>
@@ -293,6 +235,13 @@ export default () => {
             <View className={styles.userText}>预约核酸检测时间</View>
           </Space>
         </Space>
+        <View className={styles.box}>
+          <View className={styles.popTitle}>温馨提示：</View>
+          <View className={styles.popText}>
+            核酸采集点工作时间：8:00-17:30；核酸挂号缴费时间：8:00-17:00。
+            号源每日08:00更新，如有需求，请提前预约。
+          </View>
+        </View>
         {data?.data?.items?.length > 0 ? (
           <>
             {data?.data?.items.map((item: NucleType) => {
