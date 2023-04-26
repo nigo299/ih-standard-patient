@@ -12,6 +12,8 @@ export default class BaseHis {
       clinicPayBatchType: 'BATCH',
       showMedicalModal: false,
       showTodayRegisterSourceInReserve: false,
+      showCalenderInTodayRegister: true,
+      showSelectTypeInTodayRegister: true,
     };
   }
 }
@@ -28,4 +30,8 @@ type StaticConfig = {
   showMedicalModal: boolean;
   /** 预约挂号中是否显示当日号源 */
   showTodayRegisterSourceInReserve: boolean;
+  /** 当日挂号是否显示日期组件*/
+  showCalenderInTodayRegister: boolean;
+  /** 当日挂号是否显示按日期挂号和按医生挂号组件*/
+  showSelectTypeInTodayRegister: boolean;
 };
