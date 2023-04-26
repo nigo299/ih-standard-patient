@@ -452,6 +452,16 @@ export default () => {
       visitPeriod,
     ],
   );
+  const registerConfirm = useCallback(() => {
+    // 0元支付
+    if (Number(confirmInfo?.totalFee) === 0) {
+      handleRegisterConfim();
+    } else {
+      socialPayAuth().then(() => {
+        handleRegisterConfim();
+      });
+    }
+  }, [confirmInfo?.totalFee, handleRegisterConfim]);
   useUpdateEffect(() => {
     if (process.env.REMAX_APP_PLATFORM === 'app') {
       const href = window.location.href;
@@ -597,14 +607,7 @@ export default () => {
           if (infoData?.[0]?.noticeInfo) {
             setVisible(true);
           } else {
-            // 0元支付
-            if (Number(confirmInfo?.totalFee) === 0) {
-              handleRegisterConfim();
-            } else {
-              socialPayAuth().then(() => {
-                handleRegisterConfim();
-              });
-            }
+            registerConfirm();
           }
         }}
         loading={payFlag}
@@ -623,13 +626,7 @@ export default () => {
         close={() => setVisible(false)}
         content={infoData?.[0]?.noticeInfo || ''}
         confirm={() => {
-          if (Number(confirmInfo?.totalFee) === 0) {
-            handleRegisterConfim();
-          } else {
-            socialPayAuth().then(() => {
-              handleRegisterConfim();
-            });
-          }
+          registerConfirm();
         }}
       />
     </View>
