@@ -123,7 +123,7 @@ export default () => {
           报告结果<Text style={{ color: '#FF9743' }}>实时查询</Text>
         </View>
       ),
-      url: `/pages/report/report-list/index?patientId=${patientId}`,
+      url: `/pages/report/report-list/index`,
       image: `${IMAGE_DOMIN}/home/bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
