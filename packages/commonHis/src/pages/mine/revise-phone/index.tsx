@@ -51,7 +51,7 @@ export default () => {
   return (
     <View>
       <Space alignItems="center" className={styles.tip}>
-        第二步：绑定新手机号
+        绑定新手机号
       </Space>
       <View className={styles.content}>
         <Form
