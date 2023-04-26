@@ -59,10 +59,8 @@ export default () => {
       if (code === 0 && data?.payOrderId) {
         if (PLATFORM === 'web') {
           // H5逻辑
-          // todo 待确定实现方式
           const result = await usePayApi.h5支付下单.request({
             orderId: data.payOrderId,
-            extFields: inhospPatientInfo?.extFields,
             callbackUrl: `${returnUrl()}#/pages/waiting/index?bizType=ZYYJBJ&orderId=${
               data.orderId
             }`,
