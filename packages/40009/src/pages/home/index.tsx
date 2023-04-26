@@ -252,6 +252,7 @@ export default () => {
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/ybzc.png`,
+            open: true,
             onClick: () =>
               (window.location.href =
                 'https://mp.weixin.qq.com/s/_X3r9QceeDPBcmTlHlo32Q'),
