@@ -71,7 +71,7 @@ export default () => {
       return false;
     }
     return true;
-  }, [waitOpList?.length, selectList.length]);
+  }, [selectList?.length, waitOpList?.length]);
   const handlePay = useCallback(
     async (payAuthNo?: string) => {
       if (process.env.REMAX_APP_PLATFORM === 'app') {

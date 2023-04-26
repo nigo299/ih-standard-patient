@@ -38,13 +38,13 @@ export const ORDER_INVOICE = false;
 export const CHILDREN_DEPTLIST = true;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
-  process.env.REMAX_APP_PLATFORM === 'app' ? false : false;
+  process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
 // 门诊缴费必须全部支付
 export const PAYMENT_SELECTALL_PAY = false;
 // 是否启用H5支付(flase为立即缴费小程序支付)
 export const H5_PAY = false;
 // 是否有支付宝小程序
-export const IS_ALIPAY = true;
+export const IS_ALIPAY = false;
 // 支付宝小程序appid
 export const APPID = PLATFORM === 'ali' ? '2021002125656335' : '';
 // 是否开启意见反馈（小桥医助小程序）
