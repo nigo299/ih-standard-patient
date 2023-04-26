@@ -21,6 +21,7 @@ export default () => {
     needInit: !!patientId,
   });
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+  // todo 待确定实现方式
   const {
     loading: dayLoading,
     data: { data: inventoryDetail },
@@ -35,6 +36,7 @@ export default () => {
       patientId,
       beginDate: selectDate,
       endDate: selectDate,
+      extFields: liveData?.extFields,
     },
     needInit: true,
   });
@@ -45,7 +47,7 @@ export default () => {
         itemTotalFee: inventoryDetail?.totalFee || 0,
       },
     ];
-  }, [inventoryDetail?.totalFee]);
+  }, [inventoryDetail.totalFee]);
   usePageEvent('onShow', () => {
     reportCmPV({ title: '住院日清单查询' });
     setNavigationBar({
