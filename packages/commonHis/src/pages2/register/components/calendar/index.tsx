@@ -94,7 +94,7 @@ export default ({
             disableItemCls={styles.calenderDisable}
             itemCls={styles.calenderItem}
             current={current}
-            weekOffset={dayjs().day()}
+            weekOffset={dayjs().day() % 7}
             {...props}
           />
         )}
