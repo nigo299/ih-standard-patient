@@ -50,6 +50,7 @@
     "unstated-next": "^1.1.0",
     "uuid": "^8.3.2",
     "vconsole": "^3.9.5",
+    "eruda": "^3.0.0",
     "weixin-js-sdk": "^1.6.0",
     "wx-ci": "^1.0.6",
     "commonHis": "*",
