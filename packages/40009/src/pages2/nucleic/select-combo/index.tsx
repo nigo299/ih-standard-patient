@@ -40,7 +40,6 @@ export default () => {
   const { type } = useGetParams<{ type: string }>();
   const { getPatientList, defaultPatientInfo } = patientState.useContainer();
   const [show, setShow] = useState(false);
-  const [show2, setShow2] = useState(false);
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
   const {
     request,
@@ -114,70 +113,6 @@ export default () => {
         </Space>
       </Mask>
 
-      <Mask
-        show={show2}
-        center
-        close={() => {
-          setShow2(false);
-        }}
-      >
-        <Space vertical className={styles.popup}>
-          <View className={styles.popupTop}>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/hsjcxz.png`}
-              className={styles.popupImg}
-              mode="aspectFit"
-            />
-          </View>
-          <Space flex="auto" vertical className={styles.popupWrap}>
-            <View className={styles.bold}>温馨提示：</View>
-            <View className={styles.popupText}>
-              核酸采集点工作时间：8:00-17:30； 核酸挂号缴费时间：8:00-17:00。
-              号源每日08:00更新，如有需求，请提前预约。
-            </View>
-          </Space>
-          <Space className={styles.popupBtns}>
-            <Space
-              justify="center"
-              alignItems="center"
-              flex="auto"
-              className={styles.cacelBtn}
-              onTap={() => {
-                setShow2(false);
-              }}
-            >
-              不接受
-            </Space>
-            <Space
-              justify="center"
-              alignItems="center"
-              flex="auto"
-              className={styles.popupBtn}
-              onTap={() => {
-                const selectNucle = data?.data?.items?.filter(
-                  (item: NucleType) => item.resourceId === resourceId,
-                );
-                if (selectNucle?.[0]?.nucleicName) {
-                  const {
-                    nucleicName,
-                    endTime,
-                    startTime,
-                    resourceId,
-                    regFee,
-                  } = selectNucle[0];
-                  setShow2(false);
-
-                  navigateTo({
-                    url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-                  });
-                }
-              }}
-            >
-              <ColorText>接受</ColorText>
-            </Space>
-          </Space>
-        </Space>
-      </Mask>
       <Space className={styles.top} alignItems="flex-start">
         <Space alignItems="center">
           <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
@@ -314,18 +249,6 @@ export default () => {
               <ColorText>*</ColorText>
               <View> 我院提供24小时核酸检测服务</View>
             </Space>
-
-            {/* <Space
-              alignItems="center"
-              justify="center"
-              className={styles.tip2}
-              onTap={() => {
-                setShow2(true);
-                hideTabBar();
-              }}
-            >
-              点击查看<ColorText>《检测须知》</ColorText>
-            </Space> */}
           </>
         ) : (
           <NoData />
@@ -345,7 +268,17 @@ export default () => {
           }
           onTap={(e) => {
             e.stopPropagation();
-            setShow2(true);
+
+            const selectNucle = data?.data?.items?.filter(
+              (item: NucleType) => item.resourceId === resourceId,
+            );
+            if (selectNucle?.[0]?.nucleicName) {
+              const { nucleicName, endTime, startTime, resourceId, regFee } =
+                selectNucle[0];
+              navigateTo({
+                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
+              });
+            }
           }}
         >
           下一步
