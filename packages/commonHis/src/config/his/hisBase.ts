@@ -11,6 +11,7 @@ export default class BaseHis {
       registerDoctorTagType: 'SOURCE_AND_PRICE',
       clinicPayBatchType: 'BATCH',
       showMedicalModal: false,
+      showTodayRegisterSourceInReserve: false,
     };
   }
 }
@@ -25,4 +26,6 @@ type StaticConfig = {
   clinicPayBatchType: 'SINGLE' | 'BATCH';
   /** 支付界面是否显示医保支付弹窗 */
   showMedicalModal: boolean;
+  /** 预约挂号中是否显示当日号源 */
+  showTodayRegisterSourceInReserve: boolean;
 };
