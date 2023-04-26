@@ -66,6 +66,7 @@ export default () => {
   } = globalState.useContainer();
   const { getDeptList } = regsiterState.useContainer();
   const [show, setShow] = useState(false);
+  const [noticeInfo, setNoticeInfo] = useState<string>('');
   const [registerMode, setRegisterMode] = useState('');
   const { clearCountdownTimer } = useDownCount();
 
@@ -95,6 +96,14 @@ export default () => {
   } = useApi.注意事项内容查询({
     params: {
       noticeType: 'GHXZ',
+      noticeMethod: 'WBK',
+    },
+  });
+  const {
+    data: { data: infoData3 },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'DRGHXZ',
       noticeMethod: 'WBK',
     },
   });
@@ -320,8 +329,13 @@ export default () => {
         setPageStyle({
           overflow: 'hidden',
         });
-        if (infoData2?.[0]?.noticeInfo) setShow(true);
-        else {
+        if (infoData2?.[0]?.noticeInfo && nav.title === '预约挂号') {
+          setNoticeInfo(infoData2?.[0]?.noticeInfo);
+          setShow(true);
+        } else if (infoData3?.[0]?.noticeInfo && nav.title === '当日挂号') {
+          setNoticeInfo(infoData3?.[0]?.noticeInfo);
+          setShow(true);
+        } else {
           setPageStyle({
             overflow: 'inherit',
           });
@@ -376,7 +390,7 @@ export default () => {
         url: nav.url,
       });
     },
-    [getDeptList, getPatientList, infoData2, patientId],
+    [getDeptList, getPatientList, infoData2, infoData3, patientId],
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
@@ -561,7 +575,7 @@ export default () => {
       <RegisterNotice
         show={show}
         close={() => setShow(false)}
-        content={infoData2?.[0]?.noticeInfo || ''}
+        content={noticeInfo}
         confirm={() => {
           if (
             registerMode.includes('reserve') &&
