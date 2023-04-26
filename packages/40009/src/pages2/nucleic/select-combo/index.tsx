@@ -12,7 +12,7 @@ import {
   Loading,
   Exceed,
 } from '@kqinfo/ui';
-import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
+import { IMAGE_DOMIN } from '@/config/constant';
 import { Mask } from '@/components';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
