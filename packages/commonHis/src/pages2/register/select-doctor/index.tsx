@@ -60,13 +60,13 @@ export default () => {
   const [date, setDate] = useEffectState(
     useMemo(() => {
       let newDate;
-      if (type === 'reserve') {
+      if (type === 'reserve' && !config.showTodayRegisterSourceInReserve) {
         newDate =
           scheduleList?.find(
             ({ scheduleDate, status }) =>
               scheduleDate !== dayjs().format('YYYY-MM-DD') && status === 1,
           )?.scheduleDate || scheduleList?.[1]?.scheduleDate;
-      } else if (type === 'day') {
+      } else if (type === 'day' || config.showTodayRegisterSourceInReserve) {
         newDate = dayjs().format('YYYY-MM-DD');
       } else {
         newDate = scheduleList?.find(
@@ -74,7 +74,7 @@ export default () => {
         )?.scheduleDate;
       }
       return dayjs(newDate);
-    }, [scheduleList, type]),
+    }, [config, scheduleList, type]),
   );
 
   const {
