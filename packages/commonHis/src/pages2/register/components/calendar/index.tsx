@@ -5,7 +5,7 @@ import { Props } from '@kqinfo/ui/lib/calendar';
 import styles from './index.less';
 import { THEME_COLOR2 } from '@/config/constant';
 import { useHisConfig } from '@/hooks';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 const weeks = ['日', '一', '二', '三', '四', '五', '六'];
 
 export default ({
@@ -94,6 +94,7 @@ export default ({
             disableItemCls={styles.calenderDisable}
             itemCls={styles.calenderItem}
             current={current}
+            weekOffset={dayjs().day()}
             {...props}
           />
         )}
