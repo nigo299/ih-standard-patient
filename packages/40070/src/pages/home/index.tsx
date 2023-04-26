@@ -156,51 +156,7 @@ export default () => {
       new: false,
       // open: process.env.REMAX_APP_PLATFORM === 'production' && true,
     },
-    // {
-    //   title: '报告查询',
-    //   subTitle: () => (
-    //     <View style={{ color: '#666' }}>
-    //       报告结果<Text style={{ color: '#F371A9' }}>实时查询</Text>
-    //     </View>
-    //   ),
-    //   url: `/pages/report/report-list/index?patientId=${patientId}`,
-    //   image: `${IMAGE_DOMIN}/home/bgcx.png`,
-    //   new: PLATFORM === 'ali' && true,
-    // },
   ];
-
-  // const showDoctorRecords = useMemo(() => {
-  //   // configType
-  //   //   configType: "DOCTOR"
-  //   // doctorRecordInfo: {showCount: 5}
-  //   // doctorRecordInfoList: []
-  //   if (configData) {
-  //     const findData = configData.find((d) => d.configType === 'DOCTOR');
-  //     const doctors = findData?.doctorRecordInfoList || [];
-  //     // return new Array(10).fill(doctors[0]);
-  //     return doctors;
-  //   } else {
-  //     return [];
-  //   }
-  // }, [configData]);
-
-  // const {
-  //   data: { data: article },
-  // } = useApi.获取文章列表({
-  //   initValue: {
-  //     data: {},
-  //   },
-  //   params: {
-  //     pageNum: 1,
-  //     numPerPage: 3,
-  //     state: 'ONLINE',
-  //   },
-  //   needInit: true,
-  // });
-
-  // const healthList = useMemo(() => {
-  //   return article.recordList?.filter((item) => item.typeName === '健康宣教');
-  // }, [article.recordList]);
 
   const homeCardNavConfig = useMemo(() => {
     const arr = [
@@ -273,35 +229,6 @@ export default () => {
         },
       },
     ];
-    // const addArr = (
-    //   configData?.find((item) => item.configType === 'EXPAND')?.expandInfo || []
-    // )?.map((item) => ({
-    //   title: item.title,
-    //   subTitle: '',
-    //   url: '',
-    //   image: item.imgUrl,
-    //   onClick: () => {
-    //     if (PLATFORM === 'web') {
-    //       if (item.jumpType === 'H5') {
-    //         window.location.href = item.jumpUrl;
-    //       } else if (item.jumpType === 'MINI_APP') {
-    //         navigateToMiniProgram({
-    //           appId: item.appId,
-    //           path: item.jumpUrl,
-    //         });
-    //       } else {
-    //         window.location.href = item.jumpUrl;
-    //       }
-    //     } else if (PLATFORM === 'ali') {
-    //       if (item.jumpType === 'MINI_APP') {
-    //         navigateToMiniProgram({
-    //           appId: item.appId,
-    //           path: item.jumpUrl,
-    //         });
-    //       }
-    //     }
-    //   },
-    // }));
 
     return [...arr];
   }, []);
