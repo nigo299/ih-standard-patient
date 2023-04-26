@@ -32,6 +32,7 @@ export type keys =
   | 'waitPayListParams'
   | 'createOpOrderParams'
   | 'patientId'
+  | 'debugger'
   | 'canApplyRefund';
 
 const prefixKey = (key: string) => {
@@ -57,7 +58,7 @@ const storage: Storage = {
   get: (key: string) => {
     switch (key) {
       case 'elderly':
-        return !!getStorageSync(prefixKey(key));
+        return !!getStorageSync(prefixKey(key)) as any;
       default:
         return getStorageSync(prefixKey(key));
     }
