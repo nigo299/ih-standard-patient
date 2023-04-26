@@ -7,7 +7,7 @@ export default class BaseHis {
     this.hisId = hisId;
     this.config = {
       defaultAddress: '重庆市-市辖区-沙坪坝区',
-      registerNoticeText: `热烈庆祝${HOSPITAL_NAME}开通啦！}`,
+      registerNoticeText: `热烈庆祝${HOSPITAL_NAME}开通啦！`,
       registerDoctorTagType: 'SOURCE_AND_PRICE',
       clinicPayBatchType: 'BATCH',
       showMedicalModal: false,
