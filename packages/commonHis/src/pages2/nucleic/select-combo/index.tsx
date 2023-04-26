@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
+import { View, Image, navigateTo, redirectTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import {
@@ -21,6 +21,7 @@ import useApi from '@/apis/common';
 import styles from './index.less';
 import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
+import { useHisConfig } from '@/hooks';
 
 interface NucleType {
   deptId: string;
@@ -56,6 +57,7 @@ export default () => {
     },
     needInit: false,
   });
+  const { config } = useHisConfig();
   const [resourceId, setResourceId] = useEffectState(
     data?.data?.items?.[0]?.resourceId || '',
   );
@@ -76,6 +78,7 @@ export default () => {
         }
       });
     }
+
     setNavigationBar({
       title: '核酸检测',
     });
@@ -293,6 +296,15 @@ export default () => {
             <View className={styles.userText}>预约核酸检测时间</View>
           </Space>
         </Space>
+        {config.showNucleicText && (
+          <View className={styles.box}>
+            <View className={styles.popTitle}>温馨提示：</View>
+            <View className={styles.popText}>
+              核酸采集点工作时间：8:00-17:30；核酸挂号缴费时间：8:00-17:00。
+              号源每日08:00更新，如有需求，请提前预约。
+            </View>
+          </View>
+        )}
         {data?.data?.items?.length > 0 ? (
           <>
             {data?.data?.items.map((item: NucleType) => {
