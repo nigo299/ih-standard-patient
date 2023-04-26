@@ -306,6 +306,7 @@ export default () => {
       setCancelVal('');
       setLoading(true);
       setShowInfo(false);
+      // todo 待优化
       const extFields = JSON.parse(orderDetail?.extFields || '{}');
       const { code, msg } = await useApi.取消锁号.request({
         orderId,
