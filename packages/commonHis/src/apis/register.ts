@@ -278,7 +278,7 @@ interface RegisterOrderListType extends API.ResponseDataType {
   data: OrderListType[];
 }
 
-interface OrderDetailType {
+export interface OrderDetailType {
   agtOrdNum: string;
   bizName: string;
   bizType: string;
