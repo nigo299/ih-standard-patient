@@ -1,6 +1,7 @@
 import CryptoJS from 'crypto-js';
 import { PLATFORM } from '@/config/constant';
 import { reLaunch, redirectTo } from 'remax/one';
+import dayjs from 'dayjs';
 
 export const reLaunchUrl = (url: string) => {
   if (PLATFORM === 'web') {
@@ -110,6 +111,13 @@ export const analyzeIDCard = (idcard: string) => {
     analyzeSex,
     analyzeBirth,
   };
+};
+
+export const getAgeByBirthDay = (birthDay?: string): number | undefined => {
+  if (!birthDay) {
+    return undefined;
+  }
+  return dayjs().diff(birthDay, 'years');
 };
 
 //验证规则
