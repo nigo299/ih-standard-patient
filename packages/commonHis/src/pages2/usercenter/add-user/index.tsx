@@ -301,15 +301,17 @@ export default memo(() => {
             patientAge = getAgeByBirthDay(submitBirthDay) || 0;
           }
 
+          const submitPatientSex =
+            btnSubType === 'add'
+              ? values['patientSex']
+              : selectCard.patientSex || values['patientSex'];
+
           const params = {
             ...values,
             yibaoNo: '',
             patCardType: 21,
             birthday: submitBirthDay,
-            patientSex:
-              btnSubType === 'add'
-                ? values['patientSex']
-                : selectCard.patientSex,
+            patientSex: submitPatientSex,
             isNewCard: btnSubType === 'add' ? 1 : 0,
             patientType: values['patientType']
               ? values['patientType']
