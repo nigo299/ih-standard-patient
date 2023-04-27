@@ -825,13 +825,41 @@ export default memo(() => {
                 </FormItem>
               )}
 
-              <FormItem label={'性别'} name="patientSexed">
-                <ReInput
-                  type="text"
-                  className={classNames(styles.reInput, styles.disabled)}
-                  placeholderClassName={styles.placeholder}
-                />
-              </FormItem>
+              {selectCard?.patientSex ? (
+                <FormItem label={'性别'} name="patientSexed">
+                  <ReInput
+                    type="text"
+                    className={classNames(styles.reInput, styles.disabled)}
+                    placeholderClassName={styles.placeholder}
+                  />
+                </FormItem>
+              ) : (
+                <FormItem
+                  label={'性别'}
+                  name="patientSex"
+                  after={
+                    <Image
+                      src={`${IMAGE_DOMIN}/usercenter/down.png`}
+                      className={styles.icon}
+                    />
+                  }
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Picker
+                    cols={1}
+                    data={[
+                      { label: '男', value: 'M' },
+                      { label: '女', value: 'F' },
+                    ]}
+                  >
+                    请选择
+                  </Picker>
+                </FormItem>
+              )}
 
               <FormItem
                 label={'选择就诊卡'}
