@@ -2,7 +2,7 @@ import React from 'react';
 import { navigateBack, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Loading } from '@kqinfo/ui';
+import { Loading, showModal } from '@kqinfo/ui';
 import useApi from '@/apis/login';
 import { getBrowserUa, reLaunchUrl, returnUrl } from '@/utils';
 import { showToast } from '@kqinfo/ui';
@@ -87,6 +87,16 @@ export default () => {
           getPatientList();
           navigateTo({
             url,
+          });
+        } else {
+          showModal({
+            title: '提示',
+            content: '登录错误，请重新登录！',
+            showCancel: false,
+            confirmText: '我知道了',
+          }).then(() => {
+            storage.clear();
+            reLaunchUrl('/pages/home/index');
           });
         }
       }
