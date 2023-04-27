@@ -9,6 +9,7 @@ import dayjs from 'dayjs';
 import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import useGetParams from '@/utils/useGetParams';
+import useGetExpensesDayDetail from '@/pages2/inhosp/inventory/hooks/useGetExpensesDayDetail';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -21,24 +22,10 @@ export default () => {
     needInit: !!patientId,
   });
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
-  // todo 待确定实现方式
-  const {
-    loading: dayLoading,
-    data: { data: inventoryDetail },
-  } = useApi.查询住院一日清单({
-    initValue: {
-      data: {
-        items: [],
-      },
-    },
-    params: {
-      admissionNum: liveData?.admissionNum,
-      patientId,
-      beginDate: selectDate,
-      endDate: selectDate,
-      extFields: liveData?.extFields,
-    },
-    needInit: true,
+  const { dayLoading, inventoryDetail } = useGetExpensesDayDetail({
+    liveData,
+    patientId,
+    selectDate,
   });
   const totalDatas = useMemo(() => {
     return [

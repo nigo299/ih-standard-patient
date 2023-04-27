@@ -49,6 +49,7 @@ import RegisterCard from '@/components/registerCard';
 import AntFoestToast from '@/components/antFoestToast';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import CustomerReported from '@/components/customerReported';
+import useRegisterCancelOrder from '@/pages2/register/order-detail/hooks/useRegisterCancelOrder';
 
 const cancelItems = [
   { value: '不想去', checked: false },
@@ -306,12 +307,12 @@ export default () => {
       setCancelVal('');
       setLoading(true);
       setShowInfo(false);
-      // todo 待确定实现方式
       const extFields = JSON.parse(orderDetail?.extFields || '{}');
-      const { code, msg } = await useApi.取消锁号.request({
+      const { code, msg } = await useRegisterCancelOrder({
         orderId,
-        cancelReason: cancelVal || cancelValStorage || '',
-        payAuthNo: payAuthNo || '',
+        cancelVal,
+        cancelValStorage,
+        payAuthNo,
         extFields,
       });
       if (code === 0) {
