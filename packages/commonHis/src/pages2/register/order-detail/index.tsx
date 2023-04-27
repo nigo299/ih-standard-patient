@@ -49,6 +49,7 @@ import RegisterCard from '@/components/registerCard';
 import AntFoestToast from '@/components/antFoestToast';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import CustomerReported from '@/components/customerReported';
+import useGetCancelOrderExtFields from '@/pages2/register/order-detail/hooks/useGetCancelOrderExtFields';
 import { PatGender } from '@/config/dict';
 
 const cancelItems = [
@@ -96,6 +97,7 @@ export default () => {
   const [cancelVal, setCancelVal] = useState('');
   const [form] = Form.useForm();
   const [toggle, setToggle] = useState([true, false]);
+  const cancelExtFields = useGetCancelOrderExtFields({ orderDetail });
   const clinicList = [
     {
       label: '就诊医院',
@@ -294,7 +296,7 @@ export default () => {
       }
       setPayFlag(false);
     },
-    [hospitialConfigData?.data?.medicalPay, request, setOrderInfo],
+    [hospitialConfigData, request, setOrderInfo],
   );
   const cancelRegisterPay = useCallback(
     async (payAuthNo?: string, cancelValStorage?: string) => {
@@ -311,7 +313,7 @@ export default () => {
         orderId,
         cancelReason: cancelVal || cancelValStorage || '',
         payAuthNo: payAuthNo || '',
-        // extFields: orderDetail?.extFields || '',
+        extFields: cancelExtFields,
       });
       if (code === 0) {
         setLoading(false);
@@ -327,7 +329,7 @@ export default () => {
         showToast({ title: msg || '取消挂号失败，请重试!', icon: 'fail' });
       }
     },
-    [cancelVal, orderId, request],
+    [cancelExtFields, cancelVal, orderId, request],
   );
   const medicalAuth = useCallback(async () => {
     if (PLATFORM === 'ali') {
@@ -370,12 +372,7 @@ export default () => {
         window.location.href = data.authUrl;
       }
     }
-  }, [
-    cancelRegisterPay,
-    orderDetail?.payOrderId,
-    orderDetail?.totalFee,
-    orderId,
-  ]);
+  }, [cancelRegisterPay, orderDetail, orderId]);
   const cancelMedicalPay = useCallback(
     async (cancelVal: string) => {
       if (PLATFORM === 'ali') {
@@ -402,7 +399,7 @@ export default () => {
         }
       }
     },
-    [cancelRegisterPay, orderDetail?.payOrderId, orderDetail?.totalFee],
+    [cancelRegisterPay, orderDetail],
   );
   usePageEvent('onShow', () => {
     if (mysl === '1' && PLATFORM === 'ali') {

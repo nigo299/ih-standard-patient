@@ -61,6 +61,14 @@ export const mineNavListConfig = [
     image: `${IMAGE_DOMIN}/mine/yjfk.png`,
     open: false,
   },
+  {
+    title: '调查问卷',
+    url: '',
+    image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+    open: false,
+    onClick: () =>
+      (window.location.href = 'https://wj.qq.com/s2/8938221/c4b1/'),
+  },
 ];
 
 export const inhospMoneys = [

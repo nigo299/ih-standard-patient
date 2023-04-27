@@ -136,6 +136,7 @@ export default {
       beginDate: string;
       endDate: string;
       admissionNum: string;
+      extFields?: any;
     }) =>
       request.post<ExpensesdaylistType>(
         '/api/intelligent/api/in-hospital/expenses-day-detail',
