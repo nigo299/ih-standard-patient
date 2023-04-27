@@ -115,7 +115,7 @@ export default () => {
           className={classNames(styles.item, styles.item2)}
           onTap={() =>
             navigateTo({
-              url: '/pages/mine/bind-phone/index',
+              url: '/pages/mine/revise-phone/index',
             })
           }
         >

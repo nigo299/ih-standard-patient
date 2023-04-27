@@ -13,6 +13,7 @@ import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import { returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import styles from './index.less';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -61,7 +62,7 @@ export default () => {
           deptName: data?.deptName,
           doctorName: data?.doctorName,
           patientName: `${patientName} | ${
-            waitOpList[0].gender === 'M' ? '男' : '女'
+            PatGender[waitOpList[0].gender] || ''
           } | ${waitOpList[0].age || '未知'}岁`,
           patCardNo,
           totalFee: data.totalFee,

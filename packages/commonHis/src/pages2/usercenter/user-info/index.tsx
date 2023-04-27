@@ -20,6 +20,7 @@ import patientState from '@/stores/patient';
 import styles from './index.less';
 import { IDTYPES, PLATFORM } from '@/config/constant';
 import showModal from '@/utils/showModal';
+import { PatGender } from '@/config/dict';
 
 const tabs = [
   { content: '就诊卡', index: 1 },
@@ -188,7 +189,7 @@ export default memo(() => {
             <Space className={styles.list}>
               <FormItem label="性别" labelWidth={'4em'} />
               <View className={styles.listText}>
-                {userInfo?.patientSex === 'M' ? '男' : '女'}
+                {PatGender[userInfo?.patientSex] || ''}
               </View>
             </Space>
             <Space className={styles.list}>

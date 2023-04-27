@@ -15,6 +15,7 @@ import {
   Tip,
   NucleicQrcode,
   AntForest,
+  RegisterNotice,
 } from '@/components';
 import {
   Shadow,
@@ -42,6 +43,8 @@ import payState, { OrderInfoType } from '@/stores/pay';
 import patientState from '@/stores/patient';
 import styles from './index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
+import useCommonApi from '@/apis/common';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -69,10 +72,20 @@ export default () => {
     visitEndTime: string;
     visitPeriod: string;
   }>();
+  const [visible, setVisible] = useState(false);
   const { getPatientList } = patientState.useContainer();
   const [show, setShow] = useState(false);
   const [payFlag, setPayFlag] = useState(false);
   const { data: hospitialConfigData } = usePatientApi.获取医院挷卡配置信息({
+    needInit: true,
+  });
+  const {
+    data: { data: infoData },
+  } = useCommonApi.注意事项内容查询({
+    params: {
+      noticeType: 'GHXY',
+      noticeMethod: 'WBK',
+    },
     needInit: true,
   });
   const {
@@ -152,7 +165,7 @@ export default () => {
       // text: selectedPatient?.patientName || '-',
       text: selectedPatient?.patientName
         ? `${selectedPatient?.patientName} | ${
-            selectedPatient?.patientSex === 'F' ? '女' : '男'
+            PatGender[selectedPatient?.patientSex] || ''
           } | ${selectedPatient?.patientAge || '未知'}岁`
         : '-',
     },
@@ -332,7 +345,7 @@ export default () => {
           doctorName: confirmInfo?.doctorName,
           // patientName: selectedPatient?.patientName,
           patientName: `${selectedPatient?.patientName} | ${
-            selectedPatient?.patientSex === 'M' ? '男' : '女'
+            PatGender[selectedPatient?.patientSex] || ''
           } | ${selectedPatient?.patientAge || '未知'}岁`,
           patCardNo: selectedPatient?.patHisNo,
           patientFullIdNo: decrypt(selectedPatient?.encryptIdNo),
@@ -440,6 +453,16 @@ export default () => {
       visitPeriod,
     ],
   );
+  const registerConfirm = useCallback(() => {
+    // 0元支付
+    if (Number(confirmInfo?.totalFee) === 0) {
+      handleRegisterConfim();
+    } else {
+      socialPayAuth().then(() => {
+        handleRegisterConfim();
+      });
+    }
+  }, [confirmInfo?.totalFee, handleRegisterConfim]);
   useUpdateEffect(() => {
     if (process.env.REMAX_APP_PLATFORM === 'app') {
       const href = window.location.href;
@@ -582,13 +605,10 @@ export default () => {
           [styles.buttonAli]: PLATFORM === 'ali',
         })}
         onTap={() => {
-          // 0元支付
-          if (Number(confirmInfo?.totalFee) === 0) {
-            handleRegisterConfim();
+          if (infoData?.[0]?.noticeInfo) {
+            setVisible(true);
           } else {
-            socialPayAuth().then(() => {
-              handleRegisterConfim();
-            });
+            registerConfirm();
           }
         }}
         loading={payFlag}
@@ -601,6 +621,14 @@ export default () => {
         show={show}
         close={() => clearTimer()}
         nucleicJumpParams={nucleicJumpParams}
+      />
+      <RegisterNotice
+        show={visible}
+        close={() => setVisible(false)}
+        content={infoData?.[0]?.noticeInfo || ''}
+        confirm={() => {
+          registerConfirm();
+        }}
       />
     </View>
   );

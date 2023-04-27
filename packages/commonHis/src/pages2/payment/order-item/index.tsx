@@ -9,6 +9,7 @@ import useGetParams from '@/utils/useGetParams';
 import { Form, PartTitle, Table, Space } from '@kqinfo/ui';
 import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
 import { formDate } from '@/utils';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -56,7 +57,7 @@ export default () => {
   const infoList = [
     {
       label: '就诊人',
-      text: `${patientName} | ${gender === 'M' ? '男' : '女'} | ${age}岁`,
+      text: `${patientName} | ${PatGender[gender] || ''} | ${age}岁`,
     },
     {
       label: '就诊号',

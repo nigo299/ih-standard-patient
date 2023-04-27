@@ -40,6 +40,7 @@ import dayjs from 'dayjs';
 import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/cascade-picker';
 import useGetParams from '@/utils/useGetParams';
 import { useHisConfig } from '@/hooks';
+import { PatGender } from '@/config/dict';
 
 interface CardType {
   birthday: string;
@@ -199,7 +200,7 @@ export default memo(() => {
                 setIsBrithday(false);
               }
               form.setFieldsValue({
-                patientSexed: options[0]?.patientSex === 'M' ? '男' : '女',
+                patientSexed: PatGender[options[0]?.patientSex] || '',
                 patientSex: options[0]?.patientSex,
                 brithdayed: options[0]?.birthday?.slice(0, 10),
                 addressed: options[0]?.address,
@@ -243,44 +244,44 @@ export default memo(() => {
         }
 
         if (checkPhoneFlag) {
-          // 判断成人儿童表单需要识别的身份信息
-          const idNo =
-            values['patientType'] === '1'
-              ? values['parentIdNo']
-              : values['idNo'];
-          const name =
-            values['patientType'] === '1'
-              ? values['parentName']
-              : values['patientName'];
+          // // 判断成人儿童表单需要识别的身份信息
+          // const idNo =
+          //   values['patientType'] === '1'
+          //     ? values['parentIdNo']
+          //     : values['idNo'];
+          // const name =
+          //   values['patientType'] === '1'
+          //     ? values['parentName']
+          //     : values['patientName'];
           const birthday =
             values['idType'] === '1'
               ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
               : `${values['birthday']} 00:00:00`;
 
-          console.log(
-            'valuse',
-            values,
-            selectCard,
-            'selectCard',
-            'birthday',
-            birthday,
-          );
-          if (
-            bindcardProdiles?.isFace === 1 &&
-            !faceInfo.success &&
-            faceInfo.idNo !== idNo &&
-            faceInfo.name !== name
-          ) {
-            setFaceInfo({
-              idNo,
-              name,
-              success: false,
-            });
-            navigateTo({
-              url: '/pages2/usercenter/face-verify/index',
-            });
-            return;
-          }
+          // console.log(
+          //   'valuse',
+          //   values,
+          //   selectCard,
+          //   'selectCard',
+          //   'birthday',
+          //   birthday,
+          // );
+          // if (
+          //   bindcardProdiles?.isFace === 1 &&
+          //   !faceInfo.success &&
+          //   faceInfo.idNo !== idNo &&
+          //   faceInfo.name !== name
+          // ) {
+          //   setFaceInfo({
+          //     idNo,
+          //     name,
+          //     success: false,
+          //   });
+          //   navigateTo({
+          //     url: '/pages2/usercenter/face-verify/index',
+          //   });
+          //   return;
+          // }
           const patientAge =
             btnSubType === 'add'
               ? analyzeIDCard(values['idNo']).analyzeAge
@@ -347,10 +348,8 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles.childrenMaxAge,
-      bindcardProdiles.isFace,
+      bindcardProdiles,
       btnSubType,
-      faceInfo,
       form,
       getPatientList,
       handleAdd,
@@ -850,7 +849,7 @@ export default memo(() => {
                       setSelectCard(current);
                       form.setFieldsValue({
                         patientSex: current.patientSex,
-                        patientSexed: current.patientSex === 'M' ? '男' : '女',
+                        patientSexed: PatGender[current.patientSex] || '',
                         birthday: current.birthday,
                         brithdayed: current.birthday,
                         addressed: current.address,

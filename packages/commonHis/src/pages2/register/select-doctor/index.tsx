@@ -26,7 +26,6 @@ enum DoctorType {
 
 export default () => {
   const { config } = useHisConfig();
-  console.log(config);
 
   const { setDeptDetail } = registerState.useContainer();
   const { deptId, type = 'default' } = useGetParams<{
@@ -36,7 +35,7 @@ export default () => {
   const {
     request: requestScheduleList,
     loading,
-    data: { data: scheduleList },
+    data: { data: originScheduleList },
   } = useApi.查询科室排班日期({
     initValue: {
       data: [],
@@ -46,18 +45,28 @@ export default () => {
     },
     needInit: !!deptId,
   });
+
+  /** 当日挂号的时候不选择日期的号源 */
+  const scheduleList = useMemo(() => {
+    if (type === 'day') {
+      return originScheduleList?.filter(
+        (i) => i.scheduleDate === dayjs().format('YYYY-MM-DD'),
+      );
+    }
+    return originScheduleList;
+  }, [originScheduleList, type]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [doctorType, setDoctorType] = useState<DoctorType>(DoctorType.all);
   const [date, setDate] = useEffectState(
     useMemo(() => {
       let newDate;
-      if (type === 'reserve') {
+      if (type === 'reserve' && !config.showTodayRegisterSourceInReserve) {
         newDate =
           scheduleList?.find(
             ({ scheduleDate, status }) =>
               scheduleDate !== dayjs().format('YYYY-MM-DD') && status === 1,
           )?.scheduleDate || scheduleList?.[1]?.scheduleDate;
-      } else if (type === 'day') {
+      } else if (type === 'day' || config.showTodayRegisterSourceInReserve) {
         newDate = dayjs().format('YYYY-MM-DD');
       } else {
         newDate = scheduleList?.find(
@@ -65,7 +74,7 @@ export default () => {
         )?.scheduleDate;
       }
       return dayjs(newDate);
-    }, [scheduleList, type]),
+    }, [config, scheduleList, type]),
   );
 
   const {
@@ -117,12 +126,16 @@ export default () => {
     let canSelectAndHasSource;
 
     if (type === 'reserve') {
-      canSelectAndHasSource = scheduleList?.some(
-        ({ scheduleDate, status }) =>
+      canSelectAndHasSource = scheduleList?.some(({ scheduleDate, status }) => {
+        if (config.showTodayRegisterSourceInReserve) {
+          return day.isSame(scheduleDate) && status === 1;
+        }
+        return (
           scheduleDate !== dayjs().format('YYYY-MM-DD') &&
           day.isSame(scheduleDate) &&
-          status === 1,
-      );
+          status === 1
+        );
+      });
     } else if (type === 'day') {
       canSelectAndHasSource = scheduleList?.some(
         ({ scheduleDate, status }) =>
@@ -155,12 +168,16 @@ export default () => {
   };
   const renderCanChoose = (day: dayjs.Dayjs) => {
     if (type === 'reserve') {
-      return scheduleList?.some(
-        ({ scheduleDate, status }) =>
+      return scheduleList?.some(({ scheduleDate, status }) => {
+        if (config.showTodayRegisterSourceInReserve) {
+          return day.isSame(scheduleDate) && status === 1;
+        }
+        return (
           scheduleDate !== dayjs().format('YYYY-MM-DD') &&
           day.isSame(scheduleDate) &&
-          status === 1,
-      );
+          status === 1
+        );
+      });
     } else if (type === 'day') {
       return scheduleList?.some(
         ({ scheduleDate, status }) =>
@@ -257,7 +274,7 @@ export default () => {
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         )?.status === 1 ? (
           newDoctorList?.length >= 1 &&
-          newDoctorList?.map((item, index) => {
+          newDoctorList?.map((item) => {
             if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
               return (
                 <ShowPrice

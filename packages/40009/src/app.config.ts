@@ -75,6 +75,8 @@ const subPackages = [
       'nucleic/select-combo/index', // 自助核酸检测选择套餐
       'nucleic/upload/index', // 网约出租车核酸上传图片
       'nucleic/confirm/index', // 自助核酸检测确认订单
+      'debugger/index', //debug页面
+      'clearstorage/index', //清除缓存页面
     ],
   },
   // 适老版页面

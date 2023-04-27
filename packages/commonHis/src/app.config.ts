@@ -82,6 +82,8 @@ const subPackages = [
       'diagnosis/order-detail/caseHistory', //门诊病历
       'diagnosis/order-detail/prescription', //门诊处方详情
       'diagnosis/order-detail/beInHisDocAd', //住院医嘱
+      'debugger/index', //debug页面
+      'clearstorage/index', //清除缓存页面
     ],
   },
   // 适老版页面

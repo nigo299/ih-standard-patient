@@ -10,6 +10,7 @@ import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import useGetParams from '@/utils/useGetParams';
 import useGetExpensesDayDetail from '@/pages2/inhosp/inventory/hooks/useGetExpensesDayDetail';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -55,7 +56,7 @@ export default () => {
               <Space alignItems="center" className={styles.patName}>
                 {liveData?.patientName}
                 <View className={styles.patInfo}>
-                  {liveData?.patientSex === 'M' ? '男' : '女'}
+                  {PatGender[liveData?.patientSex] || ''}
                   {liveData?.patientAge}岁
                 </View>
               </Space>

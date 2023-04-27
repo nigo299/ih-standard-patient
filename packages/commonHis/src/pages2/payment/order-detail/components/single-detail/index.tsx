@@ -38,6 +38,7 @@ import styles from '@/pages2/payment/order-detail/components/single-detail/index
 import { MedicalPayType } from '@/apis/register';
 import storage from '@/utils/storage';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { orderId } = useGetParams<{ orderId: string }>();
@@ -82,7 +83,7 @@ export default () => {
     {
       label: '就诊人',
       text: `${orderDetail?.patientName} | ${
-        orderDetail?.patientSex === 'M' ? '男' : '女'
+        PatGender[orderDetail?.patientSex] || ''
       } | ${orderDetail?.patientAge}岁`,
     },
     {

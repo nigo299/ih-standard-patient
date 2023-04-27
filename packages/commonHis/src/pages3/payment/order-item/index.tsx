@@ -8,6 +8,7 @@ import { ListItem, RegisterCardOld } from '@/components';
 import useGetParams from '@/utils/useGetParams';
 import { PartTitle } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -44,7 +45,7 @@ export default () => {
     },
     {
       label: '性别',
-      text: waitOpDetail?.gender === 'M' ? '男' : '女',
+      text: PatGender[waitOpDetail?.gender] || '',
     },
     {
       label: '年龄',

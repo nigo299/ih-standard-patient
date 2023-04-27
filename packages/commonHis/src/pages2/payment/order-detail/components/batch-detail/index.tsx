@@ -40,6 +40,7 @@ import storage from '@/utils/storage';
 import payState, { OrderInfoType } from '@/stores/pay';
 import usePayApi from '@/apis/pay';
 import socialPayAuth from '@/utils/socialPayAuth';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { orderId } = useGetParams<{ orderId: string }>();
@@ -91,7 +92,7 @@ export default () => {
     {
       label: '就诊人',
       text: `${orderDetail?.patientName} | ${
-        orderDetail?.patientSex === 'M' ? '男' : '女'
+        PatGender[orderDetail?.patientSex] || ''
       } | ${orderDetail?.patientAge}岁`,
     },
     {
@@ -206,7 +207,7 @@ export default () => {
             doctorName: data?.doctorName,
             // patientName: `${waitOpList[0].patientName}`,
             patientName: `${selectedItem?.patientInfo?.patientName} | ${
-              selectedItem?.patientInfo?.patientSex === 'M' ? '男' : '女'
+              PatGender[selectedItem?.patientInfo?.patientSex] || ''
             } | ${selectedItem?.patientInfo?.patientAge || '未知'}`,
             patCardNo: orderDetail?.patCardNo,
             patientFullIdNo: decrypt(

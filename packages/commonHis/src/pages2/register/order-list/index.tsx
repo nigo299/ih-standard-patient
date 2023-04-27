@@ -16,6 +16,7 @@ import useApi from '@/apis/register';
 import classNames from 'classnames';
 import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
+import { PatGender } from '@/config/dict';
 
 export default memo(() => {
   const {
@@ -117,7 +118,7 @@ export default memo(() => {
                           colon={false}
                         />
                         <View className={styles.name2}>{`${
-                          order.patientSex === 'M' ? '男' : '女'
+                          PatGender[order.patientSex] || ''
                         } | ${order.patientAge}`}</View>
                       </Space>
                       <View className={styles.bizName}>{order?.bizName}</View>

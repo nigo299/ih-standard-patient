@@ -11,6 +11,7 @@ import showModal from '@/utils/showModal';
 import useApi from '@/apis/common';
 import { ListItem } from '@/components';
 import styles from './index.less';
+import { PatGender } from '@/config/dict';
 
 interface QueryDataType {
   averageTime: string;
@@ -147,7 +148,7 @@ export default () => {
           <Space vertical className={styles.patientText}>
             <View>
               <Text className={styles.bold}>{patientName}</Text>{' '}
-              {`${patientSex === 'M' ? '男' : '女'} | ${patientAge}`}
+              {`${PatGender[patientSex] || ''} | ${patientAge}`}
             </View>
             <View>{patHisNo}</View>
           </Space>

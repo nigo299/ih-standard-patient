@@ -40,6 +40,7 @@ import storage from '@/utils/storage';
 import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import { FormInstance } from 'rc-field-form/es/interface';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const isLogin = useMemo(() => !!storage.get('login_access_token'), []);
@@ -166,7 +167,7 @@ export default () => {
         doctorName: data?.doctorName,
         // patientName: `${waitOpList[0].patientName}`,
         patientName: `${selectItem?.patientInfo?.patientName} | ${
-          selectItem?.patientInfo?.patientSex === 'M' ? '男' : '女'
+          PatGender[selectItem?.patientInfo?.patientSex] || ''
         } | ${selectItem?.patientInfo?.patientAge || '未知'}`,
         patCardNo: originalList[0]?.patCardNo,
         patientFullIdNo: decrypt(selectItem?.patientInfo?.encryptIdNo),

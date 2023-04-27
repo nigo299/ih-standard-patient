@@ -102,7 +102,7 @@ export default () => {
           患者提前<Text style={{ color: '#FF9743' }}>预约号源</Text>
         </View>
       ),
-      url: '/pages2/register/department/index?type=reserve',
+      url: '/pages2/register/department/index?type=default',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
     },
@@ -123,7 +123,7 @@ export default () => {
           报告结果<Text style={{ color: '#FF9743' }}>实时查询</Text>
         </View>
       ),
-      url: `/pages/report/report-list/index?patientId=${patientId}`,
+      url: `/pages/report/report-list/index`,
       image: `${IMAGE_DOMIN}/home/bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
@@ -252,6 +252,7 @@ export default () => {
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/ybzc.png`,
+            open: true,
             onClick: () =>
               (window.location.href =
                 'https://mp.weixin.qq.com/s/_X3r9QceeDPBcmTlHlo32Q'),
