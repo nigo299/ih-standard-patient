@@ -312,7 +312,7 @@ export default () => {
       const { code, msg } = await useApi.取消锁号.request({
         orderId,
         cancelReason: cancelVal || cancelValStorage || '',
-        payAuthNo,
+        payAuthNo: payAuthNo || '',
         extFields: cancelExtFields,
       });
       if (code === 0) {
