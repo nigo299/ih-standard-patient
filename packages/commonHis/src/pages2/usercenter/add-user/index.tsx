@@ -8,7 +8,13 @@ import {
   redirectTo,
 } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { analyzeIDCard, checkPhoneForm, decrypt, parseAge } from '@/utils';
+import {
+  analyzeIDCard,
+  checkPhoneForm,
+  decrypt,
+  getAgeByBirthDay,
+  parseAge,
+} from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { WhiteSpace, Tip } from '@/components';
 import useApi, { HisCardType } from '@/apis/usercenter';
@@ -282,18 +288,24 @@ export default memo(() => {
           //   });
           //   return;
           // }
-          const patientAge =
+          let patientAge =
             btnSubType === 'add'
               ? analyzeIDCard(values['idNo']).analyzeAge
               : selectCard.patientAge;
+
+          const submitBirthDay =
+            btnSubType === 'add' || !isBrithday
+              ? birthday
+              : selectCard.birthday;
+          if (!patientAge && submitBirthDay) {
+            patientAge = getAgeByBirthDay(submitBirthDay) || 0;
+          }
+
           const params = {
             ...values,
             yibaoNo: '',
             patCardType: 21,
-            birthday:
-              btnSubType === 'add' || !isBrithday
-                ? birthday
-                : selectCard.birthday,
+            birthday: submitBirthDay,
             patientSex:
               btnSubType === 'add'
                 ? values['patientSex']
