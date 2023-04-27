@@ -87,6 +87,8 @@ export default memo(() => {
   const [checked, setChecked] = useState(true);
   // 非身份建档his有可能返回出生日期为空、需要用户手动选择出生日期
   const [isBrithday, setIsBrithday] = useState(true);
+  // 当查询出来的出生日期为空时，动态获取当前是否是儿童
+  const [isChild, setIsChild] = useState(false);
   const [defaulted, setDefaulted] = useState(false);
   const [btnSubType, setBtnSubType] = useState<'add' | 'bind' | 'search'>(
     'search',
@@ -105,6 +107,7 @@ export default memo(() => {
     patientAge: '',
   });
   const [form] = Form.useForm();
+
   const {
     data: { data: bindcardProdiles },
   } = useApi.获取医院挷卡配置信息({
@@ -124,6 +127,7 @@ export default memo(() => {
       },
     },
   });
+
   const { request: handleSearch, loading: searchLoading } =
     useApi.查询就诊人绑定卡号({
       needInit: false,
@@ -131,6 +135,7 @@ export default memo(() => {
   const { request: handleAdd, loading: addLoading } = useApi.建档绑卡({
     needInit: false,
   });
+
   const handleFormSubmit = useCallback(
     async (values: any) => {
       delete values['checked'];
@@ -459,6 +464,7 @@ export default memo(() => {
       clearCountdownTimer();
     };
   }, [clearCountdownTimer]);
+
   return (
     <View className={styles.page}>
       <Form form={form} onFinish={(values: any) => handleFormSubmit(values)}>
@@ -821,6 +827,18 @@ export default memo(() => {
                     mode={'date'}
                     start={dayjs().format('1900-01-01')}
                     end={dayjs().format('YYYY-MM-DD')}
+                    onChange={(birthday: any) => {
+                      const age = getAgeByBirthDay(birthday);
+                      if (age === undefined || !bindcardProdiles) {
+                        return;
+                      }
+                      const innerIsChild =
+                        age < bindcardProdiles.childrenMaxAge;
+                      setIsChild(innerIsChild);
+                      form.setFieldsValue({
+                        patientType: innerIsChild ? '1' : '0',
+                      });
+                    }}
                   >
                     请选择
                   </Picker>
@@ -917,8 +935,8 @@ export default memo(() => {
 
         {(!checked ||
           (selectCard?.idNo &&
-            Number(selectCard.patientAge) <
-              bindcardProdiles?.childrenMaxAge)) && (
+            Number(selectCard.patientAge) < bindcardProdiles?.childrenMaxAge) ||
+          (!isBrithday && isChild)) && (
           <FormItem noStyle>
             {(_, __, { getFieldValue }) => {
               const parentIdType = getFieldValue('parentIdType') || '1';
