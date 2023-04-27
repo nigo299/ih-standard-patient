@@ -51,7 +51,7 @@ export default () => {
         itemTotalFee: inventoryDetail?.totalFee || 0,
       },
     ];
-  }, [inventoryDetail.totalFee]);
+  }, [inventoryDetail?.totalFee]);
   usePageEvent('onShow', () => {
     reportCmPV({ title: '住院日清单查询' });
     setNavigationBar({
