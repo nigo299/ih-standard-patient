@@ -357,17 +357,9 @@ export default () => {
               });
             });
           } else {
-            if (nav.title === '报告查询') {
-              navigateTo({
-                url: `${nav.url}${
-                  patient.filter((item) => item.isDefault === 1)[0].patientId
-                }`,
-              });
-            } else {
-              navigateTo({
-                url: nav.url,
-              });
-            }
+            navigateTo({
+              url: nav.url,
+            });
           }
         });
         return;
