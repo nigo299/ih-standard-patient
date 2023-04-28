@@ -15,6 +15,7 @@ import { returnUrl } from '@/utils';
 import { PLATFORM, PAY_TYPE } from '@/config/constant';
 import dayjs from 'dayjs';
 import styles from './index.less';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -110,7 +111,7 @@ export default () => {
           deptName: deptName,
           doctorName: doctorName,
           patientName: `${defaultPatientInfo?.patientName} | ${
-            defaultPatientInfo?.patientSex === 'M' ? '男' : '女'
+            PatGender[defaultPatientInfo?.patientSex] || ''
           } | ${
             analyzeIDCard(defaultPatientInfo?.patientFullIdNo)?.analyzeAge ||
             '未知'
@@ -173,7 +174,7 @@ export default () => {
           </View>
           <View className={styles.headText}>
             <Text>{`性别:   ${
-              defaultPatientInfo?.patientSex === 'M' ? '男' : '女'
+              PatGender[defaultPatientInfo?.patientSex] || ''
             }`}</Text>
             <Text className={styles.headText2}>{`年龄:   ${
               defaultPatientInfo?.patientAge || ''

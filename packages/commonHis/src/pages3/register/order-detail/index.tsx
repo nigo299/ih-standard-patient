@@ -14,6 +14,7 @@ import dayjs from 'dayjs';
 import styles from './index.less';
 import classNames from 'classnames';
 import setPageStyle from '@/utils/setPageStyle';
+import { PatGender } from '@/config/dict';
 
 const cancelItems = [
   { value: '不想去', checked: false },
@@ -145,7 +146,7 @@ export default () => {
           deptName: deptName,
           doctorName: doctorName,
           patientName: `${patientName} | ${
-            patientSex === 'M' ? '男' : '女'
+            PatGender[patientSex] || ''
           } | ${patientAge}岁`,
           patCardNo,
           registerTime: `${formDate(visitDate).slice(

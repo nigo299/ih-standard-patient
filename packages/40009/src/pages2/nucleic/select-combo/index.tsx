@@ -247,7 +247,7 @@ export default () => {
 
             <Space className={styles.tip}>
               <ColorText>*</ColorText>
-              <View> 我院提供24小时核酸检测服务</View>
+              <View> 我院提供绿码核酸单检服务</View>
             </Space>
           </>
         ) : (

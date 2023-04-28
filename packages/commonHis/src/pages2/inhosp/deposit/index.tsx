@@ -23,6 +23,7 @@ import { returnUrl } from '@/utils';
 import BigNumber from 'bignumber.js';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -76,7 +77,7 @@ export default () => {
             deptName,
             doctorName: '',
             patientName: `${patientName} | ${
-              analyzeIDCard(idNo)?.analyzeSex === 'M' ? '男' : '女'
+              PatGender[analyzeIDCard(idNo)?.analyzeSex as string] || ''
             } | ${analyzeIDCard(idNo)?.analyzeAge || '未知'}岁`,
             patCardNo: patCardNo,
             totalFee: Number(new BigNumber(payCash).times(100)),

@@ -102,7 +102,7 @@ export default () => {
           患者提前<Text style={{ color: '#FF9743' }}>预约号源</Text>
         </View>
       ),
-      url: '/pages2/register/department/index?type=reserve',
+      url: '/pages2/register/department/index?type=default',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
     },
@@ -252,6 +252,7 @@ export default () => {
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/ybzc.png`,
+            open: true,
             onClick: () =>
               (window.location.href =
                 'https://mp.weixin.qq.com/s/_X3r9QceeDPBcmTlHlo32Q'),
@@ -356,17 +357,9 @@ export default () => {
               });
             });
           } else {
-            if (nav.title === '报告查询') {
-              navigateTo({
-                url: `${nav.url}${
-                  patient.filter((item) => item.isDefault === 1)[0].patientId
-                }`,
-              });
-            } else {
-              navigateTo({
-                url: nav.url,
-              });
-            }
+            navigateTo({
+              url: nav.url,
+            });
           }
         });
         return;

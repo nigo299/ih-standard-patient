@@ -18,6 +18,7 @@ import { navigateTo } from 'remax/one';
 import useApi from '@/apis/common';
 import useGetParams from '@/utils/useGetParams';
 import dayjs from 'dayjs';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { patHisNo } = useGetParams<{ patHisNo: string }>();
@@ -87,7 +88,7 @@ export default () => {
                 </Space>
                 <Space justify={'space-between'}>
                   <FormItem label={'性别'}>
-                    {resultData?.patSex === 'M' ? '男' : '女'}
+                    {PatGender[resultData?.patSex] || ''}
                   </FormItem>
                   <FormItem label={'年龄'} className={styles.itemText}>
                     {resultData?.patAge + '岁'}

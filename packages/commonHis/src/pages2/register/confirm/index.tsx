@@ -44,6 +44,7 @@ import patientState from '@/stores/patient';
 import styles from './index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
 import useCommonApi from '@/apis/common';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -164,7 +165,7 @@ export default () => {
       // text: selectedPatient?.patientName || '-',
       text: selectedPatient?.patientName
         ? `${selectedPatient?.patientName} | ${
-            selectedPatient?.patientSex === 'F' ? '女' : '男'
+            PatGender[selectedPatient?.patientSex] || ''
           } | ${selectedPatient?.patientAge || '未知'}岁`
         : '-',
     },
@@ -344,7 +345,7 @@ export default () => {
           doctorName: confirmInfo?.doctorName,
           // patientName: selectedPatient?.patientName,
           patientName: `${selectedPatient?.patientName} | ${
-            selectedPatient?.patientSex === 'M' ? '男' : '女'
+            PatGender[selectedPatient?.patientSex] || ''
           } | ${selectedPatient?.patientAge || '未知'}岁`,
           patCardNo: selectedPatient?.patHisNo,
           patientFullIdNo: decrypt(selectedPatient?.encryptIdNo),

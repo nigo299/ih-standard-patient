@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import openLocation from '@/utils/openLocation';
 import setNavigationBar from '@/utils/setNavigationBar';
 import {
   Space,

@@ -9,6 +9,7 @@ import useApi from '@/apis/payment';
 import classNames from 'classnames';
 import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const {
@@ -54,7 +55,7 @@ export default () => {
                           colon={false}
                         />
                         <View className={styles.name2}>{`${
-                          order.patientSex === 'M' ? '男' : '女'
+                          PatGender[order.patientSex] || ''
                         } | ${order.patientAge}岁`}</View>
                       </Space>
                       <Space className={styles.price}>

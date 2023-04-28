@@ -42,6 +42,7 @@ import reportCmPV from '@/alipaylog/reportCmPV';
 import storage from '@/utils/storage';
 import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
+import { PatGender } from '@/config/dict';
 
 export default () => {
   const { setOrderInfo } = payState.useContainer();
@@ -71,7 +72,7 @@ export default () => {
       return false;
     }
     return true;
-  }, [waitOpList?.length, selectList.length]);
+  }, [selectList, waitOpList]);
   const handlePay = useCallback(
     async (payAuthNo?: string) => {
       if (process.env.REMAX_APP_PLATFORM === 'app') {
@@ -136,7 +137,7 @@ export default () => {
         deptName: data?.deptName,
         doctorName: data?.doctorName,
         patientName: `${waitOpList[0].patientName} | ${
-          waitOpList[0].gender === 'M' ? '男' : '女'
+          PatGender[waitOpList[0].gender] || ''
         } | ${waitOpList[0].age || '未知'}岁`,
         // patientName: `${waitOpList[0].patientName} | ${
         //   waitOpList[0].gender === 'M' ? '男' : '女'
@@ -195,6 +196,7 @@ export default () => {
           });
           if (result.code === 0 && result.data) {
             if (medicalPay) {
+              console.log(orderInfo, 'orderinfo');
               setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
               navigateTo({
                 url: `/pages/pay/index?mode=medical`,
@@ -374,9 +376,9 @@ export default () => {
                       !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
                     }
                   >
-                    {`${item.patientName} ${
-                      item.gender === 'M' ? '男' : '女'
-                    } | ${item.age}岁`}
+                    {`${item.patientName} ${PatGender[item.gender] || ''} | ${
+                      item.age
+                    }岁`}
                   </View>
                   <View className={styles.td}>
                     <FormItem

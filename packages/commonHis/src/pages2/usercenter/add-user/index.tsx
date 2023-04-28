@@ -8,7 +8,13 @@ import {
   redirectTo,
 } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { analyzeIDCard, checkPhoneForm, decrypt, parseAge } from '@/utils';
+import {
+  analyzeIDCard,
+  checkPhoneForm,
+  decrypt,
+  getAgeByBirthDay,
+  parseAge,
+} from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { WhiteSpace, Tip } from '@/components';
 import useApi, { HisCardType } from '@/apis/usercenter';
@@ -40,6 +46,7 @@ import dayjs from 'dayjs';
 import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/cascade-picker';
 import useGetParams from '@/utils/useGetParams';
 import { useHisConfig } from '@/hooks';
+import { PatGender } from '@/config/dict';
 
 interface CardType {
   birthday: string;
@@ -80,6 +87,8 @@ export default memo(() => {
   const [checked, setChecked] = useState(true);
   // 非身份建档his有可能返回出生日期为空、需要用户手动选择出生日期
   const [isBrithday, setIsBrithday] = useState(true);
+  // 当查询出来的出生日期为空时，动态获取当前是否是儿童
+  const [isChild, setIsChild] = useState(false);
   const [defaulted, setDefaulted] = useState(false);
   const [btnSubType, setBtnSubType] = useState<'add' | 'bind' | 'search'>(
     'search',
@@ -98,6 +107,7 @@ export default memo(() => {
     patientAge: '',
   });
   const [form] = Form.useForm();
+
   const {
     data: { data: bindcardProdiles },
   } = useApi.获取医院挷卡配置信息({
@@ -117,6 +127,7 @@ export default memo(() => {
       },
     },
   });
+
   const { request: handleSearch, loading: searchLoading } =
     useApi.查询就诊人绑定卡号({
       needInit: false,
@@ -124,6 +135,7 @@ export default memo(() => {
   const { request: handleAdd, loading: addLoading } = useApi.建档绑卡({
     needInit: false,
   });
+
   const handleFormSubmit = useCallback(
     async (values: any) => {
       delete values['checked'];
@@ -199,7 +211,7 @@ export default memo(() => {
                 setIsBrithday(false);
               }
               form.setFieldsValue({
-                patientSexed: options[0]?.patientSex === 'M' ? '男' : '女',
+                patientSexed: PatGender[options[0]?.patientSex] || '',
                 patientSex: options[0]?.patientSex,
                 brithdayed: options[0]?.birthday?.slice(0, 10),
                 addressed: options[0]?.address,
@@ -281,22 +293,30 @@ export default memo(() => {
           //   });
           //   return;
           // }
-          const patientAge =
+          let patientAge =
             btnSubType === 'add'
               ? analyzeIDCard(values['idNo']).analyzeAge
               : selectCard.patientAge;
+
+          const submitBirthDay =
+            btnSubType === 'add' || !isBrithday
+              ? birthday
+              : selectCard.birthday;
+          if (!patientAge && submitBirthDay) {
+            patientAge = getAgeByBirthDay(submitBirthDay) || 0;
+          }
+
+          const submitPatientSex =
+            btnSubType === 'add'
+              ? values['patientSex']
+              : selectCard.patientSex || values['patientSex'];
+
           const params = {
             ...values,
             yibaoNo: '',
             patCardType: 21,
-            birthday:
-              btnSubType === 'add' || !isBrithday
-                ? birthday
-                : selectCard.birthday,
-            patientSex:
-              btnSubType === 'add'
-                ? values['patientSex']
-                : selectCard.patientSex,
+            birthday: submitBirthDay,
+            patientSex: submitPatientSex,
             isNewCard: btnSubType === 'add' ? 1 : 0,
             patientType: values['patientType']
               ? values['patientType']
@@ -444,6 +464,7 @@ export default memo(() => {
       clearCountdownTimer();
     };
   }, [clearCountdownTimer]);
+
   return (
     <View className={styles.page}>
       <Form form={form} onFinish={(values: any) => handleFormSubmit(values)}>
@@ -806,19 +827,59 @@ export default memo(() => {
                     mode={'date'}
                     start={dayjs().format('1900-01-01')}
                     end={dayjs().format('YYYY-MM-DD')}
+                    onChange={(birthday: any) => {
+                      const age = getAgeByBirthDay(birthday);
+                      if (age === undefined || !bindcardProdiles) {
+                        return;
+                      }
+                      const innerIsChild =
+                        age < bindcardProdiles.childrenMaxAge;
+                      setIsChild(innerIsChild);
+                      form.setFieldsValue({
+                        patientType: innerIsChild ? '1' : '0',
+                      });
+                    }}
                   >
                     请选择
                   </Picker>
                 </FormItem>
               )}
 
-              <FormItem label={'性别'} name="patientSexed">
-                <ReInput
-                  type="text"
-                  className={classNames(styles.reInput, styles.disabled)}
-                  placeholderClassName={styles.placeholder}
-                />
-              </FormItem>
+              {selectCard?.patientSex ? (
+                <FormItem label={'性别'} name="patientSexed">
+                  <ReInput
+                    type="text"
+                    className={classNames(styles.reInput, styles.disabled)}
+                    placeholderClassName={styles.placeholder}
+                  />
+                </FormItem>
+              ) : (
+                <FormItem
+                  label={'性别'}
+                  name="patientSex"
+                  after={
+                    <Image
+                      src={`${IMAGE_DOMIN}/usercenter/down.png`}
+                      className={styles.icon}
+                    />
+                  }
+                  rules={[
+                    {
+                      required: true,
+                    },
+                  ]}
+                >
+                  <Picker
+                    cols={1}
+                    data={[
+                      { label: '男', value: 'M' },
+                      { label: '女', value: 'F' },
+                    ]}
+                  >
+                    请选择
+                  </Picker>
+                </FormItem>
+              )}
 
               <FormItem
                 label={'选择就诊卡'}
@@ -848,7 +909,7 @@ export default memo(() => {
                       setSelectCard(current);
                       form.setFieldsValue({
                         patientSex: current.patientSex,
-                        patientSexed: current.patientSex === 'M' ? '男' : '女',
+                        patientSexed: PatGender[current.patientSex] || '',
                         birthday: current.birthday,
                         brithdayed: current.birthday,
                         addressed: current.address,
@@ -874,8 +935,8 @@ export default memo(() => {
 
         {(!checked ||
           (selectCard?.idNo &&
-            Number(selectCard.patientAge) <
-              bindcardProdiles?.childrenMaxAge)) && (
+            Number(selectCard.patientAge) < bindcardProdiles?.childrenMaxAge) ||
+          (!isBrithday && isChild)) && (
           <FormItem noStyle>
             {(_, __, { getFieldValue }) => {
               const parentIdType = getFieldValue('parentIdType') || '1';

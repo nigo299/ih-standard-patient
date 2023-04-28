@@ -9,6 +9,8 @@ import dayjs from 'dayjs';
 import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import useGetParams from '@/utils/useGetParams';
+import { PatGender } from '@/config/dict';
+import useGetExpensesDayDetailExtFields from '@/pages2/inhosp/inventory/hooks/useGetExpensesDayDetailExtFields';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -21,6 +23,9 @@ export default () => {
     needInit: !!patientId,
   });
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+
+  const extFields = useGetExpensesDayDetailExtFields({ liveData });
+
   const {
     loading: dayLoading,
     data: { data: inventoryDetail },
@@ -35,6 +40,7 @@ export default () => {
       patientId,
       beginDate: selectDate,
       endDate: selectDate,
+      extFields,
     },
     needInit: true,
   });
@@ -66,7 +72,7 @@ export default () => {
               <Space alignItems="center" className={styles.patName}>
                 {liveData?.patientName}
                 <View className={styles.patInfo}>
-                  {liveData?.patientSex === 'M' ? '男' : '女'}
+                  {PatGender[liveData?.patientSex] || ''}
                   {liveData?.patientAge}岁
                 </View>
               </Space>
