@@ -411,7 +411,7 @@ export default () => {
             align={'between'}
             rowStyle={{ color: '#666', fontWeight: 'bold' }}
             columns={[
-              { title: '药品名称', dataIndex: 'itemName' },
+              { title: '项目名称', dataIndex: 'itemName' },
               { title: '规格', dataIndex: 'itemSpces' },
               // {
               //   title: '单价/元',
