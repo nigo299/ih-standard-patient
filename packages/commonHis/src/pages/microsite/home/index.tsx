@@ -9,28 +9,15 @@ import useApi from '@/apis/microsite';
 import { usePageEvent } from 'remax/macro';
 import { PreviewImage } from '@/components';
 import setNavigationBar from '@/utils/setNavigationBar';
-
+import { useHisConfig } from '@/hooks';
+import oldViews from './components/old-views';
+import OldViews from './components/old-views';
 export default () => {
+  const { config } = useHisConfig();
+  console.log(config.microSitesEntries);
+
   const banners: string[] = [`${IMAGE_DOMIN}/home/banner1.png`];
-  const HEADER_ACTIONS: Array<{
-    key: number;
-    icon: string;
-    title: string;
-    action: string;
-  }> = [
-    {
-      key: 0,
-      icon: `${IMAGE_DOMIN}/newhome/yyjs.png`,
-      title: '医院介绍',
-      action: '/pages/microsite/hospital-summary/index',
-    },
-    {
-      key: 1,
-      icon: `${IMAGE_DOMIN}/newhome/ksfb.png`,
-      title: '科室分布',
-      action: '/pages/microsite/dept-distribute/index',
-    },
-  ];
+
   const [activeIndex, setActiveIndex] = useState<number>(0); // banner 默认选中的值
   const { data, request } = useApi.获取文章列表({
     initValue: {
@@ -89,8 +76,8 @@ export default () => {
         </View>
       </View>
       <View className={styles['container-warp']}>
-        <View className={classnames(styles.header)}>
-          {HEADER_ACTIONS.map((item) => (
+        {config.microSitesEntries === 'SHOW_MORE_VIEWS' && <OldViews />}
+        {/* {HEADER_ACTIONS.map((item) => (
             <Shadow key={`header-item-${item.key}`} shadowColor={'#5f848e'}>
               <Space
                 alignItems="center"
@@ -115,8 +102,7 @@ export default () => {
                 <View className={styles.label}>{item.title}</View>
               </Space>
             </Shadow>
-          ))}
-        </View>
+          ))} */}
 
         <View className={styles['content-warp']}>
           <View className={styles['content-title-warp']}>
