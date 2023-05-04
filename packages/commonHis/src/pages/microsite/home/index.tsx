@@ -10,8 +10,8 @@ import { usePageEvent } from 'remax/macro';
 import { PreviewImage } from '@/components';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { useHisConfig } from '@/hooks';
-import oldViews from './components/old-views';
 import OldViews from './components/old-views';
+import ShowMoreViews from './components/show-more-views';
 export default () => {
   const { config } = useHisConfig();
   console.log(config.microSitesEntries);
@@ -76,34 +76,8 @@ export default () => {
         </View>
       </View>
       <View className={styles['container-warp']}>
-        {config.microSitesEntries === 'SHOW_MORE_VIEWS' && <OldViews />}
-        {/* {HEADER_ACTIONS.map((item) => (
-            <Shadow key={`header-item-${item.key}`} shadowColor={'#5f848e'}>
-              <Space
-                alignItems="center"
-                justify="center"
-                flex="auto"
-                className={styles['card-warp']}
-                onTap={() => {
-                  if (item.action) {
-                    navigateTo({
-                      url: item.action,
-                    });
-                  }
-                }}
-              >
-                <Space
-                  justify="center"
-                  alignItems="center"
-                  className={styles.icon}
-                >
-                  <Image src={item.icon} className={styles.image} />
-                </Space>
-                <View className={styles.label}>{item.title}</View>
-              </Space>
-            </Shadow>
-          ))} */}
-
+        {config.microSitesEntries === 'OLD_VIEWS' && <OldViews />}
+        {config.microSitesEntries === 'SHOW_MORE_VIEWS' && <ShowMoreViews />}
         <View className={styles['content-warp']}>
           <View className={styles['content-title-warp']}>
             <View className={styles.title}>医院动态</View>

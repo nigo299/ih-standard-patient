@@ -11,11 +11,20 @@ import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 
 export default () => {
-  const { type } = useGetParams<{ type: 'reserve' | 'day' }>();
+  const { type, summary } = useGetParams<{
+    type: 'reserve' | 'day';
+    summary: string;
+  }>();
   const { hospitalList, setDeptList } = regsiterState.useContainer();
   const handleSelect = useCallback(
     (dept: DeptType[]) => {
       setDeptList(dept);
+      if (!!summary) {
+        navigateTo({
+          url: `/pages/microsite/dept-summary/index`,
+        });
+        return;
+      }
       navigateTo({
         url: `/pages2/register/department/index?type=${type}`,
       });

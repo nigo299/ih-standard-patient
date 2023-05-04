@@ -75,13 +75,14 @@ export default createContainer(() => {
 
   const getDeptList = useCallback(async (type: string) => {
     const { data, code } = await useApi.查询科室列表.request();
+    const pages = getCurrentPageUrl();
     if (code === 0 && data?.length === 1) {
       const deptList =
         type && type === 'reserve'
           ? data[0].children.filter((item) => !item.name.includes('核酸'))
           : data[0].children;
       setDeptList(deptList);
-      const pages = getCurrentPageUrl();
+
       if (pages?.indexOf('register/department') === -1) {
         navigateTo({
           url: `/pages2/register/department/index?type=${type}`,
@@ -89,7 +90,14 @@ export default createContainer(() => {
       }
     }
     if (code === 0 && data?.length > 1) {
+      console.log(pages, 'pages');
       setHospitalList(data);
+      if (pages?.indexOf('microsite/dept-summary') !== -1) {
+        navigateTo({
+          url: `/pages2/register/select-hospital/index?type=${type}?summary=true`,
+        });
+        return;
+      }
       navigateTo({
         url: `/pages2/register/select-hospital/index?type=${type}`,
       });
