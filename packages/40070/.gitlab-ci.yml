@@ -1,25 +1,429 @@
-include:
-  - project: 'fe-his-groups/apps/common'
-    ref: main
-    file: '.gitlab-ci-template.yml'
+stages:
+  - build
+  - deploy
+  - prod-42
 
 workflow:
   rules:
+    # remove detached merge request pipelines
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
     - if: $CI_COMMIT_BRANCH =~ /^40070-.*/ || $CI_COMMIT_TAG =~ /^release-40070-.*/
-      variables:
-        HIS_ID: 40070
-        ENABLE_H5: 'true'
-        WORK_DIR: 'packages/40070'
-        DIST_PATH: 'packages/40070/dist'
       when: always
     - when: never
 
-#  这个job是为了gitlab 不报错，没有任何执行的逻辑
-jobs:
+variables:
+  BUILD_IMAGE: 'node:14'
+  PREPARE_CMD: yarn #安装依赖包的命令
+  DIST_PATH: packages/40009/dist #打包结果的路径
+  GIT_SUBMODULE_STRATEGY: recursive
+  # 部署的测试环境和开发环境的nginx根目录
+  TEST_DEPLOY_ROOT_PATH:
+    /opt/web/app/oper/static/websites/hospital/views/patients
+    # 部署的正式环境的nginx根目录
+  PROD_DEPLOY_ROOT_PATH:
+    /opt/web/web-projects/patients
+    # 部署的等保环境的nginx根目录
+  PROTECTION_DEPLOY_ROOT_PATH: /data/nginx/html/patients
+  # 取消git clean删除node_modules的操作  https://docs.gitlab.com/ee/ci/large_repositories/#store-custom-clone-options-in-configtoml
+  GIT_CLEAN_FLAGS: -ffdx -e node_modules/
+  # 使用此模板时需要重新hisId
+  HIS_ID: dev
+  # 是否启用h5
+  ENABLE_H5: 'false'
+  # 是否启用h5阿里小程序
+  ENABLE_ALI: 'false'
+  # 是否启用H5医保app
+  ENABLE_APP: 'false'
+  # 当前执行打包脚本的目录，主要用在仓库 https://ourgit.cqkqinfo.com/fe-his-groups/apps/monorepo
+  WORK_DIR: 'packages/40070'
+  # 版本号，防止测试环境和开发环境被占用
+  # API_VERSION: 1.0.0
+  # PROD_VERSION: 1.0.0
+before_script:
+  # 这段代码的意思是： 1、创建打包目录文件夹；2、如果之前有文件部署，这里删除对应的文件;3、粘贴打包产物到打包目录
+  - copyAndDeploy(){  mkdir -p $1/;rm -rf $1/*; cp -R $2/* $1/; echo "打包路径$1成功！"; };
+
+#------------- H5公众号开发环境 -------------
+build_development:
   stage: build
+  image: $BUILD_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_H5 == "true"
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:web:development #打包的命令
   script:
-    - exit 0
-  only:
-    - /none_exist/
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+development:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_H5 == "true"
+  script:
+    - |
+      if [ $API_VERSION ];then
+        copyAndDeploy $TEST_DEPLOY_ROOT_PATH/p$HIS_ID-his-test-$API_VERSION $DIST_PATH/web
+      else
+        copyAndDeploy $TEST_DEPLOY_ROOT_PATH/p$HIS_ID-his-test $DIST_PATH/web
+      fi
+  dependencies:
+    - build_development
+  tags:
+    - ih-front-test-dx-15
+
+#------------- H5公众号测试环境 -------------
+build_test:
+  stage: build
+  image: $BUILD_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_H5 == "true"
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:web:test #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+test:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_H5 == "true"
+  script:
+    - |
+      if [ $API_VERSION ];then
+        copyAndDeploy $TEST_DEPLOY_ROOT_PATH/p$HIS_ID-his-$API_VERSION $DIST_PATH/web
+      else
+        copyAndDeploy $TEST_DEPLOY_ROOT_PATH/p$HIS_ID-his $DIST_PATH/web
+      fi
+  dependencies:
+    - build_test
+  tags:
+    - ih-front-test-dx-15
+
+#------------- H5公众号正式环境 -------------
+build_prod:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_H5 == "true"
+    - if: $ENABLE_PROD_PREVIEW == "true"
+  image: $BUILD_IMAGE
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:web #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+.prod_template:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_H5 == "true"
+      when: manual
+  variables:
+    DEPLOY_ROOT_PATH: $PROTECTION_DEPLOY_ROOT_PATH
+  script:
+    - copyAndDeploy $DEPLOY_ROOT_PATH/p$HIS_ID-his $DIST_PATH/web
+  dependencies:
+    - build_prod
+  allow_failure: false
+  tags:
+    - dxonlinenginx10
+
+deploy_protection-10:
+  extends: .prod_template
+
+deploy_protection-19:
+  extends: .prod_template
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_H5 == "true"
+      when: on_success
+  stage: prod-42
+  tags:
+    - dxonlinenginx19
+
+#------------- 正式的预览环境 -------------
+deploy_protection_preview-10:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_H5 == "true" && $ENABLE_PROD_PREVIEW == "true"
+  variables:
+    DEPLOY_ROOT_PATH: $PROTECTION_DEPLOY_ROOT_PATH
+  script:
+    - copyAndDeploy $DEPLOY_ROOT_PATH/p$HIS_ID-his-preview $DIST_PATH/web
+  dependencies:
+    - build_prod
+  tags:
+    - dxonlinenginx10
+
+deploy_protection_preview-19:
+  extends: deploy_protection_preview-10
+  tags:
+    - dxonlinenginx19
+
+#------------- H5医保app开发环境 -------------
+build_app_development:
+  stage: build
+  image: $BUILD_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_APP == "true"
+      when: manual
+      allow_failure: true
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:app:development #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+app_development:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_APP == "true"
+      when: manual
+  script:
+    - copyAndDeploy $TEST_DEPLOY_ROOT_PATH/p$HIS_ID-his-app-test $DIST_PATH/web
+  dependencies:
+    - build_app_development
+  tags:
+    - ih-front-test-dx-15
+
+# #------------- H5医保app测试环境 -------------
+build_app_test:
+  stage: build
+  image: $BUILD_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_APP == "true"
+      when: manual
+      allow_failure: true
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:app:test #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+app_test:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_APP == "true"
+      when: manual
+  script:
+    - copyAndDeploy $TEST_DEPLOY_ROOT_PATH/p$HIS_ID-his-app $DIST_PATH/web
+  dependencies:
+    - build_app_test
+  tags:
+    - ih-front-test-dx-15
+
+#------------- H5医保app正式环境 -------------
+build_app_prod:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_APP == "true"
+      when: manual
+      allow_failure: true
+  image: $BUILD_IMAGE
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:app #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+.app_prod_template:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_APP == "true"
+      when: manual
+  variables:
+    DEPLOY_ROOT_PATH: $PROTECTION_DEPLOY_ROOT_PATH
+  script:
+    - copyAndDeploy $DEPLOY_ROOT_PATH/p$HIS_ID-his-app $DIST_PATH/web
+  dependencies:
+    - build_app_prod
+  tags:
+    - dxonlinenginx10
+
+app_deploy_protection-10:
+  extends: .app_prod_template
+
+app_deploy_protection-19:
+  extends: .app_prod_template
+  stage: prod-42
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_APP == "true"
+      when: on_success
+  tags:
+    - dxonlinenginx19
+
+# #------------ 微信小程序测试环境 ------------
+# wechat_test:
+#   stage: test
+#   image: $BUILD_IMAGE
+#   variables:
+#     CI: 'false'
+#     BUILD_CMD: yarn build:wechat:test #打包的命令
+#   script:
+#     - echo $PREPARE_CMD
+#     - $PREPARE_CMD
+#     - echo $BUILD_CMD
+#     - $BUILD_CMD
+#     - rm -rf ./dist/wechat/images
+#     - yarn wx-ci app -q -f wxci.config.js
+#   tags:
+#     - kq-test
+#   only:
+#     - master
+
+# #------------ 微信小程序预览（正式）环境  ------------
+# wechat_prod:
+#   stage: prod
+#   image: $BUILD_IMAGE
+#   variables:
+#     CI: 'false'
+#     BUILD_CMD: yarn build:wechat #打包的命令
+#   script:
+#     - echo $PREPARE_CMD
+#     - $PREPARE_CMD
+#     - echo $BUILD_CMD
+#     - $BUILD_CMD
+#     - rm -rf ./dist/wechat/images
+#     - yarn wx-ci upload -q -f wxci.config.js
+#   tags:
+#     - kq-test
+#   when: manual
+#   only:
+#     - /release-.*/
+
+#------------ 支付宝小程序开发环境  ------------
+build_ali_development:
+  stage: build
+  image: $BUILD_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_ALI == "true"
+      when: manual
+      allow_failure: true
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:ali:development #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+    - rm -rf ./dist/ali/images
+    - node miniu.config.js preview
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+#------------ 支付宝小程序测试环境  ------------
+build_ali_test:
+  stage: build
+  image: $BUILD_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG !~ /release-.*/ && $ENABLE_ALI == "true"
+      when: manual
+      allow_failure: true
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:ali:test #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+    - rm -rf ./dist/ali/images
+    - node miniu.config.js preview
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
+  tags:
+    - kq-test
+
+#------------ 支付宝小程序预览（正式）环境  ------------
+ali_prod:
+  stage: deploy
+  image: $BUILD_IMAGE
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_ALI == "true"
+      when: manual
+      allow_failure: true
+  variables:
+    CI: 'false'
+    BUILD_CMD: yarn build:ali #打包的命令
+  script:
+    - echo $PREPARE_CMD
+    - $PREPARE_CMD
+    - cd $WORK_DIR
+    - echo $BUILD_CMD
+    - $BUILD_CMD
+    - rm -rf ./dist/ali/images
+    - node miniu.config.js upload
+  artifacts:
+    paths:
+      - $DIST_PATH/
+    expire_in: 10 hours
   tags:
     - kq-test
