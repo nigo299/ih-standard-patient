@@ -15,7 +15,7 @@ workflow:
 variables:
   BUILD_IMAGE: 'node:14'
   PREPARE_CMD: yarn #安装依赖包的命令
-  DIST_PATH: packages/40009/dist #打包结果的路径
+  DIST_PATH: packages/40070/dist #打包结果的路径
   GIT_SUBMODULE_STRATEGY: recursive
   # 部署的测试环境和开发环境的nginx根目录
   TEST_DEPLOY_ROOT_PATH:
