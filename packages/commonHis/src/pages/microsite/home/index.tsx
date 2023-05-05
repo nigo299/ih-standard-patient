@@ -9,28 +9,15 @@ import useApi from '@/apis/microsite';
 import { usePageEvent } from 'remax/macro';
 import { PreviewImage } from '@/components';
 import setNavigationBar from '@/utils/setNavigationBar';
-
+import { useHisConfig } from '@/hooks';
+import OldViews from './components/old-views';
+import ShowMoreViews from './components/show-more-views';
 export default () => {
+  const { config } = useHisConfig();
+  console.log(config.microSitesEntries);
+
   const banners: string[] = [`${IMAGE_DOMIN}/home/banner1.png`];
-  const HEADER_ACTIONS: Array<{
-    key: number;
-    icon: string;
-    title: string;
-    action: string;
-  }> = [
-    {
-      key: 0,
-      icon: `${IMAGE_DOMIN}/newhome/yyjs.png`,
-      title: '医院介绍',
-      action: '/pages/microsite/hospital-summary/index',
-    },
-    {
-      key: 1,
-      icon: `${IMAGE_DOMIN}/newhome/ksfb.png`,
-      title: '科室分布',
-      action: '/pages/microsite/dept-distribute/index',
-    },
-  ];
+
   const [activeIndex, setActiveIndex] = useState<number>(0); // banner 默认选中的值
   const { data, request } = useApi.获取文章列表({
     initValue: {
@@ -89,35 +76,8 @@ export default () => {
         </View>
       </View>
       <View className={styles['container-warp']}>
-        <View className={classnames(styles.header)}>
-          {HEADER_ACTIONS.map((item) => (
-            <Shadow key={`header-item-${item.key}`} shadowColor={'#5f848e'}>
-              <Space
-                alignItems="center"
-                justify="center"
-                flex="auto"
-                className={styles['card-warp']}
-                onTap={() => {
-                  if (item.action) {
-                    navigateTo({
-                      url: item.action,
-                    });
-                  }
-                }}
-              >
-                <Space
-                  justify="center"
-                  alignItems="center"
-                  className={styles.icon}
-                >
-                  <Image src={item.icon} className={styles.image} />
-                </Space>
-                <View className={styles.label}>{item.title}</View>
-              </Space>
-            </Shadow>
-          ))}
-        </View>
-
+        {config.microSitesEntries === 'OLD_VIEWS' && <OldViews />}
+        {config.microSitesEntries === 'SHOW_MORE_VIEWS' && <ShowMoreViews />}
         <View className={styles['content-warp']}>
           <View className={styles['content-title-warp']}>
             <View className={styles.title}>医院动态</View>

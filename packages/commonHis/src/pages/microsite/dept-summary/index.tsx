@@ -23,6 +23,7 @@ export default () => {
   usePageEvent('onShow', async () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
+    console.log(deptList, 'deptList');
     if (deptList.length === 0) {
       getDeptList(type);
     }
@@ -30,6 +31,7 @@ export default () => {
       title: '科室介绍',
     });
   });
+
   return (
     <View>
       <View className={styles.header}>

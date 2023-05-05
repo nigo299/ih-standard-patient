@@ -14,6 +14,7 @@ export default class BaseHis {
       showTodayRegisterSourceInReserve: false,
       showCalenderInTodayRegister: true,
       showSelectTypeInTodayRegister: true,
+      microSitesEntries: 'OLD_VIEWS',
     };
   }
 }
@@ -34,4 +35,6 @@ type StaticConfig = {
   showCalenderInTodayRegister: boolean;
   /** 当日挂号是否显示按日期挂号和按医生挂号组件*/
   showSelectTypeInTodayRegister: boolean;
+  /** OLD_VIEWS:只展示医院介绍和科室分布，SHOW_MORE_VIEWS:展示更多的功能入口 */
+  microSitesEntries: 'OLD_VIEWS' | 'SHOW_MORE_VIEWS';
 };

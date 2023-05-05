@@ -95,7 +95,10 @@ const ShowPrice = (data: any) => {
                   alignItems="center"
                   justify="center"
                 >
-                  ¥{(registerFee / 100).toFixed(2)}
+                  ¥
+                  {(extFields.timeFlag1?.split('|')[2] &&
+                    (extFields.timeFlag1?.split('|')[2] - 0)?.toFixed(2)) ||
+                    (registerFee / 100).toFixed(2)}
                 </Space>
               </View>
             </Space>
@@ -129,7 +132,10 @@ const ShowPrice = (data: any) => {
                   alignItems="center"
                   justify="center"
                 >
-                  ¥{(registerFee / 100).toFixed(2)}
+                  ¥
+                  {(extFields.timeFlag2?.split('|')[2] &&
+                    (extFields.timeFlag2?.split('|')[2] - 0)?.toFixed(2)) ||
+                    (registerFee / 100).toFixed(2)}
                 </Space>
               </View>
             </Space>
@@ -163,7 +169,10 @@ const ShowPrice = (data: any) => {
                   alignItems="center"
                   justify="center"
                 >
-                  ¥{(registerFee / 100).toFixed(2)}
+                  ¥
+                  {(extFields.timeFlag3?.split('|')[2] &&
+                    (extFields.timeFlag3?.split('|')[2] - 0)?.toFixed(2)) ||
+                    (registerFee / 100).toFixed(2)}
                 </Space>
               </View>
             </Space>
@@ -197,7 +206,10 @@ const ShowPrice = (data: any) => {
                   alignItems="center"
                   justify="center"
                 >
-                  ¥{(registerFee / 100).toFixed(2)}
+                  ¥
+                  {(extFields.timeFlag4?.split('|')[2] &&
+                    (extFields.timeFlag4?.split('|')[2] - 0)?.toFixed(2)) ||
+                    (registerFee / 100).toFixed(2)}
                 </Space>
               </View>
             </Space>
@@ -231,7 +243,10 @@ const ShowPrice = (data: any) => {
                   alignItems="center"
                   justify="center"
                 >
-                  ¥{(registerFee / 100).toFixed(2)}
+                  ¥
+                  {(extFields.timeFlag5?.split('|')[2] &&
+                    (extFields.timeFlag5?.split('|')[2] - 0)?.toFixed(2)) ||
+                    (registerFee / 100).toFixed(2)}
                 </Space>
               </View>
             </Space>

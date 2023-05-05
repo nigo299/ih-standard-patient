@@ -205,13 +205,13 @@ export default () => {
         url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
         image: `${IMAGE_DOMIN}/home/pdjd.png`,
       },
-      // {
-      //   title: '微官网',
-      //   subTitle: '医院信息门户',
-      //   url: '/pages/microsite/home/index',
-      //   image: `${IMAGE_DOMIN}/home/wgw.png`,
-      //   patientId: true,
-      // },
+      {
+        title: '微官网',
+        subTitle: '医院信息门户',
+        url: '/pages/microsite/home/index',
+        image: `${IMAGE_DOMIN}/home/wgw.png`,
+        patientId: true,
+      },
       // {
       //   title: '住院预约',
       //   subTitle: '医院信息门户',
