@@ -1,1 +1,1 @@
-include: 'packages/40070/.gitlab-ci.yml'
+include: 'packages/**/.gitlab-ci.yml'
