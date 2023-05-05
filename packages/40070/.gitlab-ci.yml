@@ -2,14 +2,16 @@ include:
   - project: 'fe-his-groups/apps/common'
     ref: main
     file: '.gitlab-ci-template.yml'
-    rules:
-      - if: $CI_COMMIT_BRANCH == "40070-ci-test"
 
-variables:
-  HIS_ID: 40070
-  ENABLE_H5: 'true'
-  WORK_DIR: 'packages/40070'
-  DIST_PATH: 'packages/40070/dist'
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^40070-.*/ || CI_COMMIT_TAG =~ /^release-40070-.*/
+      variables:
+        HIS_ID: 40070
+        ENABLE_H5: 'true'
+        WORK_DIR: 'packages/40070'
+        DIST_PATH: 'packages/40070/dist'
+    - when: never
 
 #  这个job是为了gitlab 不报错，没有任何执行的逻辑
 jobs:
