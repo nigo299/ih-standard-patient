@@ -4,6 +4,7 @@ include:
 
 # 无用的ci，用来防止gitlab报错
 ci:
+  stage: build
   except:
     - /^\d{3,6}-.*/
     - /^release.*/
