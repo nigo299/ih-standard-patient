@@ -1,3 +1,13 @@
 include:
   - local: 'packages/40070/.gitlab-ci.yml'
   - local: 'packages/40009/.gitlab-ci.yml'
+
+# 无用的ci，用来防止gitlab报错
+ci:
+  except:
+    - /^\d{3,6}-.*/
+    - /^release.*/
+  script:
+    - exit 0
+  tags:
+    - kq-test
