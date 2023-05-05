@@ -19,6 +19,6 @@ workflow:
 #       - if: $CI_COMMIT_BRANCH == "40070-ci-test"
 job:
   script:
-    - echo $HIS_ID
+    - echo $CI_COMMIT_REF_NAME
   tags:
     - kq-test
