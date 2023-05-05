@@ -1,1 +1,5 @@
-include: 'packages/40070/.gitlab-ci.yml'
+include:
+  - project: 'fe-his-groups/apps/common'
+    ref: main
+    file: '.gitlab-ci-template-no-workflow.yml'
+  - local: 'packages/40070/.gitlab-ci.yml'

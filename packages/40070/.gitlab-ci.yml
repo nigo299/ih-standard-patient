@@ -11,8 +11,3 @@ workflow:
         DIST_PATH: 'packages/40070/dist'
       when: always
     - when: never
-
-include:
-  - project: 'fe-his-groups/apps/common'
-    ref: main
-    file: '.gitlab-ci-template-no-workflow.yml'
