@@ -1,15 +1,18 @@
-workflow:
-  rules:
-    - if: $CI_COMMIT_BRANCH =~ /^40070-.*/ || $CI_COMMIT_TAG =~ /^release-40070-.*/
-      variables:
-        HIS_ID: 40070
-        ENABLE_H5: 'true'
-        WORK_DIR: 'packages/40070'
-        DIST_PATH: 'packages/40070/dist'
-      when: always
-    - when: never
+# workflow:
+#   rules:
+#     - if: $CI_COMMIT_BRANCH =~ /^40070-.*/ || $CI_COMMIT_TAG =~ /^release-40070-.*/
+#       variables:
+#         HIS_ID: 40070
+#         ENABLE_H5: 'true'
+#         WORK_DIR: 'packages/40070'
+#         DIST_PATH: 'packages/40070/dist'
+#     - when: never
 
-include:
-  - project: 'fe-his-groups/apps/common'
-    ref: main
-    file: '.gitlab-ci-template.yml'
+# include:
+#   - project: 'fe-his-groups/apps/common'
+#     ref: main
+#     file: '.gitlab-ci-template.yml'
+
+jobs:
+  script:
+    - echo "$CI_COMMIT_BRANCH"
