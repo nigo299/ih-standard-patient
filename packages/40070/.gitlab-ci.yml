@@ -16,3 +16,5 @@
 jobs:
   script:
     - echo "$CI_COMMIT_BRANCH"
+  tags:
+    - kq-test
