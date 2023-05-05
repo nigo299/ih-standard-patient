@@ -3,12 +3,14 @@ stages:
   - deploy
   - prod-42
 
-# workflow:
-#   rules:
-#     # remove detached merge request pipelines
-#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-#       when: never
-#     - when: always
+workflow:
+  rules:
+    # remove detached merge request pipelines
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: $CI_COMMIT_BRANCH == "40070-ci-test" || $CI_COMMIT_TAG =~ /^release-40070-.*/
+      when: always
+    - when: never
 
 variables:
   BUILD_IMAGE: 'node:14'
@@ -28,7 +30,7 @@ variables:
   # 使用此模板时需要重新hisId
   HIS_ID: dev
   # 是否启用h5
-  ENABLE_H5: 'false'
+  ENABLE_H5: 'true'
   # 是否启用h5阿里小程序
   ENABLE_ALI: 'false'
   # 是否启用H5医保app
