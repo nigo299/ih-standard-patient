@@ -1,12 +1,8 @@
-include:
-  - project: 'fe-his-groups/apps/common'
-    ref: main
-    file: '.gitlab-ci-template.yml'
-
-variables:
-  HIS_ID: 2219
-  ENABLE_H5: 'true'
-  # 是否启用支付宝小程序
-  ENABLE_ALI: 'true'
-  WORK_DIR: 'packages/2219'
-  DIST_PATH: 'packages/2219/dist'
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^2219-.*/ || CI_COMMIT_TAG =~ /^release-2219-.*/
+      variables:
+        HIS_ID: 2219
+        ENABLE_H5: 'true'
+        WORK_DIR: 'packages/2219'
+        DIST_PATH: 'packages/2219/dist'
