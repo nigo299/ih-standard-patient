@@ -3,12 +3,12 @@ stages:
   - deploy
   - prod-42
 
-workflow:
-  rules:
-    # remove detached merge request pipelines
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      when: never
-    - when: always
+# workflow:
+#   rules:
+#     # remove detached merge request pipelines
+#     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+#       when: never
+#     - when: always
 
 variables:
   BUILD_IMAGE: 'node:14'
