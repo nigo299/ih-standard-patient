@@ -11,6 +11,7 @@ workflow:
         ENABLE_H5: 'true'
         WORK_DIR: 'packages/40070'
         DIST_PATH: 'packages/40070/dist'
+      when: always
     - when: never
 
 #  这个job是为了gitlab 不报错，没有任何执行的逻辑
