@@ -3,13 +3,13 @@ workflow:
     # remove detached merge request pipelines
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       when: never
-    - if: '$CI_COMMIT_REF_NAME == "40070-ci-test"'
-      when: always
-      variables:
-        HIS_ID: 40070
-        ENABLE_H5: 'true'
-        WORK_DIR: 'packages/40070'
-        DIST_PATH: 'packages/40070/dist'
+    # - if: '$CI_COMMIT_REF_NAME == "40070-ci-test"'
+    #   when: always
+    #   variables:
+    #     HIS_ID: 40070
+    #     ENABLE_H5: 'true'
+    #     WORK_DIR: 'packages/40070'
+    #     DIST_PATH: 'packages/40070/dist'
     - when: always
 
 # include:
@@ -21,5 +21,6 @@ workflow:
 job:
   script:
     - echo $CI_COMMIT_REF_NAME
+    - echo $CI_COMMIT_BRANCH
   tags:
     - kq-test
