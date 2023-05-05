@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Image, Text, redirectTo, navigateBack } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Space, PartTitle, BackgroundImg, showToast } from '@kqinfo/ui';
+import { Space, BackgroundImg, showToast } from '@kqinfo/ui';
 import patientState from '@/stores/patient';
 import { IMAGE_DOMIN } from '@/config/constant';
 import classNames from 'classnames';
-import showModal from '@/utils/showModal';
+
 import useApi from '@/apis/common';
 import { ListItem } from '@/components';
 import styles from './index.less';
@@ -34,6 +34,8 @@ export default () => {
       patientAge,
     },
   } = patientState.useContainer();
+  console.log(patHisNo);
+
   const [activeTab, setActiveTab] = useState(1);
   // const { request } = useApi.透传字段({
   //   needInit: false,
@@ -44,7 +46,6 @@ export default () => {
     params: {
       patCardNo: patCardNo,
       queueType: 'visitation',
-      patHisNo,
     },
   });
 
@@ -114,6 +115,7 @@ export default () => {
         // transformCode: 'KQ00007',
         patCardNo,
         queueType: 'visitation',
+        patHisNo,
       }).then((res) => {
         const data = res?.data?.recordList;
         if (data?.length > 0) {
