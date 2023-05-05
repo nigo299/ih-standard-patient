@@ -10,7 +10,7 @@ workflow:
         ENABLE_H5: 'true'
         WORK_DIR: 'packages/40070'
         DIST_PATH: 'packages/40070/dist'
-    - when: always
+    - when: never
 
 include:
   - project: 'fe-his-groups/apps/common'
