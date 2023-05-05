@@ -41,6 +41,11 @@ export const mineNavListConfig = [
     image: `${IMAGE_DOMIN}/mine/gzsc.png`,
   },
   {
+    title: '全院挂号记录',
+    url: '/pages2/register/order-list/index',
+    image: `${IMAGE_DOMIN}/mine/ghdd.png`,
+  },
+  {
     title: '附三院挂号记录',
     url: 'https://m.hsyuntai.com/med/hp/hospitals/100039/hos/user/personal',
     image: `${IMAGE_DOMIN}/mine/gzsc.png`,
