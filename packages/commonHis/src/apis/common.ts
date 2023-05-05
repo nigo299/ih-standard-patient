@@ -419,6 +419,7 @@ export default {
       patCardNo?: string;
       patHisId?: string;
       queueType: string; //visitation-就诊队列；examine-检查队列；inspect-检验队列；medicine-取药队列
+      patHisNo?: string;
     }) =>
       request.get<{ data: { recordList: any[] } } & API.ResponseDataType>(
         '/api/intelligent/ihis/queue/info',

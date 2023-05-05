@@ -44,6 +44,7 @@ export default () => {
     params: {
       patCardNo: patCardNo,
       queueType: 'visitation',
+      patHisNo,
     },
   });
 
