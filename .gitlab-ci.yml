@@ -1,1 +1,28 @@
-include: 'packages/40070/.gitlab-ci.yml'
+stages:
+  - build
+  - deploy
+  - prod-42
+
+include:
+  - local: 'packages/40070/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^40070-.*/ || $CI_COMMIT_TAG =~ /^release-40070-.*/
+  - local: 'packages/40009/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^40009.*/ || $CI_COMMIT_TAG =~ /^release-40009.*/
+  - local: 'packages/40011/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^40011.*/ || $CI_COMMIT_TAG =~ /^release-40011.*/
+  - local: 'packages/2219/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^2219.*/ || $CI_COMMIT_TAG =~ /^release-2219.*/
+
+# 无用的ci，用来防止gitlab报错
+ci:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH !~ /^\d{3,6}-.*/ && $CI_COMMIT_TAG !~ /^release-\d{3,6}-.*/
+  script:
+    - exit 0
+  tags:
+    - kq-test
