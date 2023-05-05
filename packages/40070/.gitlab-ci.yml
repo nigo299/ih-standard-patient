@@ -13,6 +13,7 @@ variables:
 
 #  这个job是为了gitlab 不报错，没有任何执行的逻辑
 jobs:
+  stage: build
   script:
     - exit 0
   only:
