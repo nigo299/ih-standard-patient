@@ -14,6 +14,7 @@ export default class BaseHis {
       showTodayRegisterSourceInReserve: false,
       showCalenderInTodayRegister: true,
       showSelectTypeInTodayRegister: true,
+      microSitesEntries: 'OLD_VIEWS',
     };
   }
 }
