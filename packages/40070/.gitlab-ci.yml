@@ -20,3 +20,5 @@ workflow:
 job:
   script:
     - echo $HIS_ID
+  tags:
+    - kq-test
