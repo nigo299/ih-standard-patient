@@ -1,16 +1,15 @@
 workflow:
   rules:
+    # remove detached merge request pipelines
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
     - if: '$CI_COMMIT_BRANCH == "40070-ci-test"'
       variables:
         HIS_ID: 40070
         ENABLE_H5: 'true'
         WORK_DIR: 'packages/40070'
         DIST_PATH: 'packages/40070/dist'
-      when: always
-    # remove detached merge request pipelines
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      when: never
-    - when: never
+    - when: always
 
 # include:
 #   - project: 'fe-his-groups/apps/common'
