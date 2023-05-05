@@ -6,7 +6,7 @@ workflow:
     - if: '$CI_COMMIT_REF_NAME == "40070-ci-test"'
       when: always
       variables:
-        HIS_ID: '40070'
+        HIS_ID: 40070
         ENABLE_H5: 'true'
         WORK_DIR: 'packages/40070'
         DIST_PATH: 'packages/40070/dist'
