@@ -5,6 +5,9 @@ include:
 
 variables:
   HIS_ID: '40009'
+  # 是否启用H5
   ENABLE_H5: 'true'
+  # 是否启用支付宝小程序
+  ENABLE_ALI: 'true'
   WORK_DIR: 'packages/40009'
   DIST_PATH: 'packages/40009/dist'

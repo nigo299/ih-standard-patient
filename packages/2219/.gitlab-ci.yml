@@ -4,7 +4,9 @@ include:
     file: '.gitlab-ci-template.yml'
 
 variables:
-  HIS_ID: '40011'
+  HIS_ID: '2219'
   ENABLE_H5: 'true'
-  WORK_DIR: 'packages/40011'
-  DIST_PATH: 'packages/40011/dist'
+  # 是否启用支付宝小程序
+  ENABLE_ALI: 'true'
+  WORK_DIR: 'packages/2219'
+  DIST_PATH: 'packages/2219/dist'
