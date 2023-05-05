@@ -1,14 +1,10 @@
-workflow:
-  rules:
-    - if: $CI_COMMIT_BRANCH =~ /^2219-.*/ || $CI_COMMIT_TAG =~ /^release-2219-.*/
-      variables:
-        HIS_ID: 2219
-        ENABLE_H5: 'true'
-        WORK_DIR: 'packages/2219'
-        DIST_PATH: 'packages/2219/dist'
-    - when: never
-
 include:
   - project: 'fe-his-groups/apps/common'
     ref: main
     file: '.gitlab-ci-template.yml'
+
+variables:
+  HIS_ID: '40011'
+  ENABLE_H5: 'true'
+  WORK_DIR: 'packages/40011'
+  DIST_PATH: 'packages/40011/dist'

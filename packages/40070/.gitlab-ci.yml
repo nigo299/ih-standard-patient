@@ -1,7 +1,7 @@
 include:
   - project: 'fe-his-groups/apps/common'
     ref: main
-    file: '.gitlab-ci-template-no-workflow.yml'
+    file: '.gitlab-ci-template.yml'
 
 variables:
   HIS_ID: '40070'
