@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { View, Image, navigateTo } from 'remax/one';
-import { Swiper, Shadow, Exceed, Space, showToast } from '@kqinfo/ui';
+import { View, navigateTo } from 'remax/one';
+import { Swiper, Shadow, Exceed, showToast } from '@kqinfo/ui';
 import styles from './index.less';
 import { IMAGE_DOMIN } from '@/config/constant';
 import classnames from 'classnames';

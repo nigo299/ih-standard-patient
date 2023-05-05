@@ -4,8 +4,7 @@ include:
     file: '.gitlab-ci-template.yml'
 
 variables:
-  # 项目名称
-  HIS_ID: 40009
+  HIS_ID: '40009'
   # 是否启用H5
   ENABLE_H5: 'true'
   # 是否启用支付宝小程序
