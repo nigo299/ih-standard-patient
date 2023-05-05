@@ -11,15 +11,22 @@ import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 
 export default () => {
-  const { type, summary } = useGetParams<{
+  const { type, summary, doctor } = useGetParams<{
     type: 'reserve' | 'day';
     summary: string;
+    doctor: string;
   }>();
   const { hospitalList, setDeptList } = regsiterState.useContainer();
   const handleSelect = useCallback(
     (dept: DeptType[]) => {
       setDeptList(dept);
       if (!!summary) {
+        if (!!doctor) {
+          navigateTo({
+            url: `/pages/microsite/dept-summary/index?doctor=true`,
+          });
+          return;
+        }
         navigateTo({
           url: `/pages/microsite/dept-summary/index`,
         });
@@ -28,8 +35,9 @@ export default () => {
       navigateTo({
         url: `/pages2/register/department/index?type=${type}`,
       });
+      return;
     },
-    [setDeptList, type],
+    [doctor, setDeptList, summary, type],
   );
   usePageEvent('onShow', () => {
     setNavigationBar({

@@ -4,8 +4,9 @@ import { Space, showToast } from '@kqinfo/ui';
 import styles from './index.less';
 import { IMAGE_DOMIN } from '@/config/constant';
 import openLocation from '@/utils/openLocation';
-
+import regsiterState from '@/stores/register';
 export default () => {
+  const { getDeptList } = regsiterState.useContainer();
   const HEADER_ACTIONS: Array<{
     key: number;
     icon: string;
@@ -27,13 +28,13 @@ export default () => {
     },
     {
       title: '科室介绍',
-      action: '/pages/microsite/dept-summary/index',
+      action: '/pages/microsite/dept-summary/index?type=default',
       icon: `${IMAGE_DOMIN}/microsite/ksjs.png`,
       key: 2,
     },
     {
       title: '医生介绍',
-      action: '/pages/microsite/dept-summary/index?doctor=true',
+      action: '/pages/microsite/dept-summary/index?type=default&doctor=true',
       icon: `${IMAGE_DOMIN}/microsite/ysjs.png`,
       key: 3,
     },
@@ -45,23 +46,28 @@ export default () => {
       key: 4,
     },
   ];
-  const handleNavClick = useCallback(async (nav) => {
-    if (nav?.open) {
-      showToast({
-        title: '功能开发中，敬请期待',
-        icon: 'none',
+  const handleNavClick = useCallback(
+    async (nav) => {
+      if (nav?.open) {
+        showToast({
+          title: '功能开发中，敬请期待',
+          icon: 'none',
+        });
+        return;
+      }
+      if (nav?.onTap) {
+        nav.onTap();
+        return;
+      }
+      if (nav?.title === '科室介绍' || '医生介绍') {
+        getDeptList('default');
+      }
+      navigateTo({
+        url: nav.action,
       });
-      return;
-    }
-    if (nav?.onTap) {
-      nav.onTap();
-      return;
-    }
-
-    navigateTo({
-      url: nav.action,
-    });
-  }, []);
+    },
+    [getDeptList],
+  );
   return (
     <View className={styles['container-warp']}>
       <Space className={styles.cardNav} flexWrap="wrap">

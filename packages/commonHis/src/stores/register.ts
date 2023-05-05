@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { navigateTo } from 'remax/one';
+import { navigateTo, redirectTo } from 'remax/one';
 import { createContainer } from 'unstated-next';
 import {
   RegisterConfimType,
@@ -9,6 +9,7 @@ import {
 import { DeptDetailType } from '@/apis/microsite';
 import useApi from '@/apis/register';
 import { getCurrentPageUrl } from '@/utils';
+
 export interface IProps {
   deptId: string;
   doctorId: string;
@@ -92,14 +93,19 @@ export default createContainer(() => {
     if (code === 0 && data?.length > 1) {
       console.log(pages, 'pages');
       setHospitalList(data);
-      if (pages?.indexOf('microsite/dept-summary') !== -1) {
-        navigateTo({
-          url: `/pages2/register/select-hospital/index?type=${type}?summary=true`,
+      if (pages?.indexOf('doctor') !== -1) {
+        redirectTo({
+          url: `/pages2/register/select-hospital/index?type=${type}&summary=true&doctor=true`,
+        });
+        return;
+      } else if (pages?.indexOf('summary') !== -1) {
+        redirectTo({
+          url: `/pages2/register/select-hospital/index?type=${type}&summary=true`,
         });
         return;
       }
       navigateTo({
-        url: `/pages2/register/select-hospital/index?type=${type}`,
+        url: `/pages2/register/select-hospital/index?type=default`,
       });
     }
   }, []);
