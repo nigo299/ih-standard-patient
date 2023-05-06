@@ -91,7 +91,8 @@ export default () => {
       const params = {
         deptName: waitOpList[0].deptName,
         doctorName: waitOpList[0].doctorName,
-        createDate: formDate(waitOpList[0].date),
+        // createDate: formDate(waitOpList[0].date),
+        createDate: null,
         hisOrderNo: newHisOrdNums,
         medinsureChannel:
           PLATFORM === 'ali'
@@ -405,7 +406,7 @@ export default () => {
                       {item.payName || '暂无'}
                     </Exceed>
                   </View>
-                  <View className={styles.td}>
+                  {/* <View className={styles.td}>
                     <FormItem
                       label="开单时间"
                       labelWidth={'4em'}
@@ -415,7 +416,7 @@ export default () => {
                       }
                     />
                     <View>{formDate(item.date) || '暂无'}</View>
-                  </View>
+                  </View> */}
                 </Form>
               </View>
               <View className={styles.arrowWrap}>

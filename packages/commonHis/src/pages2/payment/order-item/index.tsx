@@ -77,10 +77,10 @@ export default () => {
       label: '开单医生',
       text: doctorName,
     },
-    {
-      label: '开单时间',
-      text: formDate(date),
-    },
+    // {
+    //   label: '开单时间',
+    //   text: formDate(date),
+    // },
     {
       label: '项目类别',
       text: waitOpDetail?.chargeType,
