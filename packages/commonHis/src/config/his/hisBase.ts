@@ -15,6 +15,7 @@ export default class BaseHis {
       showCalenderInTodayRegister: true,
       showSelectTypeInTodayRegister: true,
       microSitesEntries: 'OLD_VIEWS',
+      showBillTime: true,
     };
   }
 }
@@ -37,4 +38,6 @@ type StaticConfig = {
   showSelectTypeInTodayRegister: boolean;
   /** OLD_VIEWS:只展示医院介绍和科室分布，SHOW_MORE_VIEWS:展示更多的功能入口 */
   microSitesEntries: 'OLD_VIEWS' | 'SHOW_MORE_VIEWS';
+  /** 是否显示门诊缴费单的开单时间（口腔医院无法获取开单时间故不进行展示）*/
+  showBillTime: boolean;
 };

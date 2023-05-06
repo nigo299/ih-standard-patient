@@ -9,9 +9,11 @@ import useGetParams from '@/utils/useGetParams';
 import { Form, PartTitle, Table, Space } from '@kqinfo/ui';
 import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
 import { formDate } from '@/utils';
+import { useHisConfig } from '@/hooks';
 import { PatGender } from '@/config/dict';
 
 export default () => {
+  const { config } = useHisConfig();
   const {
     hisOrderNo,
     deptName,
@@ -64,28 +66,47 @@ export default () => {
       text: patCardNo,
     },
   ];
-  const clinicList = [
-    {
-      label: '开单医院',
-      text: waitOpDetail?.hisName,
-    },
-    {
-      label: '开单科室',
-      text: deptName,
-    },
-    {
-      label: '开单医生',
-      text: doctorName,
-    },
-    // {
-    //   label: '开单时间',
-    //   text: formDate(date),
-    // },
-    {
-      label: '项目类别',
-      text: waitOpDetail?.chargeType,
-    },
-  ];
+  const clinicList = config.showBillTime
+    ? [
+        {
+          label: '开单医院',
+          text: waitOpDetail?.hisName,
+        },
+        {
+          label: '开单科室',
+          text: deptName,
+        },
+        {
+          label: '开单医生',
+          text: doctorName,
+        },
+        {
+          label: '开单时间',
+          text: formDate(date),
+        },
+        {
+          label: '项目类别',
+          text: waitOpDetail?.chargeType,
+        },
+      ]
+    : [
+        {
+          label: '开单医院',
+          text: waitOpDetail?.hisName,
+        },
+        {
+          label: '开单科室',
+          text: deptName,
+        },
+        {
+          label: '开单医生',
+          text: doctorName,
+        },
+        {
+          label: '项目类别',
+          text: waitOpDetail?.chargeType,
+        },
+      ];
   usePageEvent('onShow', () => {
     setNavigationBar({
       title: '订单详情',
