@@ -314,7 +314,6 @@ export default () => {
         cancelReason: cancelVal || cancelValStorage || '',
         payAuthNo: payAuthNo || '',
         extFields: cancelExtFields,
-        agtOrdNum: orderDetail?.agtOrdNum,
       });
       if (code === 0) {
         setLoading(false);
