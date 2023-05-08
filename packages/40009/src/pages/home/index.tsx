@@ -295,7 +295,7 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/shz.png`,
             onClick: () =>
               (window.location.href =
-                'https://platform.wshoto.com/workbench/marketing/custom'),
+                'https://platform.wshoto.com/workbench/marketing/customForm/customFormMaterial/wpDkH9EAAAmAbD85j4zWikkmdVFWOIog?cid=wpDkH9EAAAmAbD85j4zWikkmdVFWOIog&formId=1654742772848528642&userId=woDkH9EAAADGypKwUyrZiXJCRMmOMjpQ'),
           },
           // {
           //   title: '医保电子凭证',
