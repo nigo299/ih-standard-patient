@@ -538,7 +538,7 @@ export default () => {
             >
               <Image src={item.image} className={styles.cardImg} />
               <View className={styles.cardTitle}>{item.title}</View>
-              {item.title === '电子票据' && (
+              {item.title === '电子发票' && (
                 <WxOpenLaunchWeapp
                   username="gh_310a33219dae"
                   path="pages/index/index.html?agencyCode=b4d1d3101b6f4bd8b9e6ca9e58beeb47"
