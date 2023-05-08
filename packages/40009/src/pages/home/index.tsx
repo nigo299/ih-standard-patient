@@ -198,19 +198,27 @@ export default () => {
         ]
       : [
           {
+            title: '电子发票',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/dzpj.png`,
+            patientId: true,
+          },
+          {
             title: '来院导航',
             subTitle: '导航来院不迷路',
             url: '/pages2/register',
             image: `${IMAGE_DOMIN}/home/lydh.png`,
             onClick: () => openLocation(),
           },
-
           {
-            title: '电子票据',
+            title: '院内导航',
             subTitle: '',
             url: '',
-            image: `${IMAGE_DOMIN}/home/dzpj.png`,
-            patientId: true,
+            image: `${IMAGE_DOMIN}/home/yndh.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://his.ipalmap.com/pandora/cqbbkryy/index.html#/search'),
           },
           {
             title: '智能导诊',
@@ -222,30 +230,11 @@ export default () => {
                 'https://miying.qq.com/guide-h5/home?appid=wxab8f6386222bc56a'),
           },
           {
-            title: '院内导航',
+            title: '就医指南',
             subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/yndh.png`,
-            onClick: () =>
-              (window.location.href =
-                'https://his.ipalmap.com/pandora/cqbbkryy/index.html#/search'),
-          },
-
-          {
-            title: '健康活动',
-            subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/jkhd.png`,
-            onClick: () =>
-              (window.location.href =
-                'https://cqkuanren.mike-x.com/mbrm/AXCQ3xCr'),
-          },
-          {
-            title: '排队进度',
-            subTitle: '前面还有多少人',
-            url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-            image: `${IMAGE_DOMIN}/home/pdjd.png`,
-            open: true,
+            url: '/pages/microsite/article-detail/index?id=643',
+            image: `${IMAGE_DOMIN}/home/wgw.png`,
+            patientId: true,
           },
           {
             title: '医保政策',
@@ -258,13 +247,6 @@ export default () => {
                 'https://mp.weixin.qq.com/s/_X3r9QceeDPBcmTlHlo32Q'),
           },
           {
-            title: '微官网',
-            subTitle: '医院信息门户',
-            url: '/pages/microsite/home/index',
-            image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
-          },
-          {
             title: '核酸检测',
             subTitle: '',
             url: '/pages2/nucleic/select-combo/index?type=1',
@@ -273,11 +255,47 @@ export default () => {
               (window.location.href = 'https://cqkuanren.mike-x.com/aN5Im'),
           },
           {
-            title: '就医指南',
+            title: '疫苗接种',
             subTitle: '',
-            url: '/pages/microsite/article-detail/index?id=643',
-            image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
+            url: '/pages2/nucleic/select-combo/index?type=1',
+            image: `${IMAGE_DOMIN}/home/ymjz.png`,
+            onClick: () =>
+              (window.location.href = 'https://cqkuanren.mike-x.com/NvvlEwJ'),
+          },
+          {
+            title: '健康活动',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/jkhd.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://cqkuanren.mike-x.com/mbrm/AXCQ3xCr'),
+          },
+          {
+            title: '会员金卡',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/hyjk.png`,
+            onClick: () =>
+              (window.location.href = 'https://j.youzan.com/k0p99L'),
+          },
+          {
+            title: '松山文创',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/sswc.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://wx.vzan.com/plug-ins/#/FixupIndex/1269048393?v=1681977679223&templateId=66636&rand=1683515046701&fr=&appid=&shareuid=581520'),
+          },
+          {
+            title: '手汗症',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/shz.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://platform.wshoto.com/workbench/marketing/customForm/customFormMaterial/wpDkH9EAAAmAbD85j4zWikkmdVFWOIog?cid=wpDkH9EAAAmAbD85j4zWikkmdVFWOIog&formId=1654742772848528642&userId=woDkH9EAAADGypKwUyrZiXJCRMmOMjpQ'),
           },
           // {
           //   title: '医保电子凭证',
@@ -286,11 +304,6 @@ export default () => {
           //   image: `${IMAGE_DOMIN}/home/ybdzpz.png`,
           //   open: false,
           // },
-          {
-            title: '',
-            subTitle: '',
-            url: '',
-          },
         ];
 
   const onNavClick = useCallback(
