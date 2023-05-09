@@ -75,17 +75,21 @@ export default createContainer(() => {
       const { code, data } = await useApi.获取配置信息.request();
       if (code == 0 && data?.appId && data?.signature) {
         const { appId, signature, timestamp, noncestr } = data;
-        await wxInit({
-          configData: {
-            appId,
-            signature,
-            timestamp,
-            nonceStr: noncestr,
-            openTagList: ['wx-open-launch-weapp', 'wx-open-launch-app'],
-          },
-        });
-        setInitWechat(true);
-        return;
+        try {
+          await wxInit({
+            configData: {
+              appId,
+              signature,
+              timestamp,
+              nonceStr: noncestr,
+              openTagList: ['wx-open-launch-weapp', 'wx-open-launch-app'],
+            },
+          });
+          setInitWechat(true);
+          return;
+        } catch (err) {
+          console.log('微信初始化sdk错误', err);
+        }
       } else {
         return Promise.reject();
       }
