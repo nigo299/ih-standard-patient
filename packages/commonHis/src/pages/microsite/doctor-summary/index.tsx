@@ -37,7 +37,7 @@ export default () => {
     params: {
       deptId,
     },
-    needInit: false,
+    needInit: true,
   });
   const [selectDept, setSelectDept] = useState(deptList[0]?.no || '');
   const options1 = useMemo(() => {
@@ -49,11 +49,12 @@ export default () => {
         };
       });
     }
-  }, []);
+  }, [deptList]);
   usePageEvent('onShow', () => {
-    request({ deptId: selectDept || '' }).then((data) => {
-      console.log(data);
-    });
+    setSelectDept(deptId);
+    // request({ deptId: selectDept || '' }).then((data) => {
+    //   console.log(data);
+    // });
     if (deptList.length === 0) {
       getDeptList(type);
     } else {
