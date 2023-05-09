@@ -178,8 +178,13 @@ export default () => {
       {
         title: '满意度调查',
         subTitle: '',
-        url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/feedback/feedback-add/index',
+        url: '',
         image: `${IMAGE_DOMIN}/home/myddc.png`,
+        onClick: () => {
+          window.location.href =
+            'https://health.10086.cn/questionnaire/front.html';
+        },
+        open: PLATFORM !== 'web',
       },
 
       {

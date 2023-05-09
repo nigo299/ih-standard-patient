@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Platform } from '@kqinfo/ui';
-import { View } from 'remax/one';
 import globalState from '@/stores/global';
 
 export interface IPorps {
@@ -17,25 +16,30 @@ export default ({ path, username }: IPorps) => {
   }, []);
   return (
     <Platform platform={['web']}>
-      <View
-        web-dangerouslySetInnerHTML={{
-          __html: `<wx-open-launch-weapp
-                  username=${username}
-                  path=${path}
-                  style="position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;"
-               >
-                 <template>
-                 <style>
-                  .wx-btn{
-                    height:999px;
-                    width:100%;
-                   }
-                  </style>
-                  <div class="wx-btn"></div>
-                 </template>
-               </wx-open-launch-weapp>`,
+      <wx-open-launch-weapp
+        username={username}
+        path={path}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 999,
+          bottom: 0,
         }}
-      />
+      >
+        <script type="text/wxtag-template">
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+            }}
+          />
+        </script>
+      </wx-open-launch-weapp>
     </Platform>
   );
 };

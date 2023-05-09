@@ -246,7 +246,7 @@ export const date2hour = (date = 0) => {
   )}`;
 };
 
-export const encryptIdNo = (str: string) => {
+export const encryptIdNo = (str?: string) => {
   if (null != str && str != undefined) {
     const pat = /(\d{1})\d*(\d{1})/;
     return str.replace(pat, '$1****************$2');
@@ -264,7 +264,7 @@ export const encryptPhone = (str: string) => {
   }
 };
 
-export const encryptName = (str: string) => {
+export const encryptName = (str?: string) => {
   if (null != str && str != undefined) {
     if (str.length === 2) {
       return '**' + str.substring(1, str.length);
