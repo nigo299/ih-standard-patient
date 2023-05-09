@@ -93,7 +93,7 @@ export default () => {
       const params = {
         deptName: waitOpList[0].deptName,
         doctorName: waitOpList[0].doctorName,
-        createDate: formDate(waitOpList[0].date) || null,
+        createDate: waitOpList[0]?.date ? formDate(waitOpList[0]?.date) : null,
         hisOrderNo: newHisOrdNums,
         medinsureChannel:
           PLATFORM === 'ali'
