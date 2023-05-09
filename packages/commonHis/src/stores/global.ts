@@ -85,6 +85,7 @@ export default createContainer(() => {
               openTagList: ['wx-open-launch-weapp', 'wx-open-launch-app'],
             },
           });
+          console.log('微信初始化sdk成功');
           setInitWechat(true);
           return;
         } catch (err) {
