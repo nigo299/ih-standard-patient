@@ -66,47 +66,30 @@ export default () => {
       text: patCardNo,
     },
   ];
-  const clinicList = config.showBillTime
-    ? [
-        {
-          label: '开单医院',
-          text: waitOpDetail?.hisName,
-        },
-        {
-          label: '开单科室',
-          text: deptName,
-        },
-        {
-          label: '开单医生',
-          text: doctorName,
-        },
-        {
-          label: '开单时间',
-          text: formDate(date),
-        },
-        {
-          label: '项目类别',
-          text: waitOpDetail?.chargeType,
-        },
-      ]
-    : [
-        {
-          label: '开单医院',
-          text: waitOpDetail?.hisName,
-        },
-        {
-          label: '开单科室',
-          text: deptName,
-        },
-        {
-          label: '开单医生',
-          text: doctorName,
-        },
-        {
-          label: '项目类别',
-          text: waitOpDetail?.chargeType,
-        },
-      ];
+  const clinicList = [
+    {
+      label: '开单医院',
+      text: waitOpDetail?.hisName,
+    },
+    {
+      label: '开单科室',
+      text: deptName,
+    },
+    {
+      label: '开单医生',
+      text: doctorName,
+    },
+    {
+      label: '开单时间',
+      text: formDate(date),
+      hide: config?.hideBillTime,
+    },
+    {
+      label: '项目类别',
+      text: waitOpDetail?.chargeType,
+    },
+  ];
+
   usePageEvent('onShow', () => {
     setNavigationBar({
       title: '订单详情',
@@ -141,9 +124,12 @@ export default () => {
           </View>
           <PartTitle className={styles.title}>开单信息</PartTitle>
           <View className={styles.list}>
-            {clinicList.map((item) => (
-              <ListItem key={item.label} {...item} />
-            ))}
+            {clinicList.map((item) => {
+              if (item.hide) {
+                return null;
+              }
+              return <ListItem key={item.label} {...item} />;
+            })}
             <Table
               loading={loading}
               dataSource={waitOpDetail?.itemList || []}

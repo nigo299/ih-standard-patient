@@ -7,7 +7,7 @@ export default class His2219 extends HisBase {
       defaultAddress: '重庆市-市辖区-渝中区',
       microSitesEntries: 'SHOW_MORE_VIEWS',
       clinicPayBatchType: 'SINGLE',
-      showBillTime: false,
+      hideBillTime: true,
       regCalendarNumberOfDays: 7,
       showRegSourceTypes: false,
       enableFaceVerify: true,
