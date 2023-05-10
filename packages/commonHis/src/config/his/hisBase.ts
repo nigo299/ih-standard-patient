@@ -21,6 +21,7 @@ export default class BaseHis {
       enableFaceVerify: false,
       showCancelRegTips: false,
       recordMedicalCard: false,
+      showChoseDeptDialog: false,
     };
   }
 }
@@ -55,4 +56,6 @@ type StaticConfig = {
   showCancelRegTips: boolean;
   /** 建档是否选填医保卡号*/
   recordMedicalCard: boolean;
+  /** 是否展示科室选择界面的挂号须知弹窗*/
+  showChoseDeptDialog: boolean;
 };

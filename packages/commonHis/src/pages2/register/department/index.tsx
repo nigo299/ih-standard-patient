@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { CopyRight, Step, WhiteSpace } from '@/components';
+import { CopyRight, RegisterNotice, Step, WhiteSpace } from '@/components';
 import {
   CHILDREN_DEPTLIST,
   IMAGE_DOMIN,
@@ -17,14 +17,24 @@ import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import Search from '../search-doctor/search';
-
+import useApi from '@/apis/common';
 export default () => {
   const { type = 'default' } = useGetParams<{
     type: 'reserve' | 'day' | 'default';
   }>();
   const { setSearchQ } = globalState.useContainer();
   const { deptList, getDeptList } = regsiterState.useContainer();
+  const [show, setShow] = useState(true);
+  const {
+    data: { data: infoData },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'GHXZ',
+      noticeMethod: 'WBK',
+    },
+  });
   usePageEvent('onShow', async () => {
+    if (infoData?.[0]?.noticeInfo) setShow(true);
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
     if (deptList.length === 0) {
@@ -134,6 +144,16 @@ export default () => {
           <CopyRight dept />
         </>
       )}
+      <RegisterNotice
+        show={show}
+        close={() => {
+          setShow(false);
+        }}
+        content={infoData?.[0]?.noticeInfo || ''}
+        confirm={() => {
+          setShow(false);
+        }}
+      />
     </View>
   );
 };
