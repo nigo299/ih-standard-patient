@@ -272,7 +272,7 @@ export default () => {
                 'https://cqkuanren.mike-x.com/mbrm/AXCQ3xCr'),
           },
           {
-            title: '会员金卡',
+            title: '办理会员',
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/hyjk.png`,
@@ -293,9 +293,7 @@ export default () => {
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/shz.png`,
-            onClick: () =>
-              (window.location.href =
-                'https://platform.wshoto.com/workbench/marketing/customForm/customFormMaterial/wpDkH9EAAAmAbD85j4zWikkmdVFWOIog?cid=wpDkH9EAAAmAbD85j4zWikkmdVFWOIog&formId=1654742772848528642&userId=woDkH9EAAADGypKwUyrZiXJCRMmOMjpQ'),
+            onClick: () => (window.location.href = 'https://wsurl.cc/5HufLq'),
           },
           // {
           //   title: '医保电子凭证',
