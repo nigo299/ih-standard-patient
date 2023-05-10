@@ -8,6 +8,8 @@ export default class His2219 extends HisBase {
       microSitesEntries: 'SHOW_MORE_VIEWS',
       clinicPayBatchType: 'SINGLE',
       showBillTime: false,
+      regCalendarNumberOfDays: 7,
+      showRegSourceTypes: false,
     });
   }
 }

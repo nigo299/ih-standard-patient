@@ -16,7 +16,7 @@ import {
   parseAge,
 } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { WhiteSpace, Tip } from '@/components';
+import { WhiteSpace } from '@/components';
 import useApi, { HisCardType } from '@/apis/usercenter';
 import {
   getAddressOptions,
@@ -47,6 +47,7 @@ import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/ca
 import useGetParams from '@/utils/useGetParams';
 import { useHisConfig } from '@/hooks';
 import { PatGender } from '@/config/dict';
+import TipContent from '@/pages2/usercenter/add-user/components/tipContent';
 
 interface CardType {
   birthday: string;
@@ -1139,16 +1140,7 @@ export default memo(() => {
           </FormItem>
         </Form>
 
-        <Tip
-          className={styles.tip}
-          items={[
-            <View key={'add-tip'} className={styles.tipText}>
-              本院实行实名制就诊，
-              <Text style={{ color: '#D95E38' }}>请如实填写就诊人信息，</Text>
-              如因信息错误产生的一切后果自行负责。
-            </View>,
-          ]}
-        />
+        <TipContent />
         {checked && cardList.length === 0 && (
           <Button
             type="primary"

@@ -16,6 +16,8 @@ export default class BaseHis {
       showSelectTypeInTodayRegister: true,
       microSitesEntries: 'OLD_VIEWS',
       showBillTime: true,
+      regCalendarNumberOfDays: 14,
+      showRegSourceTypes: true,
     };
   }
 }
@@ -40,4 +42,8 @@ type StaticConfig = {
   microSitesEntries: 'OLD_VIEWS' | 'SHOW_MORE_VIEWS';
   /** 是否显示门诊缴费单的开单时间（口腔医院无法获取开单时间故不进行展示）*/
   showBillTime: boolean;
+  /** 控制选择挂号时间时显示的天数*/
+  regCalendarNumberOfDays: number;
+  /** 控制选择挂号时间页面是否展示号别切换的tab*/
+  showRegSourceTypes: boolean;
 };
