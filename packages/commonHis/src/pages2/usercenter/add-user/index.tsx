@@ -1145,16 +1145,6 @@ export default memo(() => {
                     type="text"
                     maxLength={11}
                     adjustPosition
-                    onChange={(v) =>
-                      // v &&
-                      // setAlipayUserInfo({
-                      //   ...alipayUserInfo,
-                      //   aliPayPhone: v,
-                      // })
-                      console.log(v)
-                    }
-                    /** 查询绑定就诊人手机号不可更改 */
-                    // disabled={checked && cardList.length !== 0}
                   />
                 </FormItem>
               )}
