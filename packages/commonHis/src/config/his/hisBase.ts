@@ -18,6 +18,7 @@ export default class BaseHis {
       showBillTime: true,
       regCalendarNumberOfDays: 14,
       showRegSourceTypes: true,
+      enableFaceVerify: false,
     };
   }
 }
@@ -46,4 +47,6 @@ type StaticConfig = {
   regCalendarNumberOfDays: number;
   /** 控制选择挂号时间页面是否展示号别切换的tab*/
   showRegSourceTypes: boolean;
+  /** 是否开启人脸识别*/
+  enableFaceVerify: boolean;
 };

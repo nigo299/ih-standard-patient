@@ -1,12 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  navigateTo,
-  navigateBack,
-  Image,
-  redirectTo,
-} from 'remax/one';
+import { View, navigateTo, navigateBack, Image, redirectTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import {
   analyzeIDCard,
@@ -38,7 +31,7 @@ import globalState, { AlipayUserInfoType } from '@/stores/global';
 import { useDownCount } from 'parsec-hooks';
 import styles from './index.less';
 import classNames from 'classnames';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import storage from '@/utils/storage';
 import { useUpdateEffect } from 'ahooks';
 import reportCmPV from '@/alipaylog/reportCmPV';
@@ -278,22 +271,24 @@ export default memo(() => {
           //   'birthday',
           //   birthday,
           // );
-          // if (
-          //   bindcardProdiles?.isFace === 1 &&
-          //   !faceInfo.success &&
-          //   faceInfo.idNo !== idNo &&
-          //   faceInfo.name !== name
-          // ) {
-          //   setFaceInfo({
-          //     idNo,
-          //     name,
-          //     success: false,
-          //   });
-          //   navigateTo({
-          //     url: '/pages2/usercenter/face-verify/index',
-          //   });
-          //   return;
-          // }
+          if (
+            config.enableFaceVerify &&
+            bindcardProdiles?.isFace === 1 &&
+            !faceInfo.success &&
+            faceInfo.idNo !== idNo &&
+            faceInfo.name !== name &&
+            PLATFORM === 'web'
+          ) {
+            setFaceInfo({
+              idNo,
+              name,
+              success: false,
+            });
+            navigateTo({
+              url: '/pages2/usercenter/face-verify/index',
+            });
+            return;
+          }
           let patientAge =
             btnSubType === 'add'
               ? analyzeIDCard(values['idNo']).analyzeAge
@@ -368,15 +363,22 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles,
+      bindcardProdiles.childrenMaxAge,
+      bindcardProdiles.isFace,
       btnSubType,
+      faceInfo.idNo,
+      faceInfo.name,
+      faceInfo.success,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
+      idNo,
       isBrithday,
       pageRoute,
-      selectCard,
+      selectCard.birthday,
+      selectCard.patientAge,
+      selectCard.patientSex,
       setFaceInfo,
       user.phone,
     ],

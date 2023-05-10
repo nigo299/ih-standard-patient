@@ -10,6 +10,7 @@ export default class His2219 extends HisBase {
       showBillTime: false,
       regCalendarNumberOfDays: 7,
       showRegSourceTypes: false,
+      enableFaceVerify: true,
     });
   }
 }
