@@ -51,6 +51,7 @@ import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import CustomerReported from '@/components/customerReported';
 import useGetCancelOrderExtFields from '@/pages2/register/order-detail/hooks/useGetCancelOrderExtFields';
 import { PatGender } from '@/config/dict';
+import { useHisConfig } from '@/hooks';
 
 const cancelItems = [
   { value: '不想去', checked: false },
@@ -59,6 +60,7 @@ const cancelItems = [
 ];
 
 export default () => {
+  const { config } = useHisConfig();
   const { orderId, mysl = '0' } = useGetParams<{
     orderId: string;
     /**支付宝小程序蚂蚁森林获取 */
@@ -94,6 +96,7 @@ export default () => {
   });
   const [payFlag, setPayFlag] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [showTip, setShowTip] = useState(false);
   const [cancelVal, setCancelVal] = useState('');
   const [form] = Form.useForm();
   const [toggle, setToggle] = useState([true, false]);
@@ -641,7 +644,13 @@ export default () => {
             type={'primary'}
             ghost
             className={styles.button}
-            onTap={() => setShowInfo(true)}
+            onTap={() => {
+              if (config.showCancelRegTips) {
+                setShowTip(true);
+              } else {
+                setShowInfo(true);
+              }
+            }}
           >
             取消挂号
           </Button>
@@ -688,6 +697,23 @@ export default () => {
             </Radio>
           ))}
         </Radio.Group>
+      </Dialog>
+      <Dialog
+        show={showTip}
+        successText="继续退号"
+        failText="取消"
+        title="温馨提示"
+        onFail={() => setShowTip(false)}
+        onSuccess={() => {
+          setShowTip(false);
+          setShowInfo(true);
+        }}
+      >
+        <Space style={{ lineHeight: 1.2, padding: 20 }}>
+          <View>
+            因我院号源紧张，若90内出现预约成功后就诊当天退号或未按时签到累计达到3次，将视为违约，180天内您将不再享有网上预约挂号服务。
+          </View>
+        </Space>
       </Dialog>
     </View>
   );

@@ -11,6 +11,7 @@ export default class His2219 extends HisBase {
       regCalendarNumberOfDays: 7,
       showRegSourceTypes: false,
       enableFaceVerify: true,
+      showCancelRegTips: true,
     });
   }
 }
