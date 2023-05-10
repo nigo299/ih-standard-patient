@@ -1127,6 +1127,37 @@ export default memo(() => {
                   }
                 }}
               </FormItem>
+              {config.recordMedicalCard && (
+                <FormItem
+                  label={'医保卡号（选填）'}
+                  name={'patientMedicalCardNo'}
+                  rules={[
+                    {
+                      type: 'string',
+                      message: '请输入正确的医保卡号',
+                    },
+                  ]}
+                >
+                  <ReInput
+                    className={styles.reInput}
+                    placeholderClassName={styles.placeholder}
+                    placeholder="请输入医保卡号"
+                    type="text"
+                    maxLength={11}
+                    adjustPosition
+                    onChange={(v) =>
+                      // v &&
+                      // setAlipayUserInfo({
+                      //   ...alipayUserInfo,
+                      //   aliPayPhone: v,
+                      // })
+                      console.log(v)
+                    }
+                    /** 查询绑定就诊人手机号不可更改 */
+                    // disabled={checked && cardList.length !== 0}
+                  />
+                </FormItem>
+              )}
             </Form>
           </>
         )}
