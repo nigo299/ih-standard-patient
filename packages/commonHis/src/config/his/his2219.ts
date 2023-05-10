@@ -12,6 +12,7 @@ export default class His2219 extends HisBase {
       showRegSourceTypes: false,
       enableFaceVerify: true,
       showCancelRegTips: true,
+      recordMedicalCard: true,
     });
   }
 }

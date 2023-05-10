@@ -20,6 +20,7 @@ export default class BaseHis {
       showRegSourceTypes: true,
       enableFaceVerify: false,
       showCancelRegTips: false,
+      recordMedicalCard: false,
     };
   }
 }
@@ -52,4 +53,6 @@ type StaticConfig = {
   enableFaceVerify: boolean;
   /** 是否展示取消挂号时的温馨提示*/
   showCancelRegTips: boolean;
+  /** 建档是否选填医保卡号*/
+  recordMedicalCard: boolean;
 };
