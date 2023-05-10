@@ -59,7 +59,7 @@ export default () => {
         nav.onTap();
         return;
       }
-      if (nav?.title === '科室介绍' || '医生介绍') {
+      if (nav?.title === '科室介绍' || nav?.title === '医生介绍') {
         getDeptList('default');
       }
       navigateTo({

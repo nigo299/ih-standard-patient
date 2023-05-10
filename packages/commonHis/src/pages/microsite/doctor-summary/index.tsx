@@ -39,7 +39,7 @@ export default () => {
     },
     needInit: false,
   });
-  const [selectDept, setSelectDept] = useState(deptList[0]?.no || '');
+  const [selectDept, setSelectDept] = useState(deptId || '');
   const options1 = useMemo(() => {
     if (deptList?.length !== 0) {
       return deptList.map((item) => {
@@ -49,7 +49,7 @@ export default () => {
         };
       });
     }
-  }, []);
+  }, [deptList]);
   usePageEvent('onShow', () => {
     request({ deptId: selectDept || '' }).then((data) => {
       console.log(data);

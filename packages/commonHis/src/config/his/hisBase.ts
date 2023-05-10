@@ -15,6 +15,10 @@ export default class BaseHis {
       showCalenderInTodayRegister: true,
       showSelectTypeInTodayRegister: true,
       microSitesEntries: 'OLD_VIEWS',
+      hideBillTime: false,
+      regCalendarNumberOfDays: 14,
+      showRegSourceTypes: true,
+      enableFaceVerify: false,
     };
   }
 }
@@ -37,4 +41,12 @@ type StaticConfig = {
   showSelectTypeInTodayRegister: boolean;
   /** OLD_VIEWS:只展示医院介绍和科室分布，SHOW_MORE_VIEWS:展示更多的功能入口 */
   microSitesEntries: 'OLD_VIEWS' | 'SHOW_MORE_VIEWS';
+  /** 是否隐藏门诊缴费单的开单时间（口腔医院无法获取开单时间故不进行展示）*/
+  hideBillTime: boolean;
+  /** 控制选择挂号时间时显示的天数*/
+  regCalendarNumberOfDays: number;
+  /** 控制选择挂号时间页面是否展示号别切换的tab*/
+  showRegSourceTypes: boolean;
+  /** 是否开启人脸识别*/
+  enableFaceVerify: boolean;
 };

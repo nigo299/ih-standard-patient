@@ -230,7 +230,7 @@ export default () => {
           renderDot={renderDate}
           renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
           current={date}
-          limit={14}
+          limit={config.regCalendarNumberOfDays}
           showDoctor
           deptId={deptId}
           onChange={(
@@ -245,31 +245,33 @@ export default () => {
           type={type}
         />
         <WhiteSpace />
-        <Space className={styles.radiosWrap} flexWrap="nowrap">
-          <Radio.Group
-            value={doctorType}
-            className={styles.radios}
-            onChange={(v) => setDoctorType(v as DoctorType)}
-          >
-            {[
-              { value: '仅展示有号', label: '仅展示有号' },
-              { value: '专家号', label: '专家号' },
-              { value: '普通号', label: '普通号' },
-              { value: '义诊号', label: '义诊号' },
-            ].map((item: any) => (
-              <Radio
-                className={styles.radio}
-                value={item.value}
-                backgroundColor={'#fff'}
-                color={'#C1C1C1'}
-                type="button"
-                key={item.value}
-              >
-                {item.label}
-              </Radio>
-            ))}
-          </Radio.Group>
-        </Space>
+        {config.showRegSourceTypes && (
+          <Space className={styles.radiosWrap} flexWrap="nowrap">
+            <Radio.Group
+              value={doctorType}
+              className={styles.radios}
+              onChange={(v) => setDoctorType(v as DoctorType)}
+            >
+              {[
+                { value: '仅展示有号', label: '仅展示有号' },
+                { value: '专家号', label: '专家号' },
+                { value: '普通号', label: '普通号' },
+                { value: '义诊号', label: '义诊号' },
+              ].map((item: any) => (
+                <Radio
+                  className={styles.radio}
+                  value={item.value}
+                  backgroundColor={'#fff'}
+                  color={'#C1C1C1'}
+                  type="button"
+                  key={item.value}
+                >
+                  {item.label}
+                </Radio>
+              ))}
+            </Radio.Group>
+          </Space>
+        )}
         {scheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         )?.status === 1 ? (

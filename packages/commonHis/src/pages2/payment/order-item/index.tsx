@@ -9,9 +9,11 @@ import useGetParams from '@/utils/useGetParams';
 import { Form, PartTitle, Table, Space } from '@kqinfo/ui';
 import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
 import { formDate } from '@/utils';
+import { useHisConfig } from '@/hooks';
 import { PatGender } from '@/config/dict';
 
 export default () => {
+  const { config } = useHisConfig();
   const {
     hisOrderNo,
     deptName,
@@ -80,12 +82,14 @@ export default () => {
     {
       label: '开单时间',
       text: formDate(date),
+      hide: config?.hideBillTime,
     },
     {
       label: '项目类别',
       text: waitOpDetail?.chargeType,
     },
   ];
+
   usePageEvent('onShow', () => {
     setNavigationBar({
       title: '订单详情',
@@ -120,9 +124,12 @@ export default () => {
           </View>
           <PartTitle className={styles.title}>开单信息</PartTitle>
           <View className={styles.list}>
-            {clinicList.map((item) => (
-              <ListItem key={item.label} {...item} />
-            ))}
+            {clinicList.map((item) => {
+              if (item.hide) {
+                return null;
+              }
+              return <ListItem key={item.label} {...item} />;
+            })}
             <Table
               loading={loading}
               dataSource={waitOpDetail?.itemList || []}

@@ -14,8 +14,10 @@ import useApi from '@/apis/register';
 import registerState from '@/stores/register';
 import { useUpdateEffect, useLockFn } from 'ahooks';
 import styles from './index.less';
+import { useHisConfig } from '@/hooks';
 
 export default () => {
+  const { config } = useHisConfig();
   const { setDoctorDetail } = registerState.useContainer();
   const {
     deptId,
@@ -333,7 +335,7 @@ export default () => {
           renderDot={renderDate}
           renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
           current={date}
-          limit={14}
+          limit={config.regCalendarNumberOfDays}
           onChange={(
             day:
               | dayjs.Dayjs

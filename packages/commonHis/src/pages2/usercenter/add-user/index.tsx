@@ -1,12 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  navigateTo,
-  navigateBack,
-  Image,
-  redirectTo,
-} from 'remax/one';
+import { View, navigateTo, navigateBack, Image, redirectTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import {
   analyzeIDCard,
@@ -16,7 +9,7 @@ import {
   parseAge,
 } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { WhiteSpace, Tip } from '@/components';
+import { WhiteSpace } from '@/components';
 import useApi, { HisCardType } from '@/apis/usercenter';
 import {
   getAddressOptions,
@@ -38,7 +31,7 @@ import globalState, { AlipayUserInfoType } from '@/stores/global';
 import { useDownCount } from 'parsec-hooks';
 import styles from './index.less';
 import classNames from 'classnames';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import storage from '@/utils/storage';
 import { useUpdateEffect } from 'ahooks';
 import reportCmPV from '@/alipaylog/reportCmPV';
@@ -47,6 +40,7 @@ import { CascadePickerOption } from 'antd-mobile/es/components/cascade-picker/ca
 import useGetParams from '@/utils/useGetParams';
 import { useHisConfig } from '@/hooks';
 import { PatGender } from '@/config/dict';
+import TipContent from '@/pages2/usercenter/add-user/components/tipContent';
 
 interface CardType {
   birthday: string;
@@ -277,22 +271,24 @@ export default memo(() => {
           //   'birthday',
           //   birthday,
           // );
-          // if (
-          //   bindcardProdiles?.isFace === 1 &&
-          //   !faceInfo.success &&
-          //   faceInfo.idNo !== idNo &&
-          //   faceInfo.name !== name
-          // ) {
-          //   setFaceInfo({
-          //     idNo,
-          //     name,
-          //     success: false,
-          //   });
-          //   navigateTo({
-          //     url: '/pages2/usercenter/face-verify/index',
-          //   });
-          //   return;
-          // }
+          if (
+            config.enableFaceVerify &&
+            bindcardProdiles?.isFace === 1 &&
+            !faceInfo.success &&
+            faceInfo.idNo !== idNo &&
+            faceInfo.name !== name &&
+            PLATFORM === 'web'
+          ) {
+            setFaceInfo({
+              idNo,
+              name,
+              success: false,
+            });
+            navigateTo({
+              url: '/pages2/usercenter/face-verify/index',
+            });
+            return;
+          }
           let patientAge =
             btnSubType === 'add'
               ? analyzeIDCard(values['idNo']).analyzeAge
@@ -367,15 +363,22 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles,
+      bindcardProdiles.childrenMaxAge,
+      bindcardProdiles.isFace,
       btnSubType,
+      faceInfo.idNo,
+      faceInfo.name,
+      faceInfo.success,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
+      idNo,
       isBrithday,
       pageRoute,
-      selectCard,
+      selectCard.birthday,
+      selectCard.patientAge,
+      selectCard.patientSex,
       setFaceInfo,
       user.phone,
     ],
@@ -1139,16 +1142,7 @@ export default memo(() => {
           </FormItem>
         </Form>
 
-        <Tip
-          className={styles.tip}
-          items={[
-            <View key={'add-tip'} className={styles.tipText}>
-              本院实行实名制就诊，
-              <Text style={{ color: '#D95E38' }}>请如实填写就诊人信息，</Text>
-              如因信息错误产生的一切后果自行负责。
-            </View>,
-          ]}
-        />
+        <TipContent />
         {checked && cardList.length === 0 && (
           <Button
             type="primary"
