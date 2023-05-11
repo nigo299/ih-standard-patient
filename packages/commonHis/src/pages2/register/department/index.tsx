@@ -18,7 +18,9 @@ import useGetParams from '@/utils/useGetParams';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import Search from '../search-doctor/search';
 import useApi from '@/apis/common';
+import { useHisConfig } from '@/hooks';
 export default () => {
+  const { config } = useHisConfig();
   const { type = 'default' } = useGetParams<{
     type: 'reserve' | 'day' | 'default';
   }>();
@@ -32,6 +34,7 @@ export default () => {
       noticeType: 'GHXZ',
       noticeMethod: 'WBK',
     },
+    needInit: config.showChoseDeptDialog,
   });
   usePageEvent('onShow', async () => {
     if (infoData?.[0]?.noticeInfo) setShow(true);
