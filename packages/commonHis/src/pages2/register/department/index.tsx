@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
@@ -34,10 +34,9 @@ export default () => {
       noticeType: 'GHXZ',
       noticeMethod: 'WBK',
     },
-    needInit: config.showChoseDeptDialog,
+    needInit: config.showChooseDeptDialog,
   });
   usePageEvent('onShow', async () => {
-    if (infoData?.[0]?.noticeInfo) setShow(true);
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
     if (deptList.length === 0) {
@@ -47,6 +46,9 @@ export default () => {
       title: '选择科室',
     });
   });
+  useEffect(() => {
+    if (infoData?.[0]?.noticeInfo) setShow(true);
+  }, [infoData]);
   return (
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
