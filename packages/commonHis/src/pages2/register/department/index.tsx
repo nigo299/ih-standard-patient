@@ -47,8 +47,8 @@ export default () => {
     });
   });
   useEffect(() => {
-    if (infoData?.[0]?.noticeInfo) setShow(true);
-  }, [infoData]);
+    if (config.showChooseDeptDialog && infoData?.[0]?.noticeInfo) setShow(true);
+  }, [config.showChooseDeptDialog, infoData]);
   return (
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
