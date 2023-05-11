@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { CopyRight, Step, WhiteSpace } from '@/components';
+import { CopyRight, RegisterNotice, Step, WhiteSpace } from '@/components';
 import {
   CHILDREN_DEPTLIST,
   IMAGE_DOMIN,
@@ -17,13 +17,25 @@ import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import Search from '../search-doctor/search';
-
+import useApi from '@/apis/common';
+import { useHisConfig } from '@/hooks';
 export default () => {
+  const { config } = useHisConfig();
   const { type = 'default' } = useGetParams<{
     type: 'reserve' | 'day' | 'default';
   }>();
   const { setSearchQ } = globalState.useContainer();
   const { deptList, getDeptList } = regsiterState.useContainer();
+  const [show, setShow] = useState(false);
+  const {
+    data: { data: infoData },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'GHXZ',
+      noticeMethod: 'WBK',
+    },
+    needInit: config.showChooseDeptDialog,
+  });
   usePageEvent('onShow', async () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
@@ -34,6 +46,9 @@ export default () => {
       title: '选择科室',
     });
   });
+  useEffect(() => {
+    if (config.showChooseDeptDialog && infoData?.[0]?.noticeInfo) setShow(true);
+  }, [config.showChooseDeptDialog, infoData]);
   return (
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
@@ -134,6 +149,16 @@ export default () => {
           <CopyRight dept />
         </>
       )}
+      <RegisterNotice
+        show={show}
+        close={() => {
+          setShow(false);
+        }}
+        content={infoData?.[0]?.noticeInfo || ''}
+        confirm={() => {
+          setShow(false);
+        }}
+      />
     </View>
   );
 };
