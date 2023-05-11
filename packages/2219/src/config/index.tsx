@@ -1,4 +1,4 @@
-import { IMAGE_DOMIN } from './constant';
+import { IMAGE_DOMIN, PLATFORM } from './constant';
 import openLocation from '@/utils/openLocation';
 
 export const tabBarConfig = [
@@ -34,47 +34,72 @@ export const mineMainNavConfig = [
   },
 ];
 
-export const mineNavListConfig = [
-  {
-    title: '报告及影像查询',
-    url: '/pages/collect/index',
-    image: `${IMAGE_DOMIN}/mine/gzsc.png`,
-  },
-  {
-    title: '全院挂号记录',
-    url: '/pages2/register/order-list/index',
-    image: `${IMAGE_DOMIN}/mine/ghdd.png`,
-  },
-  {
-    title: '附三院挂号记录',
-    url: 'https://m.hsyuntai.com/med/hp/hospitals/100039/hos/user/personal',
-    image: `${IMAGE_DOMIN}/mine/gzsc.png`,
-  },
-  {
-    title: '大学城挂号记录',
-    url: 'https://appsp.zcareze.com/appsp/h5/authorize?appid=wx5da34ab726d31047&authType=0&authMode=userinfo&address=page%3DhomePage%2Fcustom%2Frfyah65atp7i8kybfke23kxmh48nzaz8',
-    image: `${IMAGE_DOMIN}/mine/gzsc.png`,
-  },
-  {
-    title: '关注/收藏',
-    url: '/pages/collect/index',
-    image: `${IMAGE_DOMIN}/mine/gzsc.png`,
-  },
-  {
-    title: '意见反馈',
-    url: '/pages2/feedback/feedback-list/index',
-    image: `${IMAGE_DOMIN}/mine/yjfk.png`,
-    open: false,
-  },
-  {
-    title: '调查问卷',
-    url: '',
-    image: `${IMAGE_DOMIN}/mine/yjfk.png`,
-    open: false,
-    onClick: () =>
-      (window.location.href = 'https://wj.qq.com/s2/8938221/c4b1/'),
-  },
-];
+export const mineNavListConfig =
+  PLATFORM !== 'ali'
+    ? [
+        {
+          title: '报告及影像查询',
+          url: '/pages/collect/index',
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
+        },
+        {
+          title: '全院挂号记录',
+          url: '/pages2/register/order-list/index',
+          image: `${IMAGE_DOMIN}/mine/ghdd.png`,
+        },
+        {
+          title: '附三院挂号记录',
+          url: 'https://m.hsyuntai.com/med/hp/hospitals/100039/hos/user/personal',
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
+        },
+        {
+          title: '大学城挂号记录',
+          url: 'https://appsp.zcareze.com/appsp/h5/authorize?appid=wx5da34ab726d31047&authType=0&authMode=userinfo&address=page%3DhomePage%2Fcustom%2Frfyah65atp7i8kybfke23kxmh48nzaz8',
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
+        },
+        {
+          title: '关注/收藏',
+          url: '/pages/collect/index',
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
+        },
+        {
+          title: '意见反馈',
+          url: '/pages2/feedback/feedback-list/index',
+          image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+          open: false,
+        },
+        {
+          title: '调查问卷',
+          url: '',
+          image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+          open: false,
+          onClick: () =>
+            (window.location.href = 'https://wj.qq.com/s2/8938221/c4b1/'),
+        },
+      ]
+    : [
+        {
+          title: '报告及影像查询',
+          url: '/pages/collect/index',
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
+        },
+        {
+          title: '全院挂号记录',
+          url: '/pages2/register/order-list/index',
+          image: `${IMAGE_DOMIN}/mine/ghdd.png`,
+        },
+        {
+          title: '关注/收藏',
+          url: '/pages/collect/index',
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
+        },
+        {
+          title: '意见反馈',
+          url: '/pages2/feedback/feedback-list/index',
+          image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+          open: false,
+        },
+      ];
 
 export const inhospMoneys = [
   {

@@ -22,6 +22,7 @@ export default class BaseHis {
       showCancelRegTips: false,
       recordMedicalCard: false,
       showChooseDeptDialog: false,
+      enableRegInfoDeptNavigate: false,
     };
   }
 }
@@ -30,8 +31,11 @@ type StaticConfig = {
   defaultAddress: string;
   /** 医生选择界面的滚动广播文字 */
   registerNoticeText: string;
-  /** SOURCE_AND_PRICE:展示号源数量与价格，ORIGINAL_AND_CURRENT_PRICE:展示原价与现价 */
-  registerDoctorTagType: 'SOURCE_AND_PRICE' | 'ORIGINAL_AND_CURRENT_PRICE';
+  /** SOURCE_AND_PRICE:展示号源数量与价格，ORIGINAL_AND_CURRENT_PRICE:展示原价与现价, SHOW_DOC_TAGS:展示医生介绍信息上的标签（初诊、复诊等） */
+  registerDoctorTagType:
+    | 'SOURCE_AND_PRICE'
+    | 'ORIGINAL_AND_CURRENT_PRICE'
+    | 'SHOW_DOC_TAGS';
   /** 控制门诊缴费是否支持合单支付: BATCH: 合单支付， SINGLE: 单笔支付，（order-list、order-detail对应不同的ui与逻辑） */
   clinicPayBatchType: 'SINGLE' | 'BATCH';
   /** 支付界面是否显示医保支付弹窗 */
@@ -58,4 +62,6 @@ type StaticConfig = {
   recordMedicalCard: boolean;
   /** 是否展示科室选择界面的挂号须知弹窗*/
   showChooseDeptDialog: boolean;
+  /** 挂号信息就诊科室项是否开启导航前往功能*/
+  enableRegInfoDeptNavigate: boolean;
 };

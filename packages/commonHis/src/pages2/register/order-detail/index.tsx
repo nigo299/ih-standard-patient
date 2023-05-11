@@ -567,7 +567,7 @@ export default () => {
           {clinicList
             .slice(0, toggle[0] ? clinicList?.length : 4)
             .map((item) => (
-              <ListItem key={item.label} {...item} />
+              <ListItem key={item.label} {...item} orderDetail={orderDetail} />
             ))}
         </View>
         <ListTitle

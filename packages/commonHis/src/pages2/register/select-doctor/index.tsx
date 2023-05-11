@@ -17,6 +17,7 @@ import styles from './index.less';
 import { useHisConfig } from '@/hooks';
 import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
 import ShowSource from '@/pages2/register/select-doctor/components/show-source';
+import ShowDocTags from '@/pages2/register/select-doctor/components/show-doc-tags';
 enum DoctorType {
   all = '仅展示有号',
   normal = '急诊号',
@@ -288,6 +289,14 @@ export default () => {
             if (config.registerDoctorTagType === 'SOURCE_AND_PRICE') {
               return (
                 <ShowSource
+                  data={{ item, date, deptId, type }}
+                  key={item.doctorId}
+                />
+              );
+            }
+            if (config.registerDoctorTagType === 'SHOW_DOC_TAGS') {
+              return (
+                <ShowDocTags
                   data={{ item, date, deptId, type }}
                   key={item.doctorId}
                 />
