@@ -54,8 +54,8 @@ export default ({
               导航前往
               <WxOpenLaunchWeapp
                 username="gh_1828bcf09dc4"
-                // path={`pages/department/department?deptId=${orderDetail.deptId}&deptName=${orderDetail.deptName}`}
-                path={`pages/department/department?deptId=${'牙周科(上)'}&deptName=${'202598'}`}
+                path={`pages/index/index?buildingId=${202597}&type=1&hisName=${'洁牙中心(冉)'}`}
+                // path={`pages/index/index?buildingId=${this.state.deptInfo.summary}&type=1&hisName=${this.state.deptInfo.name}`}
               />
             </Exceed>
           )}
