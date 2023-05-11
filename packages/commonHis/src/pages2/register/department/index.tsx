@@ -26,7 +26,7 @@ export default () => {
   }>();
   const { setSearchQ } = globalState.useContainer();
   const { deptList, getDeptList } = regsiterState.useContainer();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const {
     data: { data: infoData },
   } = useApi.注意事项内容查询({
