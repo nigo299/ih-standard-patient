@@ -102,6 +102,11 @@ export default () => {
     needInit: !!deptId,
   });
   const newDoctorList = useMemo(() => {
+    if (doctorList && config.showFullDoc) {
+      return doctorList.sort((prev, next) =>
+        prev?.leftSource === 0 ? 1 : next?.leftSource === 0 ? -1 : 0,
+      );
+    }
     if (doctorType === '仅展示有号') {
       return (
         doctorList && doctorList?.filter((doctor) => doctor.leftSource > 0)

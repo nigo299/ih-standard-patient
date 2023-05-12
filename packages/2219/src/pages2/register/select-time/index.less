@@ -1,0 +1,161 @@
+@import '@/styles/index.less';
+
+.content {
+  padding: 24px 20px;
+}
+
+.items {
+  width: 710px;
+  background: #ffffff;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  padding: 30px 0 30px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #333333;
+  line-height: 30px;
+  width: 100%;
+  margin-bottom: 9px;
+}
+
+.part {
+  width: 8px;
+  height: 24px;
+  background: @theme-color;
+  margin-right: 14px;
+}
+
+.open {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #999999;
+  line-height: 48px;
+  flex: 1;
+  text-align: right;
+}
+
+.up {
+  width: 24px;
+  height: 24px;
+  margin-left: 14px;
+  margin-right: 20px;
+}
+
+.fold {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 20px 10px 20px;
+}
+
+.item {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 0 5px;
+  width: 318px;
+  height: 86px;
+  border-radius: 23px;
+  font-size: 24px;
+  color: #333;
+  border: 1px solid #e2e2e2;
+}
+.items1 {
+  // border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+}
+.items2 {
+  // border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  font-weight: bold;
+}
+.itemsText {
+  margin-right: 8px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.disbaled {
+  font-weight: bold;
+  color: #999;
+  background: #eee;
+  border: 1px solid #eee;
+  pointer-events: none;
+}
+
+.scheduleOn {
+  font-weight: bold;
+  background-color: @theme-color;
+  border: 1px solid @theme-color;
+  color: #fff;
+}
+
+.items2 > .type {
+  // color: @theme-color2;
+  margin: 0 20px 0 0px;
+}
+
+.disbaled > .type {
+  color: #999;
+}
+
+.scheduleOn > .type {
+  color: #fff;
+}
+
+.calendar {
+  margin-bottom: 30px;
+}
+.schedules {
+  padding: 20px 0;
+}
+
+.detail {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  text-decoration: underline;
+  color: @theme-color;
+}
+.btn {
+  margin: 30px auto;
+}
+
+.hasSource {
+  margin-top: 10px;
+  color: #333;
+  font-weight: normal;
+}
+.noSource {
+  margin-top: 10px;
+  color: #999;
+  font-weight: normal;
+}
+
+.noData {
+  color: #999;
+  font-size: 26px;
+  margin: 100px 0;
+}
+
+.noDataImg {
+  width: 167px;
+  height: 120px;
+  margin-bottom: 15px;
+}

@@ -23,6 +23,7 @@ export default class BaseHis {
       recordMedicalCard: false,
       showChooseDeptDialog: false,
       enableRegInfoDeptNavigate: false,
+      showFullDoc: false,
     };
   }
 }
@@ -64,4 +65,6 @@ type StaticConfig = {
   showChooseDeptDialog: boolean;
   /** 挂号信息就诊科室项是否开启导航前往功能*/
   enableRegInfoDeptNavigate: boolean;
+  /** 是否展示满诊的医生*/
+  showFullDoc: boolean;
 };

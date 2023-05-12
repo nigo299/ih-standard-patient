@@ -249,15 +249,15 @@ export default memo(() => {
         }
 
         if (checkPhoneFlag) {
-          // // 判断成人儿童表单需要识别的身份信息
-          // const idNo =
-          //   values['patientType'] === '1'
-          //     ? values['parentIdNo']
-          //     : values['idNo'];
-          // const name =
-          //   values['patientType'] === '1'
-          //     ? values['parentName']
-          //     : values['patientName'];
+          // 判断成人儿童表单需要识别的身份信息
+          const idNo =
+            values['patientType'] === '1'
+              ? values['parentIdNo']
+              : values['idNo'];
+          const name =
+            values['patientType'] === '1'
+              ? values['parentName']
+              : values['patientName'];
           const birthday =
             values['idType'] === '1'
               ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
@@ -366,6 +366,7 @@ export default memo(() => {
       bindcardProdiles.childrenMaxAge,
       bindcardProdiles.isFace,
       btnSubType,
+      config.enableFaceVerify,
       faceInfo.idNo,
       faceInfo.name,
       faceInfo.success,
@@ -373,7 +374,6 @@ export default memo(() => {
       getPatientList,
       handleAdd,
       handleSearch,
-      idNo,
       isBrithday,
       pageRoute,
       selectCard.birthday,

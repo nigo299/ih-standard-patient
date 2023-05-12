@@ -7,7 +7,7 @@ import { IMAGE_DOMIN, STEP_ITEMS } from '@/config/constant';
 import { DoctorInfo, Calendar } from '@/pages2/register/components';
 import { Button, Space, showToast, Loading } from '@kqinfo/ui';
 import useGetParams from '@/utils/useGetParams';
-import Items from './items';
+import Items from '@/pages2/register/select-time/items';
 import dayjs from 'dayjs';
 import { useEffectState } from 'parsec-hooks';
 import useApi from '@/apis/register';

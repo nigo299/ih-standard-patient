@@ -86,9 +86,12 @@ const ShowDocTags = (data: any) => {
                 backgroundColor: '#fa9e49',
                 color: 'white',
                 fontWeight: 'normal',
+                boxSizing: 'border-box',
+                padding: '0px 4px',
+                borderRadius: '4px',
               }}
             >
-              教学号、口腔内科治疗
+              {'教学号、口腔内科治疗'}
             </Exceed>
           </Space>
           <Exceed clamp={1} className={styles.doctorText}>
