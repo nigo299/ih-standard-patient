@@ -419,30 +419,31 @@ export default () => {
   }, [clearCountdownTimer]);
   return (
     <View>
-      <BackgroundImg
-        img={`${IMAGE_DOMIN}/home/banner1.png`}
-        className={styles.bannerImg}
-        isPreviewImage
-      >
-        <Space
-          className={styles.microsite}
-          justify="center"
-          alignItems="center"
-          onTap={(e) => {
-            e.stopPropagation();
-            // showToast({
-            //   title: '功能暂未开放!',
-            //   icon: 'none',
-            // });
-            // return;
-            navigateTo({
-              url: '/pages/microsite/hospital-summary/index',
-            });
-          }}
+      <View>
+        <BackgroundImg
+          img={`${IMAGE_DOMIN}/home/banner1.png`}
+          className={styles.bannerImg}
+          isPreviewImage
         >
-          医院信息
-        </Space>
-      </BackgroundImg>
+          <Space
+            className={styles.microsite}
+            justify="center"
+            alignItems="center"
+            onTap={(e) => {
+              e.stopPropagation();
+              // showToast({
+              //   title: '功能暂未开放!',
+              //   icon: 'none',
+              // });
+              // return;
+              navigateTo({
+                url: '/pages/microsite/hospital-summary/index',
+              });
+            }}
+          />
+        </BackgroundImg>
+      </View>
+
       <Space vertical className={styles.content}>
         <View
           className={styles.toSearch}
