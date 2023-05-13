@@ -11,7 +11,6 @@ import {
   DropDownMenu,
   DropDownMenuItem,
   FormItem,
-  Calendar,
 } from '@kqinfo/ui';
 import useApi from '@/apis/register';
 import useCommApi from '@/apis/common';
@@ -22,11 +21,12 @@ import { PatGender } from '@/config/dict';
 import useGetParams from '@/utils/useGetParams';
 import patientState from '@/stores/patient';
 import dayjs from 'dayjs';
+import { DatePicker, Toast, Button } from 'antd-mobile';
 
 export default memo(() => {
   const [rangeDate, setRangeDate] = useState([
-    dayjs().startOf('month'),
-    dayjs().endOf('month'),
+    dayjs().startOf('month').toDate(),
+    dayjs().endOf('month').toDate(),
   ] as any[]);
   const { bindPatientList } = patientState.useContainer();
   const { checkAll } = useGetParams<{
@@ -61,10 +61,10 @@ export default memo(() => {
     needInit: !!checkAll,
   });
   console.log(allOrderList, 'allOrderList');
-
+  const [buttonText, setButtonText] = useState(dayjs().format('YYYY年MM月'));
   const [orderType, setOrderType] = useState('');
   const [orderStatus, setOrderStatus] = useState('');
-
+  const [visible1, setVisible1] = useState(false);
   const options1 = useMemo(() => {
     if (orderList?.length >= 1) {
       return [{ text: '全部', value: '' }].concat(
@@ -133,20 +133,20 @@ export default memo(() => {
           </>
         )}
         {!!checkAll && (
-          <DropDownMenuItem
-            title={
-              rangeDate?.[0]
-                ? `${dayjs(rangeDate?.[0]).format('YYYY/MM/DD')}~${dayjs(
-                    rangeDate?.[1],
-                  ).format('YYYY/MM/DD')}`
-                : '就诊时间'
-            }
-            className={styles.dropLeft}
-            arrowsSize={18}
-            maxHeight={'100vh'}
-          >
-            <Space vertical className={styles.calendarContainer}>
-              <Space className={styles.calenderfoot}>
+          // <DropDownMenuItem
+          //   title={
+          //     rangeDate?.[0]
+          //       ? `${dayjs(rangeDate?.[0]).format('YYYY/MM/DD')}~${dayjs(
+          //           rangeDate?.[1],
+          //         ).format('YYYY/MM/DD')}`
+          //       : '就诊时间'
+          //   }
+          //   className={styles.dropLeft}
+          //   arrowsSize={18}
+          //   maxHeight={'100vh'}
+          // >
+          <Space vertical className={styles.calendarContainer}>
+            {/* <Space className={styles.calenderfoot}>
                 <Space className={styles.footItem}>
                   {rangeDate?.[0]
                     ? `${dayjs(rangeDate?.[0]).format('YYYY/MM/DD')}~${dayjs(
@@ -162,8 +162,8 @@ export default memo(() => {
                 >
                   清空
                 </Space>
-              </Space>
-              <Calendar.Picker
+              </Space> */}
+            {/* <Calendar.Picker
                 range={true}
                 current={rangeDate as any}
                 onChange={(v: any[]) => {
@@ -173,9 +173,32 @@ export default memo(() => {
                   setRangeDate(v);
                   console.log(v);
                 }}
-              />
-            </Space>
-          </DropDownMenuItem>
+              /> */}
+            <Button
+              size="large"
+              onClick={() => {
+                setVisible1(true);
+              }}
+            >
+              {buttonText}
+            </Button>
+            <DatePicker
+              visible={visible1}
+              onClose={() => {
+                setVisible1(false);
+              }}
+              precision="month"
+              onConfirm={(val) => {
+                const startOfMonth = dayjs(val).startOf('month').toDate();
+                const endOfMonth = dayjs(val).endOf('month').toDate();
+                setRangeDate([startOfMonth, endOfMonth]);
+                setButtonText(dayjs(val).format('YYYY年MM月'));
+              }}
+              min={dayjs().subtract(5, 'year').month(0).toDate()}
+              max={new Date()}
+            />
+          </Space>
+          // </DropDownMenuItem>
         )}
       </DropDownMenu>
       <WhiteSpace />
