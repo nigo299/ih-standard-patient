@@ -80,19 +80,18 @@ const ShowDocTags = (data: any) => {
           </View>
           <Space className={styles.subtitle} flexWrap="nowrap">
             <View style={{ marginRight: '8px' }}>{title}</View>
-            <Exceed
-              clamp={1}
+            <span
               style={{
                 backgroundColor: '#fa9e49',
                 color: 'white',
-                fontWeight: 'normal',
-                boxSizing: 'border-box',
-                padding: '0px 4px',
-                borderRadius: '4px',
+                fontWeight: 'bold',
+                padding: '2px 4px',
+                wordBreak: 'break-all',
+                height: 'auto',
               }}
             >
-              {'教学号、口腔内科治疗'}
-            </Exceed>
+              {item?.extPropes?.memo}
+            </span>
           </Space>
           <Exceed clamp={1} className={styles.doctorText}>
             {`擅长: ${

@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { PLATFORM } from '@/config/constant';
 import { useHisConfig } from '@/hooks';
 import { WxOpenLaunchWeapp } from '@/components';
+import useCommApi from '@/apis/common';
 export default ({
   label,
   text,
@@ -20,7 +21,15 @@ export default ({
 }) => {
   const path = window.location.href;
   const { config } = useHisConfig();
-
+  const { data } = useCommApi.透传字段({
+    params: {
+      transformCode: 'KQ00072',
+      deptCode: orderDetail?.deptNo,
+      // sign: '197013930CE44E58DBCC1E6F803CC27A',
+      // t: '202304',
+    },
+    needInit: config.enableRegInfoDeptNavigate,
+  });
   return (
     <Space
       justify="flex-start"

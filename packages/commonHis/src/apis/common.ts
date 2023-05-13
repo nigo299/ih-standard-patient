@@ -331,6 +331,10 @@ export default {
       VisitId?: string;
       DocId?: string;
       patHisNo?: string;
+      deptCode?: string;
+      ids?: string[];
+      startDate?: string;
+      endDate?: string;
     }) =>
       request.post<FacadeType>('/api/ihis/his/facade/server', params, {
         headers: {
