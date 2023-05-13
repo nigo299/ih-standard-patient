@@ -25,8 +25,8 @@ import dayjs from 'dayjs';
 
 export default memo(() => {
   const [rangeDate, setRangeDate] = useState([
-    dayjs().subtract(30, 'd'),
-    dayjs(),
+    dayjs().startOf('month'),
+    dayjs().endOf('month'),
   ] as any[]);
   const { bindPatientList } = patientState.useContainer();
   const { checkAll } = useGetParams<{
@@ -60,6 +60,8 @@ export default memo(() => {
     },
     needInit: !!checkAll,
   });
+  console.log(allOrderList, 'allOrderList');
+
   const [orderType, setOrderType] = useState('');
   const [orderStatus, setOrderStatus] = useState('');
 
@@ -91,13 +93,18 @@ export default memo(() => {
   }, [orderList]);
 
   const showList = useMemo(() => {
+    if (allOrderList?.data?.length >= 1) {
+      return allOrderList?.data
+        ?.filter((item) => !orderType || item.bizName === orderType)
+        ?.filter((item) => !orderStatus || item.statusName === orderStatus);
+    }
     if (orderList?.length >= 1) {
       return orderList
         .filter((item) => !orderType || item.bizName === orderType)
         .filter((item) => !orderStatus || item.statusName === orderStatus);
     }
     return [];
-  }, [orderList, orderStatus, orderType]);
+  }, [allOrderList?.data, orderList, orderStatus, orderType]);
 
   usePageEvent('onShow', () => {
     reportCmPV({ title: '挂号记录查询' });
