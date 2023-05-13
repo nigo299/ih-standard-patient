@@ -43,10 +43,12 @@ export default memo(() => {
     },
     needInit: true,
   });
-  const { data } = useCommApi.透传字段({
+  const {
+    data: { data: allOrderList },
+  } = useCommApi.透传字段({
     params: {
       transformCode: 'KQ00071',
-      ids,
+      ids: JSON.stringify(ids),
       startDate: rangeDate?.[0]
         ? dayjs(rangeDate[0]).format('YYYY-MM-DD')
         : undefined,

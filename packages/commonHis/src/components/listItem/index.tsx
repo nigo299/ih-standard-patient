@@ -21,15 +21,17 @@ export default ({
 }) => {
   const path = window.location.href;
   const { config } = useHisConfig();
-  const { data } = useCommApi.透传字段({
+  const {
+    data: { data: deptInfo },
+  } = useCommApi.透传字段({
     params: {
       transformCode: 'KQ00072',
       deptCode: orderDetail?.deptNo,
-      // sign: '197013930CE44E58DBCC1E6F803CC27A',
-      // t: '202304',
     },
     needInit: config.enableRegInfoDeptNavigate,
   });
+  // console.log(data, 'data');
+
   return (
     <Space
       justify="flex-start"
@@ -63,8 +65,7 @@ export default ({
               导航前往
               <WxOpenLaunchWeapp
                 username="gh_1828bcf09dc4"
-                path={`pages/index/index?buildingId=${202597}&type=1&hisName=${'洁牙中心(冉)'}`}
-                // path={`pages/index/index?buildingId=${this.state.deptInfo.summary}&type=1&hisName=${this.state.deptInfo.name}`}
+                path={`pages/index/index?buildingId=${deptInfo?.summary}&type=1&hisName=${deptInfo?.name}`}
               />
             </Exceed>
           )}
