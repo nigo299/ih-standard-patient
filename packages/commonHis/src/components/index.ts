@@ -33,3 +33,4 @@ export { default as AntForestToast } from '@/components/antFoestToast';
 export { default as FloatingBall } from '@/components/floatingBall';
 export { default as Feedback } from '@/components/feedback';
 export { default as MedicallItem } from '@/components/medicalItem';
+export { default as Dots } from '@/components/Dots';

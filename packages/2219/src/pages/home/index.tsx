@@ -40,6 +40,7 @@ import useApi from '@/apis/common';
 import Dialog from '@/components/dialog';
 import storage from '@/utils/storage';
 import dayjs from 'dayjs';
+import openLocation from 'commonHis/src/utils/openLocation';
 
 export interface NavType {
   title: string;
@@ -191,125 +192,59 @@ export default () => {
   ];
 
   const homeCardNavConfig = useMemo(() => {
-    const arr = [
-      // {
-      //   title: '就诊签到',
-      //   subTitle: '',
-      //   url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/signin/list/index',
-      //   image: `${IMAGE_DOMIN}/home/yyqd.png`,
-      //   patientId: true,
-      // },
-      {
-        title: '排队进度',
-        subTitle: '前面还有多少人',
-        url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-        image: `${IMAGE_DOMIN}/home/pdjd.png`,
-      },
-      {
-        title: '微官网',
-        subTitle: '医院信息门户',
-        url: '/pages/microsite/home/index',
-        image: `${IMAGE_DOMIN}/home/wgw.png`,
-        patientId: true,
-      },
-      // {
-      //   title: '住院预约',
-      //   subTitle: '医院信息门户',
-      //   url: '/pages2/inhosp/reserve-list/index',
-      //   image: `${IMAGE_DOMIN}/home/zyyy.png`,
-      // },
-      // {
-      //   title: '来院导航',
-      //   subTitle: '到院路线地图导航',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/lydh.png`,
-      //   onClick: () => openLocation(),
-      // },
-      // {
-      //   title: '智能导诊',
-      //   subTitle: '导航来院不迷路',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/zndz.png`,
-      //   onClick: () =>
-      //     (window.location.href =
-      //       'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40064'),
-      // },
-      // {
-      //   title: '物价查询',
-      //   subTitle: '',
-      //   url: '/pages2/price-inquiry/type/index',
-      //   image: `${IMAGE_DOMIN}/home/price-search.png`,
-      //   patientId: true,
-      // },
-      // {
-      //   title: '医保电子凭证',
-      //   subTitle: '线上医保电子凭证',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/ybjzpz.png`,
-      //   onClick: () =>
-      //     (window.location.href =
-      //       'https://mp.weixin.qq.com/insurance/card/creditjump?cityid=999999&from=USzyLFkJki8kTGhO1CG-cQ.%3D#wechat_redirect'),
-      //   open: PLATFORM !== 'web',
-      // },
-      // {
-      //   title: '院内导航',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/yndh.png`,
-      //   patientId: true,
-      // },
-      // {
-      //   title: '电子票据',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/dzpj.png`,
-      //   patientId: true,
-      // },
-      // {
-      //   title: '入托体检报告',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/rttjbg.png`,
-      //   onClick: () =>
-      //     (window.location.href =
-      //       'http://eb.spbqfybjy.com:10000/weixin/#/studenexamine'),
-      // },
-      // {
-      //   title: '教师体检报告',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/jstjbg.png`,
-      //   onClick: () =>
-      //     (window.location.href =
-      //       'http://eb.spbqfybjy.com:10001/weixin/#/workerexamine'),
-      // },
-      // {
-      //   title: '两癌筛查预约',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/lascyy.png`,
-      //   onClick: () =>
-      //     (window.location.href =
-      //       'https://wx.scmttec.com/passport/wx/login.do?target=hospitalHome_index?depaCode=5001060009&uFrom=mzzy5001060009'),
-      // },
-      // {
-      //   title: '疫苗预约',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/ymyy.png`,
-      //   onClick: () =>
-      //     (window.location.href =
-      //       'https://wx.scmttec.com/passport/wx/login.do?target=hospitalHome_index?depaCode=5001060009&uFrom=mzzy5001060009'),
-      // },
-      // {
-      //   title: '孕产妇建档',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/ycfjd.png`,
-      //   onClick: () =>
-      //     (window.location.href = 'https://www.cqyyt.com/yunbao/web?hpId=93'),
-      // },
-    ];
+    const arr =
+      PLATFORM === 'web'
+        ? [
+            {
+              title: '排队进度',
+              subTitle: '前面还有多少人',
+              url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+              image: `${IMAGE_DOMIN}/home/pdjd.png`,
+            },
+            {
+              title: '微官网',
+              subTitle: '医院信息门户',
+              url: '/pages/microsite/home/index',
+              image: `${IMAGE_DOMIN}/home/wgw.png`,
+              patientId: true,
+            },
+            {
+              title: '来院导航',
+              subTitle: '到院路线地图导航',
+              url: '',
+              image: `${IMAGE_DOMIN}/home/lydh.png`,
+              onClick: () => openLocation(),
+            },
+          ]
+        : [
+            {
+              title: '排队进度',
+              subTitle: '前面还有多少人',
+              url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+              image: `${IMAGE_DOMIN}/home/pdjd.png`,
+            },
+            {
+              title: '微官网',
+              subTitle: '医院信息门户',
+              url: '/pages/microsite/home/index',
+              image: `${IMAGE_DOMIN}/home/wgw.png`,
+              patientId: true,
+            },
+            {
+              title: '来院导航',
+              subTitle: '到院路线地图导航',
+              url: '',
+              image: `${IMAGE_DOMIN}/home/lydh.png`,
+              onClick: () => openLocation(),
+            },
+            {
+              title: '院内签到',
+              subTitle: '',
+              url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/signin/list/index',
+              image: `${IMAGE_DOMIN}/home/yyqd.png`,
+              patientId: true,
+            },
+          ];
     const addArr = (
       configData?.find((item) => item.configType === 'EXPAND')?.expandInfo || []
     )?.map((item) => ({

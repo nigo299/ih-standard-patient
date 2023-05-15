@@ -52,6 +52,7 @@ export interface FacadeType extends API.ResponseDataType {
     data: any;
     hisCostTime: number;
     msg: string;
+    [key: string]: any;
   };
 }
 
@@ -335,6 +336,10 @@ export default {
       ids?: string[];
       startDate?: string;
       endDate?: string;
+      hisId?: string;
+      cardNo?: string;
+      cardType?: string;
+      authToken?: string;
     }) =>
       request.post<FacadeType>('/api/ihis/his/facade/server', params, {
         headers: {
