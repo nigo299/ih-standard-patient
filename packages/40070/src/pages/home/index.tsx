@@ -48,6 +48,9 @@ export interface NavType {
   subTitle?: React.ReactNode | string;
   url: string;
   image?: string;
+  appid?: string;
+  path?: string;
+  type?: 'wechatMini';
   open?: boolean;
   new?: boolean;
   /** true 表示不需要绑定患者也可以进入 */
@@ -159,7 +162,7 @@ export default () => {
   ];
 
   const homeCardNavConfig = useMemo(() => {
-    const arr = [
+    const arr: NavType[] = [
       {
         title: '微官网',
         subTitle: '医院信息门户',
@@ -170,7 +173,9 @@ export default () => {
       {
         title: '体检预约',
         subTitle: '',
-        // url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/signin/list/index',
+        type: 'wechatMini',
+        appid: 'wx987fe1a9f991c5a0',
+        path: 'pages/waiting/waiting',
         url: '',
         image: `${IMAGE_DOMIN}/home/tjyy.png`,
         patientId: true,
@@ -473,6 +478,9 @@ export default () => {
             >
               <Image src={item.image} className={styles.cardImg} />
               <View className={styles.cardTitle}>{item.title}</View>
+              {item.type === 'wechatMini' && (
+                <WxOpenLaunchWeapp appid={item.appid} path={item.path || ''} />
+              )}
 
               {item.title === '院内导航' && (
                 <WxOpenLaunchWeapp
