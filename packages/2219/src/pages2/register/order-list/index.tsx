@@ -11,6 +11,8 @@ import {
   DropDownMenu,
   DropDownMenuItem,
   FormItem,
+  Picker,
+  Button,
 } from '@kqinfo/ui';
 import useApi from '@/apis/register';
 import useCommApi from '@/apis/common';
@@ -21,7 +23,7 @@ import { PatGender } from '@/config/dict';
 import useGetParams from '@/utils/useGetParams';
 import patientState from '@/stores/patient';
 import dayjs from 'dayjs';
-import { DatePicker, Toast, Button } from 'antd-mobile';
+// import { DatePicker, Toast, Button } from 'antd-mobile';
 
 export default memo(() => {
   const [rangeDate, setRangeDate] = useState([
@@ -45,6 +47,7 @@ export default memo(() => {
   });
   const {
     data: { data: allOrderList },
+    request: checkAllOrders,
   } = useCommApi.透传字段({
     params: {
       transformCode: 'KQ00071',
@@ -174,15 +177,8 @@ export default memo(() => {
                   console.log(v);
                 }}
               /> */}
-            <Button
-              size="large"
-              onClick={() => {
-                setVisible1(true);
-              }}
-            >
-              {buttonText}
-            </Button>
-            <DatePicker
+
+            {/* <DatePicker
               visible={visible1}
               onClose={() => {
                 setVisible1(false);
@@ -196,7 +192,36 @@ export default memo(() => {
               }}
               min={dayjs().subtract(5, 'year').month(0).toDate()}
               max={new Date()}
-            />
+            /> */}
+            <Picker
+              mode={'date'}
+              visible={visible1}
+              start={dayjs().subtract(5, 'year').month(0).format('YYYY-MM')}
+              end={dayjs().format('YYYY-MM')}
+              onChange={(val: any) => {
+                console.log(val, 'vallll');
+                const startOfMonth = dayjs(val).startOf('month').toDate();
+                const endOfMonth = dayjs(val).endOf('month').toDate();
+                setRangeDate([startOfMonth, endOfMonth]);
+                setButtonText(dayjs(val).format('YYYY年MM月'));
+                console.log(startOfMonth, endOfMonth, '111');
+                checkAllOrders({
+                  transformCode: 'KQ00071',
+                  ids: JSON.stringify(ids),
+                  startDate: dayjs(rangeDate[0]).format('YYYY-MM-DD'),
+                  endDate: dayjs(rangeDate?.[1]).format('YYYY-MM-DD'),
+                });
+              }}
+            >
+              <Button
+                type="primary"
+                onTap={() => {
+                  setVisible1(true);
+                }}
+              >
+                {buttonText}
+              </Button>
+            </Picker>
           </Space>
           // </DropDownMenuItem>
         )}
