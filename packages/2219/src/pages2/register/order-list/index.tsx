@@ -64,7 +64,7 @@ export default memo(() => {
     needInit: !!checkAll,
   });
   console.log(allOrderList, 'allOrderList');
-  const [buttonText, setButtonText] = useState(dayjs().format('YYYY年MM月'));
+  const [buttonText, setButtonText] = useState('选择查询日期');
   const [orderType, setOrderType] = useState('');
   const [orderStatus, setOrderStatus] = useState('');
   const [visible1, setVisible1] = useState(false);
@@ -194,7 +194,7 @@ export default memo(() => {
               max={new Date()}
             /> */}
             <Picker
-              mode={'date'}
+              mode={'month'}
               visible={visible1}
               start={dayjs().subtract(5, 'year').month(0).format('YYYY-MM')}
               end={dayjs().format('YYYY-MM')}

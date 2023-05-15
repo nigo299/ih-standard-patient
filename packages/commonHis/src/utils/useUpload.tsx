@@ -43,7 +43,7 @@ export const compressImg = (
       reader.onload = ({ target: { result: src } }) => {
         const image = new Image(); // 创建 img 元素
         image.onload = async () => {
-          const canvas = document.createElement('canvas'); // 创建 canvas 元素
+          const canvas = document?.createElement('canvas'); // 创建 canvas 元素
           const context = canvas.getContext('2d');
           let targetWidth = image.width;
           let targetHeight = image.height;

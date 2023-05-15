@@ -24,6 +24,7 @@ export default class BaseHis {
       showChooseDeptDialog: false,
       enableRegInfoDeptNavigate: false,
       showFullDoc: false,
+      showFullSourceDay: false,
     };
   }
 }
@@ -67,4 +68,6 @@ type StaticConfig = {
   enableRegInfoDeptNavigate: boolean;
   /** 是否展示满诊的医生*/
   showFullDoc: boolean;
+  /** 是否显示已满诊的日期排班*/
+  showFullSourceDay: boolean;
 };

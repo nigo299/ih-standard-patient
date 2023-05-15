@@ -70,9 +70,15 @@ export default () => {
       } else if (type === 'day' || config.showTodayRegisterSourceInReserve) {
         newDate = dayjs().format('YYYY-MM-DD');
       } else {
-        newDate = scheduleList?.find(
-          ({ status }) => status === 1,
-        )?.scheduleDate;
+        if (config.showFullSourceDay) {
+          newDate = scheduleList?.find(
+            ({ status }) => status === 1 || status === 2,
+          )?.scheduleDate;
+        } else {
+          newDate = scheduleList?.find(
+            ({ status }) => status === 1,
+          )?.scheduleDate;
+        }
       }
       return dayjs(newDate);
     }, [config, scheduleList, type]),
@@ -119,7 +125,7 @@ export default () => {
         )
       );
     }
-  }, [doctorType, doctorList]);
+  }, [doctorList, config.showFullDoc, doctorType]);
   const renderDate = (day: dayjs.Dayjs) => {
     const canSelect =
       scheduleList &&
@@ -280,7 +286,7 @@ export default () => {
         )}
         {scheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
-        )?.status === 1 ? (
+        ) ? (
           newDoctorList?.length >= 1 &&
           newDoctorList?.map((item) => {
             if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
