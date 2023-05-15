@@ -240,7 +240,11 @@ export default () => {
         <WhiteSpace />
         <Calendar
           renderDot={renderDate}
-          renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
+          renderDisable={
+            config.showFullSourceDay
+              ? undefined
+              : (day: dayjs.Dayjs) => !renderCanChoose(day)
+          }
           current={date}
           limit={config.regCalendarNumberOfDays}
           showDoctor
