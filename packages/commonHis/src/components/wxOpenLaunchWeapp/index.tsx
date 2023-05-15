@@ -4,12 +4,14 @@ import globalState from '@/stores/global';
 import { PLATFORM } from '@/config/constant';
 
 export interface IPorps {
+  /** appId */
+  appid?: string;
   /** 小程序原始id */
-  username: string;
+  username?: string;
   /** 小程序路径 */
   path: string;
 }
-export default ({ path, username }: IPorps) => {
+export default ({ path, username, appid }: IPorps) => {
   const { initWxSDK } = globalState.useContainer();
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export default ({ path, username }: IPorps) => {
     <Platform platform={['web']}>
       <wx-open-launch-weapp
         username={username}
+        appid={appid}
         path={path}
         style={{
           position: 'absolute',
