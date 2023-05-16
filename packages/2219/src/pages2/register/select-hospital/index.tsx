@@ -23,7 +23,7 @@ export default () => {
         window.location.href =
           'https://m.hsyuntai.com/med/hp/hospitals/100039/hos/registration/departmentDetails/2//1315922/?deptName=%E5%8F%A3%E8%85%94%E7%A7%91';
         return;
-      } else if (name === '附属大学城医院口腔门诊分部') {
+      } else if (name === '附属大学城医院口腔门诊部') {
         window.location.href =
           'https://appsp.zcareze.com/appsp/h5/authorize?appid=wx5da34ab726d31047&authType=0&authMode=userinfo&address=page%3DnewRegistration%2FwithCode%2F11%2F7%2F006%2F%2F%2F%2F%2F%2F%2F';
         return;

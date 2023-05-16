@@ -1,4 +1,4 @@
-const monitor = require('@alipaylog/index');
+const monitor = require('@/alipaylog/index');
 const queryString = require('query-string');
 
 let myAppId: any = null;

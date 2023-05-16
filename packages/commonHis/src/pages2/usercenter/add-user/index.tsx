@@ -249,28 +249,19 @@ export default memo(() => {
         }
 
         if (checkPhoneFlag) {
-          // // 判断成人儿童表单需要识别的身份信息
-          // const idNo =
-          //   values['patientType'] === '1'
-          //     ? values['parentIdNo']
-          //     : values['idNo'];
-          // const name =
-          //   values['patientType'] === '1'
-          //     ? values['parentName']
-          //     : values['patientName'];
+          // 判断成人儿童表单需要识别的身份信息
+          const idNo =
+            values['patientType'] === '1'
+              ? values['parentIdNo']
+              : values['idNo'];
+          const name =
+            values['patientType'] === '1'
+              ? values['parentName']
+              : values['patientName'];
           const birthday =
             values['idType'] === '1'
               ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
               : `${values['birthday']} 00:00:00`;
-
-          // console.log(
-          //   'valuse',
-          //   values,
-          //   selectCard,
-          //   'selectCard',
-          //   'birthday',
-          //   birthday,
-          // );
           if (
             config.enableFaceVerify &&
             bindcardProdiles?.isFace === 1 &&
@@ -363,24 +354,19 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles.childrenMaxAge,
-      bindcardProdiles.isFace,
+      bindcardProdiles,
       btnSubType,
-      faceInfo.idNo,
-      faceInfo.name,
-      faceInfo.success,
+      config,
+      faceInfo,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
-      idNo,
       isBrithday,
       pageRoute,
-      selectCard.birthday,
-      selectCard.patientAge,
-      selectCard.patientSex,
+      selectCard,
       setFaceInfo,
-      user.phone,
+      user,
     ],
   );
 

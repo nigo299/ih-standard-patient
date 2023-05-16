@@ -44,7 +44,7 @@ export const mineNavListConfig =
         },
         {
           title: '全院挂号记录',
-          url: '/pages2/register/order-list/index',
+          url: '/pages2/register/order-list/index?checkAll=true',
           image: `${IMAGE_DOMIN}/mine/ghdd.png`,
         },
         {
@@ -82,11 +82,6 @@ export const mineNavListConfig =
           title: '报告及影像查询',
           url: '/pages/collect/index',
           image: `${IMAGE_DOMIN}/mine/gzsc.png`,
-        },
-        {
-          title: '全院挂号记录',
-          url: '/pages2/register/order-list/index',
-          image: `${IMAGE_DOMIN}/mine/ghdd.png`,
         },
         {
           title: '关注/收藏',

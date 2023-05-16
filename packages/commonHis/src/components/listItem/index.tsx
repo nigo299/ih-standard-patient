@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { PLATFORM } from '@/config/constant';
 import { useHisConfig } from '@/hooks';
 import { WxOpenLaunchWeapp } from '@/components';
+import useCommApi from '@/apis/common';
 export default ({
   label,
   text,
@@ -20,6 +21,16 @@ export default ({
 }) => {
   const path = window.location.href;
   const { config } = useHisConfig();
+  const { data } = useCommApi.透传字段({
+    params: {
+      transformCode: 'KQ00072',
+      deptCode: orderDetail?.deptNo,
+    },
+    needInit: config.enableRegInfoDeptNavigate,
+  });
+  // console.log(deptInfo, 'data12333');
+  const deptInfo = data?.data?.data;
+  console.log(deptInfo, 'deptInfo');
 
   return (
     <Space
@@ -54,8 +65,7 @@ export default ({
               导航前往
               <WxOpenLaunchWeapp
                 username="gh_1828bcf09dc4"
-                path={`pages/index/index?buildingId=${202597}&type=1&hisName=${'洁牙中心(冉)'}`}
-                // path={`pages/index/index?buildingId=${this.state.deptInfo.summary}&type=1&hisName=${this.state.deptInfo.name}`}
+                path={`pages/index/index?buildingId=${deptInfo?.summary}&type=1&hisName=${deptInfo?.name}`}
               />
             </Exceed>
           )}

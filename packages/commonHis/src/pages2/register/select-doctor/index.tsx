@@ -70,9 +70,15 @@ export default () => {
       } else if (type === 'day' || config.showTodayRegisterSourceInReserve) {
         newDate = dayjs().format('YYYY-MM-DD');
       } else {
-        newDate = scheduleList?.find(
-          ({ status }) => status === 1,
-        )?.scheduleDate;
+        if (config.showFullSourceDay) {
+          newDate = scheduleList?.find(
+            ({ status }) => status === 1 || status === 2,
+          )?.scheduleDate;
+        } else {
+          newDate = scheduleList?.find(
+            ({ status }) => status === 1,
+          )?.scheduleDate;
+        }
       }
       return dayjs(newDate);
     }, [config, scheduleList, type]),
@@ -102,6 +108,11 @@ export default () => {
     needInit: !!deptId,
   });
   const newDoctorList = useMemo(() => {
+    if (doctorList && config.showFullDoc) {
+      return doctorList.sort((prev, next) =>
+        prev?.leftSource === 0 ? 1 : next?.leftSource === 0 ? -1 : 0,
+      );
+    }
     if (doctorType === '仅展示有号') {
       return (
         doctorList && doctorList?.filter((doctor) => doctor.leftSource > 0)
@@ -114,7 +125,7 @@ export default () => {
         )
       );
     }
-  }, [doctorType, doctorList]);
+  }, [doctorList, config.showFullDoc, doctorType]);
   const renderDate = (day: dayjs.Dayjs) => {
     const canSelect =
       scheduleList &&
@@ -229,7 +240,11 @@ export default () => {
         <WhiteSpace />
         <Calendar
           renderDot={renderDate}
-          renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
+          renderDisable={
+            config.showFullSourceDay
+              ? undefined
+              : (day: dayjs.Dayjs) => !renderCanChoose(day)
+          }
           current={date}
           limit={config.regCalendarNumberOfDays}
           showDoctor
@@ -275,7 +290,7 @@ export default () => {
         )}
         {scheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
-        )?.status === 1 ? (
+        ) ? (
           newDoctorList?.length >= 1 &&
           newDoctorList?.map((item) => {
             if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
