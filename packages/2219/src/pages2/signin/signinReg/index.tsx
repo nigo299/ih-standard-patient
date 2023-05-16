@@ -11,6 +11,7 @@ import { getLocation } from 'remax/ali';
 import { useQuery } from 'remax';
 import useCommonApi from '@/apis/common';
 import { IMAGE_DOMIN } from '@/config/constant';
+import storage from '@/utils/storage';
 export default () => {
   const { beaconsRef, isBtFail } = useGeolocation();
   const { oldSignIn } = useQuery();
@@ -20,24 +21,24 @@ export default () => {
       hisId: '2219',
     },
   });
-  const [openId, setOpenId] = useState('');
+  const [openId] = useState(storage.get('openid') || '');
   const signinType = useMemo(() => {
     return config?.data?.bluetoothStatus;
     // return 0;
   }, [config]); // 1是蓝牙签到。0是GPS签到
 
-  useEffect(() => {
-    getAuthCode({
-      success: async (result: my.IGetAuthCodeSuccessResult) => {
-        const res = await useCommonApi.透传字段.request({
-          // todo 获取支付宝小程序的鉴权信息
-          transformCode: 'KQ00066',
-          authToken: String(result.authCode),
-        });
-        setOpenId(res?.data?.userId || '');
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   getAuthCode({
+  //     success: async (result: my.IGetAuthCodeSuccessResult) => {
+  //       const res = await useCommonApi.透传字段.request({
+  //         // todo 获取支付宝小程序的鉴权信息
+  //         transformCode: 'KQ00066',
+  //         authToken: String(result.authCode),
+  //       });
+  //       setOpenId(res?.data?.userId || '');
+  //     },
+  //   });
+  // }, []);
 
   const [signIn] = useState<RegItem | undefined>(() => {
     try {

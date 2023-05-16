@@ -50,7 +50,7 @@ export default () => {
               if (userInfo?.data?.phone) {
                 const aliPayPhone = decrypt(userInfo?.data?.phone);
                 const result = await useApi.注册.request({
-                  phone: aliPayPhone,
+                  phone: aliPayPhone as string,
                   validateCode: 'cqkqif',
                 });
                 if (result?.data?.openid) {
