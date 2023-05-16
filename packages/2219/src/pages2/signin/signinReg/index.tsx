@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { View, Text, Image } from 'remax/one';
 import styles from './index.less';
-import { getAuthCode } from 'remax/ali';
+// import { getAuthCode } from 'remax/ali';
 import { Tip } from '@kqinfo/ui';
 import useGeolocation from '../signin/useGeolocation';
 import { RegItem, SigninResp, useApi } from '../apis';
