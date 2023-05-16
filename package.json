@@ -7,8 +7,6 @@
   "scripts": {
     "addHis": "ts-node scripts/index.ts",
     "web": "lerna run --scope 40009 web",
-    "ali": "lerna run --scope 2219 ali",
-    "wechat": "lerna run --scope 2219 wechat",
     "postinstall": "patch-package"
   },
   "lint-staged": {
