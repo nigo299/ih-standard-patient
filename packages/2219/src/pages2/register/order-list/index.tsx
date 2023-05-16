@@ -35,7 +35,9 @@ export default memo(() => {
     checkAll: string;
   }>();
   console.log(bindPatientList, 'bindPatientList');
-  const ids = bindPatientList.map((item) => item.patHisNo);
+  const ids = bindPatientList.map((item) => {
+    return Number(item?.patHisNo);
+  });
   const {
     request,
     data: { data: orderList },
@@ -51,7 +53,7 @@ export default memo(() => {
   } = useCommApi.透传字段({
     params: {
       transformCode: 'KQ00071',
-      ids: JSON.stringify(ids),
+      ids: `[${ids.join(',')}]`,
       startDate: rangeDate?.[0]
         ? dayjs(rangeDate[0]).format('YYYY-MM-DD')
         : undefined,
@@ -68,6 +70,7 @@ export default memo(() => {
   const [orderType, setOrderType] = useState('');
   const [orderStatus, setOrderStatus] = useState('');
   const [visible1, setVisible1] = useState(false);
+  const [showAllOrders, setShowAllOrders] = useState(false);
   const options1 = useMemo(() => {
     if (orderList?.length >= 1) {
       return [{ text: '全部', value: '' }].concat(
@@ -97,9 +100,8 @@ export default memo(() => {
 
   const showList = useMemo(() => {
     if (allOrderList?.data?.length >= 1) {
-      return allOrderList?.data
-        ?.filter((item) => !orderType || item.bizName === orderType)
-        ?.filter((item) => !orderStatus || item.statusName === orderStatus);
+      setShowAllOrders(true);
+      return allOrderList?.data;
     }
     if (orderList?.length >= 1) {
       return orderList
@@ -207,7 +209,7 @@ export default memo(() => {
                 console.log(startOfMonth, endOfMonth, '111');
                 checkAllOrders({
                   transformCode: 'KQ00071',
-                  ids: JSON.stringify(ids),
+                  ids: `[${ids.join(',')}]`,
                   startDate: dayjs(rangeDate[0]).format('YYYY-MM-DD'),
                   endDate: dayjs(rangeDate?.[1]).format('YYYY-MM-DD'),
                 });
@@ -229,6 +231,7 @@ export default memo(() => {
       <WhiteSpace />
       <View className={styles.content}>
         {showList?.length >= 1 &&
+          !checkAll &&
           showList.map((order, index) => (
             <React.Fragment key={index}>
               <Shadow card key={order?.orderId}>
@@ -303,6 +306,83 @@ export default memo(() => {
                   ).slice(0, 10)} ${order?.visitBeginTime}-${
                     order?.visitEndTime
                   }`}</Space>
+                </Space>
+              </Shadow>
+              <WhiteSpace />
+            </React.Fragment>
+          ))}
+        {showList?.length >= 1 &&
+          showAllOrders &&
+          showList.map((order, index) => (
+            <React.Fragment key={index}>
+              <Shadow card key={order?.orderId}>
+                <Space
+                  vertical
+                  className={styles.item}
+                  onTap={() =>
+                    navigateTo({
+                      url: `/pages2/register/order-detail/index?orderId=${order?.orderId}`,
+                    })
+                  }
+                >
+                  <Space
+                    justify="space-between"
+                    alignItems="center"
+                    flex="auto"
+                  >
+                    <Space alignItems="center">
+                      <Space alignItems="center" className={styles.name}>
+                        <FormItem
+                          label={order?.patName}
+                          labelWidth="4em"
+                          colon={false}
+                        />
+                        <View className={styles.name2}>{`${
+                          PatGender[order.patientSex] || ''
+                        } | ${order.patientAge}`}</View>
+                      </Space>
+                      <View className={styles.bizName}>{order?.bizName}</View>
+                      {order.refundStatus === 1 && (
+                        <View className={styles.reFundName}>有退款</View>
+                      )}
+                    </Space>
+                    <Space className={styles.price}>
+                      ￥{Number(order?.regFee / 100).toFixed(2)}
+                    </Space>
+                  </Space>
+                  <Space
+                    justify="space-between"
+                    alignItems="center"
+                    flex="auto"
+                  >
+                    <View className={styles.deptName}>
+                      {`就诊科室 : ${order?.deptName}`}
+                    </View>
+                    <View
+                      className={classNames(styles.status, {
+                        [styles.success]: order?.status === '0',
+                        [styles.fail]:
+                          order?.status === 'F' || order?.status === 'H',
+                        [styles.warning]: order?.status === 'L',
+                        [styles.cancel]: order?.status === 'C',
+                      })}
+                    >
+                      {order?.status === '0' && '待就诊'}
+                      {order?.status === 'S' &&
+                        order?.visitStatus === 1 &&
+                        '已就诊'}
+                      {order?.status === 'S' &&
+                        order?.visitStatus === 2 &&
+                        '未就诊'}
+                      {order?.status === 'F' && '支付失败'}
+                      {order?.status === 'L' && '待支付'}
+                      {order?.status === 'C' && '已取消'}
+                      {order?.status === 'H' && '支付异常'}
+                    </View>
+                  </Space>
+                  <Space
+                    className={styles.time}
+                  >{`就诊时间 : ${order?.scheduleDate} ${order?.timeFlag}${order?.beginTime}-${order?.endTime}`}</Space>
                 </Space>
               </Shadow>
               <WhiteSpace />
