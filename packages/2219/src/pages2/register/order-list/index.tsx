@@ -321,7 +321,9 @@ export default memo(() => {
                   className={styles.item}
                   onTap={() =>
                     navigateTo({
-                      url: `/pages2/register/order-detail/index?orderId=${order?.orderId}`,
+                      url: `/pages2/register/all-order/index?order=${JSON.stringify(
+                        order,
+                      )}`,
                     })
                   }
                 >
@@ -337,14 +339,7 @@ export default memo(() => {
                           labelWidth="4em"
                           colon={false}
                         />
-                        <View className={styles.name2}>{`${
-                          PatGender[order.patientSex] || ''
-                        } | ${order.patientAge}`}</View>
                       </Space>
-                      <View className={styles.bizName}>{order?.bizName}</View>
-                      {order.refundStatus === 1 && (
-                        <View className={styles.reFundName}>有退款</View>
-                      )}
                     </Space>
                     <Space className={styles.price}>
                       ￥{Number(order?.regFee / 100).toFixed(2)}
@@ -361,14 +356,18 @@ export default memo(() => {
                     <View
                       className={classNames(styles.status, {
                         [styles.success]: order?.status === '0',
-                        [styles.fail]:
-                          order?.status === 'F' || order?.status === 'H',
-                        [styles.warning]: order?.status === 'L',
-                        [styles.cancel]: order?.status === 'C',
+                        // [styles.fail]:
+                        //   order?.status === 'F' || order?.status === 'H',
+                        [styles.warning]: order?.status === '1',
+                        [styles.cancel]: order?.status === '4',
                       })}
                     >
-                      {order?.status === '0' && '待就诊'}
-                      {order?.status === 'S' &&
+                      {order?.status === '0' && '已支付未签到'}
+                      {order?.status === '3' && '已接诊'}
+                      {order?.status === '2' && '已签到未接诊'}
+                      {order?.status === '1' && '未支付未签到'}
+                      {order?.status === '4' && '已取消'}
+                      {/* {order?.status === 'S' &&
                         order?.visitStatus === 1 &&
                         '已就诊'}
                       {order?.status === 'S' &&
@@ -377,7 +376,7 @@ export default memo(() => {
                       {order?.status === 'F' && '支付失败'}
                       {order?.status === 'L' && '待支付'}
                       {order?.status === 'C' && '已取消'}
-                      {order?.status === 'H' && '支付异常'}
+                      {order?.status === 'H' && '支付异常'} */}
                     </View>
                   </Space>
                   <Space
