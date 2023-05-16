@@ -31,6 +31,16 @@ const pages = [
   // 'pages/sign/list/index', // 签到列表
 ];
 
+const subAliPages = [
+  'signin/chooseType/index', // 签到选择类型页面
+  'signin/search/index', // 签到查询就诊人页面
+  'signin/list/index', // 签到列表页面
+  'signin/signin/index', // 检查签到页面
+  'signin/signinJy/index', // 检验签到页面
+  'signin/signinReg/index', // 挂号签到页面
+  'signin/detail/index', // 签到详情页面
+];
+
 const subPackages = [
   {
     root: 'pages2',
@@ -65,13 +75,6 @@ const subPackages = [
       'usercenter/revise-user-address/index', // 修改就诊人地址
       'usercenter/ocr-recognition/index', // OCR识别
       'usercenter/face-verify/index', // 人脸识别验证
-      'signin/chooseType/index', // 签到选择类型页面
-      'signin/search/index', // 签到查询就诊人页面
-      'signin/list/index', // 签到列表页面
-      'signin/signin/index', // 检查签到页面
-      'signin/signinJy/index', // 检验签到页面
-      'signin/signinReg/index', // 挂号签到页面
-      'signin/detail/index', // 签到详情页面
       'feedback/feedback-list/index', // 意见反馈列表
       'feedback/feedback-detail/index', // 意见反馈详情
       'feedback/feedback-add/index', // 新增意见反馈
@@ -167,7 +170,9 @@ export const wechat: WechatAppConfig = {
 export const ali: AliAppConfig = {
   pages: [
     pages,
-    subPackages[0].pages.map((item) => `${subPackages[0].root}/${item}`),
+    [...subPackages[0]?.pages, ...subAliPages].map(
+      (item) => `${subPackages[0].root}/${item}`,
+    ),
     // subPackages.map(
     //   (items) =>
     //     items.root !== 'pages3' &&
