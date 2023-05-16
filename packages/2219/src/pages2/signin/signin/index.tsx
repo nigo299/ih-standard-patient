@@ -4,7 +4,7 @@ import styles from './index.less';
 import { Tip } from '@kqinfo/ui';
 import useGeolocation from './useGeolocation';
 import useCommonApi from '@/apis/common';
-import Dots from 'commonHis/src/components/Dots';
+import Dots from 'commonHis/src/components/dots';
 import { getAuthCode, getLocation } from 'remax/ali';
 import { useApi, PatientInfo, RequestInfoListItem, SigninResp } from '../apis';
 import useGetParams from 'commonHis/src/utils/useGetParams';

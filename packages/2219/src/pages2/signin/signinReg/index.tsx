@@ -5,7 +5,7 @@ import { getAuthCode } from 'remax/ali';
 import { Tip } from '@kqinfo/ui';
 import useGeolocation from '../signin/useGeolocation';
 import { RegItem, SigninResp, useApi } from '../apis';
-import Dots from 'commonHis/src/components/Dots';
+import Dots from 'commonHis/src/components/dots';
 import dayjs from 'dayjs';
 import { getLocation } from 'remax/ali';
 import { useQuery } from 'remax';

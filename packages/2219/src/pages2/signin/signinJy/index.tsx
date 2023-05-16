@@ -4,7 +4,7 @@ import styles from './index.less';
 import { Tip } from '@kqinfo/ui';
 import useGeolocation from '../signin/useGeolocation';
 import { JyListItem, SigninResp, useApi } from '../apis';
-import Dots from 'commonHis/src/components/Dots';
+import Dots from 'commonHis/src/components/dots';
 import { getAuthCode, getLocation } from 'remax/ali';
 import { useQuery } from 'remax';
 import useCommonApi from '@/apis/common';
