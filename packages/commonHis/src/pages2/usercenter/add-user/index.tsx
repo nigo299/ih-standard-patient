@@ -262,15 +262,6 @@ export default memo(() => {
             values['idType'] === '1'
               ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
               : `${values['birthday']} 00:00:00`;
-
-          // console.log(
-          //   'valuse',
-          //   values,
-          //   selectCard,
-          //   'selectCard',
-          //   'birthday',
-          //   birthday,
-          // );
           if (
             config.enableFaceVerify &&
             bindcardProdiles?.isFace === 1 &&
@@ -363,24 +354,19 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles.childrenMaxAge,
-      bindcardProdiles.isFace,
+      bindcardProdiles,
       btnSubType,
-      config.enableFaceVerify,
-      faceInfo.idNo,
-      faceInfo.name,
-      faceInfo.success,
+      config,
+      faceInfo,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
       isBrithday,
       pageRoute,
-      selectCard.birthday,
-      selectCard.patientAge,
-      selectCard.patientSex,
+      selectCard,
       setFaceInfo,
-      user.phone,
+      user,
     ],
   );
 
