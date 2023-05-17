@@ -333,7 +333,7 @@ export default {
       DocId?: string;
       patHisNo?: string;
       deptCode?: string;
-      ids?: string[];
+      ids?: string;
       startDate?: string;
       endDate?: string;
       hisId?: string;

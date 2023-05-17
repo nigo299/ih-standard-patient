@@ -44,7 +44,7 @@ export const mineNavListConfig =
         },
         {
           title: '全院挂号记录',
-          url: '/pages2/register/order-list/index?checkAll=true',
+          url: '/pages2/register/all-order-list/index',
           image: `${IMAGE_DOMIN}/mine/ghdd.png`,
         },
         {

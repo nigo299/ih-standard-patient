@@ -17,7 +17,9 @@ export default () => {
   const { data: config } = useApi.医院签到配置({
     params: { districtCode: 'ZY00000002', hisId: '2219' },
   });
-  const [openId] = useState(storage.get('openid') || '');
+  const openId = useMemo(() => {
+    return storage.get('openid') || '';
+  }, []);
   const signinType = useMemo(() => {
     return config?.data?.bluetoothStatus;
     // return 1;

@@ -11,7 +11,6 @@ export default ({
   onChange,
   scheduleId: selectId,
   title,
-  extPropes,
 }: {
   items: ScheduleType[];
   title?: string;
@@ -51,6 +50,7 @@ export default ({
                 visitBeginTime,
                 visitEndTime,
                 extPropes,
+                registerFee,
               },
               index,
             ) => (
@@ -100,6 +100,10 @@ export default ({
                   {visitBeginTime?.slice(0, 5)}-{visitEndTime?.slice(0, 5)}
                   {/* <View className={styles.type}>普通</View> {`余 : ${leftSource}`} */}
                   <View className={styles.type}>{`余号: ${1}`}</View>
+                  <View
+                    className={styles.type}
+                    style={{ color: '#ff9d46' }}
+                  >{`价格: ¥${(registerFee / 100).toFixed(2)}`}</View>
                 </View>
               </View>
             ),

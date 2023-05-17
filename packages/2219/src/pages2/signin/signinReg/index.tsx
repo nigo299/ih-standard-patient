@@ -21,7 +21,9 @@ export default () => {
       hisId: '2219',
     },
   });
-  const [openId] = useState(storage.get('openid') || '');
+  const openId = useMemo(() => {
+    return storage.get('openid') || '';
+  }, []);
   const signinType = useMemo(() => {
     return config?.data?.bluetoothStatus;
     // return 0;
