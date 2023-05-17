@@ -1,0 +1,21 @@
+export type AllListItem = {
+  beginTime: '09:50';
+  deptCode: '30313';
+  deptName: '正畸科(冉)';
+  doctorName: '苟永超';
+  endTime: '10:00';
+  hisOrdNum: '4963616';
+  orderSource: '网上门诊';
+  patCardNo: '';
+  patCardType: '';
+  patId: '1003805737';
+  patIdNo: '50010119971028103X';
+  patIdType: '';
+  patMobile: '15523362813';
+  patName: '陈茁';
+  payTime: '2023-05-17 09:40:27';
+  regFee: 1500;
+  scheduleDate: '2023-05-17';
+  status: string;
+  timeFlag: '上午';
+};

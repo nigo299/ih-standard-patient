@@ -6,21 +6,25 @@ import useGetParams from '@/utils/useGetParams';
 import { Form, Space } from '@kqinfo/ui';
 import { ListItem, ListTitle, FloatingBall } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
-
+import { AllListItem } from 'src/config/types/reg';
 import styles from './index.less';
 
 export default () => {
-  const { order } = useGetParams<{
-    order: any;
-  }>();
-  const staticOrderInfo = useMemo(() => {
-    try {
-      return JSON.parse(order);
-    } catch (e) {
-      return {};
-    }
-  }, [order]);
-  console.log(staticOrderInfo, 'staticOrderInfo');
+  const {
+    deptName,
+    doctorName,
+    scheduleDate,
+    timeFlag,
+    beginTime,
+    endTime,
+    patName,
+    patId,
+    regFee,
+    hisOrdNum,
+    orderSource,
+    status,
+    payTime,
+  } = useGetParams<AllListItem>();
 
   const [form] = Form.useForm();
   const [toggle, setToggle] = useState([true, false]);
@@ -31,29 +35,27 @@ export default () => {
     },
     {
       label: '就诊科室',
-      text: staticOrderInfo?.deptName,
+      text: deptName,
     },
     {
       label: '就诊医生',
-      text: staticOrderInfo?.doctorName,
+      text: doctorName,
     },
     {
       label: '就诊日期',
-      text: staticOrderInfo?.scheduleDate,
+      text: scheduleDate,
     },
     {
       label: '就诊时间',
-      text:
-        `${staticOrderInfo?.timeFlag}${staticOrderInfo?.beginTime}-${staticOrderInfo?.endTime}` ||
-        '暂无',
+      text: `${timeFlag}${beginTime}-${endTime}` || '暂无',
     },
     {
       label: '就诊人',
-      text: staticOrderInfo?.patName,
+      text: patName,
     },
     {
       label: '就诊卡号',
-      text: staticOrderInfo?.patId,
+      text: patId,
     },
   ];
 
@@ -61,21 +63,21 @@ export default () => {
     const list = [
       {
         label: '医院单号',
-        text: staticOrderInfo?.hisOrdNum,
+        text: hisOrdNum,
       },
       {
         label: '预约来院',
-        text: staticOrderInfo?.orderSource,
+        text: orderSource,
       },
 
       {
         label: '挂号费',
-        text: `￥${Number(staticOrderInfo?.regFee / 100).toFixed(2)}`,
+        text: `￥${Number(regFee / 100).toFixed(2)}`,
       },
     ];
 
     return list;
-  }, [staticOrderInfo]);
+  }, [hisOrdNum, orderSource, regFee]);
 
   usePageEvent('onShow', () => {
     setNavigationBar({
@@ -90,9 +92,9 @@ export default () => {
         <Image
           mode="aspectFit"
           src={`${IMAGE_DOMIN}/payment/${
-            staticOrderInfo?.status === '0' || staticOrderInfo?.status === '2'
+            status === '0' || status === '2'
               ? 'success'
-              : staticOrderInfo?.status === '4'
+              : status === '4'
               ? 'fail'
               : 'abnormal'
           }.png`}
@@ -105,14 +107,14 @@ export default () => {
               alignItems={'center'}
               justify={'space-between'}
             >
-              {staticOrderInfo?.status === '0' && '已支付未签到'}
-              {staticOrderInfo?.status === '2' && '已签到未接诊'}
-              {staticOrderInfo?.status === '3' && '已接诊'}
-              {staticOrderInfo?.status === '1' && '未支付未签到'}
-              {staticOrderInfo?.status === '4' && '已取消'}
+              {status === '0' && '已支付未签到'}
+              {status === '2' && '已签到未接诊'}
+              {status === '3' && '已接诊'}
+              {status === '1' && '未支付未签到'}
+              {status === '4' && '已取消'}
             </Space>
           </View>
-          <View className={styles.statusInfo}>{staticOrderInfo?.payTime}</View>
+          <View className={styles.statusInfo}>{payTime}</View>
         </View>
       </View>
       <Form className={styles.content} form={form}>

@@ -18,6 +18,8 @@ import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import patientState from '@/stores/patient';
 import dayjs from 'dayjs';
+import qs from 'qs';
+import { AllListItem } from 'src/config/types/reg';
 
 export default memo(() => {
   const [rangeDate, setRangeDate] = useState([
@@ -104,7 +106,7 @@ export default memo(() => {
       <WhiteSpace />
       <View className={styles.content}>
         {showList?.length >= 1 &&
-          showList.map((order) => (
+          showList.map((order: AllListItem) => (
             <React.Fragment key={order?.payTime}>
               <Shadow card>
                 <Space
@@ -112,7 +114,7 @@ export default memo(() => {
                   className={styles.item}
                   onTap={() =>
                     navigateTo({
-                      url: `/pages2/register/all-order/index?order=${JSON.stringify(
+                      url: `/pages2/register/all-order/index?${qs.stringify(
                         order,
                       )}`,
                     })
