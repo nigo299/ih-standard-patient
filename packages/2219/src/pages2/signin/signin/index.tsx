@@ -5,18 +5,20 @@ import { Tip } from '@kqinfo/ui';
 import useGeolocation from './useGeolocation';
 import useCommonApi from '@/apis/common';
 import Dots from 'commonHis/src/components/dots';
-import { getAuthCode, getLocation } from 'remax/ali';
+import { getLocation } from 'remax/ali';
 import { useApi, PatientInfo, RequestInfoListItem, SigninResp } from '../apis';
 import useGetParams from 'commonHis/src/utils/useGetParams';
 import { IMAGE_DOMIN } from '@/config/constant';
-
+import storage from '@/utils/storage';
 export default () => {
   const { beaconsRef, isBtFail } = useGeolocation();
   const { oldSignIn } = useGetParams<{
     oldSignIn: string;
   }>();
 
-  const [openId, setOpenId] = useState('');
+  const openId = useMemo(() => {
+    return storage.get('openid') || '';
+  }, []);
   const { data: config } = useApi.医院签到配置({
     params: { districtCode: 'ZY00000002', hisId: '2219' },
   });
@@ -25,18 +27,18 @@ export default () => {
     // return 1;
   }, [config]); // 1是蓝牙签到。0是GPS签到
 
-  useEffect(() => {
-    getAuthCode({
-      success: async (result: my.IGetAuthCodeSuccessResult) => {
-        const res = await useCommonApi.透传字段.request({
-          //获取支付宝小程序的鉴权信息
-          transformCode: 'KQ00066',
-          authToken: String(result.authCode),
-        });
-        setOpenId(res?.data?.userId || '');
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   getAuthCode({
+  //     success: async (result: my.IGetAuthCodeSuccessResult) => {
+  //       const res = await useCommonApi.透传字段.request({
+  //         //获取支付宝小程序的鉴权信息
+  //         transformCode: 'KQ00066',
+  //         authToken: String(result.authCode),
+  //       });
+  //       setOpenId(res?.data?.userId || '');
+  //     },
+  //   });
+  // }, []);
 
   const [signIn] = useState<
     | { PatientInfo: PatientInfo; RequestInfoList: RequestInfoListItem[] }

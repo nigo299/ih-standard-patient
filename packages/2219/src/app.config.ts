@@ -65,7 +65,9 @@ const subPackages = [
       'register/doctor-summary/index', // 挂号医生介绍
       'register/confirm/index', // 挂号锁号
       'register/order-list/index', // 挂号订单列表
+      'register/all-order-list/index', // 全院挂号订单列表
       'register/order-detail/index', // 挂号订单详情
+      'register/all-order/index', // 全院挂号订单详情
       'usercenter/add-user/index', // 添加就诊人
       'usercenter/user-list/index', // 就诊人列表
       'usercenter/select-user/index', // 选择就诊人

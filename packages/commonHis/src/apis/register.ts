@@ -492,6 +492,7 @@ export interface MedicalPayType {
 interface MedicalPayDataType extends API.ResponseDataType {
   /** 医保下单医保App和微信支付宝移动医保都在用 */
   data: string;
+  code: number;
 }
 
 export default {

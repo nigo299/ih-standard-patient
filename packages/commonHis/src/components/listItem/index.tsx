@@ -17,7 +17,7 @@ export default ({
   text?: string | ReactNode;
   elderly?: boolean;
   className?: string;
-  orderDetail: any;
+  orderDetail?: any;
 }) => {
   const path = window.location.href;
   const { config } = useHisConfig();

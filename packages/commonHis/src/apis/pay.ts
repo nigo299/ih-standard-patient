@@ -17,6 +17,7 @@ interface ChoosePaymodeType extends API.ResponseDataType {
 
 interface ChooseH5PaymodeType extends API.ResponseDataType {
   data: string;
+  code: number;
 }
 
 export interface OrderStatusType {
@@ -35,12 +36,14 @@ export interface MedInsureAlipayType extends API.ResponseDataType {
     medicalCardInstId: string;
     medicalCardId: string;
   };
+  code: number;
 }
 
 export interface WechatAuthUrlType extends API.ResponseDataType {
   data: {
     authUrl: string;
   };
+  code: number;
 }
 
 export interface MedInsureWechatType extends API.ResponseDataType {
