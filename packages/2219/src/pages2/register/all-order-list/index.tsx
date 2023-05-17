@@ -105,7 +105,7 @@ export default memo(() => {
       <View className={styles.content}>
         {showList?.length >= 1 &&
           showList.map((order) => (
-            <React.Fragment key={order?.orderId}>
+            <React.Fragment key={order?.payTime}>
               <Shadow card>
                 <Space
                   vertical

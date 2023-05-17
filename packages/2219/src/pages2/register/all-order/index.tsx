@@ -13,7 +13,13 @@ export default () => {
   const { order } = useGetParams<{
     order: any;
   }>();
-  const staticOrderInfo = JSON.parse(order);
+  const staticOrderInfo = useMemo(() => {
+    try {
+      return JSON.parse(order);
+    } catch (e) {
+      return {};
+    }
+  }, [order]);
   console.log(staticOrderInfo, 'staticOrderInfo');
 
   const [form] = Form.useForm();
