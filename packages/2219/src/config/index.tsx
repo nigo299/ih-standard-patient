@@ -45,7 +45,7 @@ export const mineNavListConfig =
         {
           title: '全院挂号记录',
           url: '/pages2/register/all-order-list/index',
-          image: `${IMAGE_DOMIN}/mine/ghdd.png`,
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
         },
         {
           title: '附三院挂号记录',
