@@ -246,11 +246,7 @@ export default () => {
                 >
                   {queryData?.serialNum || 0}
                 </View>
-                <View className={styles.itemBold2}>
-                  {queryData?.serialNum > queryData?.currentNum
-                    ? '已过号'
-                    : '等待叫号'}
-                </View>
+                <View className={styles.itemBold2}>等待叫号</View>
               </Space>
             </BackgroundImg>
           </Space>

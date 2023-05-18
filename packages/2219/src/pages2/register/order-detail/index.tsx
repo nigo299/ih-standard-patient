@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { View, Image, navigateTo } from 'remax/one';
+import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import {
   decrypt,
@@ -75,15 +75,6 @@ export default () => {
   const { data: hospitialConfigData } = usePatientApi.获取医院挷卡配置信息({
     needInit: true,
   });
-  const {
-    data: { data: infoData },
-  } = useCommApi.注意事项内容查询({
-    params: {
-      noticeType: 'SYTS',
-      noticeMethod: 'TC',
-    },
-  });
-  const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const {
     request,
     data: { data: orderDetail },
@@ -523,11 +514,12 @@ export default () => {
           className={styles.statusImg}
         />
         <View>
-          <View className={styles.status}>
+          <View>
             <Space
               className={styles.status}
               alignItems={'center'}
               justify={'space-between'}
+              // style={{ flexWrap: 'wrap' }}
             >
               {orderDetail?.statusName}
               {(orderDetail?.status === 'F' || orderDetail?.status === 'C') && (
@@ -539,17 +531,51 @@ export default () => {
               )}
             </Space>
           </View>
-          <View className={styles.statusInfo}>
-            {orderDetail?.status === 'S' &&
-              `挂号成功，请根据签到时间至少提前20分钟携带绑定的卡（身份证、医保卡、院内诊疗卡）到科室分诊处签到候诊。
-                就诊卡号：${orderDetail?.patCardNo}`}
-            {orderDetail?.status === 'L' &&
-              '请在锁号的时候内完成支付，否则将取消号源'}
-            {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}
-            {orderDetail?.status === 'F' &&
-              orderDetail?.refundList?.length >= 1 &&
-              orderDetail.refundList[0].refundDesc}
-          </View>
+        </View>
+        <View className={styles.statusInfo}>
+          {orderDetail?.status === 'S' && (
+            <View className={styles.regSuccessInfo}>
+              <Text style={{ marginLeft: '28px' }}>
+                因口腔诊疗特殊性，来院患者须按本人签到时间提前签到，具体规则为：
+              </Text>
+              <br />
+              <Text>
+                一、请就诊患者务必在签到时间前，携带绑定的卡（身份证、医保卡、院内诊疗卡）到所挂科室楼层自助机提前签到候诊。
+              </Text>
+              <br />
+              <Text>
+                二、按时签到者，系统根据挂号序号自动排队，
+                <Text className={styles.red}>
+                  过号30分钟内的患者，按当前医生接诊队列顺延2位。过号30分钟以上
+                </Text>
+                ，为保障医疗质量和患者安全，超过医生安全诊疗行为时间的患者，仅可做口腔一般检查，
+                <Text className={styles.red}>无法进行治疗操作</Text>
+                ，急诊除外。
+              </Text>
+              <br />
+              <Text>
+                三、
+                <Text className={styles.red}>
+                  签到迟到者，须排在当前医生签到队列时段末位，签到迟到30分钟以上者，该号源作废
+                </Text>
+                ，可退费重新预约。我院签到队列时段分为：上午：8:30-9:30；9：30-10:30；10:30-11:30；下午：14:00-15:00；15:00-16:00；16:00-17:00。
+              </Text>
+              <br />
+              <Text>
+                四、享受医保待遇的患者请于就诊当日到门诊收费处或自助机处转为医保重新结算，享受诊查费医保统筹补贴，网上预约挂号费将原路退回。
+              </Text>
+            </View>
+          )}
+          {orderDetail?.status === 'L' &&
+            '请在锁号的时候内完成支付，否则将取消号源'}
+          {orderDetail?.status === 'C' && (
+            <View className={styles.regFailInfo}>
+              <Text>挂号已取消，如需就诊请重新挂号</Text>
+            </View>
+          )}
+          {orderDetail?.status === 'F' &&
+            orderDetail?.refundList?.length >= 1 &&
+            orderDetail.refundList[0].refundDesc}
         </View>
         {countdown > 0 && orderDetail?.canPayFlag === 1 && (
           <View className={styles.leftPayTime}>
@@ -723,17 +749,6 @@ export default () => {
           <View>
             因我院号源紧张，若90内出现预约成功后就诊当天退号或未按时签到累计达到3次，将视为违约，180天内您将不再享有网上预约挂号服务。
           </View>
-        </Space>
-      </Dialog>
-      <Dialog
-        hideFail
-        show={visible}
-        title={'重要提醒'}
-        successText={'确定'}
-        onSuccess={() => setVisible(false)}
-      >
-        <Space style={{ lineHeight: 1.2, padding: 20 }}>
-          <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
       </Dialog>
     </View>
