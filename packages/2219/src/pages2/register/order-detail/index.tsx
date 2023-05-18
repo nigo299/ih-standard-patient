@@ -79,7 +79,7 @@ export default () => {
     data: { data: infoData },
   } = useCommApi.注意事项内容查询({
     params: {
-      noticeType: 'GHTS',
+      noticeType: 'SYTS',
       noticeMethod: 'TC',
     },
   });
