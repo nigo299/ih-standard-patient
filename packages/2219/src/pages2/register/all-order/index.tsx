@@ -47,7 +47,10 @@ export default () => {
     },
     {
       label: '就诊时间',
-      text: `${timeFlag}${beginTime}-${endTime}` || '暂无',
+      text:
+        `${timeFlag}${decodeURIComponent(beginTime)}-${decodeURIComponent(
+          endTime,
+        )}` || '暂无',
     },
     {
       label: '就诊人',
@@ -114,7 +117,9 @@ export default () => {
               {status === '4' && '已取消'}
             </Space>
           </View>
-          <View className={styles.statusInfo}>{payTime}</View>
+          <View className={styles.statusInfo}>
+            {decodeURIComponent(payTime)}
+          </View>
         </View>
       </View>
       <Form className={styles.content} form={form}>
