@@ -602,7 +602,12 @@ export default () => {
           {clinicList
             .slice(0, toggle[0] ? clinicList?.length : 4)
             .map((item) => (
-              <ListItem key={item.label} {...item} orderDetail={orderDetail} />
+              <ListItem
+                key={item.label}
+                {...item}
+                orderDetail={orderDetail}
+                navigate={true}
+              />
             ))}
         </View>
         <ListTitle
@@ -641,9 +646,9 @@ export default () => {
                     payOrderId: orderDetail?.payOrderId,
                     endDate: formDate(orderDetail?.orderTime).slice(0, 10),
                     beginDate: formDate(orderDetail?.orderTime).slice(0, 10),
-                    extFields: JSON.stringify({
+                    extFields: {
                       hisRecepitNo: orderDetail?.hisRecepitNo,
-                    }),
+                    },
                   });
                   if (ebillDataList.length >= 1) {
                     if (ebillDataList[0].pictureUrl) {
