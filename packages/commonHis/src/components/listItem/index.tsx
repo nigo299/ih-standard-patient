@@ -26,7 +26,7 @@ export default ({
       transformCode: 'KQ00072',
       deptCode: orderDetail?.deptNo,
     },
-    needInit: config.enableRegInfoDeptNavigate,
+    needInit: label === '就诊科室' && config.enableRegInfoDeptNavigate,
   });
   // console.log(deptInfo, 'data12333');
   const deptInfo = data?.data?.data;
