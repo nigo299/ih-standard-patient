@@ -19,7 +19,6 @@ import {
   ColorText,
   Loading,
   Space,
-  RichText,
 } from '@kqinfo/ui';
 import {
   ListItem,
@@ -44,7 +43,7 @@ import dayjs from 'dayjs';
 import styles from './index.less';
 import socialPayAuth from '@/utils/socialPayAuth';
 import storage from '@/utils/storage';
-import { useDownCount, useEffectState } from 'parsec-hooks';
+import { useDownCount } from 'parsec-hooks';
 import { useUpdateEffect } from 'ahooks';
 import RegisterCard from '@/components/registerCard';
 import AntFoestToast from '@/components/antFoestToast';
@@ -642,6 +641,9 @@ export default () => {
                     payOrderId: orderDetail?.payOrderId,
                     endDate: formDate(orderDetail?.orderTime).slice(0, 10),
                     beginDate: formDate(orderDetail?.orderTime).slice(0, 10),
+                    extFields: JSON.stringify({
+                      hisRecepitNo: orderDetail?.hisRecepitNo,
+                    }),
                   });
                   if (ebillDataList.length >= 1) {
                     if (ebillDataList[0].pictureUrl) {
