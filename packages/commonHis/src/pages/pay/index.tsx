@@ -264,10 +264,10 @@ export default () => {
       }
       if (getBrowserUa() === 'wechat') {
         const { code, msg, data } = await wechatPayRequest({
-          callUrl: encodeURIComponent(
+          callUrl:
             // `${window?.location?.origin}${window?.location?.pathname}#/pages/medical/order-item/index`,
             `https%3A%2F%2Fihs.cqkqinfo.com%2Fpatients%2Fp40009-his-test%2F%23%2Fpages%2Fmedical%2Forder-item%2Findex`,
-          ),
+
           bizChannel: 'insuranceWxPay',
         });
         if (code === 0 && data?.authUrl) {
