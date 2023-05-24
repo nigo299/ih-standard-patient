@@ -11,6 +11,7 @@ import {
   Exceed,
   DropDownMenuItem,
   DropDownMenu,
+  Button,
 } from '@kqinfo/ui';
 
 import globalState from '@/stores/global';
@@ -28,6 +29,7 @@ export default () => {
     type: 'reserve' | 'day';
   }>();
   const { deptList, getDeptList } = regsiterState.useContainer();
+  const [pageNum, setPageNum] = useState(1);
   const { data, request } = useApi.查询科室医生列表({
     initValue: {
       data: {
@@ -94,6 +96,7 @@ export default () => {
               setSelectDept(v);
               request({ deptId: v });
               console.log(v);
+              setPageNum(1);
             }}
             options={options1}
           />
@@ -101,9 +104,7 @@ export default () => {
         <WhiteSpace />
         <View className={styles.docInfo}>
           为您共查找到
-          <Text className={styles.docNum}>
-            {data?.data?.recordList?.length}
-          </Text>
+          <Text className={styles.docNum}>{data?.data?.totalCount}</Text>
           位医生
         </View>
         <WhiteSpace />
@@ -140,7 +141,17 @@ export default () => {
               </View>
             </Shadow>
           ))}
-
+        <Button
+          type="primary"
+          disabled={data?.data?.endPageIndex === pageNum}
+          onTap={() => {
+            const num = pageNum + 1;
+            setPageNum(num);
+            request({ deptId: selectDept || '', pageNum: num });
+          }}
+        >
+          下一页
+        </Button>
         <NoData />
       </View>
     </View>

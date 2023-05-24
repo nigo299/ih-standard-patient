@@ -35,6 +35,8 @@ interface NucleType {
   startTime: string;
   timeFlag: string;
   totalNum: string;
+  fee: string;
+  feeCode: string;
 }
 export default () => {
   const { type } = useGetParams<{ type: string }>();
@@ -43,6 +45,7 @@ export default () => {
   const { getPatientList, defaultPatientInfo } = patientState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
   const {
     request,
@@ -56,8 +59,11 @@ export default () => {
     },
     needInit: false,
   });
+  const [selectNucle, setSelectNucle] = useState<NucleType>(
+    data?.data?.items?.[0]?.feeList[0],
+  );
   const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
+    data?.data?.items?.[0]?.feeList[0]?.feeCode || '',
   );
   usePageEvent('onShow', async () => {
     request();
@@ -212,23 +218,27 @@ export default () => {
               flex="auto"
               className={styles.popupBtn}
               onTap={() => {
-                const selectNucle = data?.data?.items?.filter(
-                  (item: NucleType) => item.resourceId === resourceId,
-                );
-                if (selectNucle?.[0]?.nucleicName) {
-                  const {
-                    nucleicName,
-                    endTime,
-                    startTime,
-                    resourceId,
-                    regFee,
-                  } = selectNucle[0];
-                  setShow2(false);
+                const items = data?.data?.items;
+                const { fee, nucleicName, feeCode } = selectNucle;
+                const {
+                  beginTime,
+                  endTime,
+                  resourceId,
+                  deptCode,
+                  doctorCode,
+                  scheduleDate,
+                  timeFlag,
+                } = items[0];
 
-                  navigateTo({
-                    url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-                  });
-                }
+                setShow2(false);
+
+                navigateTo({
+                  url: `/pages2/nucleic/confirm/index?patientId=${
+                    defaultPatientInfo?.patientId
+                  }&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${beginTime}&regFee=${
+                    Number(fee) / 100
+                  }&feeCode=${feeCode}&deptCode=${deptCode}&doctorCode=${doctorCode}&scheduleDate=${scheduleDate}&timeFlag=${timeFlag}`,
+                });
               }}
             >
               <ColorText>接受</ColorText>
@@ -295,21 +305,24 @@ export default () => {
         </Space>
         {data?.data?.items?.length > 0 ? (
           <>
-            {data?.data?.items.map((item: NucleType) => {
+            {data?.data?.items?.[0]?.feeList?.map((item: NucleType) => {
               const { nucleicName } = item;
               return (
                 <Space
                   className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
+                    [styles.active]: resourceId === item.feeCode,
                   })}
                   key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
+                  onTap={() => {
+                    setSelectNucle(item);
+                    setResourceId(item.feeCode);
+                  }}
                   vertical
                   // size={30}
                   // ignoreNum={4}
                   justify="center"
                 >
-                  {resourceId === item.resourceId && (
+                  {resourceId === item.feeCode && (
                     <Image
                       src={`${IMAGE_DOMIN}/nucleic/active.png`}
                       className={styles.activeImg}
@@ -320,7 +333,9 @@ export default () => {
                   </Exceed>
                   <Space alignItems="center" className={styles.regFee}>
                     <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
+                    <ColorText fontWeight={600}>
+                      {(Number(item?.fee) / 100).toFixed(2)}元
+                    </ColorText>
                   </Space>
                   <View className={styles.solid} />
 
@@ -334,13 +349,15 @@ export default () => {
                         <ColorText>健康码状态为无码、黄码人员</ColorText>
                       )}
                       {(nucleicName?.includes('核酸检测（混检）') ||
+                        nucleicName?.includes('新型冠状病毒核酸检测(混采)') ||
                         nucleicName?.includes(
                           '核酸检测（出租网约车免费）（绿码）',
                         )) &&
                         '新型冠状病毒核酸检测（混采10:1）'}
 
-                      {nucleicName?.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
+                      {nucleicName?.includes('核酸检测（单检') ||
+                        (nucleicName?.includes('新型冠状病毒核酸检测(单采') &&
+                          '自愿核酸检测人员，单人单管')}
                     </View>
                   </Space>
                   {/*<Image*/}
