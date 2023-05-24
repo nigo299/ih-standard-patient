@@ -26,6 +26,7 @@ export default class BaseHis {
       showFullDoc: false,
       showFullSourceDay: false,
       showBillTime: true,
+      clinicDefaultSelectAll: false,
     };
   }
 }
@@ -73,4 +74,6 @@ type StaticConfig = {
   showFullSourceDay: boolean;
   /** 是否展示门诊列表页的开单时间项*/
   showBillTime: boolean;
+  /** 门诊缴费批量缴费时是否默认选择所有缴费单*/
+  clinicDefaultSelectAll: boolean;
 };
