@@ -378,8 +378,8 @@ export default () => {
       window.location.href =
         'https://tihs.cqkqinfo.com/patients/p40064-his/#/pages/home/index';
     }
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+    // window.location.href =
+    //   'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
 
     showTabBar();
     setPageStyle({
@@ -646,7 +646,7 @@ export default () => {
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
       </Dialog>
-      {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}
+      {/* {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />} */}
     </View>
   );
 };
