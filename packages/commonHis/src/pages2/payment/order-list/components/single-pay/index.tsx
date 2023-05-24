@@ -407,19 +407,17 @@ export default () => {
                       {item.payName || '暂无'}
                     </Exceed>
                   </View>
-                  {!!config.showBillTime && (
-                    <View className={styles.td}>
-                      <FormItem
-                        label="开单时间"
-                        labelWidth={'4em'}
-                        className={styles.label}
-                        onTap={(event) =>
-                          !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
-                        }
-                      />
-                      <View>{formDate(item.date) || '暂无'}</View>
-                    </View>
-                  )}
+                  <View className={styles.td}>
+                    <FormItem
+                      label="开单时间"
+                      labelWidth={'4em'}
+                      className={styles.label}
+                      onTap={(event) =>
+                        !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
+                      }
+                    />
+                    <View>{formDate(item.date) || '暂无'}</View>
+                  </View>
                 </Form>
               </View>
               <View className={styles.arrowWrap}>
