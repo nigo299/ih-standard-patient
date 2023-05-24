@@ -133,7 +133,6 @@ export default () => {
       url: '/pages2/register/department/index?type=day',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
       new: false,
-      // open: process.env.REMAX_APP_PLATFORM === 'production' && true,
     },
     {
       title: '预约挂号',
@@ -145,7 +144,6 @@ export default () => {
       url: '/pages2/register/department/index?type=reserve',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
-      // open: process.env.REMAX_APP_PLATFORM === 'production' && true,
     },
     {
       title: '门诊缴费',
@@ -157,7 +155,6 @@ export default () => {
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
       image: `${IMAGE_DOMIN}/home/mzjf.png`,
       new: false,
-      // open: process.env.REMAX_APP_PLATFORM === 'production' && true,
     },
   ];
 
@@ -349,24 +346,6 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  // useEffect(() => {
-  //   hideTabBar();
-  //   showModal({
-  //     title: '提示',
-  //     content: '是否进入适老模式',
-  //   }).then(({ confirm }) => {
-  //     if (confirm) {
-  //       setElderly(true);
-  //       if (PLATFORM === 'web') {
-  //         redirectTo({ url: '/pages3/home/index' });
-  //       } else {
-  //         reLaunch({ url: '/pages3/home/index' });
-  //       }
-  //     }
-  //     showTabBar();
-  //   });
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   useEffect(() => {
     return () => {
