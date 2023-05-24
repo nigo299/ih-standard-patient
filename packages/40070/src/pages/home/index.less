@@ -31,7 +31,7 @@
   height: 89px;
 }
 .notice {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .microsite {
@@ -83,23 +83,40 @@
 }
 
 .navImg {
-  width: 131px;
-  height: 131px;
+  width: 88px;
+  height: 88px;
+  margin-top: -10px;
 }
 
 .navWrap {
+  width: 335px;
+  height: 129px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 20px 11px 0 26px;
   position: relative;
-  &:active {
-    opacity: 0.7;
+  &:nth-child(1) {
+    background-color: #fef0f5;
+    margin-bottom: 21px;
+  }
+  &:nth-child(2) {
+    background-color: #e4f4ff;
+    margin-bottom: 21px;
+  }
+  &:nth-child(3) {
+    background-color: #fef5ec;
+  }
+  &:nth-child(4) {
+    background-color: #e6f7f3;
   }
 }
 
 .navNewImg {
   position: absolute;
-  top: 5px;
-  right: 18px;
-  width: 53px;
-  height: 26px;
+  top: -6px;
+  right: -4px;
+  width: 64px;
+  height: 41px;
 }
 
 .navLsnlImg {
@@ -110,9 +127,12 @@
   height: 33px;
 }
 
+.navInfo {
+  padding-top: 8px;
+}
 .navTitle {
-  margin: 12px 0 13px 0;
   color: @black-300;
+  margin-bottom: 9px;
   font-size: 34px;
   font-weight: bold;
 }

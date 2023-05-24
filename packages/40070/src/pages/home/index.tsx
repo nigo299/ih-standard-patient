@@ -124,17 +124,6 @@ export default () => {
   const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const homeMainNavConfig = [
     {
-      title: '当日挂号',
-      subTitle: () => (
-        <View style={{ color: '#666' }}>
-          线上快速<Text style={{ color: '#F371A9' }}>当日挂号</Text>
-        </View>
-      ),
-      url: '/pages2/register/department/index?type=day',
-      image: `${IMAGE_DOMIN}/home/drgh.png`,
-      new: false,
-    },
-    {
       title: '预约挂号',
       subTitle: () => (
         <View style={{ color: '#666' }}>
@@ -146,6 +135,18 @@ export default () => {
       new: true,
     },
     {
+      title: '当日挂号',
+      subTitle: () => (
+        <View style={{ color: '#666' }}>
+          到院患者<Text style={{ color: '#F371A9' }}>当日挂号</Text>
+        </View>
+      ),
+      url: '/pages2/register/department/index?type=day',
+      image: `${IMAGE_DOMIN}/home/drgh.png`,
+      new: false,
+    },
+
+    {
       title: '门诊缴费',
       subTitle: () => (
         <View style={{ color: '#666' }}>
@@ -155,6 +156,16 @@ export default () => {
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
       image: `${IMAGE_DOMIN}/home/mzjf.png`,
       new: false,
+    },
+    {
+      title: '报告查询',
+      subTitle: () => (
+        <View style={{ color: '#666' }}>
+          报告结果<Text style={{ color: '#F371A9' }}>实时查询</Text>
+        </View>
+      ),
+      url: `/pages/report/report-list/index`,
+      image: `${IMAGE_DOMIN}/home/bgcx.png`,
     },
   ];
 
@@ -406,21 +417,14 @@ export default () => {
             ))}
           </NoticeBar>
         )}
-        <Space justify="space-between" className={styles.nav}>
+        <Space justify="space-between" className={styles.nav} flexWrap="wrap">
           {homeMainNavConfig.map((nav) => (
             <Space
-              vertical
               justify="center"
-              alignItems="center"
               key={nav.title}
               className={styles.navWrap}
               onTap={() => handleNavClick(nav)}
             >
-              <Image
-                src={nav.image}
-                mode="aspectFill"
-                className={styles.navImg}
-              />
               {nav.new && (
                 <Image
                   src={
@@ -435,8 +439,15 @@ export default () => {
                   })}
                 />
               )}
-              <View className={styles.navTitle}>{nav.title}</View>
-              {nav.subTitle()}
+              <View className={styles.navInfo}>
+                <View className={styles.navTitle}>{nav.title}</View>
+                {nav.subTitle()}
+              </View>
+              <Image
+                src={nav.image}
+                mode="aspectFill"
+                className={styles.navImg}
+              />
             </Space>
           ))}
         </Space>
