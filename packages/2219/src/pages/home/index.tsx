@@ -83,14 +83,14 @@ export default () => {
     },
     needInit: IS_FEEDBACL,
   });
-  const {
-    data: { data: infoData },
-  } = useApi.注意事项内容查询({
-    params: {
-      noticeType: 'SYTS',
-      noticeMethod: 'TC',
-    },
-  });
+  // const {
+  //   data: { data: infoData },
+  // } = useApi.注意事项内容查询({
+  //   params: {
+  //     noticeType: 'SYTS',
+  //     noticeMethod: 'TC',
+  //   },
+  // });
   const {
     data: { data: infoData2 },
   } = useApi.注意事项内容查询({
@@ -102,7 +102,7 @@ export default () => {
   const {
     data: { data: configData },
   } = useApi.获取首页配置信息({});
-  const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
+  // const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const homeMainNavConfig = [
     {
       title: '预约挂号',
@@ -390,10 +390,10 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  useEffect(() => {
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-  }, []);
+  // useEffect(() => {
+  //   window.location.href =
+  //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+  // }, []);
   // useEffect(() => {
   //   window.location.href =
   //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
@@ -643,7 +643,7 @@ export default () => {
           }
         }}
       />
-      <Dialog
+      {/* <Dialog
         hideFail
         show={visible}
         title={'重要提醒'}
@@ -653,8 +653,8 @@ export default () => {
         <Space style={{ lineHeight: 1.2, padding: 20 }}>
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
-      </Dialog>
-      {/* {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />} */}
+      </Dialog> */}
+      {/*{PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}*/}
     </View>
   );
 };

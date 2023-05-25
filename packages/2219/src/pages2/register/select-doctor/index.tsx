@@ -14,7 +14,7 @@ import useMicrositeApi from '@/apis/microsite';
 import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import useComApi from '@/apis/common';
-import styles from './index.less';
+import styles from '@/pages2/register/select-doctor/index.less';
 import { useHisConfig } from '@/hooks';
 import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
 import ShowSource from '@/pages2/register/select-doctor/components/show-source';
@@ -30,7 +30,6 @@ const specilDepts = ['30312001', '30312002', '30312003'];
 
 export default () => {
   const { config } = useHisConfig();
-  const [visible, setVisible] = useState(false);
   const { setDeptDetail } = registerState.useContainer();
   const { deptId, type = 'default' } = useGetParams<{
     deptId: string;
@@ -44,6 +43,7 @@ export default () => {
       noticeMethod: 'TC',
     },
   });
+  const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const {
     request: requestScheduleList,
     loading,
@@ -111,7 +111,7 @@ export default () => {
       deptId: specilDepts.includes(deptId) ? '30312' : deptId,
       extFields: specilDepts.includes(deptId)
         ? { inputData: deptId?.slice(-1) }
-        : null,
+        : { inputData: null },
     },
     needInit: !!deptId && !!date,
   });
@@ -250,6 +250,7 @@ export default () => {
       setDeptDetail(deptDetail);
     }
   }, [deptDetail]);
+
   useEffect(() => {
     if (deptId === '30312001') {
       console.log('1233');
@@ -283,7 +284,6 @@ export default () => {
       requestScheduleList();
       requestDoctorList();
     }
-    setVisible(true);
     setNavigationBar({
       title: '选择医生',
     });

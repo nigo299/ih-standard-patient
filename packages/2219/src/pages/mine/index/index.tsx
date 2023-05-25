@@ -14,7 +14,7 @@ import {
   QrCode,
   FormItem,
 } from '@kqinfo/ui';
-import { TabBar, PreviewImage, QrCodeModal } from '@/components';
+import { PreviewImage, QrCodeModal } from '@/components';
 import patientState from '@/stores/patient';
 import globalState from '@/stores/global';
 import styles from 'commonHis/src/pages/mine/index/index.less';
@@ -258,7 +258,7 @@ export default () => {
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />
-                                {selectPatient?.patCardNo}
+                                {selectPatient?.patHisNo}
                               </Space>
                             </Space>
                             <Space
@@ -277,7 +277,7 @@ export default () => {
                                 alignItems="center"
                               >
                                 <QrCode
-                                  content={selectPatient?.patCardNo || ''}
+                                  content={selectPatient?.patHisNo || ''}
                                   className={styles.mediaQrcodeImg}
                                 />
                               </Space>
@@ -430,7 +430,7 @@ export default () => {
       <QrCodeModal
         show={show}
         name={`${selectPatient?.patientName} | ${selectPatient?.patCardNo}`}
-        content={selectPatient?.patCardNo || ''}
+        content={selectPatient?.patHisNo || ''}
         close={() => {
           setShow(false);
           showTabBar();
