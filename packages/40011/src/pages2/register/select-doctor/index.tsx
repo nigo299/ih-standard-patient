@@ -48,7 +48,7 @@ export default () => {
     },
     params: {
       deptId,
-      extFields: JSON.stringify({ hisType }),
+      extFields: { hisType },
     },
     needInit: !!deptId,
   });
