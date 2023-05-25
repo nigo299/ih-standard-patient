@@ -283,6 +283,7 @@ export default () => {
       requestScheduleList();
       requestDoctorList();
     }
+    setVisible(true);
     setNavigationBar({
       title: '选择医生',
     });
