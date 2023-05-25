@@ -516,7 +516,11 @@ export default {
     },
   ),
   查询科室医生号源: createApiHooks(
-    (params: { deptId: string | number; scheduleDate: string }) => {
+    (params: {
+      deptId: string | number;
+      scheduleDate: string;
+      extFields: any;
+    }) => {
       return request.post<RegisterScheduleDoctorListType>(
         '/api/intelligent/api/register/schedule-doctor-list',
         params,
