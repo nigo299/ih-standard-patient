@@ -7,7 +7,7 @@ import { Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
 import { DeptType } from '@/apis/register';
 import regsiterState from '@/stores/register';
-import styles from '@/pages2/register/select-hospital/index.less';
+import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 
 export default () => {
@@ -57,7 +57,7 @@ export default () => {
     <View>
       <Step step={1} />
       <View className={styles.header} />
-      <Space justify="center">
+      {/* <Space justify="center">
         <Image
           className={styles.banner}
           src={`${IMAGE_DOMIN}/register/banner.png`}
@@ -68,7 +68,7 @@ export default () => {
             })
           }
         />
-      </Space>
+      </Space> */}
       <WhiteSpace />
       <View className={styles.lists}>
         {hospitalList?.map((item, index) => (
