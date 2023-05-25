@@ -348,6 +348,7 @@ export interface OrderDetailType {
   preSettlementResult: string;
   encryptIdNo: string;
   encryptPatientIdNo: string;
+  hisRecepitNo?: string;
 }
 interface RegisterOrderDetialType extends API.ResponseDataType {
   data: OrderDetailType;
