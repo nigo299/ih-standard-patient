@@ -429,8 +429,6 @@ export default () => {
       window.location.href =
         'https://tihs.cqkqinfo.com/patients/p40064-his/#/pages/home/index';
     }
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
     // getCardProdiles();
     showTabBar();
     setPageStyle({

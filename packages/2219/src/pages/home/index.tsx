@@ -390,6 +390,14 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
+  useEffect(() => {
+    window.location.href =
+      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+  }, []);
+  // useEffect(() => {
+  //   window.location.href =
+  //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+  // }, []);
   // useEffect(() => {
   //   hideTabBar();
   //   showModal({
