@@ -3,7 +3,7 @@ import { View, Text, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { mineMainNavConfig, mineNavListConfig } from '@/config';
-import { HOSPITAL_NAME, IMAGE_DOMIN, PLATFORM } from '@/config/constant';
+import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
 import {
   Space,
   PartTitle,
