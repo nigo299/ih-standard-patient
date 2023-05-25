@@ -39,7 +39,7 @@ export const CHILDREN_DEPTLIST = false;
 export const PAYMENT_SELECTALL =
   process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
 // 门诊缴费必须全部支付
-export const PAYMENT_SELECTALL_PAY = false;
+export const PAYMENT_SELECTALL_PAY = true;
 // 是否启用H5支付(flase为立即缴费小程序支付)
 export const H5_PAY = false;
 // 是否有支付宝小程序

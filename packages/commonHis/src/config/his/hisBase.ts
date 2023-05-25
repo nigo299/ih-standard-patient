@@ -25,7 +25,6 @@ export default class BaseHis {
       enableRegInfoDeptNavigate: false,
       showFullDoc: false,
       showFullSourceDay: false,
-      clinicDefaultSelectAll: false,
     };
   }
 }
@@ -71,6 +70,4 @@ type StaticConfig = {
   showFullDoc: boolean;
   /** 是否显示已满诊的日期排班*/
   showFullSourceDay: boolean;
-  /** 门诊缴费批量缴费时是否默认选择所有缴费单*/
-  clinicDefaultSelectAll: boolean;
 };

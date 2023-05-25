@@ -43,10 +43,8 @@ import storage from '@/utils/storage';
 import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import { PatGender } from '@/config/dict';
-import { useHisConfig } from '@/hooks';
 
 export default () => {
-  const { config } = useHisConfig();
   const { setOrderInfo } = payState.useContainer();
   const { patientId, patCardNo } = useGetParams<{
     patientId: string;
@@ -272,7 +270,7 @@ export default () => {
     );
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
-      if (PAYMENT_SELECTALL_PAY || config.clinicDefaultSelectAll) {
+      if (PAYMENT_SELECTALL_PAY) {
         setSelectList(data?.map((item) => item.hisOrderNo));
       } else {
         setSelectList([data[0].hisOrderNo]);
