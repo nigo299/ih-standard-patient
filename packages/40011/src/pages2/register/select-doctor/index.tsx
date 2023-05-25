@@ -32,11 +32,11 @@ export default () => {
   const {
     deptId,
     type = 'default',
-    isNew,
+    hisType,
   } = useGetParams<{
     deptId: string;
     type: 'reserve' | 'day' | 'default';
-    isNew?: boolean;
+    hisType?: string;
   }>();
   const {
     request: requestScheduleList,
@@ -48,7 +48,7 @@ export default () => {
     },
     params: {
       deptId,
-      extFields: JSON.stringify({ isNew }),
+      extFields: { hisType },
     },
     needInit: !!deptId,
   });
