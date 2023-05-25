@@ -22,12 +22,12 @@ export default () => {
       setDeptList(hospitalList?.[1]?.children || []);
       if (name === '彭水中医院新城院区') {
         navigateTo({
-          url: `/pages2/register/department/index?type=${type}&isNew=true`,
+          url: `/pages2/register/department/index?type=${type}&hisType=1`,
         });
         return;
       } else if (name === '彭水中医院老院区') {
         navigateTo({
-          url: `/pages2/register/department/index?type=${type}&isNew=false`,
+          url: `/pages2/register/department/index?type=${type}&hisType=2`,
         });
         return;
       }
@@ -74,24 +74,40 @@ export default () => {
       </Space>
       <WhiteSpace />
       <View className={styles.lists}>
-        {hospitalList?.map((item, index) => (
-          <View className={styles.itemWrap} key={index}>
-            <Image
-              src={`${IMAGE_DOMIN}/register/districtBg.png`}
-              className={styles.bg}
-            />
-            <View
-              key={item.id}
-              className={styles.item}
-              onTap={() => handleSelect(item)}
-            >
-              <View className={styles.name}>{item.name}</View>
-              <View className={styles.address}>{`地址：${
-                item.address || '暂无'
-              }`}</View>
-            </View>
+        <View className={styles.itemWrap}>
+          <Image
+            src={`${IMAGE_DOMIN}/register/districtBg.png`}
+            className={styles.bg}
+          />
+          <View
+            className={styles.item}
+            onTap={() => {
+              navigateTo({
+                url: `/pages2/register/department/index?type=${type}&hisType=1`,
+              });
+            }}
+          >
+            <View className={styles.name}>{'新院区'}</View>
+            <View className={styles.address}>{`地址：${'暂无'}`}</View>
           </View>
-        ))}
+        </View>
+        <View className={styles.itemWrap}>
+          <Image
+            src={`${IMAGE_DOMIN}/register/districtBg.png`}
+            className={styles.bg}
+          />
+          <View
+            className={styles.item}
+            onTap={() => {
+              navigateTo({
+                url: `/pages2/register/department/index?type=${type}&hisType=2`,
+              });
+            }}
+          >
+            <View className={styles.name}>{'老院区'}</View>
+            <View className={styles.address}>{`地址：${'暂无'}`}</View>
+          </View>
+        </View>
       </View>
     </View>
   );

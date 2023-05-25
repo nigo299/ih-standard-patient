@@ -21,9 +21,9 @@ import useApi from '@/apis/common';
 import { useHisConfig } from '@/hooks';
 export default () => {
   const { config } = useHisConfig();
-  const { type = 'default', isNew } = useGetParams<{
+  const { type = 'default', hisType } = useGetParams<{
     type: 'reserve' | 'day' | 'default';
-    isNew: boolean;
+    hisType: string;
   }>();
   const { setSearchQ } = globalState.useContainer();
   const { deptList, getDeptList } = regsiterState.useContainer();
@@ -111,13 +111,13 @@ export default () => {
           onChange={(id, children) => {
             if (children.length === 0) {
               navigateTo({
-                url: `/pages2/register/select-doctor/index?deptId=${id}&type=${type}&isNew=${isNew}`,
+                url: `/pages2/register/select-doctor/index?deptId=${id}&type=${type}&hisType=${hisType}`,
               });
             }
           }}
           onSelect={(dept) => {
             navigateTo({
-              url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&isNew=${isNew}`,
+              url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&hisType=${hisType}`,
             });
           }}
         />
