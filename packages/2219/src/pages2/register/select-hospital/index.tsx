@@ -1,14 +1,15 @@
 import React, { useCallback } from 'react';
-import { View, Image, navigateTo } from 'remax/one';
+import { View, Image, navigateTo, reLaunch } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { Button } from '@kqinfo/ui';
+
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import { DeptType } from '@/apis/register';
 import regsiterState from '@/stores/register';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
+import { Space } from '@kqinfo/ui';
 
 export default () => {
   const { type, summary, doctor } = useGetParams<{
@@ -57,18 +58,6 @@ export default () => {
     <View>
       <Step step={1} />
       <View className={styles.header} />
-      {/* <Space justify="center">
-        <Image
-          className={styles.banner}
-          src={`${IMAGE_DOMIN}/register/banner.png`}
-          onTap={() =>
-            showToast({
-              icon: 'none',
-              title: '功能暂未开放!',
-            })
-          }
-        />
-      </Space> */}
       <WhiteSpace />
       <View className={styles.lists}>
         {hospitalList?.map((item, index) => (
@@ -90,16 +79,26 @@ export default () => {
           </View>
         ))}
       </View>
-      <Button
-        type="primary"
-        className={styles.backBtn}
+      <Space
+        className={styles.ball}
+        justify="center"
+        alignItems="center"
+        vertical
+        size={8}
         onTap={() => {
-          window.location.href =
-            'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+          if (PLATFORM === 'web') {
+            window.location.href =
+              'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+          } else {
+            reLaunch({
+              url: '/pages/home/index',
+            });
+          }
         }}
       >
-        返回首页
-      </Button>
+        <View>返回</View>
+        <View>首页</View>
+      </Space>
     </View>
   );
 };
