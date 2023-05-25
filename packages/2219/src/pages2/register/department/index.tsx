@@ -37,6 +37,20 @@ export default () => {
     },
     needInit: config.showChooseDeptDialog,
   });
+  const deptChildren = [
+    { no: '30312001', name: '儿童牙病' },
+    { no: '30312002', name: '儿童早期矫治' },
+    { no: '30312003', name: '儿童牙外伤' },
+  ];
+  const realDeptList = deptList.map((dept) => {
+    if (dept?.no === '30312') {
+      return {
+        ...dept,
+        children: deptChildren,
+      };
+    }
+    return dept;
+  });
   usePageEvent('onShow', async () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
@@ -96,7 +110,7 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={deptList.map(({ name, children, no }) => ({
+          data={realDeptList.map(({ name, children, no }) => ({
             name,
             id: no,
             children: children.map(({ name, no }) => ({

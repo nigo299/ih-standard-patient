@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { Space, showToast } from '@kqinfo/ui';
+import { Button } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
@@ -90,6 +90,16 @@ export default () => {
           </View>
         ))}
       </View>
+      <Button
+        type="primary"
+        className={styles.backBtn}
+        onTap={() => {
+          window.location.href =
+            'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+        }}
+      >
+        返回首页
+      </Button>
     </View>
   );
 };

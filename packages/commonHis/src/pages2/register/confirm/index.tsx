@@ -587,7 +587,7 @@ export default () => {
             </View> */}
             <View>
               请在预约挂号成功后
-              <Text style={{ color: '#D95E38' }}>5分钟内</Text>
+              <Text style={{ color: '#D95E38' }}>15分钟内</Text>
               完成支付，超出时间后 系统将做退号处理
             </View>
             {/* <View style={{ color: '#D95E38' }}>

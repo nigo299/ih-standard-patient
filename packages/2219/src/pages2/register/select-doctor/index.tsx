@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -13,6 +13,7 @@ import useApi from '@/apis/register';
 import useMicrositeApi from '@/apis/microsite';
 import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
+import useComApi from '@/apis/common';
 import styles from './index.less';
 import { useHisConfig } from '@/hooks';
 import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
@@ -26,19 +27,23 @@ enum DoctorType {
   night = '普通号',
 }
 const specilDepts = ['30312001', '30312002', '30312003'];
-const DeptCode = {
-  '30312001': 1,
-  '30312002': 2,
-  '30312003': 3,
-};
+
 export default () => {
   const { config } = useHisConfig();
-
+  const [visible, setVisible] = useState(false);
   const { setDeptDetail } = registerState.useContainer();
   const { deptId, type = 'default' } = useGetParams<{
     deptId: string;
     type: 'reserve' | 'day' | 'default';
   }>();
+  const {
+    data: { data: infoData },
+  } = useComApi.注意事项内容查询({
+    params: {
+      noticeType: 'SYTS',
+      noticeMethod: 'TC',
+    },
+  });
   const {
     request: requestScheduleList,
     loading,
@@ -103,7 +108,10 @@ export default () => {
     },
     params: {
       scheduleDate: date.format('YYYY-MM-DD'),
-      deptId,
+      deptId: specilDepts.includes(deptId) ? '30312' : deptId,
+      extFields: specilDepts.includes(deptId)
+        ? { inputData: deptId?.slice(-1) }
+        : null,
     },
     needInit: !!deptId && !!date,
   });
@@ -116,11 +124,35 @@ export default () => {
     },
     needInit: !!deptId,
   });
+  const realDeptDetail = useMemo(() => {
+    if (deptId === '30312001') {
+      return {
+        name: '儿童牙病',
+        hisDistrict: '冉家坝院区',
+        summary:
+          '诊疗范围：儿童牙体龋病、非龋病疾病、牙髓病、根尖周疾病，儿童口腔舒适治疗。',
+      };
+    }
+    if (deptId === '30312002') {
+      return {
+        name: '儿童早期矫治',
+        hisDistrict: '冉家坝院区',
+        summary:
+          '诊疗范围：儿童各类错颌畸形的早期矫治（如牙列拥挤，反合，上牙前突，阻生牙等）；儿童口腔不良习惯的阻断治疗（如口呼吸，咬唇，吐舌等）。',
+      };
+    }
+    if (deptId === '30312003') {
+      return {
+        name: '儿童牙外伤',
+        hisDistrict: '冉家坝院区',
+        summary: '诊疗范围：儿童乳牙和年轻恒牙外伤。',
+      };
+    }
+    return deptDetail;
+  }, [deptDetail, deptId]);
   const newDoctorList = useMemo(() => {
     if (doctorList && config.showFullDoc) {
-      return doctorList.sort((prev, next) =>
-        prev?.leftSource === 0 ? 1 : next?.leftSource === 0 ? -1 : 0,
-      );
+      return doctorList;
     }
     if (doctorType === '仅展示有号') {
       return (
@@ -218,7 +250,33 @@ export default () => {
       setDeptDetail(deptDetail);
     }
   }, [deptDetail]);
+  useEffect(() => {
+    if (deptId === '30312001') {
+      console.log('1233');
 
+      setDeptDetail({
+        name: '儿童牙病',
+        hisDistrict: '冉家坝院区',
+        summary:
+          '诊疗范围：儿童牙体龋病、非龋病疾病、牙髓病、根尖周疾病，儿童口腔舒适治疗。',
+      });
+    }
+    if (deptId === '30312002') {
+      setDeptDetail({
+        name: '儿童早期矫治',
+        hisDistrict: '冉家坝院区',
+        summary:
+          '诊疗范围：儿童各类错颌畸形的早期矫治（如牙列拥挤，反合，上牙前突，阻生牙等）；儿童口腔不良习惯的阻断治疗（如口呼吸，咬唇，吐舌等）。',
+      });
+    }
+    if (deptId === '30312003') {
+      setDeptDetail({
+        name: '儿童牙外伤',
+        hisDistrict: '冉家坝院区',
+        summary: '诊疗范围：儿童乳牙和年轻恒牙外伤。',
+      });
+    }
+  }, [deptId, setDeptDetail]);
   usePageEvent('onShow', () => {
     /** 优化小程序跳转授权返回后不自动请求接口 */
     if (deptId) {
@@ -235,11 +293,11 @@ export default () => {
       {(loading || loading2) && <Loading type="top" />}
       <View className={styles.content}>
         <DeptInfo
-          deptImg={deptDetail?.img || `${IMAGE_DOMIN}/register/dept.png`}
+          deptImg={realDeptDetail?.img || `${IMAGE_DOMIN}/register/dept.png`}
           hospitalName={HOSPITAL_NAME || '暂无'}
-          deptName={deptDetail?.name || '暂无'}
-          tag={deptDetail?.hisDistrict || '本院'}
-          summary={`简介: ${deptDetail?.summary || '暂无'}`}
+          deptName={realDeptDetail?.name || '暂无'}
+          tag={realDeptDetail?.hisDistrict || '本院'}
+          summary={`简介: ${realDeptDetail?.summary || '暂无'}`}
           onDetailTap={() =>
             navigateTo({
               url: `/pages2/register/dept-summary/index?deptId=${deptId}`,
@@ -334,8 +392,8 @@ export default () => {
       <Dialog
         hideFail
         show={visible}
-        title={'重要提醒'}
-        successText={'确定'}
+        title={'温馨提示'}
+        successText={'我已知晓'}
         onSuccess={() => setVisible(false)}
       >
         <Space style={{ lineHeight: 1.2, padding: 20 }}>

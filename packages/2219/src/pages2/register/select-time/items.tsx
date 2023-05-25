@@ -99,7 +99,7 @@ export default ({
                 <View className={styles.items2}>
                   {visitBeginTime?.slice(0, 5)}-{visitEndTime?.slice(0, 5)}
                   {/* <View className={styles.type}>普通</View> {`余 : ${leftSource}`} */}
-                  <View className={styles.type}>{`余号: ${1}`}</View>
+                  {/* <View className={styles.type}>{`余号: ${1}`}</View> */}
                   <View
                     className={styles.type}
                     style={{ color: '#ff9d46' }}
