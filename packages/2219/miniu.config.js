@@ -12,7 +12,7 @@ const miniu = require('miniu');
         // 项目地址
         project: 'dist/ali',
         // 小程序Id
-        appId: '2021002125656335',
+        appId: '2019032163620163',
         // 返回二维码文件的格式 "image" 或 "base64"， 默认值 "terminal" 供调试用
         qrcodeFormat: 'terminal',
         // 上传的终端
