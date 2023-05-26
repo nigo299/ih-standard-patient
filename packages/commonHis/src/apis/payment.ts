@@ -208,6 +208,7 @@ export default {
       patientName?: string;
       patCardNo?: string;
       scanFlag?: string;
+      extFields?: any;
     }) => {
       return request.post<PaymentWaitpayListType>(
         '/api/intelligent/api/op/wait-pay-list',

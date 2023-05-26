@@ -36,6 +36,8 @@ export default () => {
     age: string;
     gender: string;
   }>();
+  console.log(patientId, 'patientId');
+
   const {
     loading,
     data: { data: waitOpDetail },
@@ -44,7 +46,7 @@ export default () => {
       data: { waitOpList: [] },
     },
     params:
-      patientId && patientId !== 'null'
+      patientId && patientId !== 'null' && patientId !== 'undefined'
         ? {
             patientId,
             hisOrderNo: decodeURIComponent(hisOrderNo),
