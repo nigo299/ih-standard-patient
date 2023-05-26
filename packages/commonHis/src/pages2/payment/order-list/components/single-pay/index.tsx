@@ -294,7 +294,7 @@ export default () => {
       });
     }
     setLoading(false);
-  }, [patCardNo, patientId]);
+  }, [patCardNo, patientId, scanType]);
   useUpdateEffect(() => {
     if (process.env.REMAX_APP_PLATFORM === 'app') {
       const href = window.location.href;
