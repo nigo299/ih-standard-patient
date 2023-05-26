@@ -269,6 +269,7 @@ export default () => {
         : {
             patCardNo,
             scanFlag: '1',
+            extFields: JSON.stringify({ scanType }),
           },
     );
     if (code === 0 && data?.length >= 1) {
