@@ -46,11 +46,11 @@ import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
 
 export default () => {
-  const { config } = useHisConfig();
   const { setOrderInfo } = payState.useContainer();
-  const { patientId, patCardNo } = useGetParams<{
+  const { patientId, patCardNo, scanType } = useGetParams<{
     patientId: string;
     patCardNo: string;
+    scanType?: string;
   }>();
   const [waitOpList, setWaitOpList] = useState<WaitpayType[]>([]);
   const [form] = Form.useForm();
@@ -118,6 +118,7 @@ export default () => {
               medicalFlag: '2',
               extFields: JSON.stringify({
                 idNo: storage.get('idNo'),
+                scanType: scanType || '',
               }),
             }
           : params;
