@@ -67,7 +67,7 @@ export default () => {
       patientId,
       idFullTransFlag: '1',
     },
-    needInit: !!patientId,
+    needInit: !!patientId && patientId !== 'null' && patientId !== 'undefined',
   });
   const selectAll = useMemo(() => {
     if (selectList.length === 0 || selectList.length !== waitOpList.length) {
