@@ -250,7 +250,7 @@ export default {
       scanFlag?: string;
       deptName?: string;
       doctorName?: string;
-      createDate?: string;
+      createDate?: string | null;
       extraParam?: string;
     }) => {
       return request.post<CreateoporderType>(
