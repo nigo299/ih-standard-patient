@@ -7,7 +7,6 @@ import {
   BackgroundImg,
   showToast,
   Icon,
-  RichText,
   navigateToMiniProgram,
   PartTitle,
 } from '@kqinfo/ui';
@@ -18,17 +17,12 @@ import {
   IS_FEEDBACL,
   isDev,
 } from '@/config/constant';
-import {
-  CopyRight,
-  TabBar,
-  RegisterNotice,
-  WxOpenLaunchWeapp,
-} from '@/components';
+import { CopyRight, RegisterNotice, WxOpenLaunchWeapp } from '@/components';
 import patientState from '@/stores/patient';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
 import classNames from 'classnames';
-import { useDownCount, useEffectState } from 'parsec-hooks';
+import { useDownCount } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import setPageStyle from '@/utils/setPageStyle';
 import { useLockFn } from 'ahooks';
@@ -37,7 +31,6 @@ import showTabBar from '@/utils/showTabBar';
 import styles from './index.less';
 // import useApi from '@/apis/microsite';
 import useApi from '@/apis/common';
-import Dialog from '@/components/dialog';
 import storage from '@/utils/storage';
 import dayjs from 'dayjs';
 import openLocation from 'commonHis/src/utils/openLocation';
@@ -394,10 +387,7 @@ export default () => {
   //   window.location.href =
   //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
   // }, []);
-  // useEffect(() => {
-  //   window.location.href =
-  //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-  // }, []);
+
   // useEffect(() => {
   //   hideTabBar();
   //   showModal({
