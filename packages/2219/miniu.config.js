@@ -30,11 +30,11 @@ const miniu = require('miniu');
         // 项目地址
         project: 'dist/ali',
         // 小程序Id
-        appId: '2021002125656335',
+        appId: '2019032163620163',
         clientType: 'alipay',
         experience: true,
       });
-      console.log('生存体验版本成功');
+      console.log('生成体验版本成功');
       console.log(`小程序上传文件大小 ${uploadResult.packages[0].size}`);
       console.log(`上传版本号 ${uploadResult.packageVersion}`);
       console.log(`二维码图片地址 ${uploadResult.qrCodeUrl}`);
