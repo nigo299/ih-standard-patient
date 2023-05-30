@@ -17,7 +17,8 @@ export default () => {
     summary: string;
     doctor: string;
   }>();
-  const { hospitalList, setDeptList } = regsiterState.useContainer();
+  const { hospitalList, setDeptList, getDeptList } =
+    regsiterState.useContainer();
   const handleSelect = useCallback(
     ({ children: dept, name }: { children: DeptType[]; name: string }) => {
       if (name === '附三院口腔门诊部') {
@@ -50,6 +51,9 @@ export default () => {
     [doctor, setDeptList, summary, type],
   );
   usePageEvent('onShow', () => {
+    if (hospitalList.length === 0) {
+      getDeptList(type);
+    }
     setNavigationBar({
       title: '选择院区',
     });
