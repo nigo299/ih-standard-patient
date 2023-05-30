@@ -184,7 +184,7 @@ export const validator = {
   },
 };
 
-export const checkPhoneForm = (phone: string) => /^1[3-9][0-9]{9}$/.test(phone);
+export const checkPhoneForm = (phone: string) => /^1[0-9]{10}$/.test(phone);
 
 export const checkChinese = (val: string) => /^[\u4E00-\u9FA5]+$/.test(val);
 
