@@ -25,6 +25,7 @@ export default class BaseHis {
       enableRegInfoDeptNavigate: false,
       showFullDoc: false,
       showFullSourceDay: false,
+      RegisterCardChange: 'DEFAULT_STYLE',
     };
   }
 }
@@ -70,4 +71,6 @@ type StaticConfig = {
   showFullDoc: boolean;
   /** 是否显示已满诊的日期排班*/
   showFullSourceDay: boolean;
+  /** 挂号就诊卡组件样式的相关修改 KQ_STYLE:口腔样式 DEFAULT_STYLE:默认样式 */
+  RegisterCardChange: 'KQ_STYLE' | 'DEFAULT_STYLE';
 };

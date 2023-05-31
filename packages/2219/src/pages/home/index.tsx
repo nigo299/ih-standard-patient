@@ -84,14 +84,14 @@ export default () => {
   //     noticeMethod: 'TC',
   //   },
   // });
-  const {
-    data: { data: infoData2 },
-  } = useApi.注意事项内容查询({
-    params: {
-      noticeType: 'GHXZ',
-      noticeMethod: 'WBK',
-    },
-  });
+  // const {
+  //   data: { data: infoData2 },
+  // } = useApi.注意事项内容查询({
+  //   params: {
+  //     noticeType: 'GHXZ',
+  //     noticeMethod: 'WBK',
+  //   },
+  // });
   const {
     data: { data: configData },
   } = useApi.获取首页配置信息({});
@@ -294,37 +294,37 @@ export default () => {
         setPageStyle({
           overflow: 'hidden',
         });
-        if (infoData2?.[0]?.noticeInfo) setShow(true);
-        else {
-          setPageStyle({
-            overflow: 'inherit',
+        // if (infoData2?.[0]?.noticeInfo) setShow(true);
+        // else {
+        setPageStyle({
+          overflow: 'inherit',
+        });
+        if (
+          nav.url.includes('reserve') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('reserve');
+        } else if (
+          nav.url.includes('day') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('day');
+        } else if (
+          nav.url.includes('health') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('health');
+        } else if (
+          nav.url.includes('default') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('default');
+        } else {
+          navigateTo({
+            url: nav.url,
           });
-          if (
-            nav.url.includes('reserve') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('reserve');
-          } else if (
-            nav.url.includes('day') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('day');
-          } else if (
-            nav.url.includes('health') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('health');
-          } else if (
-            nav.url.includes('default') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('default');
-          } else {
-            navigateTo({
-              url: nav.url,
-            });
-          }
         }
+        // }
 
         setRegisterMode(nav?.url);
         return;
@@ -360,7 +360,7 @@ export default () => {
         url: nav.url,
       });
     },
-    [getDeptList, getPatientList, infoData2, patientId],
+    [getDeptList, getPatientList, patientId],
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
@@ -383,10 +383,10 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  useEffect(() => {
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-  }, []);
+  // useEffect(() => {
+  //   window.location.href =
+  //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+  // }, []);
 
   // useEffect(() => {
   //   hideTabBar();
@@ -601,7 +601,7 @@ export default () => {
           />
         </View>
       </Space>
-      <RegisterNotice
+      {/* <RegisterNotice
         show={show}
         close={() => setShow(false)}
         content={infoData2?.[0]?.noticeInfo || ''}
@@ -632,7 +632,7 @@ export default () => {
             });
           }
         }}
-      />
+      /> */}
       {/* <Dialog
         hideFail
         show={visible}

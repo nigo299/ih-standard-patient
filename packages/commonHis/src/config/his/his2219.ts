@@ -18,6 +18,7 @@ export default class His2219 extends HisBase {
       registerDoctorTagType: 'SHOW_DOC_TAGS',
       showFullDoc: true,
       showFullSourceDay: true,
+      RegisterCardChange: 'KQ_STYLE',
     });
   }
 }

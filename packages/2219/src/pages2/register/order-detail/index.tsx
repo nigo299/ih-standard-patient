@@ -103,10 +103,6 @@ export default () => {
   const cancelExtFields = useGetCancelOrderExtFields({ orderDetail });
   const clinicList = [
     {
-      label: '就诊医院',
-      text: orderDetail?.hisName || HOSPITAL_NAME,
-    },
-    {
       label: '就诊科室',
       text: orderDetail?.deptName,
     },
@@ -500,6 +496,12 @@ export default () => {
         number={277}
         type="register"
       />
+
+      <RegisterCard
+        payName="register"
+        hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
+        patCardNo={orderDetail?.patCardNo}
+      />
       <View className={styles.top}>
         <Image
           mode="aspectFit"
@@ -584,13 +586,6 @@ export default () => {
           </View>
         )}
       </View>
-
-      <RegisterCard
-        payName="register"
-        hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
-        healthCardNo={jkkInfo?.healthCardId}
-        patCardNo={orderDetail?.patCardNo}
-      />
       <Form className={styles.content} form={form}>
         <ListTitle
           title="就诊信息"
@@ -637,7 +632,8 @@ export default () => {
             <Platform platform={['web']}>
               <Button
                 type="primary"
-                className={styles.button}
+                className={styles.CheckButton}
+                ghost
                 onTap={async () => {
                   const {
                     data: { ebillDataList },
@@ -682,7 +678,7 @@ export default () => {
             继续支付
           </Button>
         )}
-        {orderDetail?.canCancelFlag === 1 && (
+        {orderDetail?.canCancelFlag !== 1 && (
           <Button
             type={'primary'}
             ghost

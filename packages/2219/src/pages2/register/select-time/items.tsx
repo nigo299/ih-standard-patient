@@ -43,17 +43,15 @@ export default ({
         </View>
         <Fold folded={folded} className={styles.fold}>
           {items.map(
-            (
-              {
-                leftSource,
-                scheduleId,
-                visitBeginTime,
-                visitEndTime,
-                extPropes,
-                registerFee,
-              },
-              index,
-            ) => (
+            ({
+              leftSource,
+              scheduleId,
+              visitBeginTime,
+              visitEndTime,
+              extPropes,
+              registerFee,
+              visitQueue,
+            }) => (
               <View
                 // alignItems="center"
                 // justify="center"
@@ -67,7 +65,7 @@ export default ({
                 })}
               >
                 <View className={styles.items1}>
-                  <View className={styles.itemsText}>序号: {index + 1}</View>
+                  <View className={styles.itemsText}>序号: {visitQueue}</View>
                   <View>
                     <Text
                       style={{

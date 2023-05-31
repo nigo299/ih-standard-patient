@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Image, navigateTo, reLaunch } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-
+import useApi from '@/apis/common';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Step, WhiteSpace } from '@/components';
+import { RegisterNotice, Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import { DeptType } from '@/apis/register';
 import regsiterState from '@/stores/register';
@@ -17,6 +17,19 @@ export default () => {
     summary: string;
     doctor: string;
   }>();
+  const [show, setShow] = useState(false);
+  const {
+    data: { data: infoData },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'GHXZ',
+      noticeMethod: 'WBK',
+    },
+    needInit: !summary,
+  });
+  useEffect(() => {
+    if (infoData?.[0]?.noticeInfo && !summary) setShow(true);
+  }, [infoData, summary]);
   const { hospitalList, setDeptList, getDeptList } =
     regsiterState.useContainer();
   const handleSelect = useCallback(
@@ -60,49 +73,83 @@ export default () => {
   });
   return (
     <View>
-      <Step step={1} />
+      {!summary && <Step current={1} />}
       <View className={styles.header} />
       <WhiteSpace />
       <View className={styles.lists}>
-        {hospitalList?.map((item, index) => (
-          <View className={styles.itemWrap} key={index}>
-            <Image
-              src={`${IMAGE_DOMIN}/register/districtBg.png`}
-              className={styles.bg}
-            />
-            <View
-              key={item.id}
-              className={styles.item}
-              onTap={() => handleSelect(item)}
-            >
-              <View className={styles.name}>{item.name}</View>
-              <View className={styles.address}>{`地址：${
-                item.address || '暂无'
-              }`}</View>
+        {!summary &&
+          hospitalList?.map((item, index) => (
+            <View className={styles.itemWrap} key={index}>
+              <Image
+                src={`${IMAGE_DOMIN}/register/districtBg.png`}
+                className={styles.bg}
+              />
+              <View
+                key={item.id}
+                className={styles.item}
+                onTap={() => handleSelect(item)}
+              >
+                <View className={styles.name}>{item.name}</View>
+                <View className={styles.address}>{`地址：${
+                  item.address || '暂无'
+                }`}</View>
+              </View>
             </View>
-          </View>
-        ))}
+          ))}
+        {summary &&
+          hospitalList?.slice(0, 3)?.map((item, index) => (
+            <View className={styles.itemWrap} key={index}>
+              <Image
+                src={`${IMAGE_DOMIN}/register/districtBg.png`}
+                className={styles.bg}
+              />
+              <View
+                key={item.id}
+                className={styles.item}
+                onTap={() => handleSelect(item)}
+              >
+                <View className={styles.name}>{item.name}</View>
+                <View className={styles.address}>{`地址：${
+                  item.address || '暂无'
+                }`}</View>
+              </View>
+            </View>
+          ))}
       </View>
-      <Space
-        className={styles.ball}
-        justify="center"
-        alignItems="center"
-        vertical
-        size={8}
-        onTap={() => {
-          if (PLATFORM === 'web') {
-            window.location.href =
-              'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-          } else {
-            reLaunch({
-              url: '/pages/home/index',
-            });
-          }
-        }}
-      >
-        <View>返回</View>
-        <View>首页</View>
-      </Space>
+      {!summary && (
+        <Space
+          className={styles.ball}
+          justify="center"
+          alignItems="center"
+          vertical
+          size={8}
+          onTap={() => {
+            if (PLATFORM === 'web') {
+              window.location.href =
+                'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+            } else {
+              reLaunch({
+                url: '/pages/home/index',
+              });
+            }
+          }}
+        >
+          <View>返回</View>
+          <View>首页</View>
+        </Space>
+      )}
+      {!summary && (
+        <RegisterNotice
+          show={show}
+          close={() => {
+            setShow(false);
+          }}
+          content={infoData?.[0]?.noticeInfo || ''}
+          confirm={() => {
+            setShow(false);
+          }}
+        />
+      )}
     </View>
   );
 };
