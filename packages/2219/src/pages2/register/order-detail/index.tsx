@@ -83,17 +83,17 @@ export default () => {
     },
     needInit: false,
   });
-  const {
-    data: { data: jkkInfo },
-  } = usePatientApi.查询电子健康卡详情({
-    initValue: {
-      data: { qrCodeText: '', address: '' },
-    },
-    params: {
-      patientId: orderDetail?.patientId,
-    },
-    needInit: !!orderDetail?.patientId,
-  });
+  // const {
+  //   data: { data: jkkInfo },
+  // } = usePatientApi.查询电子健康卡详情({
+  //   initValue: {
+  //     data: { qrCodeText: '', address: '' },
+  //   },
+  //   params: {
+  //     patientId: orderDetail?.patientId,
+  //   },
+  //   needInit: !!orderDetail?.patientId,
+  // });
   const [payFlag, setPayFlag] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const [showTip, setShowTip] = useState(false);

@@ -17,7 +17,7 @@ import {
   IS_FEEDBACL,
   isDev,
 } from '@/config/constant';
-import { CopyRight, RegisterNotice, WxOpenLaunchWeapp } from '@/components';
+import { CopyRight, WxOpenLaunchWeapp } from '@/components';
 import patientState from '@/stores/patient';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
@@ -59,8 +59,8 @@ export default () => {
     // getCardProdiles
   } = globalState.useContainer();
   const { getDeptList } = regsiterState.useContainer();
-  const [show, setShow] = useState(false);
-  const [registerMode, setRegisterMode] = useState('');
+  // const [show, setShow] = useState(false);
+  // const [registerMode, setRegisterMode] = useState('');
   const { clearCountdownTimer } = useDownCount();
 
   const {
