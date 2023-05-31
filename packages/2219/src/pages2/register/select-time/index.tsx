@@ -229,15 +229,18 @@ export default () => {
 
   const handleNext = useCallback(
     (scheduleId: string) => {
-      const { visitBeginTime, visitEndTime, visitPeriod } =
+      const { visitBeginTime, visitEndTime, visitPeriod, extPropes } =
         doctorScheduleDateDetail?.itemList?.find(
           (item: { scheduleId: string }) => item.scheduleId === scheduleId,
         );
+
       if (visitBeginTime && visitEndTime && deptId)
         navigateTo({
           url: `/pages2/register/confirm/index?deptId=${deptId}&doctorId=${doctorId}&scheduleDate=${date?.format(
             'YYYY-MM-DD',
-          )}&scheduleId=${scheduleId}&visitBeginTime=${visitBeginTime}&visitEndTime=${visitEndTime}&visitPeriod=${visitPeriod}&sourceType=${sourceType}&level=${level}&title=${title}&doctorName=${doctorName}`,
+          )}&scheduleId=${scheduleId}&visitBeginTime=${visitBeginTime}&visitEndTime=${visitEndTime}&visitPeriod=${visitPeriod}&sourceType=${sourceType}&level=${level}&title=${title}&doctorName=${doctorName}&regTypes=${extPropes?.sourceType?.slice(
+            1,
+          )}`,
         });
     },
     [

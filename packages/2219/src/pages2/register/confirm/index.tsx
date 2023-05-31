@@ -41,7 +41,7 @@ import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import payState, { OrderInfoType } from '@/stores/pay';
 import patientState from '@/stores/patient';
-import styles from './index.less';
+import styles from '@/pages2/register/confirm/index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
 import useCommonApi from '@/apis/common';
 import { PatGender } from '@/config/dict';
@@ -59,6 +59,7 @@ export default () => {
     title,
     level,
     doctorName,
+    regTypes,
   } = useGetParams<{
     deptId: string;
     doctorId: string;
@@ -71,6 +72,7 @@ export default () => {
     visitBeginTime: string;
     visitEndTime: string;
     visitPeriod: string;
+    regTypes: string;
   }>();
   const [visible, setVisible] = useState(false);
   const { getPatientList } = patientState.useContainer();
@@ -117,6 +119,10 @@ export default () => {
     {
       label: '就诊科室',
       text: confirmInfo?.deptName,
+    },
+    {
+      label: '号源类型',
+      text: regTypes,
     },
     {
       label: '就诊医生',
