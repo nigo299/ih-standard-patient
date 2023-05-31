@@ -633,7 +633,6 @@ export default () => {
               <Button
                 type="primary"
                 className={styles.CheckButton}
-                ghost
                 onTap={async () => {
                   const {
                     data: { ebillDataList },
@@ -678,10 +677,9 @@ export default () => {
             继续支付
           </Button>
         )}
-        {orderDetail?.canCancelFlag !== 1 && (
+        {orderDetail?.canCancelFlag === 1 && (
           <Button
             type={'primary'}
-            ghost
             className={styles.button}
             onTap={() => {
               if (config.showCancelRegTips) {
