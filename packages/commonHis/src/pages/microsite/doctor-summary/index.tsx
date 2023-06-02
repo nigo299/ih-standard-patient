@@ -1,17 +1,15 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View, navigateTo, Image, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { WhiteSpace } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
-
 import {
-  NoData,
   Shadow,
   Exceed,
   DropDownMenuItem,
   DropDownMenu,
-  Button,
+  List,
 } from '@kqinfo/ui';
 
 import globalState from '@/stores/global';
@@ -28,20 +26,31 @@ export default () => {
     scheduleDate: string;
     type: 'reserve' | 'day';
   }>();
-  const { deptList, getDeptList } = regsiterState.useContainer();
-  const [pageNum, setPageNum] = useState(1);
-  const { data, request } = useApi.查询科室医生列表({
-    initValue: {
-      data: {
-        recordList: [],
-      },
-    },
-    params: {
-      deptId,
-    },
-    needInit: false,
-  });
   const [selectDept, setSelectDept] = useState(deptId || '');
+  const { deptList, getDeptList } = regsiterState.useContainer();
+  const [total, setTotal] = useState(0);
+
+  const getDoctorList = useCallback(
+    (page, limit) => {
+      return useApi.查询科室医生列表
+        .request({
+          deptId: selectDept,
+          pageNum: page,
+          numPerPage: limit,
+        })
+        .then((data) => {
+          setTotal(data.data?.totalCount || 0);
+          return {
+            list: data.data?.recordList || [],
+            pageNum: data.data?.currentPage,
+            pageSize: data?.data?.numPerPage,
+            total: data?.data?.totalCount || 0,
+          };
+        });
+    },
+    [selectDept],
+  );
+
   const options1 = useMemo(() => {
     if (deptList?.length !== 0) {
       return deptList.map((item) => {
@@ -53,9 +62,6 @@ export default () => {
     }
   }, [deptList]);
   usePageEvent('onShow', () => {
-    request({ deptId: selectDept || '' }).then((data) => {
-      console.log(data);
-    });
     if (deptList.length === 0) {
       getDeptList(type);
     } else {
@@ -94,9 +100,6 @@ export default () => {
             value={selectDept}
             onChange={(v) => {
               setSelectDept(v);
-              request({ deptId: v });
-              console.log(v);
-              setPageNum(1);
             }}
             options={options1}
           />
@@ -104,12 +107,13 @@ export default () => {
         <WhiteSpace />
         <View className={styles.docInfo}>
           为您共查找到
-          <Text className={styles.docNum}>{data?.data?.totalCount}</Text>
+          <Text className={styles.docNum}>{total}</Text>
           位医生
         </View>
         <WhiteSpace />
-        {data?.data?.recordList?.length > 0 &&
-          data.data.recordList?.map((item) => (
+        <List
+          getList={getDoctorList}
+          renderItem={(item) => (
             <Shadow key={item.doctorId}>
               <View
                 className={styles.item}
@@ -140,19 +144,8 @@ export default () => {
                 </View>
               </View>
             </Shadow>
-          ))}
-        <Button
-          type="primary"
-          disabled={data?.data?.endPageIndex === pageNum}
-          onTap={() => {
-            const num = pageNum + 1;
-            setPageNum(num);
-            request({ deptId: selectDept || '', pageNum: num });
-          }}
-        >
-          下一页
-        </Button>
-        <NoData />
+          )}
+        />
       </View>
     </View>
   );

@@ -3,8 +3,6 @@ import { FormItem, Exceed, Space } from '@kqinfo/ui';
 import styles from './index.less';
 import classNames from 'classnames';
 
-import { useHisConfig } from '@/hooks';
-
 export default ({
   label,
   text,
