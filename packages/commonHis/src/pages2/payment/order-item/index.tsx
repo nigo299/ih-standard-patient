@@ -84,7 +84,7 @@ export default () => {
     {
       label: '开单时间',
       text: formDate(date),
-      hide: config?.hideBillTime,
+      hide: !config?.showBillTime,
     },
     {
       label: '项目类别',
