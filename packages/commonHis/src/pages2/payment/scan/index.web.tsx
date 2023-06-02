@@ -7,7 +7,10 @@ import { usePageEvent } from 'remax/macro';
 import { APPID, IS_ALIPAY } from '@/config/constant';
 
 export default () => {
-  const { patCardNo } = useGetParams<{ patCardNo: string }>();
+  const { patCardNo, scanType } = useGetParams<{
+    patCardNo: string;
+    scanType?: string;
+  }>();
   usePageEvent('onShow', () => {
     if (getBrowserUa() === 'alipay') {
       if (!IS_ALIPAY) {
@@ -18,12 +21,12 @@ export default () => {
       }
       // 支付宝小程序
       window.location.href = `https://render.alipay.com/p/s/i/?scheme=${encodeURIComponent(
-        `alipays://platformapi/startapp?appId=${APPID}&page=pages2/payment/order-list/index?patCardNo=${patCardNo}`,
+        `alipays://platformapi/startapp?appId=${APPID}&page=pages2/payment/order-list/index?patCardNo=${patCardNo}&scanType=${scanType}`,
       )}`;
     }
     if (getBrowserUa() === 'wechat') {
       redirectTo({
-        url: `/pages2/payment/order-list/index?patCardNo=${patCardNo}`,
+        url: `/pages2/payment/order-list/index?patCardNo=${patCardNo}&scanType=${scanType}`,
       });
     }
     setNavigationBar({

@@ -291,149 +291,150 @@ export default () => {
         }
       }
       setPayFlag(true);
-      const { code, data, msg } = await useApi.锁号.request({
-        deptId,
-        doctorId,
-        scheduleDate,
-        scheduleId,
-        visitBeginTime,
-        visitEndTime,
-        visitPeriod,
-        patientId: selectedPatient?.patientId,
-        sourceType,
-        title,
-        level,
-        doctorName,
-        medinsureChannel:
-          PLATFORM === 'ali'
-            ? 3
-            : process.env.REMAX_APP_PLATFORM === 'app'
-            ? 1
-            : 2,
-      });
-      if (code === 0 && data.orderId) {
-        const orderDetail = await useApi.查询挂号订单详情.request({
-          orderId: data.orderId,
+      try {
+        const { code, data, msg } = await useApi.锁号.request({
+          deptId,
+          doctorId,
+          scheduleDate,
+          scheduleId,
+          visitBeginTime,
+          visitEndTime,
+          visitPeriod,
+          patientId: selectedPatient?.patientId,
+          sourceType,
+          title,
+          level,
+          doctorName,
+          medinsureChannel:
+            PLATFORM === 'ali'
+              ? 3
+              : process.env.REMAX_APP_PLATFORM === 'app'
+              ? 1
+              : 2,
         });
-        monitor.api({
-          api: '预约挂号',
-          success: true,
-          c1: 'taSR_YL',
-          time: 200,
-        });
-        const isTody = scheduleDate === dayjs().format('YYYY-MM-DD');
-        // 0元支付
-        if (Number(orderDetail?.data?.totalFee) === 0) {
-          const url = PAY_TYPE[isTody ? 'DBGH' : 'YYGH'].detail;
-          if (PLATFORM === 'web') {
-            setPayFlag(false);
-            window.history.pushState(null, 'index', '#/pages/home/index');
-            navigateTo({
-              url: `${url}?orderId=${data.orderId}`,
-            });
-          } else {
-            reLaunch({
-              url: `${url}?orderId=${data.orderId}`,
-            });
+        if (code === 0 && data.orderId) {
+          const orderDetail = await useApi.查询挂号订单详情.request({
+            orderId: data.orderId,
+          });
+          monitor.api({
+            api: '预约挂号',
+            success: true,
+            c1: 'taSR_YL',
+            time: 200,
+          });
+          const isTody = scheduleDate === dayjs().format('YYYY-MM-DD');
+          // 0元支付
+          if (Number(orderDetail?.data?.totalFee) === 0) {
+            const url = PAY_TYPE[isTody ? 'DBGH' : 'YYGH'].detail;
+            if (PLATFORM === 'web') {
+              setPayFlag(false);
+              window.history.pushState(null, 'index', '#/pages/home/index');
+              navigateTo({
+                url: `${url}?orderId=${data.orderId}`,
+              });
+            } else {
+              reLaunch({
+                url: `${url}?orderId=${data.orderId}`,
+              });
+            }
+            return;
           }
-          return;
-        }
-        const orderInfo: OrderInfoType = {
-          bizType: isTody ? 'DBGH' : 'YYGH',
-          hisName: confirmInfo?.hisName,
-          deptName: confirmInfo?.deptName,
-          doctorName: confirmInfo?.doctorName,
-          // patientName: selectedPatient?.patientName,
-          patientName: `${selectedPatient?.patientName} | ${
-            PatGender[selectedPatient?.patientSex] || ''
-          } | ${selectedPatient?.patientAge || '未知'}岁`,
-          patCardNo: selectedPatient?.patHisNo,
-          patientFullIdNo: decrypt(selectedPatient?.encryptIdNo),
-          registerTime: `${scheduleDate} ${visitBeginTime}-${visitEndTime}`,
-          totalFee: confirmInfo?.totalFee,
-          orderId: data.orderId,
-          payOrderId: data.payOrderId,
-          extFields: data?.extFields || '',
-        };
-        if (process.env.REMAX_APP_PLATFORM === 'app') {
-          // 线上医保App
-          const result = await useApi.医保下单.request({
+          const orderInfo: OrderInfoType = {
+            bizType: isTody ? 'DBGH' : 'YYGH',
+            hisName: confirmInfo?.hisName,
+            deptName: confirmInfo?.deptName,
+            doctorName: confirmInfo?.doctorName,
+            // patientName: selectedPatient?.patientName,
+            patientName: `${selectedPatient?.patientName} | ${
+              PatGender[selectedPatient?.patientSex] || ''
+            } | ${selectedPatient?.patientAge || '未知'}岁`,
+            patCardNo: selectedPatient?.patHisNo,
+            patientFullIdNo: decrypt(selectedPatient?.encryptIdNo),
+            registerTime: `${scheduleDate} ${visitBeginTime}-${visitEndTime}`,
+            totalFee: confirmInfo?.totalFee,
             orderId: data.orderId,
             payOrderId: data.payOrderId,
-            uniqueCode: isTody ? 13 : 10,
-            totalFee: 0,
-            selfFee: 0,
-            payAuthNo: payAuthNo || '',
-            ocToken: '',
-            insuCode: '',
-            extFields: JSON.stringify(data?.extFields),
-          });
-          if (result.code === 0 && result.data) {
-            storage.set('orderId', data.orderId);
-            storage.set('bizType', isTody ? 'DBGH' : 'YYGH');
-            window.location.href = result.data;
+            extFields: data?.extFields || '',
+          };
+          if (process.env.REMAX_APP_PLATFORM === 'app') {
+            // 线上医保App
+            const result = await useApi.医保下单.request({
+              orderId: data.orderId,
+              payOrderId: data.payOrderId,
+              uniqueCode: isTody ? 13 : 10,
+              totalFee: 0,
+              selfFee: 0,
+              payAuthNo: payAuthNo || '',
+              ocToken: '',
+              insuCode: '',
+              extFields: JSON.stringify(data?.extFields),
+            });
+            if (result.code === 0 && result.data) {
+              storage.set('orderId', data.orderId);
+              storage.set('bizType', isTody ? 'DBGH' : 'YYGH');
+              window.location.href = result.data;
+            } else {
+              window.location.href = window.location.href.split('&encData')[0];
+            }
+          } else if (PLATFORM === 'web') {
+            // H5公众号 支付逻辑
+            const result = await usePayApi.h5支付下单.request({
+              orderId: data.payOrderId,
+              callbackUrl: `${returnUrl()}#/pages/waiting/index?bizType=${
+                isTody ? 'DBGH' : 'YYGH'
+              }&orderId=${data.orderId}`,
+            });
+            if (result.code === 0 && result.data) {
+              if (medicalPay) {
+                setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
+                navigateTo({
+                  url: `/pages/pay/index?mode=medical`,
+                });
+                return;
+              } else {
+                window.location.href = result.data;
+              }
+            }
           } else {
-            window.location.href = window.location.href.split('&encData')[0];
-          }
-        } else if (PLATFORM === 'web') {
-          // H5公众号 支付逻辑
-          const result = await usePayApi.h5支付下单.request({
-            orderId: data.payOrderId,
-            callbackUrl: `${returnUrl()}#/pages/waiting/index?bizType=${
-              isTody ? 'DBGH' : 'YYGH'
-            }&orderId=${data.orderId}`,
-          });
-          if (result.code === 0 && result.data) {
+            // 小程序收银台
+            setOrderInfo(orderInfo);
             if (medicalPay) {
-              setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
               navigateTo({
                 url: `/pages/pay/index?mode=medical`,
               });
-              return;
             } else {
-              window.location.href = result.data;
+              navigateTo({
+                url: '/pages/pay/index',
+              });
             }
           }
         } else {
-          // 小程序收银台
-          setOrderInfo(orderInfo);
-          if (medicalPay) {
-            navigateTo({
-              url: `/pages/pay/index?mode=medical`,
-            });
-          } else {
-            navigateTo({
-              url: '/pages/pay/index',
-            });
-          }
+          monitor.api({
+            api: '预约挂号',
+            success: false,
+            c1: 'taSR_YL',
+            time: 200,
+          });
+          showToast({
+            icon: 'none',
+            title: msg || '下单失败，请重试!',
+          }).then(() => {
+            if (msg?.includes('您有此科室医生待付费挂号记录,请付费')) {
+              navigateTo({
+                url: '/pages2/register/order-list/index',
+              });
+            }
+          });
         }
-      } else {
-        monitor.api({
-          api: '预约挂号',
-          success: false,
-          c1: 'taSR_YL',
-          time: 200,
-        });
-        showToast({
-          icon: 'none',
-          title: msg || '下单失败，请重试!',
-        }).then(() => {
-          if (msg?.includes('您有此科室医生待付费挂号记录,请付费')) {
-            navigateTo({
-              url: '/pages2/register/order-list/index',
-            });
-          }
-        });
+        setPayFlag(false);
+      } catch (err) {
+        console.log('err', err);
+        setPayFlag(false);
       }
-      setPayFlag(false);
     },
     [
       clearTimer,
-      confirmInfo?.deptName,
-      confirmInfo?.doctorName,
-      confirmInfo?.hisName,
-      confirmInfo?.patientList,
-      confirmInfo?.totalFee,
+      confirmInfo,
       deptId,
       doctorId,
       doctorName,
@@ -462,7 +463,7 @@ export default () => {
         handleRegisterConfim();
       });
     }
-  }, [confirmInfo?.totalFee, handleRegisterConfim]);
+  }, [confirmInfo, handleRegisterConfim]);
   useUpdateEffect(() => {
     if (process.env.REMAX_APP_PLATFORM === 'app') {
       const href = window.location.href;

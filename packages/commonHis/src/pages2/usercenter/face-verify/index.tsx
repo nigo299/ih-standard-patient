@@ -106,10 +106,6 @@ export default () => {
         <Button type="primary" elderly={elderly} onTap={handleSuccess}>
           人脸认证成功，点击返回
         </Button>
-      ) : faceVerifyStatus === FaceVerifyStatus.失败 ? (
-        <Button type="attract" elderly={elderly} onTap={() => navigateBack()}>
-          重新开始人脸验证
-        </Button>
       ) : (
         <Button
           type="primary"

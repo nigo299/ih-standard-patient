@@ -312,6 +312,7 @@ export interface OrderDetailType {
   payedTime: string;
   platformSource: number;
   refundStatus: number;
+  hisRecepitNo: string;
   showStopInsure: number;
   status: 'P' | 'L' | 'S' | 'F' | 'H ' | 'C';
   statusName: string;
@@ -348,7 +349,6 @@ export interface OrderDetailType {
   preSettlementResult: string;
   encryptIdNo: string;
   encryptPatientIdNo: string;
-  hisRecepitNo?: string;
 }
 interface RegisterOrderDetialType extends API.ResponseDataType {
   data: OrderDetailType;
@@ -507,20 +507,14 @@ export default {
       });
     },
   ),
-  查询科室排班日期: createApiHooks(
-    (params: { deptId: string | number; extFields: any }) => {
-      return request.post<RegisterWeekScheduleListType>(
-        '/api/intelligent/api/register/date-schedule-list',
-        params,
-      );
-    },
-  ),
+  查询科室排班日期: createApiHooks((params: { deptId: string | number }) => {
+    return request.post<RegisterWeekScheduleListType>(
+      '/api/intelligent/api/register/date-schedule-list',
+      params,
+    );
+  }),
   查询科室医生号源: createApiHooks(
-    (params: {
-      deptId: string | number;
-      scheduleDate: string;
-      extFields: any;
-    }) => {
+    (params: { deptId: string | number; scheduleDate: string }) => {
       return request.post<RegisterScheduleDoctorListType>(
         '/api/intelligent/api/register/schedule-doctor-list',
         params,
@@ -533,7 +527,6 @@ export default {
       doctorName?: string /** 模糊搜索 */;
       pageNum?: number;
       numPerPage?: number;
-      extFields?: any;
     }) => {
       return request.get<DeptDoctorlistType>('/api/ihis/his/doctorMain', {
         params: {

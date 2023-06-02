@@ -5,7 +5,6 @@ import { Swiper, navigateToMiniProgram } from '@kqinfo/ui';
 
 export default ({
   CommonImg,
-  interval,
 }: {
   CommonImg: {
     imgUrl: string;
@@ -13,11 +12,10 @@ export default ({
     jumpUrl: string;
     appId: string;
   }[];
-  interval: number;
 }) => {
   return (
     <Swiper
-      interval={interval || 1000}
+      interval={1000}
       indicatorDots
       autoplay
       onChange={console.log}

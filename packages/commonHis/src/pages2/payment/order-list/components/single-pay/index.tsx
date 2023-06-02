@@ -44,12 +44,14 @@ import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
+
 export default () => {
   const { config } = useHisConfig();
   const { setOrderInfo } = payState.useContainer();
   const { patientId, patCardNo } = useGetParams<{
     patientId: string;
     patCardNo: string;
+    scanType?: string;
   }>();
   const [waitOpList, setWaitOpList] = useState<WaitpayType[]>([]);
   const [form] = Form.useForm();
@@ -66,7 +68,7 @@ export default () => {
       patientId,
       idFullTransFlag: '1',
     },
-    needInit: !!patientId,
+    needInit: !!patientId && patientId !== 'null' && patientId !== 'undefined',
   });
   const selectAll = useMemo(() => {
     if (selectList.length === 0 || selectList.length !== waitOpList.length) {
@@ -117,6 +119,7 @@ export default () => {
               medicalFlag: '2',
               extFields: JSON.stringify({
                 idNo: storage.get('idNo'),
+                scanType: scanType || '',
               }),
             }
           : params;
@@ -267,6 +270,7 @@ export default () => {
         : {
             patCardNo,
             scanFlag: '1',
+            extFields: JSON.stringify({ scanType }),
           },
     );
     if (code === 0 && data?.length >= 1) {
@@ -291,7 +295,7 @@ export default () => {
       });
     }
     setLoading(false);
-  }, [patCardNo, patientId]);
+  }, [patCardNo, patientId, scanType]);
   useUpdateEffect(() => {
     if (process.env.REMAX_APP_PLATFORM === 'app') {
       const href = window.location.href;
@@ -392,7 +396,6 @@ export default () => {
                     />
                     <View>{item.doctorName}</View>
                   </View>
-
                   <View className={styles.td}>
                     <FormItem
                       label="项目名称"
