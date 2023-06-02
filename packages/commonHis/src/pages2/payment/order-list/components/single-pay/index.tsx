@@ -43,7 +43,6 @@ import storage from '@/utils/storage';
 import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import { PatGender } from '@/config/dict';
-import { useHisConfig } from '@/hooks';
 
 export default () => {
   const { setOrderInfo } = payState.useContainer();
