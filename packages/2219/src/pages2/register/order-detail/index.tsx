@@ -91,7 +91,7 @@ export default () => {
       transformCode: 'KQ00072',
       deptCode: orderDetail?.deptNo,
     },
-    needInit: config.enableRegInfoDeptNavigate,
+    needInit: true,
   });
   const [deptInfo] = useState<any>(data?.data?.data || {});
   // const {

@@ -22,7 +22,6 @@ export default class BaseHis {
       showCancelRegTips: false,
       recordMedicalCard: false,
       showChooseDeptDialog: false,
-      enableRegInfoDeptNavigate: false,
       showFullDoc: false,
       showFullSourceDay: false,
       RegisterCardChange: 'DEFAULT_STYLE',
@@ -65,8 +64,6 @@ type StaticConfig = {
   recordMedicalCard: boolean;
   /** 是否展示科室选择界面的挂号须知弹窗*/
   showChooseDeptDialog: boolean;
-  /** 挂号信息就诊科室项是否开启导航前往功能*/
-  enableRegInfoDeptNavigate: boolean;
   /** 是否展示满诊的医生*/
   showFullDoc: boolean;
   /** 是否显示已满诊的日期排班*/

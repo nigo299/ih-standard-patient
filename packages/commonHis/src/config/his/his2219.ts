@@ -14,7 +14,6 @@ export default class His2219 extends HisBase {
       showCancelRegTips: true,
       recordMedicalCard: true,
       showChooseDeptDialog: true,
-      enableRegInfoDeptNavigate: true,
       registerDoctorTagType: 'SHOW_DOC_TAGS',
       showFullDoc: true,
       showFullSourceDay: true,
