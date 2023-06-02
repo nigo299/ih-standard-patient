@@ -7,10 +7,12 @@ export default ({
   label,
   text,
   elderly,
+  className,
 }: {
   label?: string;
   text?: string | ReactNode;
   elderly?: boolean;
+  className?: string;
 }) => {
   return (
     <Space
@@ -28,7 +30,9 @@ export default ({
         labelWidth={'4em'}
       />
       <Space style={{ flexWrap: 'wrap', width: '100%' }}>
-        <Exceed className={classNames(styles.text)}>{text || '暂无'}</Exceed>
+        <Exceed className={(classNames(styles.text), className)}>
+          {text || '暂无'}
+        </Exceed>
       </Space>
     </Space>
   );
