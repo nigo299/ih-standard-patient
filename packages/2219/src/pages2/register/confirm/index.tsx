@@ -85,7 +85,7 @@ export default () => {
     data: { data: infoData },
   } = useCommonApi.注意事项内容查询({
     params: {
-      noticeType: 'GHXY',
+      noticeType: 'GHXZ',
       noticeMethod: 'WBK',
     },
     needInit: true,

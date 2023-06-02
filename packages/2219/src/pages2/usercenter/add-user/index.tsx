@@ -276,6 +276,7 @@ export default memo(() => {
               ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
               : `${values['birthday']} 00:00:00`;
           if (
+            values['idType'] === '1' &&
             config.enableFaceVerify &&
             bindcardProdiles?.isFace === 1 &&
             !faceInfo.success &&

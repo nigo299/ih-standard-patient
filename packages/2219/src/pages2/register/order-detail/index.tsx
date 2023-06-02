@@ -56,7 +56,8 @@ import { useHisConfig } from '@/hooks';
 const cancelItems = [
   { value: '不想去', checked: false },
   { value: '临时有其他安排', checked: false },
-  { value: '挂错科室/医生/时间', checked: false },
+  { value: '挂错科室', checked: false },
+  { value: '医生门诊时间变更', checked: false },
 ];
 
 export default () => {
@@ -682,7 +683,10 @@ export default () => {
             type={'primary'}
             className={styles.button}
             onTap={() => {
-              if (config.showCancelRegTips) {
+              if (
+                config.showCancelRegTips &&
+                dayjs(orderDetail?.visitDate).isSame(dayjs(), 'day')
+              ) {
                 setShowTip(true);
               } else {
                 setShowInfo(true);
