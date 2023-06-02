@@ -28,12 +28,12 @@ export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
         img={`${IMAGE_DOMIN}/payment/bg.png`}
       >
         <Space vertical justify="center" alignItems="center">
-          {config.RegisterCardChange === 'DEFAULT_STYLE' && (
+          {config.registerCardChange === 'DEFAULT_STYLE' && (
             <View className={styles.hospitalName}>{hospitalName}</View>
           )}
           <View
             className={
-              config.RegisterCardChange === 'KQ_STYLE'
+              config.registerCardChange === '2219_STYLE'
                 ? styles.KQpayName
                 : styles.payName
             }
@@ -66,7 +66,7 @@ export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
                   [styles.barCodeWeb]: PLATFORM === 'web',
                   [styles.barCodeShow]: !barCodeShow,
                   [styles.KQbarCodeWeb]:
-                    config.RegisterCardChange === 'KQ_STYLE',
+                    config.registerCardChange === '2219_STYLE',
                 })}
                 onTap={() => {
                   if (PLATFORM !== 'web') {
