@@ -588,12 +588,8 @@ export default () => {
             </View> */}
             <View>
               请在预约挂号成功后
-              <Text
-                style={{ color: 'red', fontSize: '18px', fontWeight: 'bold' }}
-              >
-                15分钟内完成支付
-              </Text>
-              ，超出时间后系统将做退号处理
+              <Text style={{ color: '#D95E38' }}>5分钟内</Text>
+              完成支付，超出时间后 系统将做退号处理
             </View>
             {/* <View style={{ color: '#D95E38' }}>
               3、疫情期间，所有来院人员均须填写来院信息表方可入院，为减少现场等待时间，请在支付完成后点击【完成】按钮，根据提示前往填写
