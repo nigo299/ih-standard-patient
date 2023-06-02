@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { usePageEvent } from 'remax/macro';
 import { Image, Text, navigateBack } from 'remax/one';
 import { Space, Button, showToast } from '@kqinfo/ui';
@@ -10,10 +10,13 @@ import classNames from 'classnames';
 import { useFaceVerify } from '@/hooks';
 import { FaceVerifyStatus } from '@/hooks/use-face-verify';
 import styles from './index.less';
+import { analyzeIDCard } from '@/utils';
+import { Dialog } from '@/components';
 
 export default () => {
   const { elderly } = globalState.useContainer();
   const { faceInfo, setFaceInfo } = patientState.useContainer();
+  const [visible, setVisible] = useState(false);
   const { handleFaceVerify, faceVerifyStatus } = useFaceVerify({
     name: faceInfo.name,
     no: faceInfo.idNo,
@@ -22,6 +25,14 @@ export default () => {
       id_card_number: faceInfo.idNo,
     }),
   });
+  const { analyzeAge } = analyzeIDCard(faceInfo.idNo);
+
+  useEffect(() => {
+    if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
+      setVisible(true);
+    }
+  }, [analyzeAge, faceVerifyStatus]);
+
   const handleSuccess = useCallback(() => {
     setFaceInfo({ ...faceInfo, success: true });
     navigateBack();
@@ -104,6 +115,17 @@ export default () => {
           点击开始人脸验证
         </Button>
       )}
+      <Dialog
+        hideFail
+        show={visible}
+        title={'温馨提示'}
+        successText={'确定'}
+        onSuccess={() => navigateBack()}
+      >
+        <Space style={{ lineHeight: 1.2, padding: 20 }}>
+          60岁以上患者可以填写代理人信息由代理人进行认证。
+        </Space>
+      </Dialog>
     </Space>
   );
 };

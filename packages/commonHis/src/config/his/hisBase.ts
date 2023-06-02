@@ -15,16 +15,16 @@ export default class BaseHis {
       showCalenderInTodayRegister: true,
       showSelectTypeInTodayRegister: true,
       microSitesEntries: 'OLD_VIEWS',
-      hideBillTime: false,
+      showBillTime: true,
       regCalendarNumberOfDays: 14,
       showRegSourceTypes: true,
       enableFaceVerify: false,
       showCancelRegTips: false,
       recordMedicalCard: false,
       showChooseDeptDialog: false,
-      enableRegInfoDeptNavigate: false,
       showFullDoc: false,
       showFullSourceDay: false,
+      registerCardChange: 'DEFAULT_STYLE',
     };
   }
 }
@@ -50,8 +50,8 @@ type StaticConfig = {
   showSelectTypeInTodayRegister: boolean;
   /** OLD_VIEWS:只展示医院介绍和科室分布，SHOW_MORE_VIEWS:展示更多的功能入口 */
   microSitesEntries: 'OLD_VIEWS' | 'SHOW_MORE_VIEWS';
-  /** 是否隐藏门诊缴费单的开单时间（口腔医院无法获取开单时间故不进行展示）*/
-  hideBillTime: boolean;
+  /** 是否显示门诊缴费单的开单时间（口腔医院无法获取开单时间故不进行展示）*/
+  showBillTime: boolean;
   /** 控制选择挂号时间时显示的天数*/
   regCalendarNumberOfDays: number;
   /** 控制选择挂号时间页面是否展示号别切换的tab*/
@@ -64,10 +64,10 @@ type StaticConfig = {
   recordMedicalCard: boolean;
   /** 是否展示科室选择界面的挂号须知弹窗*/
   showChooseDeptDialog: boolean;
-  /** 挂号信息就诊科室项是否开启导航前往功能*/
-  enableRegInfoDeptNavigate: boolean;
   /** 是否展示满诊的医生*/
   showFullDoc: boolean;
   /** 是否显示已满诊的日期排班*/
   showFullSourceDay: boolean;
+  /** 挂号就诊卡组件样式的相关修改 KQ_STYLE:口腔样式 DEFAULT_STYLE:默认样式 */
+  registerCardChange: '2219_STYLE' | 'DEFAULT_STYLE';
 };

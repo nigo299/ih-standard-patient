@@ -508,7 +508,7 @@ export default {
     },
   ),
   查询科室排班日期: createApiHooks(
-    (params: { deptId: string | number; extFields?: any }) => {
+    (params: { deptId: string | number; extFields: any }) => {
       return request.post<RegisterWeekScheduleListType>(
         '/api/intelligent/api/register/date-schedule-list',
         params,

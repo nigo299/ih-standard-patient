@@ -34,7 +34,7 @@ export const NUCLEIC_APPID =
   PLATFORM === 'ali' ? '2021003128602151' : 'wx3ff25d8c71ecd5db';
 export const NUCLEIC_HID = 9;
 // 是否需要订单详情中电子发票
-export const ORDER_INVOICE = false;
+export const ORDER_INVOICE = true;
 // 是否开启二级科室
 export const CHILDREN_DEPTLIST = true;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
@@ -47,7 +47,7 @@ export const H5_PAY = false;
 // 是否有支付宝小程序
 export const IS_ALIPAY = false;
 // 支付宝小程序appid
-export const APPID = PLATFORM === 'ali' ? '2021002123649082' : '';
+export const APPID = '2019032163620163';
 // 是否开启意见反馈（小桥医助小程序）
 export const IS_FEEDBACL = PLATFORM === 'web';
 // 是否开启挂号科室选择界面智能导诊功能

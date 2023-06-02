@@ -118,6 +118,7 @@ interface OrderDetailType {
   totalRealFee: number;
   type: number;
   payOrderId: string;
+  hisRecepitNo?: string;
 }
 interface InhospOrderDetialType extends API.ResponseDataType {
   data: OrderDetailType;

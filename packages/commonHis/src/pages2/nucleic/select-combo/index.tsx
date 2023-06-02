@@ -330,16 +330,16 @@ export default () => {
                       className={styles.whImg}
                     />
                     <View>
-                      {nucleicName.includes('黄码') && (
+                      {nucleicName?.includes('黄码') && (
                         <ColorText>健康码状态为无码、黄码人员</ColorText>
                       )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
+                      {(nucleicName?.includes('核酸检测（混检）') ||
+                        nucleicName?.includes(
                           '核酸检测（出租网约车免费）（绿码）',
                         )) &&
                         '新型冠状病毒核酸检测（混采10:1）'}
 
-                      {nucleicName.includes('核酸检测（单检') &&
+                      {nucleicName?.includes('核酸检测（单检') &&
                         '自愿核酸检测人员，单人单管'}
                     </View>
                   </Space>

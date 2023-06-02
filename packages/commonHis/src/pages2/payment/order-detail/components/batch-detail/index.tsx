@@ -479,6 +479,7 @@ export default () => {
                       no: orderDetail?.hisOrderNo,
                       totalFee: orderDetail?.totalRealFee,
                       patientName: orderDetail?.patientName,
+                      hisRecepitNo: orderDetail?.hisRecepitNo,
                     },
                   });
                   if (ebillDataList.length >= 1) {

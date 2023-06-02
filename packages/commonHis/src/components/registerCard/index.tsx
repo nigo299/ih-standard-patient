@@ -6,16 +6,17 @@ import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import setPageStyle from '@/utils/setPageStyle';
 import styles from './index.less';
 import classNames from 'classnames';
-
+import { useHisConfig } from '@/hooks';
 export interface IProps {
   payName: 'register' | 'payment';
   patCardNo: string;
-  healthCardNo: string;
+  healthCardNo?: string;
   barCanvasShow?: boolean;
   hospitalName: string;
 }
 
 export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
+  const { config } = useHisConfig();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [barCodeShow, setBarCodeShow] = useState(true);
@@ -27,8 +28,16 @@ export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
         img={`${IMAGE_DOMIN}/payment/bg.png`}
       >
         <Space vertical justify="center" alignItems="center">
-          <View className={styles.hospitalName}>{hospitalName}</View>
-          <View className={styles.payName}>
+          {config.registerCardChange === 'DEFAULT_STYLE' && (
+            <View className={styles.hospitalName}>{hospitalName}</View>
+          )}
+          <View
+            className={
+              config.registerCardChange === '2219_STYLE'
+                ? styles.KQpayName
+                : styles.payName
+            }
+          >
             {payName === 'payment' && '门诊检查申请单'}
             {payName === 'register' && '挂号电子凭证'}
           </View>
@@ -51,10 +60,13 @@ export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
             )}
             {patCardNo && (
               <BarCode
+                // style={{ width: 130, height: 66 }}
                 content={patCardNo}
                 className={classNames(styles.barCode, {
                   [styles.barCodeWeb]: PLATFORM === 'web',
                   [styles.barCodeShow]: !barCodeShow,
+                  [styles.KQbarCodeWeb]:
+                    config.registerCardChange === '2219_STYLE',
                 })}
                 onTap={() => {
                   if (PLATFORM !== 'web') {

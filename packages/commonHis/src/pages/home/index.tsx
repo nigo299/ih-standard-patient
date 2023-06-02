@@ -429,7 +429,6 @@ export default () => {
       window.location.href =
         'https://tihs.cqkqinfo.com/patients/p40064-his/#/pages/home/index';
     }
-
     // getCardProdiles();
     showTabBar();
     setPageStyle({

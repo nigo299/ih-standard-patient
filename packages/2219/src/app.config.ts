@@ -9,26 +9,16 @@ const pages = [
   'pages/report/check-detail/index', // 检查报告详情
   'pages/report/inspect-detail/index', // 检验报告详情
   'pages/queue/index', // 排队进度
-  'pages/film/index', // 电子胶片
+  // 'pages/film/index', // 电子胶片
   'pages/auth/getuserinfo/index', // 授权登陆页
   'pages/auth/agreement/index', // 用户授权协议
   'pages/auth/login/index', // 登录注册页
-  'pages/microsite/home/index', // 微官网首页
-  'pages/microsite/hospital-summary/index', // 医院介绍
-  'pages/microsite/dept-summary/index', // 科室介绍
-  'pages/microsite/dept-distribute/index', // 科室分布
-  'pages/microsite/doctor-summary/index', // 医生介绍
-  'pages/microsite/hospital-article/index', // 医院动态
-  'pages/microsite/article-detail/index', // 文章详情
-  'pages/medical/order-item/index', // 医保费用确认支付以及明细
-  'pages/medical/order-detail/index', // 医保支付详情
+  // 'pages/medical/order-item/index', // 医保费用确认支付以及明细
+  // 'pages/medical/order-detail/index', // 医保支付详情
   'pages/pay/index', // 收银台
   'pages/waiting/index', // 支付结果等待页
   'pages/webview/index', // 第三方业务链接
   'pages/maintain/index', // 系统维护
-  // 'pages/sign/userList/index', // 签到选择就诊人
-  // 'pages/sign/sign/index', // 签到
-  // 'pages/sign/list/index', // 签到列表
 ];
 
 const subAliPages = [
@@ -81,10 +71,22 @@ const subPackages = [
       'feedback/feedback-detail/index', // 意见反馈详情
       'feedback/feedback-add/index', // 新增意见反馈
       'nucleic/select-combo/index', // 自助核酸检测选择套餐
-      'nucleic/upload/index', // 网约出租车核酸上传图片
+      // 'nucleic/upload/index', // 网约出租车核酸上传图片
       'nucleic/confirm/index', // 自助核酸检测确认订单
-      'cloudFlashPay/order-list/index', // 云闪付门诊待缴费列表
-      'cloudFlashPay/order-detail/index', // 云闪付门门诊缴费订单详情
+      // 'cloudFlashPay/order-list/index', // 云闪付门诊待缴费列表
+      // 'cloudFlashPay/order-detail/index', // 云闪付门门诊缴费订单详情
+    ],
+  },
+  {
+    root: 'pages/microsite',
+    pages: [
+      'home/index', // 微官网首页
+      'hospital-summary/index', // 医院介绍
+      'dept-summary/index', // 科室介绍
+      'dept-distribute/index', // 科室分布
+      'doctor-summary/index', // 医生介绍
+      'hospital-article/index', // 医院动态
+      'article-detail/index', // 文章详情
     ],
   },
   // 适老版页面
@@ -175,6 +177,7 @@ export const ali: AliAppConfig = {
     [...subPackages[0]?.pages, ...subAliPages].map(
       (item) => `${subPackages[0].root}/${item}`,
     ),
+    subPackages[1].pages.map((item) => `${subPackages[1].root}/${item}`),
     // subPackages.map(
     //   (items) =>
     //     items.root !== 'pages3' &&

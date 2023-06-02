@@ -196,6 +196,7 @@ export interface OrderDetailType {
     patientAge: number;
     encryptIdNo: string;
   };
+  hisRecepitNo?: string;
 }
 
 interface PaymentOrderDetailType extends API.ResponseDataType {

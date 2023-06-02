@@ -7,7 +7,6 @@ import {
   BackgroundImg,
   showToast,
   Icon,
-  RichText,
   navigateToMiniProgram,
   PartTitle,
 } from '@kqinfo/ui';
@@ -18,17 +17,12 @@ import {
   IS_FEEDBACL,
   isDev,
 } from '@/config/constant';
-import {
-  CopyRight,
-  TabBar,
-  RegisterNotice,
-  WxOpenLaunchWeapp,
-} from '@/components';
+import { CopyRight, WxOpenLaunchWeapp } from '@/components';
 import patientState from '@/stores/patient';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
 import classNames from 'classnames';
-import { useDownCount, useEffectState } from 'parsec-hooks';
+import { useDownCount } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import setPageStyle from '@/utils/setPageStyle';
 import { useLockFn } from 'ahooks';
@@ -37,7 +31,6 @@ import showTabBar from '@/utils/showTabBar';
 import styles from './index.less';
 // import useApi from '@/apis/microsite';
 import useApi from '@/apis/common';
-import Dialog from '@/components/dialog';
 import storage from '@/utils/storage';
 import dayjs from 'dayjs';
 import openLocation from 'commonHis/src/utils/openLocation';
@@ -66,8 +59,8 @@ export default () => {
     // getCardProdiles
   } = globalState.useContainer();
   const { getDeptList } = regsiterState.useContainer();
-  const [show, setShow] = useState(false);
-  const [registerMode, setRegisterMode] = useState('');
+  // const [show, setShow] = useState(false);
+  // const [registerMode, setRegisterMode] = useState('');
   const { clearCountdownTimer } = useDownCount();
 
   const {
@@ -83,26 +76,26 @@ export default () => {
     },
     needInit: IS_FEEDBACL,
   });
-  const {
-    data: { data: infoData },
-  } = useApi.注意事项内容查询({
-    params: {
-      noticeType: 'SYTS',
-      noticeMethod: 'TC',
-    },
-  });
-  const {
-    data: { data: infoData2 },
-  } = useApi.注意事项内容查询({
-    params: {
-      noticeType: 'GHXZ',
-      noticeMethod: 'WBK',
-    },
-  });
+  // const {
+  //   data: { data: infoData },
+  // } = useApi.注意事项内容查询({
+  //   params: {
+  //     noticeType: 'SYTS',
+  //     noticeMethod: 'TC',
+  //   },
+  // });
+  // const {
+  //   data: { data: infoData2 },
+  // } = useApi.注意事项内容查询({
+  //   params: {
+  //     noticeType: 'GHXZ',
+  //     noticeMethod: 'WBK',
+  //   },
+  // });
   const {
     data: { data: configData },
   } = useApi.获取首页配置信息({});
-  const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
+  // const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const homeMainNavConfig = [
     {
       title: '预约挂号',
@@ -135,7 +128,7 @@ export default () => {
           报告结果<Text style={{ color: '#F371A9' }}>实时查询</Text>
         </View>
       ),
-      url: `/pages/report/report-list/index?patientId=${patientId}`,
+      url: `/pages/report/report-list/index`,
       image: `${IMAGE_DOMIN}/home/bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
@@ -301,37 +294,37 @@ export default () => {
         setPageStyle({
           overflow: 'hidden',
         });
-        if (infoData2?.[0]?.noticeInfo) setShow(true);
-        else {
-          setPageStyle({
-            overflow: 'inherit',
+        // if (infoData2?.[0]?.noticeInfo) setShow(true);
+        // else {
+        setPageStyle({
+          overflow: 'inherit',
+        });
+        if (
+          nav.url.includes('reserve') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('reserve');
+        } else if (
+          nav.url.includes('day') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('day');
+        } else if (
+          nav.url.includes('health') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('health');
+        } else if (
+          nav.url.includes('default') &&
+          nav.url.includes('register/department')
+        ) {
+          getDeptList('default');
+        } else {
+          navigateTo({
+            url: nav.url,
           });
-          if (
-            nav.url.includes('reserve') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('reserve');
-          } else if (
-            nav.url.includes('day') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('day');
-          } else if (
-            nav.url.includes('health') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('health');
-          } else if (
-            nav.url.includes('default') &&
-            nav.url.includes('register/department')
-          ) {
-            getDeptList('default');
-          } else {
-            navigateTo({
-              url: nav.url,
-            });
-          }
         }
+        // }
 
         setRegisterMode(nav?.url);
         return;
@@ -367,7 +360,7 @@ export default () => {
         url: nav.url,
       });
     },
-    [getDeptList, getPatientList, infoData2, patientId],
+    [getDeptList, getPatientList, patientId],
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
@@ -378,8 +371,9 @@ export default () => {
       window.location.href =
         'https://tihs.cqkqinfo.com/patients/p40064-his/#/pages/home/index';
     }
+    // window.location.href =
+    //   'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
 
-    // getCardProdiles();
     showTabBar();
     setPageStyle({
       overflow: 'inherit',
@@ -389,6 +383,11 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
+  // useEffect(() => {
+  //   window.location.href =
+  //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+  // }, []);
+
   // useEffect(() => {
   //   hideTabBar();
   //   showModal({
@@ -602,7 +601,7 @@ export default () => {
           />
         </View>
       </Space>
-      <RegisterNotice
+      {/* <RegisterNotice
         show={show}
         close={() => setShow(false)}
         content={infoData2?.[0]?.noticeInfo || ''}
@@ -633,8 +632,8 @@ export default () => {
             });
           }
         }}
-      />
-      <Dialog
+      /> */}
+      {/* <Dialog
         hideFail
         show={visible}
         title={'重要提醒'}
@@ -644,8 +643,8 @@ export default () => {
         <Space style={{ lineHeight: 1.2, padding: 20 }}>
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
-      </Dialog>
-      {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}
+      </Dialog> */}
+      {/*{PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}*/}
     </View>
   );
 };

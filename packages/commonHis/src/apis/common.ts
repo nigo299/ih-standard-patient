@@ -340,6 +340,18 @@ export default {
       cardNo?: string;
       cardType?: string;
       authToken?: string;
+      patType?: number;
+      patName?: string;
+      patSex?: string;
+      patAge?: number;
+      patMobile?: string;
+      patIdNo?: string;
+      payTime?: string;
+      feeCode?: string;
+      doctorCode?: string;
+      scheduleDate?: string;
+      timeFlag?: string;
+      regFee?: string;
     }) =>
       request.post<FacadeType>('/api/ihis/his/facade/server', params, {
         headers: {

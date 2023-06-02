@@ -43,17 +43,15 @@ export default ({
         </View>
         <Fold folded={folded} className={styles.fold}>
           {items.map(
-            (
-              {
-                leftSource,
-                scheduleId,
-                visitBeginTime,
-                visitEndTime,
-                extPropes,
-                registerFee,
-              },
-              index,
-            ) => (
+            ({
+              leftSource,
+              scheduleId,
+              visitBeginTime,
+              visitEndTime,
+              extPropes,
+              registerFee,
+              visitQueue,
+            }) => (
               <View
                 // alignItems="center"
                 // justify="center"
@@ -67,7 +65,7 @@ export default ({
                 })}
               >
                 <View className={styles.items1}>
-                  <View className={styles.itemsText}>序号: {index + 1}</View>
+                  <View className={styles.itemsText}>序号: {visitQueue}</View>
                   <View>
                     <Text
                       style={{
@@ -99,7 +97,7 @@ export default ({
                 <View className={styles.items2}>
                   {visitBeginTime?.slice(0, 5)}-{visitEndTime?.slice(0, 5)}
                   {/* <View className={styles.type}>普通</View> {`余 : ${leftSource}`} */}
-                  <View className={styles.type}>{`余号: ${1}`}</View>
+                  {/* <View className={styles.type}>{`余号: ${1}`}</View> */}
                   <View
                     className={styles.type}
                     style={{ color: '#ff9d46' }}

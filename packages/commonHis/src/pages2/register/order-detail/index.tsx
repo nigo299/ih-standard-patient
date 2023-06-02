@@ -606,6 +606,7 @@ export default () => {
                     payOrderId: orderDetail?.payOrderId,
                     endDate: formDate(orderDetail?.orderTime).slice(0, 10),
                     beginDate: formDate(orderDetail?.orderTime).slice(0, 10),
+                    extFields: { hisRecepitNo: orderDetail?.hisRecepitNo },
                   });
                   if (ebillDataList.length >= 1) {
                     if (ebillDataList[0].pictureUrl) {

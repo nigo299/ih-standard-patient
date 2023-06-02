@@ -11,7 +11,9 @@
   padding: 32px 19px;
   line-height: 1;
   margin-bottom: 20px;
-  background-color: @theme-color;
+  background-color: #c9eaf3;
+  // border: 1px solid green;
+  flex-wrap: wrap;
 }
 .leftPayTime {
   position: absolute;
@@ -34,13 +36,17 @@
 .status {
   font-size: 36px;
   font-weight: bold;
-  color: #fff2aa;
+  color: #4a5255;
   margin: 10px 0 15px;
+  min-width: 300px;
 }
 .statusInfo {
   font-size: 26px;
-  font-weight: 400;
+  font-weight: 700;
   color: #fff2aa;
+  // border: 1px solid red;
+  margin-top: 10px;
+  line-height: 38px;
 }
 .pannel {
   margin: 0 auto;
@@ -124,12 +130,23 @@
 }
 
 .buttons {
-  margin-top: 50px;
+  margin-top: 200px;
   padding: 0 20px;
 }
 
 .button {
-  margin-top: 20px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+}
+.CheckButton {
+  position: fixed;
+  bottom: 150px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
 }
 
 .group {
@@ -141,4 +158,23 @@
   &:active {
     opacity: 0.7;
   }
+}
+.regSuccessInfo {
+  color: #51595c;
+  // line-height: 30px;
+}
+.regFailInfo {
+  color: #51595c;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  min-width: 300px;
+}
+.red {
+  color: red;
+}
+.text {
+  color: @theme-color;
+  margin-left: 5px;
+  display: block;
 }
