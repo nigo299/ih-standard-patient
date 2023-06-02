@@ -19,6 +19,7 @@ import {
   ColorText,
   Loading,
   Space,
+  Exceed,
 } from '@kqinfo/ui';
 import {
   ListItem,
@@ -52,6 +53,7 @@ import CustomerReported from '@/components/customerReported';
 import useGetCancelOrderExtFields from '@/pages2/register/order-detail/hooks/useGetCancelOrderExtFields';
 import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
+import { WxOpenLaunchWeapp } from '@/components';
 
 const cancelItems = [
   { value: '不想去', checked: false },
@@ -84,6 +86,14 @@ export default () => {
     },
     needInit: false,
   });
+  const { data } = useCommApi.透传字段({
+    params: {
+      transformCode: 'KQ00072',
+      deptCode: orderDetail?.deptNo,
+    },
+    needInit: config.enableRegInfoDeptNavigate,
+  });
+  const [deptInfo] = useState<any>(data?.data?.data || {});
   // const {
   //   data: { data: jkkInfo },
   // } = usePatientApi.查询电子健康卡详情({
@@ -105,7 +115,23 @@ export default () => {
   const clinicList = [
     {
       label: '就诊科室',
-      text: orderDetail?.deptName,
+      text: (
+        <>
+          {orderDetail?.deptName || '暂无'}
+          {PLATFORM === 'web' && (
+            <Exceed
+              className={styles.text}
+              style={{ width: '100%', marginTop: '10px', color: '#3b98c3' }}
+            >
+              导航前往
+              <WxOpenLaunchWeapp
+                username="gh_1828bcf09dc4"
+                path={`pages/index/index?buildingId=${deptInfo?.summary}&type=1&hisName=${deptInfo?.name}`}
+              />
+            </Exceed>
+          )}
+        </>
+      ),
     },
     {
       label: '就诊位置',
