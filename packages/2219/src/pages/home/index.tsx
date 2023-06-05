@@ -383,15 +383,10 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  const { initWxSDK } = globalState.useContainer();
   useEffect(() => {
-    initWxSDK();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    window.location.href =
+      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
   }, []);
-  // useEffect(() => {
-  //   window.location.href =
-  //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-  // }, []);
 
   // useEffect(() => {
   //   hideTabBar();
@@ -417,6 +412,7 @@ export default () => {
       clearCountdownTimer();
     };
   }, [clearCountdownTimer]);
+  return <View />;
   return (
     <View>
       <BackgroundImg
