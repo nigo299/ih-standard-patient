@@ -171,7 +171,9 @@ export default () => {
       {
         label: '订单状态',
         text: `${orderDetail?.statusName}${
-          orderDetail?.cancelReason ? `(${orderDetail?.cancelReason})` : ''
+          orderDetail?.cancelReason && orderDetail?.cancelReason !== 'undefined'
+            ? `(${orderDetail?.cancelReason})`
+            : ''
         }`,
       },
       {
