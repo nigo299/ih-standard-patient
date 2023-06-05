@@ -74,7 +74,7 @@ export default memo(() => {
                   {patient?.patientMobile}
                 </Space>
                 <Space className={styles['card__text']}>
-                  <FormItem label="ID号" labelWidth={'4em'} />
+                  <FormItem label="ID号" />
                   {patient?.patHisNo}
                 </Space>
                 <Space>
