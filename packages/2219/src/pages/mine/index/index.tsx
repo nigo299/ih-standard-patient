@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, Image, navigateTo, reLaunch } from 'remax/one';
+import { View, Text, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { mineMainNavConfig, mineNavListConfig } from '@/config';
-import { HOSPITAL_NAME, IMAGE_DOMIN, PLATFORM } from '@/config/constant';
+import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
 import {
   Space,
   PartTitle,
@@ -448,26 +448,6 @@ export default () => {
         }}
       />
       {/* {PLATFORM === 'web' && <TabBar active="我的" />} */}
-      <Space
-        className={styles.ball}
-        justify="center"
-        alignItems="center"
-        vertical
-        size={8}
-        onTap={() => {
-          if (PLATFORM === 'web') {
-            window.location.href =
-              'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-          } else {
-            reLaunch({
-              url: '/pages/home/index',
-            });
-          }
-        }}
-      >
-        <View>返回</View>
-        <View>首页</View>
-      </Space>
     </View>
   );
 };
