@@ -68,7 +68,7 @@ export default () => {
           storage.set('login_access_token', data?.token);
           const url = storage.get('jumpUrl') || '/pages/home/index';
           if (!decodeURIComponent(jumpUrl).includes('pages/home/index')) {
-            window.history.pushState(null, 'index', '#/pages/home/index');
+            window.history.replaceState(null, 'index', '#/pages/home/index');
           }
           // 门诊扫码付不需要跳转注册
           if (url.includes('pages2/payment/order-list/index?patCardNo')) {

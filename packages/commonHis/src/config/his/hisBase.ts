@@ -25,6 +25,7 @@ export default class BaseHis {
       showFullDoc: false,
       showFullSourceDay: false,
       registerCardChange: 'DEFAULT_STYLE',
+      showRegisterNoticeScrollText: true,
     };
   }
 }
@@ -70,4 +71,6 @@ type StaticConfig = {
   showFullSourceDay: boolean;
   /** 挂号就诊卡组件样式的相关修改 KQ_STYLE:口腔样式 DEFAULT_STYLE:默认样式 */
   registerCardChange: '2219_STYLE' | 'DEFAULT_STYLE';
+  /** 是否显示挂号页面的滚动广播文字 */
+  showRegisterNoticeScrollText: boolean;
 };

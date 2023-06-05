@@ -41,15 +41,17 @@ export default ({
   return (
     <Shadow>
       <View className={styles.wrap}>
-        <NoticeBar
-          className={styles.notice}
-          color={THEME_COLOR2}
-          background={
-            'linear-gradient(90deg, rgba(255,151,67,0.2), rgba(255,151,67,0.01))'
-          }
-        >
-          {config.registerNoticeText}
-        </NoticeBar>
+        {config.showRegisterNoticeScrollText && (
+          <NoticeBar
+            className={styles.notice}
+            color={THEME_COLOR2}
+            background={
+              'linear-gradient(90deg, rgba(255,151,67,0.2), rgba(255,151,67,0.01))'
+            }
+          >
+            {config.registerNoticeText}
+          </NoticeBar>
+        )}
         <View className={styles.filter}>
           <View>
             {current?.format('YYYY-MM-DD')} 星期

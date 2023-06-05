@@ -18,6 +18,7 @@ export default class His2219 extends HisBase {
       showFullDoc: true,
       showFullSourceDay: true,
       registerCardChange: '2219_STYLE',
+      showRegisterNoticeScrollText: false,
     });
   }
 }
