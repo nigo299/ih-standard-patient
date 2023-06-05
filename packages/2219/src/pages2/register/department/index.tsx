@@ -80,7 +80,7 @@ export default () => {
                 });
               } else if (PLATFORM === 'web') {
                 window.location.href =
-                  'https://miying.qq.com/guide-h5/home?appid=wxab8f6386222bc56a';
+                  'https://miying.qq.com/guide-h5/home?appid=wx759f40c196575cd6';
               } else {
                 showToast({
                   icon: 'none',

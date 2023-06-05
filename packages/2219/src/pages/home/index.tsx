@@ -383,6 +383,11 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
+  const { initWxSDK } = globalState.useContainer();
+  useEffect(() => {
+    initWxSDK();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // useEffect(() => {
   //   window.location.href =
   //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
