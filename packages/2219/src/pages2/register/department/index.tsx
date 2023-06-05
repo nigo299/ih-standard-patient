@@ -68,7 +68,7 @@ export default () => {
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
       <View className={styles.header} />
-      <Space justify="center">
+      {/* <Space justify="center">
         <Image
           className={styles.banner}
           src={`${IMAGE_DOMIN}/register/banner.png`}
@@ -95,7 +95,7 @@ export default () => {
             }
           }}
         />
-      </Space>
+      </Space> */}
       <Search
         onConfirm={(val) => {
           navigateTo({
