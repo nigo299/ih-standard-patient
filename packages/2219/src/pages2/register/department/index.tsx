@@ -96,7 +96,7 @@ export default () => {
           }}
         />
       </Space> */}
-      <Search
+      {/* <Search
         onConfirm={(val) => {
           navigateTo({
             url: `/pages2/register/search-doctor/index?q=${val}&type=${type}`,
@@ -105,7 +105,7 @@ export default () => {
         placeholder={'输入医生姓名、科室名称进行搜索'}
         showBtn
         style={{ flex: 0 }}
-      />
+      /> */}
       <WhiteSpace />
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
