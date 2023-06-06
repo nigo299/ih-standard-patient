@@ -365,7 +365,8 @@ export default () => {
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
     window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+      'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
+
     showTabBar();
     setPageStyle({
       overflow: 'inherit',
@@ -377,7 +378,7 @@ export default () => {
   });
   useEffect(() => {
     window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+      'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
   }, []);
 
   // useEffect(() => {
