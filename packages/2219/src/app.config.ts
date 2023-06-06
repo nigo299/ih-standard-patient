@@ -19,6 +19,7 @@ const pages = [
   'pages/waiting/index', // 支付结果等待页
   'pages/webview/index', // 第三方业务链接
   'pages/maintain/index', // 系统维护
+  'pages/redirect/index', // 重定向中转页
 ];
 
 const subAliPages = [
