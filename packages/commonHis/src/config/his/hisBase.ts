@@ -26,6 +26,7 @@ export default class BaseHis {
       showFullSourceDay: false,
       registerCardChange: 'DEFAULT_STYLE',
       showRegisterNoticeScrollText: true,
+      isMergeIndex: false,
     };
   }
 }
@@ -73,4 +74,6 @@ type StaticConfig = {
   registerCardChange: '2219_STYLE' | 'DEFAULT_STYLE';
   /** 是否显示挂号页面的滚动广播文字 */
   showRegisterNoticeScrollText: boolean;
+  /** 是否为融合首页 */
+  isMergeIndex: boolean;
 };
