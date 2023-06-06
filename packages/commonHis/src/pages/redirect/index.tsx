@@ -12,9 +12,10 @@ export default () => {
   const url = decodeURIComponent(redirectUrl);
   if (!!token && !!openId) {
     storage.set('login_access_token', token);
+    storage.set('openid', openId);
     navigateTo({
       url,
     });
   }
-  return <View>123</View>;
+  return <View />;
 };
