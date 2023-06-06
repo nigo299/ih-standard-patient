@@ -72,7 +72,6 @@ export default () => {
           if (!decodeURIComponent(jumpUrl).includes('pages/home/index')) {
             if (config.isMergeIndex) {
               window.history.replaceState(null, 'index', '#/pages/home/index');
-              return;
             }
             window.history.pushState(null, 'index', '#/pages/home/index');
           }
