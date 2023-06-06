@@ -48,7 +48,7 @@ import { useHisConfig } from '@/hooks';
 export default () => {
   const { config } = useHisConfig();
   const { setOrderInfo } = payState.useContainer();
-  const { patientId, patCardNo } = useGetParams<{
+  const { patientId, patCardNo, scanType } = useGetParams<{
     patientId: string;
     patCardNo: string;
     scanType?: string;

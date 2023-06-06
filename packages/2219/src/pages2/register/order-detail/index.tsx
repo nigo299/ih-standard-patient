@@ -171,7 +171,9 @@ export default () => {
       {
         label: '订单状态',
         text: `${orderDetail?.statusName}${
-          orderDetail?.cancelReason ? `(${orderDetail?.cancelReason})` : ''
+          orderDetail?.cancelReason && orderDetail?.cancelReason !== 'undefined'
+            ? `(${orderDetail?.cancelReason})`
+            : ''
         }`,
       },
       {
@@ -564,7 +566,9 @@ export default () => {
           {orderDetail?.status === 'S' && (
             <View className={styles.regSuccessInfo}>
               <Text style={{ marginLeft: '28px' }}>
-                因口腔诊疗特殊性，来院患者须按本人签到时间提前签到，具体规则为：
+                因口腔诊疗特殊性，来院患者须按本人签到时间提前签到
+                <Text className={styles.red}>（急诊患者不受签到规则限制）</Text>
+                ，具体规则为：
               </Text>
               <br />
               <Text>

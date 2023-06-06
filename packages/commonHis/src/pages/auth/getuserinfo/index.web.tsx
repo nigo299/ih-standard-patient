@@ -9,8 +9,10 @@ import { showToast } from '@kqinfo/ui';
 import useGetParams from '@/utils/useGetParams';
 import storage from '@/utils/storage';
 import patientState from '@/stores/patient';
+import { useHisConfig } from '@/hooks';
 
 export default () => {
+  const { config } = useHisConfig();
   const { getPatientList } = patientState.useContainer();
   const { code, jumpUrl } = useGetParams<{ code: string; jumpUrl: string }>();
   usePageEvent('onShow', async () => {
@@ -68,6 +70,9 @@ export default () => {
           storage.set('login_access_token', data?.token);
           const url = storage.get('jumpUrl') || '/pages/home/index';
           if (!decodeURIComponent(jumpUrl).includes('pages/home/index')) {
+            if (config.isMergeIndex) {
+              window.history.replaceState(null, 'index', '#/pages/home/index');
+            }
             window.history.pushState(null, 'index', '#/pages/home/index');
           }
           // 门诊扫码付不需要跳转注册

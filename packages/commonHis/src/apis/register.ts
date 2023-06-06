@@ -520,6 +520,12 @@ export default {
       return request.post<RegisterScheduleDoctorListType>(
         '/api/intelligent/api/register/schedule-doctor-list',
         params,
+        {
+          headers: {
+            'x-showToast': 'false',
+            'x-showLoading': 'false',
+          },
+        },
       );
     },
   ),
@@ -555,6 +561,12 @@ export default {
       return request.post<RegisterSchedulelistType>(
         '/api/intelligent/api/register/schedule-list',
         params,
+        {
+          headers: {
+            'x-showToast': 'false',
+            'x-showLoading': 'false',
+          },
+        },
       );
     },
   ),

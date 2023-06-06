@@ -364,16 +364,8 @@ export default () => {
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
-    if (
-      storage.get('openid') === 'oDnT4wBB4yQ3dDw3AZth0217ZUfU' &&
-      process.env.REMAX_APP_PLATFORM === 'production'
-    ) {
-      window.location.href =
-        'https://tihs.cqkqinfo.com/patients/p40064-his/#/pages/home/index';
-    }
-    // window.location.href =
-    //   'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-
+    window.location.href =
+      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
     showTabBar();
     setPageStyle({
       overflow: 'inherit',
@@ -383,10 +375,10 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  // useEffect(() => {
-  //   window.location.href =
-  //     'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
-  // }, []);
+  useEffect(() => {
+    window.location.href =
+      'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+  }, []);
 
   // useEffect(() => {
   //   hideTabBar();
@@ -412,6 +404,7 @@ export default () => {
       clearCountdownTimer();
     };
   }, [clearCountdownTimer]);
+  return <View />;
   return (
     <View>
       <BackgroundImg

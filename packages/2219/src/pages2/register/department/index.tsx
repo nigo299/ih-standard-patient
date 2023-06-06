@@ -68,7 +68,7 @@ export default () => {
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
       <View className={styles.header} />
-      <Space justify="center">
+      {/* <Space justify="center">
         <Image
           className={styles.banner}
           src={`${IMAGE_DOMIN}/register/banner.png`}
@@ -80,7 +80,7 @@ export default () => {
                 });
               } else if (PLATFORM === 'web') {
                 window.location.href =
-                  'https://miying.qq.com/guide-h5/home?appid=wxab8f6386222bc56a';
+                  'https://miying.qq.com/guide-h5/home?appid=wx759f40c196575cd6';
               } else {
                 showToast({
                   icon: 'none',
@@ -95,8 +95,8 @@ export default () => {
             }
           }}
         />
-      </Space>
-      <Search
+      </Space> */}
+      {/* <Search
         onConfirm={(val) => {
           navigateTo({
             url: `/pages2/register/search-doctor/index?q=${val}&type=${type}`,
@@ -105,7 +105,7 @@ export default () => {
         placeholder={'输入医生姓名、科室名称进行搜索'}
         showBtn
         style={{ flex: 0 }}
-      />
+      /> */}
       <WhiteSpace />
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
