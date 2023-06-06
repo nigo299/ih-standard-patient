@@ -60,8 +60,15 @@ export default () => {
               <View
                 className={styles.item}
                 onTap={() =>
+                  // navigateTo({
+                  //   url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${item.doctorId}&scheduleDate=${scheduleDate}&type=${type}`,
+                  // })
                   navigateTo({
-                    url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${item.doctorId}&scheduleDate=${scheduleDate}&type=${type}`,
+                    url: `/pages2/register/select-time/index?deptId=${
+                      specilDepts?.includes(deptId) ? '30312' : deptId
+                    }&doctorId=${
+                      item.doctorId
+                    }&scheduleDate=${scheduleDate}&type=${type}`,
                   })
                 }
               >
