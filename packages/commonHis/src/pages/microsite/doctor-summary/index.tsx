@@ -52,14 +52,21 @@ export default () => {
   );
 
   const options1 = useMemo(() => {
-    if (deptList?.length !== 0) {
-      return deptList.map((item) => {
+    return deptList?.flatMap((item) => {
+      if (item.children?.length === 0) {
         return {
           text: item.name,
           value: item.no,
         };
-      });
-    }
+      } else {
+        return item.children.map((subItem) => {
+          return {
+            text: subItem.name,
+            value: subItem.no,
+          };
+        });
+      }
+    });
   }, [deptList]);
   usePageEvent('onShow', () => {
     if (deptList.length === 0) {
