@@ -87,16 +87,17 @@ export default () => {
             }
           }}
           onSelect={(dept) => {
+            console.log('dept', dept);
             if (!!doctor) {
               navigateTo({
                 url: `/pages/microsite/doctor-summary/index?deptId=${
-                  dept.no
+                  dept.id
                 }&scheduleDate=${dayjs().format('YYYY-MM-DD')}&type=${type}`,
               });
               return;
             }
             navigateTo({
-              url: `/pages2/register/dept-summary/index?deptId=${dept.no}`,
+              url: `/pages2/register/dept-summary/index?deptId=${dept.id}`,
             });
           }}
         />
