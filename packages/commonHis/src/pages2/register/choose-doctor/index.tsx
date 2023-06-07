@@ -56,12 +56,12 @@ export default () => {
         <WhiteSpace />
         {data?.data?.recordList?.length > 0 &&
           data.data.recordList?.map((item) => (
-            <Shadow key={item.doctorId}>
+            <Shadow key={item?.doctorId}>
               <View
                 className={styles.item}
                 onTap={() =>
                   navigateTo({
-                    url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${item.doctorId}&scheduleDate=${scheduleDate}&type=${type}`,
+                    url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${item?.doctorId}&scheduleDate=${scheduleDate}&type=${type}`,
                   })
                 }
               >
@@ -74,8 +74,8 @@ export default () => {
                   }
                 />
                 <View className={styles.info}>
-                  <View className={styles.name}>{item.name}</View>
-                  <View className={styles.title}>{item.level}</View>
+                  <View className={styles.name}>{item?.name}</View>
+                  <View className={styles.title}>{item?.level}</View>
                   <Exceed clamp={1} className={styles.intro}>
                     {`简介: ${
                       item?.specialty && item?.specialty !== 'null'
