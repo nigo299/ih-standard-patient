@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { View, Image, navigateTo, reLaunch } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import useApi from '@/apis/common';
+// import useApi from '@/apis/common';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { RegisterNotice, Step, WhiteSpace } from '@/components';
+import { Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import { DeptType } from '@/apis/register';
 import regsiterState from '@/stores/register';
@@ -17,7 +17,7 @@ export default () => {
     summary: string;
     doctor: string;
   }>();
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   // const {
   //   data: { data: infoData },
   // } = useApi.注意事项内容查询({
@@ -84,7 +84,7 @@ export default () => {
   });
   return (
     <View>
-      {!summary && <Step current={1} />}
+      {!summary && <Step step={1} />}
       <View className={styles.header} />
       <WhiteSpace />
       <View className={styles.lists}>

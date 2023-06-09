@@ -364,8 +364,8 @@ export default () => {
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
+    // window.location.href =
+    //   'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
 
     showTabBar();
     setPageStyle({
@@ -376,10 +376,10 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  useEffect(() => {
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
-  }, []);
+  // useEffect(() => {
+  //   window.location.href =
+  //     'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
+  // }, []);
 
   // useEffect(() => {
   //   hideTabBar();
@@ -405,7 +405,7 @@ export default () => {
       clearCountdownTimer();
     };
   }, [clearCountdownTimer]);
-  return <View />;
+  // return <View />;
   return (
     <View>
       <BackgroundImg

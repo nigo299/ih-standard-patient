@@ -232,7 +232,7 @@ export default () => {
       const { visitBeginTime, visitEndTime, visitPeriod, extPropes } =
         doctorScheduleDateDetail?.itemList?.find(
           (item: { scheduleId: string }) => item.scheduleId === scheduleId,
-        );
+        ) as any;
 
       if (visitBeginTime && visitEndTime && deptId)
         navigateTo({
