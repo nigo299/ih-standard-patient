@@ -26,7 +26,13 @@ enum DoctorType {
   expert = '专科号',
   night = '普通号',
 }
-const specilDepts = ['30312001', '30312002', '30312003'];
+const specilDepts = [
+  '30312001',
+  '30312002',
+  '30312003',
+  '30303001',
+  '30303002',
+];
 
 export default () => {
   const { config } = useHisConfig();
@@ -53,7 +59,7 @@ export default () => {
       data: [],
     },
     params: {
-      deptId: specilDepts.includes(deptId) ? '30312' : deptId,
+      deptId: specilDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId,
       extFields: specilDepts.includes(deptId)
         ? { inputData: deptId?.slice(-1) }
         : null,
@@ -108,7 +114,7 @@ export default () => {
     },
     params: {
       scheduleDate: date.format('YYYY-MM-DD'),
-      deptId: specilDepts.includes(deptId) ? '30312' : deptId,
+      deptId: specilDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId,
       extFields: specilDepts.includes(deptId)
         ? { inputData: deptId?.slice(-1) }
         : { inputData: null },
@@ -146,6 +152,22 @@ export default () => {
         name: '儿童牙外伤',
         hisDistrict: '冉家坝院区',
         summary: '诊疗范围：儿童乳牙和年轻恒牙外伤。',
+      };
+    }
+    if (deptId === '30303001') {
+      return {
+        name: '儿童牙病',
+        hisDistrict: '上清寺院区',
+        summary:
+          '诊疗范围：儿童牙体龋病、非龋病疾病、牙髓病、根尖周疾病，儿童口腔舒适治疗。',
+      };
+    }
+    if (deptId === '30303002') {
+      return {
+        name: '儿童早期矫治',
+        hisDistrict: '上清寺院区',
+        summary:
+          '诊疗范围：儿童各类错颌畸形的早期矫治（如牙列拥挤，反合，上牙前突，阻生牙等）；儿童口腔不良习惯的阻断治疗（如口呼吸，咬唇，吐舌等）。',
       };
     }
     return deptDetail;

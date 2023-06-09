@@ -37,16 +37,27 @@ export default () => {
   //   },
   //   needInit: config.showChooseDeptDialog,
   // });
-  const deptChildren = [
+  //冉家坝写死科室
+  const deptChildrenRJB = [
     { no: '30312001', name: '儿童牙病' },
     { no: '30312002', name: '儿童早期矫治' },
     { no: '30312003', name: '儿童牙外伤' },
+  ];
+  //上清寺写死科室
+  const deptChildrenSQS = [
+    { no: '30303001', name: '儿童牙病' },
+    { no: '30303002', name: '儿童早期矫治' },
   ];
   const realDeptList = deptList.map((dept) => {
     if (dept?.no === '30312') {
       return {
         ...dept,
-        children: deptChildren,
+        children: deptChildrenRJB,
+      };
+    } else if (dept?.no === '30303') {
+      return {
+        ...dept,
+        children: deptChildrenSQS,
       };
     }
     return dept;
