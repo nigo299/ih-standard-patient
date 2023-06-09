@@ -1,22 +1,21 @@
 import React from 'react';
-import { View, Image, navigateTo } from 'remax/one';
+import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
+import { Space, Menu, Icon } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { CopyRight, Step, WhiteSpace } from '@/components';
 import {
   CHILDREN_DEPTLIST,
-  IMAGE_DOMIN,
   STEP_ITEMS,
-  IS_DEPT,
-  PLATFORM,
-} from '@/config/constant';
+  deptChildrenRanJiaBa,
+  deptChildrenShangQingSi,
+} from '../../../config/constant';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 import reportCmPV from '@/alipaylog/reportCmPV';
-import Search from '@/pages2/register/search-doctor/search';
+// import Search from '@/pages2/register/search-doctor/search';
 // import useApi from '@/apis/common';
 // import { useHisConfig } from '@/hooks';
 
@@ -37,16 +36,17 @@ export default () => {
   //   },
   //   needInit: config.showChooseDeptDialog,
   // });
-  const deptChildren = [
-    { no: '30312001', name: '儿童牙病' },
-    { no: '30312002', name: '儿童早期矫治' },
-    { no: '30312003', name: '儿童牙外伤' },
-  ];
+
   const realDeptList = deptList.map((dept) => {
     if (dept?.no === '30312') {
       return {
         ...dept,
-        children: deptChildren,
+        children: deptChildrenRanJiaBa,
+      };
+    } else if (dept?.no === '30303') {
+      return {
+        ...dept,
+        children: deptChildrenShangQingSi,
       };
     }
     return dept;
@@ -113,10 +113,12 @@ export default () => {
           data={realDeptList.map(({ name, children, no }) => ({
             name,
             id: no,
-            children: children.map(({ name, no }) => ({
-              name,
-              id: no,
-            })),
+            children: children.map(
+              ({ name, no }: { name: string; no: string }) => ({
+                name,
+                id: no,
+              }),
+            ),
           }))}
           className={styles.menu}
           leftActiveCls={styles.leftActive}

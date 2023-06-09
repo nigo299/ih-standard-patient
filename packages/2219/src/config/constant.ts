@@ -98,3 +98,20 @@ export const PAY_TYPE = {
     type: 4,
   },
 };
+
+//冉家坝写死科室
+export const deptChildrenRanJiaBa = [
+  { no: '30312001', name: '儿童牙病' },
+  { no: '30312002', name: '儿童早期矫治' },
+  { no: '30312003', name: '儿童牙外伤' },
+];
+//上清寺写死科室
+export const deptChildrenShangQingSi = [
+  { no: '30303001', name: '儿童牙病' },
+  { no: '30303002', name: '儿童早期矫治' },
+];
+//写死的特殊科室
+export const specialDepts = [
+  deptChildrenRanJiaBa,
+  deptChildrenShangQingSi,
+].flatMap((deptChildren) => deptChildren.map((dept) => dept.no));

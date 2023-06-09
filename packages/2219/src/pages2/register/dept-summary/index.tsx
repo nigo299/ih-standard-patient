@@ -45,6 +45,22 @@ export default () => {
         summary: '诊疗范围：儿童乳牙和年轻恒牙外伤。',
       };
     }
+    if (deptId === '30303001') {
+      return {
+        name: '儿童牙病',
+        hisDistrict: '上清寺院区',
+        summary:
+          '诊疗范围：儿童牙体龋病、非龋病疾病、牙髓病、根尖周疾病，儿童口腔舒适治疗。',
+      };
+    }
+    if (deptId === '30303002') {
+      return {
+        name: '儿童早期矫治',
+        hisDistrict: '上清寺院区',
+        summary:
+          '诊疗范围：儿童各类错颌畸形的早期矫治（如牙列拥挤，反合，上牙前突，阻生牙等）；儿童口腔不良习惯的阻断治疗（如口呼吸，咬唇，吐舌等）。',
+      };
+    }
     return deptDetail;
   }, [deptDetail, deptId]);
   usePageEvent('onShow', () => {
