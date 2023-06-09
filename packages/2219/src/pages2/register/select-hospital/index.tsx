@@ -137,7 +137,7 @@ export default () => {
           onTap={() => {
             if (PLATFORM === 'web') {
               window.location.href =
-                'https://ihs.cqkqinfo.com/patients/p2219-preview/#/home/indexNew';
+                'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
             } else {
               reLaunch({
                 url: '/pages/home/index',
