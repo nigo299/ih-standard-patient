@@ -8,7 +8,7 @@ import {
   HOSPITAL_NAME,
   STEP_ITEMS,
   specialDepts,
-} from '@/config/constant';
+} from '../../../config/constant';
 import { DeptInfo, Calendar } from '@/pages2/register/components';
 import { NoData, Space, Loading, Radio, RichText } from '@kqinfo/ui';
 import dayjs from 'dayjs';
@@ -19,7 +19,7 @@ import useMicrositeApi from '@/apis/microsite';
 import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import useComApi from '@/apis/common';
-import styles from '@/pages2/register/select-doctor/index.less';
+import styles from './index.less';
 import { useHisConfig } from '@/hooks';
 import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
 import ShowSource from '@/pages2/register/select-doctor/components/show-source';
@@ -112,8 +112,8 @@ export default () => {
     },
     params: {
       scheduleDate: date.format('YYYY-MM-DD'),
-      deptId: specilDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId,
-      extFields: specilDepts.includes(deptId)
+      deptId: specialDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId,
+      extFields: specialDepts.includes(deptId)
         ? { inputData: deptId?.slice(-1) }
         : { inputData: null },
     },
@@ -335,6 +335,7 @@ export default () => {
           }
           current={date}
           limit={config.regCalendarNumberOfDays}
+          className={styles.calendar}
           showDoctor
           deptId={deptId}
           onChange={(

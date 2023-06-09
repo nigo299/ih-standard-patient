@@ -3,7 +3,11 @@ import { View, navigateTo, Image } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN, HOSPITAL_NAME, specialDepts } from '@/config/constant';
+import {
+  IMAGE_DOMIN,
+  HOSPITAL_NAME,
+  specialDepts,
+} from '../../../config/constant';
 import { DeptInfo } from '@/pages2/register/components';
 import { NoData, Shadow, Exceed } from '@kqinfo/ui';
 import registerState from '@/stores/register';

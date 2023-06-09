@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { View, navigateTo } from 'remax/one';
 import { Exceed, Shadow, Space, showToast } from '@kqinfo/ui';
-import { IMAGE_DOMIN, specialDepts } from '@/config/constant';
+import { IMAGE_DOMIN, specialDepts } from '../../../../../config/constant';
 import styles from '@/pages2/register/select-doctor/components/show-doc-tags/index.less';
 import { PreviewImage } from '@/components';
 

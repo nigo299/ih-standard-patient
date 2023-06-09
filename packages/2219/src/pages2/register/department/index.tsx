@@ -9,13 +9,13 @@ import {
   STEP_ITEMS,
   deptChildrenRanJiaBa,
   deptChildrenShangQingSi,
-} from '@/config/constant';
+} from '../../../config/constant';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 import reportCmPV from '@/alipaylog/reportCmPV';
-import Search from '@/pages2/register/search-doctor/search';
+// import Search from '@/pages2/register/search-doctor/search';
 // import useApi from '@/apis/common';
 // import { useHisConfig } from '@/hooks';
 
@@ -113,10 +113,12 @@ export default () => {
           data={realDeptList.map(({ name, children, no }) => ({
             name,
             id: no,
-            children: children.map(({ name, no }) => ({
-              name,
-              id: no,
-            })),
+            children: children.map(
+              ({ name, no }: { name: string; no: string }) => ({
+                name,
+                id: no,
+              }),
+            ),
           }))}
           className={styles.menu}
           leftActiveCls={styles.leftActive}

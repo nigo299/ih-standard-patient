@@ -335,6 +335,7 @@ export default () => {
         <WhiteSpace />
         <Calendar
           deptId={deptId}
+          className={styles.calendar}
           renderDot={renderDate}
           renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
           current={date}
