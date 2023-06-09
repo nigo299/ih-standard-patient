@@ -3,14 +3,14 @@ import { View, navigateTo, Image } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
+import { IMAGE_DOMIN, HOSPITAL_NAME, specialDepts } from '@/config/constant';
 import { DeptInfo } from '@/pages2/register/components';
 import { NoData, Shadow, Exceed } from '@kqinfo/ui';
 import registerState from '@/stores/register';
 import useApi from '@/apis/register';
 import useGetParams from '@/utils/useGetParams';
 import styles from '@/pages2/register/choose-doctor/index.less';
-const specilDepts = ['30312001', '30312002', '30312003'];
+
 export default () => {
   const { deptDetail } = registerState.useContainer();
   const { deptId, scheduleDate, type } = useGetParams<{
@@ -25,7 +25,7 @@ export default () => {
       },
     },
     params: {
-      deptId: specilDepts.includes(deptId) ? '30312' : deptId,
+      deptId: specialDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId,
       pageNum: 1,
       numPerPage: 50,
     },
@@ -65,7 +65,9 @@ export default () => {
                   // })
                   navigateTo({
                     url: `/pages2/register/select-time/index?deptId=${
-                      specilDepts?.includes(deptId) ? '30312' : deptId
+                      specialDepts.includes(deptId)
+                        ? deptId?.substring(0, 5)
+                        : deptId
                     }&doctorId=${
                       item.doctorId
                     }&scheduleDate=${scheduleDate}&type=${type}`,

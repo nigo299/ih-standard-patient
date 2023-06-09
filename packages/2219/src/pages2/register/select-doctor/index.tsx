@@ -3,7 +3,12 @@ import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN, HOSPITAL_NAME, STEP_ITEMS } from '@/config/constant';
+import {
+  IMAGE_DOMIN,
+  HOSPITAL_NAME,
+  STEP_ITEMS,
+  specialDepts,
+} from '@/config/constant';
 import { DeptInfo, Calendar } from '@/pages2/register/components';
 import { NoData, Space, Loading, Radio, RichText } from '@kqinfo/ui';
 import dayjs from 'dayjs';
@@ -26,13 +31,6 @@ enum DoctorType {
   expert = '专科号',
   night = '普通号',
 }
-const specilDepts = [
-  '30312001',
-  '30312002',
-  '30312003',
-  '30303001',
-  '30303002',
-];
 
 export default () => {
   const { config } = useHisConfig();
@@ -59,8 +57,8 @@ export default () => {
       data: [],
     },
     params: {
-      deptId: specilDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId,
-      extFields: specilDepts.includes(deptId)
+      deptId: specialDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId,
+      extFields: specialDepts.includes(deptId)
         ? { inputData: deptId?.slice(-1) }
         : null,
     },

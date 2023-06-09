@@ -1,15 +1,14 @@
 import React from 'react';
-import { View, Image, navigateTo } from 'remax/one';
+import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
+import { Space, Menu, Icon } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { CopyRight, Step, WhiteSpace } from '@/components';
 import {
   CHILDREN_DEPTLIST,
-  IMAGE_DOMIN,
   STEP_ITEMS,
-  IS_DEPT,
-  PLATFORM,
+  deptChildrenRanJiaBa,
+  deptChildrenShangQingSi,
 } from '@/config/constant';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
@@ -37,17 +36,7 @@ export default () => {
   //   },
   //   needInit: config.showChooseDeptDialog,
   // });
-  //冉家坝写死科室
-  const deptChildrenRanJiaBa = [
-    { no: '30312001', name: '儿童牙病' },
-    { no: '30312002', name: '儿童早期矫治' },
-    { no: '30312003', name: '儿童牙外伤' },
-  ];
-  //上清寺写死科室
-  const deptChildrenShangQingSi = [
-    { no: '30303001', name: '儿童牙病' },
-    { no: '30303002', name: '儿童早期矫治' },
-  ];
+
   const realDeptList = deptList.map((dept) => {
     if (dept?.no === '30312') {
       return {
