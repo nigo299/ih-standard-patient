@@ -38,13 +38,13 @@ export default () => {
   //   needInit: config.showChooseDeptDialog,
   // });
   //冉家坝写死科室
-  const deptChildrenRJB = [
+  const deptChildrenRanJiaBa = [
     { no: '30312001', name: '儿童牙病' },
     { no: '30312002', name: '儿童早期矫治' },
     { no: '30312003', name: '儿童牙外伤' },
   ];
   //上清寺写死科室
-  const deptChildrenSQS = [
+  const deptChildrenShangQingSi = [
     { no: '30303001', name: '儿童牙病' },
     { no: '30303002', name: '儿童早期矫治' },
   ];
@@ -52,12 +52,12 @@ export default () => {
     if (dept?.no === '30312') {
       return {
         ...dept,
-        children: deptChildrenRJB,
+        children: deptChildrenRanJiaBa,
       };
     } else if (dept?.no === '30303') {
       return {
         ...dept,
-        children: deptChildrenSQS,
+        children: deptChildrenShangQingSi,
       };
     }
     return dept;
