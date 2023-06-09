@@ -405,7 +405,7 @@ export default () => {
       clearCountdownTimer();
     };
   }, [clearCountdownTimer]);
-  // return <View />;
+  return <View />;
   return (
     <View>
       <BackgroundImg
