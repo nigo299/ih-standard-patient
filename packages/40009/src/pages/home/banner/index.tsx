@@ -18,7 +18,7 @@ export default ({
       interval={1000}
       indicatorDots
       autoplay
-      onChange={console.log}
+      // onChange={console.log}
       className={styles.banner2}
       items={Object.values(CommonImg).map((img) => ({
         node: (
