@@ -41,7 +41,7 @@ import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import payState, { OrderInfoType } from '@/stores/pay';
 import patientState from '@/stores/patient';
-import styles from '@/pages2/register/confirm/index.less';
+import styles from './index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
 import useCommonApi from '@/apis/common';
 import { PatGender } from '@/config/dict';
@@ -532,7 +532,7 @@ export default () => {
           {patientData.map((item) => (
             <ListItem key={item.label} {...item} />
           ))}
-          <Space className={styles.patients} size={22} ignoreNum={5}>
+          <Space className={styles.patients} size={22} ignoreNum={10}>
             {confirmInfo?.patientList?.map((item, index) => (
               <Space
                 justify="center"
