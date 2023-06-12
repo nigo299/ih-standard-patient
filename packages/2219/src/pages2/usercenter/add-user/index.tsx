@@ -497,11 +497,11 @@ export default memo(() => {
           就诊人信息
         </PartTitle>
         <WhiteSpace />
-        <Form cell labelCls={styles.label} labelWidth={'4em'}>
+        {/* <Form cell labelCls={styles.label} labelWidth={'4em'}>
           <FormItem label="是否有就诊卡" name="checked" initialValue={checked}>
             <Switch onChange={(value) => setChecked(value)} />
           </FormItem>
-        </Form>
+        </Form> */}
         <WhiteSpace />
         <Form
           cell
@@ -909,12 +909,15 @@ export default memo(() => {
                       (item) => item.value === v,
                     )[0];
                     if (current?.idNo) {
+                      console.log('current', current);
                       setSelectCard(current);
                       form.setFieldsValue({
                         patientSex: current.patientSex,
                         patientSexed: PatGender[current.patientSex] || '',
-                        birthday: current.birthday,
-                        brithdayed: current.birthday,
+                        birthday: dayjs(current.birthday).format('YYYY-MM-DD'),
+                        brithdayed: dayjs(current.birthday).format(
+                          'YYYY-MM-DD',
+                        ),
                         addressed: current.address,
                         parentName: current?.parentName || '',
                         parentIdNo: current?.parentIdNo || '',
