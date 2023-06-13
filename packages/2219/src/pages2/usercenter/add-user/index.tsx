@@ -335,53 +335,54 @@ export default memo(() => {
               const IdNo = decrypt(cardItem?.encryptIdNo);
               if (IdNo === params.idNo) {
                 showToast({
-                  title: '该就诊人已存在,不能重复绑卡1',
+                  title: '该就诊人已存在,不能重复绑卡',
                   icon: 'fail',
                 });
                 return true;
               }
             });
-          });
-          console.log('isRepeatedCard', isRepeatedCard);
-          if (isRepeatedCard) {
-            const { code } = await handleAdd(
-              btnSubType === 'bind'
-                ? params
-                : {
-                    ...params,
-                    patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
-                    extFields: {
-                      profession: values['profession'],
+            console.log('isRepeatedCard', isRepeatedCard);
+            if (!isRepeatedCard) {
+              handleAdd(
+                btnSubType === 'bind'
+                  ? params
+                  : {
+                      ...params,
+                      patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
+                      extFields: {
+                        profession: values['profession'],
+                      },
                     },
-                  },
-            );
-            if (code === 0) {
-              showToast({
-                title: btnSubType === 'add' ? '建档成功' : '绑定成功',
-                icon: 'success',
-              }).then(() => {
-                if (pageRoute) {
-                  getPatientList().then((res) => {
-                    const patient = res.filter(
-                      (item) => item.patientFullIdNo === values['idNo'],
-                    )[0];
-                    const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
-                    redirectTo({
-                      url,
+              ).then((res) => {
+                if (res.code === 0) {
+                  showToast({
+                    title: btnSubType === 'add' ? '建档成功' : '绑定成功',
+                    icon: 'success',
+                  }).then(() => {
+                    if (pageRoute) {
+                      getPatientList().then((res) => {
+                        const patient = res.filter(
+                          (item) => item.patientFullIdNo === values['idNo'],
+                        )[0];
+                        const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
+                        redirectTo({
+                          url,
+                        });
+                      });
+                    } else {
+                      navigateBack();
+                    }
+
+                    setFaceInfo({
+                      idNo: '',
+                      name: '',
+                      success: false,
                     });
                   });
-                } else {
-                  navigateBack();
                 }
-
-                setFaceInfo({
-                  idNo: '',
-                  name: '',
-                  success: false,
-                });
               });
             }
-          }
+          });
         }
       }
     },
