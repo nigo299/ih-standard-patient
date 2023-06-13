@@ -69,8 +69,7 @@ export default memo(() => {
           bindPatientList.map((patient) => (
             <Space
               className={classNames(styles.card, {
-                [styles.active]:
-                  selectPatient.patientName === patient.patientName,
+                [styles.active]: selectPatient.patCardNo === patient.patCardNo,
               })}
               key={patient.patientId}
               vertical
@@ -94,7 +93,7 @@ export default memo(() => {
               <Space
                 className={classNames(styles.text, {
                   [styles.active]:
-                    selectPatient.patientName === patient.patientName,
+                    selectPatient.patCardNo === patient.patCardNo,
                 })}
                 size={40}
               >
