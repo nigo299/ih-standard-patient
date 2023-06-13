@@ -60,6 +60,7 @@ export default () => {
     level,
     doctorName,
     regTypes,
+    hisName,
   } = useGetParams<{
     deptId: string;
     doctorId: string;
@@ -73,6 +74,7 @@ export default () => {
     visitEndTime: string;
     visitPeriod: string;
     regTypes: string;
+    hisName: string;
   }>();
   const [visible, setVisible] = useState(false);
   const { getPatientList } = patientState.useContainer();
@@ -123,6 +125,10 @@ export default () => {
     {
       label: '号源类型',
       text: regTypes.substring(0, regTypes.indexOf('、')) || regTypes,
+    },
+    {
+      label: '院区',
+      text: hisName,
     },
     {
       label: '就诊医生',
