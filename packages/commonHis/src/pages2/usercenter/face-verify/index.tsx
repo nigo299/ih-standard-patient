@@ -12,6 +12,7 @@ import { FaceVerifyStatus } from '@/hooks/use-face-verify';
 import styles from './index.less';
 import { analyzeIDCard } from '@/utils';
 import { Dialog } from '@/components';
+import { useUnmount } from 'ahooks';
 
 export default () => {
   const { elderly } = globalState.useContainer();
@@ -32,7 +33,15 @@ export default () => {
       setVisible(true);
     }
   }, [analyzeAge, faceVerifyStatus]);
-
+  useUnmount(() => {
+    if (faceVerifyStatus !== FaceVerifyStatus.成功) {
+      setFaceInfo({
+        name: '',
+        idNo: '',
+        success: false,
+      });
+    }
+  });
   const handleSuccess = useCallback(() => {
     setFaceInfo({ ...faceInfo, success: true });
     navigateBack();
