@@ -124,7 +124,7 @@ export default () => {
     },
     {
       label: '号源类型',
-      text: regTypes,
+      text: regTypes.substring(0, regTypes.indexOf('、')) || regTypes,
     },
     {
       label: '院区',
