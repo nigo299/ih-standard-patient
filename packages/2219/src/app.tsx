@@ -2,12 +2,7 @@ import React from 'react';
 import StateProviders from '@/stores';
 import { ConfigProvider } from '@kqinfo/ui';
 import './app.less';
-import storage from '@/utils/storage';
 
-const href = window?.location?.href;
-if (href?.includes('isFace=false')) {
-  storage.set('isFace', 'false');
-}
 const App: React.FC = (props) => {
   return (
     <StateProviders>

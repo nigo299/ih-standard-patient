@@ -13,7 +13,6 @@ import styles from './index.less';
 import { analyzeIDCard } from '@/utils';
 import { Dialog } from '@/components';
 import { useUnmount } from 'ahooks';
-import storage from '@/utils/storage';
 
 export default () => {
   const { elderly } = globalState.useContainer();
@@ -35,7 +34,7 @@ export default () => {
     }
   }, [analyzeAge, faceVerifyStatus]);
   useUnmount(() => {
-    if (faceVerifyStatus !== FaceVerifyStatus.成功 && !storage.get('isFace')) {
+    if (faceVerifyStatus !== FaceVerifyStatus.成功) {
       setFaceInfo({
         name: '',
         idNo: '',
