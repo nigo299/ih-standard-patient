@@ -33,6 +33,7 @@ export type keys =
   | 'createOpOrderParams'
   | 'patientId'
   | 'debugger'
+  | 'isFace'
   | 'canApplyRefund';
 
 const prefixKey = (key: string) => {
