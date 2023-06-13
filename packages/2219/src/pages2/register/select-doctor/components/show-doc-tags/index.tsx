@@ -2,10 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import { View, navigateTo } from 'remax/one';
 import { Exceed, Shadow, Space, showToast } from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, specialDepts } from '../../../../../config/constant';
 import styles from '@/pages2/register/select-doctor/components/show-doc-tags/index.less';
 import { PreviewImage } from '@/components';
-const specilDepts = ['30312001', '30312002', '30312003'];
+
 const ShowDocTags = (data: any) => {
   const {
     data: { item, date, deptId, type },
@@ -29,7 +29,7 @@ const ShowDocTags = (data: any) => {
           if (item.leftSource > 0) {
             navigateTo({
               url: `/pages2/register/select-time/index?deptId=${
-                specilDepts?.includes(deptId) ? '30312' : deptId
+                specialDepts.includes(deptId) ? deptId?.substring(0, 5) : deptId
               }&doctorId=${item.doctorId}&scheduleDate=${date.format(
                 'YYYY-MM-DD',
               )}&doctorName=${name}&sourceType=${sourceType}&type=${type}&level=${level}&title=${title}`,

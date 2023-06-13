@@ -232,7 +232,7 @@ export default () => {
       const { visitBeginTime, visitEndTime, visitPeriod, extPropes } =
         doctorScheduleDateDetail?.itemList?.find(
           (item: { scheduleId: string }) => item.scheduleId === scheduleId,
-        );
+        ) as any;
 
       if (visitBeginTime && visitEndTime && deptId)
         navigateTo({
@@ -335,6 +335,7 @@ export default () => {
         <WhiteSpace />
         <Calendar
           deptId={deptId}
+          className={styles.calendar}
           renderDot={renderDate}
           renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
           current={date}
