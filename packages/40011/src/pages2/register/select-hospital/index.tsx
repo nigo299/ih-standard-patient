@@ -87,8 +87,10 @@ export default () => {
               });
             }}
           >
-            <View className={styles.name}>{'新院区'}</View>
-            <View className={styles.address}>{`地址：${'暂无'}`}</View>
+            <View className={styles.name}>{'靛水新城分院'}</View>
+            <View
+              className={styles.address}
+            >{`地址：${'彭水县中医院靛水新城分院'}`}</View>
           </View>
         </View>
         <View className={styles.itemWrap}>
@@ -105,7 +107,9 @@ export default () => {
             }}
           >
             <View className={styles.name}>{'老院区'}</View>
-            <View className={styles.address}>{`地址：${'暂无'}`}</View>
+            <View
+              className={styles.address}
+            >{`地址：${'彭水县中医院高家台街'}`}</View>
           </View>
         </View>
       </View>

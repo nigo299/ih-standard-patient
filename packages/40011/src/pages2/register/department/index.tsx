@@ -131,7 +131,7 @@ export default () => {
             className={styles.list}
             onTap={() =>
               navigateTo({
-                url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}&isNew=${isNew}`,
+                url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}&hisType=${hisType}`,
               })
             }
           >
