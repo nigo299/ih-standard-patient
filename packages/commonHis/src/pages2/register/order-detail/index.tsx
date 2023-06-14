@@ -52,6 +52,10 @@ import CustomerReported from '@/components/customerReported';
 import useGetCancelOrderExtFields from '@/pages2/register/order-detail/hooks/useGetCancelOrderExtFields';
 import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
+import {
+  visitTime,
+  registerSuccessTips,
+} from '@/pages2/register/order-detail/utils';
 
 const cancelItems = [
   { value: '不想去', checked: false },
@@ -123,7 +127,7 @@ export default () => {
       text: orderDetail?.doctorTitle,
     },
     {
-      label: '就诊时间',
+      label: visitTime,
       text:
         `${formDate(orderDetail?.visitDate).slice(0, 10) || ''} ${
           orderDetail?.visitBeginTime || ''
@@ -531,8 +535,8 @@ export default () => {
           </View>
           <View className={styles.statusInfo}>
             {orderDetail?.status === 'S' &&
-              `挂号成功，请根据签到时间至少提前20分钟携带绑定的卡（身份证、医保卡、院内诊疗卡）到科室分诊处签到候诊。
-                就诊卡号：${orderDetail?.patCardNo}`}
+              `${registerSuccessTips}
+              就诊卡号：${orderDetail?.patCardNo}`}
             {orderDetail?.status === 'L' &&
               '请在锁号的时候内完成支付，否则将取消号源'}
             {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}
