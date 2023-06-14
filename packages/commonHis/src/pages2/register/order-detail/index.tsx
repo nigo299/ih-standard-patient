@@ -535,7 +535,7 @@ export default () => {
           </View>
           <View className={styles.statusInfo}>
             {orderDetail?.status === 'S' &&
-              `${registerSuccessTips}${orderDetail?.patCardNo}`}
+              `${registerSuccessTips} 就诊卡号：${orderDetail?.patCardNo}`}
             {orderDetail?.status === 'L' &&
               '请在锁号的时候内完成支付，否则将取消号源'}
             {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}
