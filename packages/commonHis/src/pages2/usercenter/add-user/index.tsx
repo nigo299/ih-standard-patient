@@ -264,11 +264,13 @@ export default memo(() => {
               : `${values['birthday']} 00:00:00`;
           if (
             config.enableFaceVerify &&
+            PLATFORM === 'web' &&
+            btnSubType === 'add' &&
             bindcardProdiles?.isFace === 1 &&
             !faceInfo.success &&
             faceInfo.idNo !== idNo &&
             faceInfo.name !== name &&
-            PLATFORM === 'web'
+            !ocrInfo.num // ocr 人脸二选一
           ) {
             setFaceInfo({
               idNo,

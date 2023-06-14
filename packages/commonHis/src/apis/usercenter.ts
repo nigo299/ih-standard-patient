@@ -113,6 +113,7 @@ export interface HelathCardInfoType extends API.ResponseDataType {
     idNoType: string;
     qrCodeText: string;
   };
+  code: number;
 }
 
 export default {

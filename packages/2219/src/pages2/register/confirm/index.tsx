@@ -41,7 +41,7 @@ import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import payState, { OrderInfoType } from '@/stores/pay';
 import patientState from '@/stores/patient';
-import styles from '@/pages2/register/confirm/index.less';
+import styles from './index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
 import useCommonApi from '@/apis/common';
 import { PatGender } from '@/config/dict';
@@ -60,6 +60,7 @@ export default () => {
     level,
     doctorName,
     regTypes,
+    hisName,
   } = useGetParams<{
     deptId: string;
     doctorId: string;
@@ -73,6 +74,7 @@ export default () => {
     visitEndTime: string;
     visitPeriod: string;
     regTypes: string;
+    hisName: string;
   }>();
   const [visible, setVisible] = useState(false);
   const { getPatientList } = patientState.useContainer();
@@ -117,12 +119,16 @@ export default () => {
       text: confirmInfo?.hisName,
     },
     {
+      label: '就诊院区',
+      text: hisName,
+    },
+    {
       label: '就诊科室',
       text: confirmInfo?.deptName,
     },
     {
       label: '号源类型',
-      text: regTypes,
+      text: regTypes.substring(0, regTypes.indexOf('、')) || regTypes,
     },
     {
       label: '就诊医生',
@@ -532,7 +538,7 @@ export default () => {
           {patientData.map((item) => (
             <ListItem key={item.label} {...item} />
           ))}
-          <Space className={styles.patients} size={22} ignoreNum={5}>
+          <Space className={styles.patients} size={22} ignoreNum={10}>
             {confirmInfo?.patientList?.map((item, index) => (
               <Space
                 justify="center"

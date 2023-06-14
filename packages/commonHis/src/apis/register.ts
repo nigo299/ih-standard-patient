@@ -288,6 +288,7 @@ export interface OrderDetailType {
   cancelTime: string;
   cancelReason: string;
   deptName: string;
+  serialNo?: string;
   deptNo: string;
   doctorName: string;
   doctorTitle: string;

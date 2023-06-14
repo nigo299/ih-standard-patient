@@ -106,7 +106,7 @@ export default () => {
         </Space>
       ),
       // url: '/pages2/register/department/index?type=day',
-      url: '/pages2/register/select-hospital/index?type=day',
+      url: '/pages2/register/select-hospital/index?type=default',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
       new: true,
     },

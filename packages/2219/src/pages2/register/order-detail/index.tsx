@@ -86,6 +86,25 @@ export default () => {
     },
     needInit: false,
   });
+  const checkTime = useMemo(() => {
+    if (orderDetail && orderDetail.visitBeginTime) {
+      const time = new Date(`2000-01-01T${orderDetail.visitBeginTime}`);
+      time.setMinutes(time.getMinutes() - 10);
+
+      let formattedTime = time.toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+
+      const hour = time.getHours();
+      const period = hour < 12 ? '上午' : '下午';
+      formattedTime = `${period} ${formattedTime}`;
+
+      return formattedTime;
+    }
+    return '';
+  }, [orderDetail]);
   const { data } = useCommApi.透传字段({
     params: {
       transformCode: 'KQ00072',
@@ -114,23 +133,31 @@ export default () => {
   const cancelExtFields = useGetCancelOrderExtFields({ orderDetail });
   const clinicList = [
     {
+      label: '签到时间',
+      text:
+        `${formDate(orderDetail?.visitDate).slice(0, 10) || ''} ${
+          orderDetail?.visitWeekName || ''
+        } ${checkTime || ''}(前)` || '暂无',
+    },
+    {
+      label: '就诊排队号',
+      text: `${orderDetail?.serialNo || ''}`,
+    },
+    {
       label: '就诊科室',
       text: (
-        <>
+        <View>
           {orderDetail?.deptName || '暂无'}
           {PLATFORM === 'web' && (
-            <Exceed
-              className={styles.text}
-              style={{ width: '100%', marginTop: '10px', color: '#3b98c3' }}
-            >
+            <View className={styles.text} style={{ color: '#3b98c3' }}>
               导航前往
               <WxOpenLaunchWeapp
                 username="gh_1828bcf09dc4"
                 path={`pages/index/index?buildingId=${deptInfo?.summary}&type=1&hisName=${deptInfo?.name}`}
               />
-            </Exceed>
+            </View>
           )}
-        </>
+        </View>
       ),
     },
     {
@@ -663,7 +690,6 @@ export default () => {
             <Platform platform={['web']}>
               <Button
                 type="primary"
-                className={styles.CheckButton}
                 onTap={async () => {
                   const {
                     data: { ebillDataList },
