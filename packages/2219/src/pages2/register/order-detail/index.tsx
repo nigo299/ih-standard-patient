@@ -90,11 +90,18 @@ export default () => {
     if (orderDetail && orderDetail.visitBeginTime) {
       const time = new Date(`2000-01-01T${orderDetail.visitBeginTime}`);
       time.setMinutes(time.getMinutes() - 10);
-      return time.toLocaleTimeString('en-US', {
+
+      let formattedTime = time.toLocaleTimeString('en-US', {
         hour12: false,
         hour: '2-digit',
         minute: '2-digit',
       });
+
+      const hour = time.getHours();
+      const period = hour < 12 ? '上午' : '下午';
+      formattedTime = `${period} ${formattedTime}`;
+
+      return formattedTime;
     }
     return '';
   }, [orderDetail]);
@@ -130,7 +137,7 @@ export default () => {
       text:
         `${formDate(orderDetail?.visitDate).slice(0, 10) || ''} ${
           orderDetail?.visitWeekName || ''
-        } ${checkTime || ''}` || '暂无',
+        } ${checkTime || ''}(前)` || '暂无',
     },
     {
       label: '就诊排队号',
@@ -139,7 +146,7 @@ export default () => {
     {
       label: '就诊科室',
       text: (
-        <>
+        <View>
           {orderDetail?.deptName || '暂无'}
           {PLATFORM === 'web' && (
             <View className={styles.text} style={{ color: '#3b98c3' }}>
@@ -150,7 +157,7 @@ export default () => {
               />
             </View>
           )}
-        </>
+        </View>
       ),
     },
     {
