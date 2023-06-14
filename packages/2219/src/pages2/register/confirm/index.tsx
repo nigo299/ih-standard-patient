@@ -119,16 +119,16 @@ export default () => {
       text: confirmInfo?.hisName,
     },
     {
+      label: '就诊院区',
+      text: hisName,
+    },
+    {
       label: '就诊科室',
       text: confirmInfo?.deptName,
     },
     {
       label: '号源类型',
       text: regTypes.substring(0, regTypes.indexOf('、')) || regTypes,
-    },
-    {
-      label: '院区',
-      text: hisName,
     },
     {
       label: '就诊医生',
