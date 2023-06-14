@@ -149,7 +149,7 @@ export default () => {
       return {
         name: '儿童牙外伤',
         hisDistrict: '冉家坝院区',
-        summary: '诊疗范围：儿童乳牙和年轻恒牙外伤。',
+        summary: '诊疗范围为儿童乳牙和年轻恒牙外伤。',
       };
     }
     if (deptId === '30303001') {
@@ -294,7 +294,7 @@ export default () => {
       setDeptDetail({
         name: '儿童牙外伤',
         hisDistrict: '冉家坝院区',
-        summary: '诊疗范围：儿童乳牙和年轻恒牙外伤。',
+        summary: '诊疗范围为儿童乳牙和年轻恒牙外伤。',
       });
     }
   }, [deptId, setDeptDetail]);
