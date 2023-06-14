@@ -1150,9 +1150,9 @@ export default memo(() => {
                   }
                 }}
               </FormItem>
-              {config.recordMedicalCard && (
+              {config.recordMedicalCard && !checked && (
                 <FormItem
-                  label={'医保卡号（选填）'}
+                  label={<View>医保卡号(选填)</View>}
                   name={'patientMedicalCardNo'}
                   rules={[
                     {
@@ -1160,11 +1160,12 @@ export default memo(() => {
                       message: '请输入正确的医保卡号',
                     },
                   ]}
+                  vertical
                 >
                   <ReInput
                     className={styles.reInput}
                     placeholderClassName={styles.placeholder}
-                    placeholder="请输入医保卡号"
+                    placeholder="请输入医保卡号(如:A66******66)"
                     type="text"
                     maxLength={11}
                     adjustPosition
