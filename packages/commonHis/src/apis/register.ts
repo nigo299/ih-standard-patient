@@ -513,6 +513,12 @@ export default {
       return request.post<RegisterWeekScheduleListType>(
         '/api/intelligent/api/register/date-schedule-list',
         params,
+        {
+          headers: {
+            'x-showToast': 'false',
+            'x-showLoading': 'false',
+          },
+        },
       );
     },
   ),
@@ -554,6 +560,12 @@ export default {
       return request.post<RegisterDateschedulelistType>(
         '/api/intelligent/api/register/date-schedule-list',
         params,
+        {
+          headers: {
+            'x-showToast': 'false',
+            'x-showLoading': 'false',
+          },
+        },
       );
     },
   ),
@@ -615,6 +627,10 @@ export default {
             ...params,
             hisType: 2,
           },
+          headers: {
+            'x-showToast': 'false',
+            'x-showLoading': 'false',
+          },
         },
       );
     },
@@ -627,6 +643,7 @@ export default {
           params,
           headers: {
             'x-showToast': 'false',
+            'x-showLoading': 'false',
           },
         },
       );

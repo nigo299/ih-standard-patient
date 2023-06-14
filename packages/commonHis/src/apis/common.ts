@@ -427,6 +427,9 @@ export default {
     (params: { noticeType?: string; noticeMethod?: string }) =>
       request.get<InfoType>('/api/kaiqiao/content/notice/info', {
         params,
+        headers: {
+          'x-showLoading': 'false',
+        },
       }),
   ),
   获取首页配置信息: createApiHooks(() =>

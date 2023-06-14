@@ -145,6 +145,10 @@ export default {
         ...params,
         hisType: 2,
       },
+      headers: {
+        'x-showToast': 'false',
+        'x-showLoading': 'false',
+      },
     });
   }),
   分页查询文章类型: createApiHooks(
