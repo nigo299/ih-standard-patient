@@ -23,7 +23,7 @@ export default ({
       items={Object.values(CommonImg).map((img) => ({
         node: (
           <Image
-            src={img.imgUrl}
+            src={`${img.imgUrl}?x-oss-process=image/resize,h_182,m_lfit`}
             className={styles.banner2}
             onTap={() => {
               if (img.jumpType === 'H5') {
