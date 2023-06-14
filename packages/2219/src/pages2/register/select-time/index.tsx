@@ -356,7 +356,9 @@ export default () => {
 
         <WhiteSpace />
         {(loading || loading2) && <Loading type="inline" />}
-        {doctorScheduleList?.find(
+        {!loading &&
+        !loading2 &&
+        doctorScheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         )?.status === 1 ? (
           <>
