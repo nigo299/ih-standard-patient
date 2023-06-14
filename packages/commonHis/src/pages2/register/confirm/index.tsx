@@ -45,7 +45,7 @@ import styles from './index.less';
 import useNucleicJump from '@/utils/useNucleicJump';
 import useCommonApi from '@/apis/common';
 import { PatGender } from '@/config/dict';
-import * as utils from '@/pages2/register/confirm/utils';
+import { consultationPeriod } from '@/pages2/register/confirm/utils';
 
 export default () => {
   const {
@@ -128,7 +128,7 @@ export default () => {
       text: confirmInfo?.doctorTitle,
     },
     {
-      label: utils.consultationPeriod,
+      label: consultationPeriod,
       text: `${scheduleDate} ${visitBeginTime}-${visitEndTime}`,
     },
   ];

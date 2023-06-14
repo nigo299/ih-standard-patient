@@ -52,7 +52,10 @@ import CustomerReported from '@/components/customerReported';
 import useGetCancelOrderExtFields from '@/pages2/register/order-detail/hooks/useGetCancelOrderExtFields';
 import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
-import * as utils from '@/pages2/register/order-detail/utils';
+import {
+  visitTime,
+  registerSuccessTips,
+} from '@/pages2/register/order-detail/utils';
 
 const cancelItems = [
   { value: '不想去', checked: false },
@@ -124,7 +127,7 @@ export default () => {
       text: orderDetail?.doctorTitle,
     },
     {
-      label: utils.visitTime,
+      label: visitTime,
       text:
         `${formDate(orderDetail?.visitDate).slice(0, 10) || ''} ${
           orderDetail?.visitBeginTime || ''
@@ -532,7 +535,7 @@ export default () => {
           </View>
           <View className={styles.statusInfo}>
             {orderDetail?.status === 'S' &&
-              `${utils.registerSuccessTips}${orderDetail?.patCardNo}`}
+              `${registerSuccessTips}${orderDetail?.patCardNo}`}
             {orderDetail?.status === 'L' &&
               '请在锁号的时候内完成支付，否则将取消号源'}
             {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}
