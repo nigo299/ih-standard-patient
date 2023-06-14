@@ -311,7 +311,6 @@ export default () => {
   return (
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择医生') + 1} />
-      {(loading || loading2) && <Loading type="top" />}
       <View className={styles.content}>
         <DeptInfo
           deptImg={realDeptDetail?.img || `${IMAGE_DOMIN}/register/dept.png`}
@@ -377,6 +376,7 @@ export default () => {
             </Radio.Group>
           </Space>
         )}
+        {(loading || loading2) && <Loading type="inline" />}
         {scheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         ) ? (
