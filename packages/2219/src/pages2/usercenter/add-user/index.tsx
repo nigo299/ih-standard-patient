@@ -967,92 +967,90 @@ export default memo(() => {
             {(_, __, { getFieldValue }) => {
               const parentIdType = getFieldValue('parentIdType') || '1';
               return (
-                getFieldValue('patientType')?.[0] === '1' && (
-                  <>
-                    <PartTitle bold className={styles.partTitle2}>
-                      监护人信息
-                    </PartTitle>
-                    <Form
-                      cell
-                      childrenCls={styles.children}
-                      labelWidth={'4em'}
-                      requiredMark={false}
-                      labelCls={styles.label}
+                <>
+                  <PartTitle bold className={styles.partTitle2}>
+                    监护人信息
+                  </PartTitle>
+                  <Form
+                    cell
+                    childrenCls={styles.children}
+                    labelWidth={'4em'}
+                    requiredMark={false}
+                    labelCls={styles.label}
+                  >
+                    <FormItem
+                      label={'监护人姓名'}
+                      name="parentName"
+                      rules={[
+                        {
+                          required: true,
+                          message: '请输入2-8位合法监护人姓名',
+                          pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,8}$/,
+                        },
+                      ]}
                     >
-                      <FormItem
-                        label={'监护人姓名'}
-                        name="parentName"
-                        rules={[
-                          {
-                            required: true,
-                            message: '请输入2-8位合法监护人姓名',
-                            pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,8}$/,
-                          },
-                        ]}
-                      >
-                        <ReInput
-                          placeholder="请输入监护人姓名"
-                          type="text"
-                          className={styles.reInput}
-                          placeholderClassName={styles.placeholder}
-                          adjustPosition
+                      <ReInput
+                        placeholder="请输入监护人姓名"
+                        type="text"
+                        className={styles.reInput}
+                        placeholderClassName={styles.placeholder}
+                        adjustPosition
+                      />
+                    </FormItem>
+                    <FormItem
+                      label={'证件类型'}
+                      name="parentIdType"
+                      initialValue={'1'}
+                      after={
+                        <Image
+                          src={`${IMAGE_DOMIN}/usercenter/down.png`}
+                          className={styles.icon}
                         />
-                      </FormItem>
-                      <FormItem
-                        label={'证件类型'}
-                        name="parentIdType"
-                        initialValue={'1'}
-                        after={
-                          <Image
-                            src={`${IMAGE_DOMIN}/usercenter/down.png`}
-                            className={styles.icon}
-                          />
-                        }
-                        rules={[
-                          {
-                            required: true,
-                            message: '请选择监护人证件类型',
-                          },
-                        ]}
+                      }
+                      rules={[
+                        {
+                          required: true,
+                          message: '请选择监护人证件类型',
+                        },
+                      ]}
+                    >
+                      <Picker
+                        cols={1}
+                        className={styles.picker}
+                        data={bindcardProdiles?.idTypes?.map((item) => ({
+                          label: item?.dictValue,
+                          value: item?.dictKey,
+                        }))}
                       >
-                        <Picker
-                          cols={1}
-                          className={styles.picker}
-                          data={bindcardProdiles?.idTypes?.map((item) => ({
-                            label: item?.dictValue,
-                            value: item?.dictKey,
-                          }))}
-                        >
-                          请选择
-                        </Picker>
-                      </FormItem>
-                      <FormItem
-                        name={'parentIdNo'}
-                        childrenAlign="left"
-                        rules={[
-                          {
-                            type: parentIdType === '1' ? 'idCard' : 'string',
-                            required: true,
-                            message: '请输入正确的监护人身份证',
-                          },
-                        ]}
-                      >
-                        <ReInput
-                          maxLength={18}
-                          className={styles.reInput}
-                          placeholderClassName={styles.placeholder}
-                          type="idcard"
-                          adjustPosition
-                          placeholder={`请输入监护人${
-                            bindcardProdiles?.idTypes?.filter(
-                              (item) => item?.dictKey === parentIdType,
-                            )[0]?.dictValue || '身份证'
-                          }号码`}
-                        />
-                      </FormItem>
-                    </Form>
-                  </>
-                )
+                        请选择
+                      </Picker>
+                    </FormItem>
+                    <FormItem
+                      name={'parentIdNo'}
+                      childrenAlign="left"
+                      rules={[
+                        {
+                          type: parentIdType === '1' ? 'idCard' : 'string',
+                          required: true,
+                          message: '请输入正确的监护人身份证',
+                        },
+                      ]}
+                    >
+                      <ReInput
+                        maxLength={18}
+                        className={styles.reInput}
+                        placeholderClassName={styles.placeholder}
+                        type="idcard"
+                        adjustPosition
+                        placeholder={`请输入监护人${
+                          bindcardProdiles?.idTypes?.filter(
+                            (item) => item?.dictKey === parentIdType,
+                          )[0]?.dictValue || '身份证'
+                        }号码`}
+                      />
+                    </FormItem>
+                  </Form>
+                </>
               );
             }}
           </FormItem>
