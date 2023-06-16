@@ -27,6 +27,10 @@ export const handleMineNavTap = (
       window.location.href = list?.url;
       return;
     }
+    if (list.title === '旧版挂号记录查询') {
+      window.location.href = list?.url;
+      return;
+    }
     navigateTo({
       url: list?.url,
     });
