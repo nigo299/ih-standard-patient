@@ -13,15 +13,15 @@ import useApi from '@/apis/register';
 import useMicrositeApi from '@/apis/microsite';
 import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
-import styles from './index.less';
+import styles from 'commonHis/src/pages2/register/select-doctor/index.less';
 import { useHisConfig } from '@/hooks';
-import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
-import ShowSource from '@/pages2/register/select-doctor/components/show-source';
-import ShowDocTags from '@/pages2/register/select-doctor/components/show-doc-tags';
+import ShowPrice from 'commonHis/src/pages2/register/select-doctor/components/show-price';
+import ShowSource from 'commonHis/src/pages2/register/select-doctor/components/show-source';
+import ShowDocTags from 'commonHis/src/pages2/register/select-doctor/components/show-doc-tags';
 enum DoctorType {
   all = '仅展示有号',
   normal = '急诊号',
-  expert = '专科号',
+  expert = '专家号',
   night = '普通号',
 }
 
@@ -116,6 +116,11 @@ export default () => {
     if (doctorType === '仅展示有号') {
       return (
         doctorList && doctorList?.filter((doctor) => doctor.leftSource > 0)
+      );
+    } else if (doctorType === '专家号') {
+      return (
+        doctorList &&
+        doctorList?.filter((doctor) => doctor?.registerFee >= 3000)
       );
     } else {
       return (
