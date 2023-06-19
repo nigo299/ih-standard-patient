@@ -26,14 +26,13 @@ const pages = [
   'pages/waiting/index', // 支付结果等待页
   'pages/webview/index', // 第三方业务链接
   'pages/maintain/index', // 系统维护
-  'pages/sign/userList/index', // 取药签到选择就诊人
-  'pages/sign/sign/index', // 取药签到
-  'pages/sign/list/index', // 取药签到列表
+  // 'pages/sign/userList/index', // 取药签到选择就诊人
+  // 'pages/sign/sign/index', // 取药签到
+  // 'pages/sign/list/index', // 取药签到列表
 ];
 
 const subPackages = [
   {
-    root: 'pages2',
     root: 'pages2',
     pages: [
       'payment/order-list/index', // 门诊待缴费列表
@@ -66,54 +65,54 @@ const subPackages = [
       'usercenter/revise-user-address/index', // 修改就诊人地址
       'usercenter/ocr-recognition/index', // OCR识别
       'usercenter/face-verify/index', // 人脸识别验证
-      'signin/chooseType/index', // 签到选择类型页面
-      'signin/search/index', // 签到查询就诊人页面
-      'signin/list/index', // 签到列表页面
-      'signin/detail/index', // 签到详情页面
-      'feedback/feedback-list/index', // 意见反馈列表
-      'feedback/feedback-detail/index', // 意见反馈详情
-      'feedback/feedback-add/index', // 新增意见反馈
-      'nucleic/select-combo/index', // 自助核酸检测选择套餐
-      'nucleic/upload/index', // 网约出租车核酸上传图片
-      'nucleic/confirm/index', // 自助核酸检测确认订单
+      // 'signin/chooseType/index', // 签到选择类型页面
+      // 'signin/search/index', // 签到查询就诊人页面
+      // 'signin/list/index', // 签到列表页面
+      // 'signin/detail/index', // 签到详情页面
+      // 'feedback/feedback-list/index', // 意见反馈列表
+      // 'feedback/feedback-detail/index', // 意见反馈详情
+      // 'feedback/feedback-add/index', // 新增意见反馈
+      // 'nucleic/select-combo/index', // 自助核酸检测选择套餐
+      // 'nucleic/upload/index', // 网约出租车核酸上传图片
+      // 'nucleic/confirm/index', // 自助核酸检测确认订单
     ],
   },
   // 适老版页面
   {
     root: 'pages3',
     pages: [
-      'home/index', // 首页
-      'search/index', // 搜索
-      'usercenter/user-manage/index', // 就诊人管理
-      'usercenter/select-user/index', // 选择就诊人
-      'usercenter/add-user/index', // 添加就诊人
-      'usercenter/select-adduser/index', // 选择添加就诊人方式
-      'usercenter/user-info/index', // 就诊人详情
-      'usercenter/bind-user/index', // 绑定就诊人
-      'usercenter/face-verify/index', // 人脸识别验证
-      'usercenter/ocr-recognition/index', // OCR识别
-      'payment/order-list/index', // 门诊待缴费列表
-      'payment/order-item/index', // 门诊待缴费详情
-      'payment/paymented-list/index', // 门诊已缴费列表
-      'payment/order-detail/index', // 门诊缴费订单详情
-      'report/report-list/index', // 报告列表
-      'report/check-detail/index', // 检查报告详情
-      'report/inspect-detail/index', // 检验报告详情
-      'register/order-list/index', // 挂号订单列表
-      'register/order-detail/index', // 挂号订单详情
-      'inhosp/home/index', // 住院服务首页
-      'inhosp/deposit/index', // 住院服务押金预缴
-      'inhosp/inventory/index', // 住院服务清单查询
-      'inhosp/order-list/index', // 住院服务预缴列表
-      'inhosp/order-detail/index', // 住院服务预缴详情
-      'register/select-hospital/index', // 挂号选择院区
-      'register/department/index', // 挂号选择科室
-      'register/select-doctor/index', // 挂号选择医生
-      'register/select-time/index', // 挂号选择时间
-      'register/confirm/index', // 挂号锁号
-      'register/history-depts/index', // 历史科室记录
-      'register/history-doctors/index', // 历史医生记录
-      'queue/index', // 排队进度
+      // 'home/index', // 首页
+      // 'search/index', // 搜索
+      // 'usercenter/user-manage/index', // 就诊人管理
+      // 'usercenter/select-user/index', // 选择就诊人
+      // 'usercenter/add-user/index', // 添加就诊人
+      // 'usercenter/select-adduser/index', // 选择添加就诊人方式
+      // 'usercenter/user-info/index', // 就诊人详情
+      // 'usercenter/bind-user/index', // 绑定就诊人
+      // 'usercenter/face-verify/index', // 人脸识别验证
+      // 'usercenter/ocr-recognition/index', // OCR识别
+      // 'payment/order-list/index', // 门诊待缴费列表
+      // 'payment/order-item/index', // 门诊待缴费详情
+      // 'payment/paymented-list/index', // 门诊已缴费列表
+      // 'payment/order-detail/index', // 门诊缴费订单详情
+      // 'report/report-list/index', // 报告列表
+      // 'report/check-detail/index', // 检查报告详情
+      // 'report/inspect-detail/index', // 检验报告详情
+      // 'register/order-list/index', // 挂号订单列表
+      // 'register/order-detail/index', // 挂号订单详情
+      // 'inhosp/home/index', // 住院服务首页
+      // 'inhosp/deposit/index', // 住院服务押金预缴
+      // 'inhosp/inventory/index', // 住院服务清单查询
+      // 'inhosp/order-list/index', // 住院服务预缴列表
+      // 'inhosp/order-detail/index', // 住院服务预缴详情
+      // 'register/select-hospital/index', // 挂号选择院区
+      // 'register/department/index', // 挂号选择科室
+      // 'register/select-doctor/index', // 挂号选择医生
+      // 'register/select-time/index', // 挂号选择时间
+      // 'register/confirm/index', // 挂号锁号
+      // 'register/history-depts/index', // 历史科室记录
+      // 'register/history-doctors/index', // 历史医生记录
+      // 'queue/index', // 排队进度
     ],
   },
 ];
