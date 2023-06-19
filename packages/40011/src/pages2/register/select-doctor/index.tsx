@@ -101,6 +101,7 @@ export default () => {
     params: {
       scheduleDate: date.format('YYYY-MM-DD'),
       deptId,
+      extFields: { hisType },
     },
     needInit: !!deptId && !!date,
   });
