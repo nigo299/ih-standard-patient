@@ -40,6 +40,7 @@ export interface WaitpayType {
 }
 export interface PaymentWaitpayListType extends API.ResponseDataType {
   data: WaitpayType[];
+  code?: number;
 }
 
 export interface WaitDetialType {
@@ -104,6 +105,8 @@ export interface PaymentOrderType {
 }
 
 export interface CreateoporderType extends API.ResponseDataType {
+  code: number;
+  msg: string;
   data: PaymentOrderType;
 }
 
