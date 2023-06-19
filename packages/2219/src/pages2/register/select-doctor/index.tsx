@@ -377,7 +377,9 @@ export default () => {
           </Space>
         )}
         {(loading || loading2) && <Loading type="inline" />}
-        {scheduleList?.find(
+        {!loading &&
+        !loading2 &&
+        scheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         ) ? (
           newDoctorList?.length >= 1 &&

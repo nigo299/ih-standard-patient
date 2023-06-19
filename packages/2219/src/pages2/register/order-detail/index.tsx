@@ -220,6 +220,50 @@ export default () => {
         text: `¥ ${(Number(orderDetail?.totalFee) / 100).toFixed(2)}`,
         className: styles.money,
       },
+      {
+        label: '电子票据',
+        text: (
+          <>
+            {ORDER_INVOICE &&
+            orderDetail?.payStatus === 1 &&
+            orderDetail?.status === 'S' &&
+            orderDetail?.totalFee > 0 ? (
+              <Platform platform={['web']}>
+                <View
+                  style={{ color: '#3b98c3' }}
+                  onTap={async () => {
+                    const {
+                      data: { ebillDataList },
+                    } = await useCommApi.查询电子发票.request({
+                      patCardNo: orderDetail?.patCardNo,
+                      payOrderId: orderDetail?.payOrderId,
+                      endDate: formDate(orderDetail?.orderTime).slice(0, 10),
+                      beginDate: formDate(orderDetail?.orderTime).slice(0, 10),
+                      extFields: {
+                        hisRecepitNo: orderDetail?.hisRecepitNo,
+                      },
+                    });
+                    if (ebillDataList.length >= 1) {
+                      if (ebillDataList[0].pictureUrl) {
+                        window.location.href = ebillDataList[0].pictureUrl;
+                      } else {
+                        showToast({
+                          icon: 'fail',
+                          title: '电子发票生成失败，请到门诊窗口补录!',
+                        });
+                      }
+                    }
+                  }}
+                >
+                  查看电子票据
+                </View>
+              </Platform>
+            ) : (
+              <View>暂无</View>
+            )}
+          </>
+        ),
+      },
     ];
 
     if (orderDetail?.preSettlementResult) {
@@ -683,42 +727,6 @@ export default () => {
         </View>
       </Form>
       <View className={styles.buttons}>
-        {ORDER_INVOICE &&
-          orderDetail?.payStatus === 1 &&
-          orderDetail?.status === 'S' &&
-          orderDetail?.totalFee > 0 && (
-            <Platform platform={['web']}>
-              <Button
-                type="primary"
-                onTap={async () => {
-                  const {
-                    data: { ebillDataList },
-                  } = await useCommApi.查询电子发票.request({
-                    patCardNo: orderDetail?.patCardNo,
-                    payOrderId: orderDetail?.payOrderId,
-                    endDate: formDate(orderDetail?.orderTime).slice(0, 10),
-                    beginDate: formDate(orderDetail?.orderTime).slice(0, 10),
-                    extFields: {
-                      hisRecepitNo: orderDetail?.hisRecepitNo,
-                    },
-                  });
-                  if (ebillDataList.length >= 1) {
-                    if (ebillDataList[0].pictureUrl) {
-                      window.location.href = ebillDataList[0].pictureUrl;
-                    } else {
-                      showToast({
-                        icon: 'fail',
-                        title: '电子发票生成失败，请到门诊窗口补录!',
-                      });
-                    }
-                  }
-                }}
-              >
-                查看电子票据
-              </Button>
-            </Platform>
-          )}
-
         {orderDetail?.canPayFlag === 1 && countdown > 0 && (
           <Button
             type="primary"

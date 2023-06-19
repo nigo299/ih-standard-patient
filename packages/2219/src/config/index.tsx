@@ -38,6 +38,11 @@ export const mineNavListConfig =
   PLATFORM !== 'ali'
     ? [
         {
+          title: '旧版挂号记录查询',
+          url: 'https://mp.cqkqinfo.com/views/p40000/index.html?auth=1#/usercenter/usrinfmng',
+          image: `${IMAGE_DOMIN}/mine/gzsc.png`,
+        },
+        {
           title: '报告及影像查询',
           url: '/pages/collect/index',
           image: `${IMAGE_DOMIN}/mine/gzsc.png`,

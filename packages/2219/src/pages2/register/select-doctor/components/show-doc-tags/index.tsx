@@ -79,19 +79,24 @@ const ShowDocTags = (data: any) => {
             </View>
           </View>
           <Space className={styles.subtitle} flexWrap="nowrap">
-            <View style={{ marginRight: '8px' }}>{title}</View>
-            <span
-              style={{
-                backgroundColor: '#fa9e49',
-                color: 'white',
-                fontWeight: 'bold',
-                padding: '2px 4px',
-                wordBreak: 'break-all',
-                height: 'auto',
-              }}
-            >
-              {item?.extPropes?.memo}
+            <View style={{ marginRight: '8px', flexShrink: '0' }}>{title}</View>
+            <span className={styles.tag}>
+              {item?.extPropes?.memo?.substring(
+                0,
+                item?.extPropes?.memo?.indexOf('、'),
+              ) || item?.extPropes?.memo}
             </span>
+            {item?.extPropes?.memo?.substring(
+              0,
+              item?.extPropes?.memo?.indexOf('、'),
+            ) && (
+              <span className={styles.thirdTag}>
+                {item?.extPropes?.memo?.substring(
+                  item?.extPropes?.memo?.indexOf('、') + 1,
+                  item?.extPropes?.memo?.length,
+                )}
+              </span>
+            )}
           </Space>
           <Exceed clamp={1} className={styles.doctorText}>
             {`擅长: ${
