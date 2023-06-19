@@ -329,6 +329,7 @@ export default memo(() => {
             showToast({
               title: btnSubType === 'add' ? '建档成功' : '绑定成功',
               icon: 'success',
+              duration: 1000,
             }).then(() => {
               if (pageRoute) {
                 getPatientList().then((res) => {
