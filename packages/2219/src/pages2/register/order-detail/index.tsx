@@ -19,7 +19,6 @@ import {
   ColorText,
   Loading,
   Space,
-  Exceed,
 } from '@kqinfo/ui';
 import {
   ListItem,
@@ -600,7 +599,7 @@ export default () => {
       <RegisterCard
         payName="register"
         hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
-        patCardNo={orderDetail?.patCardNo}
+        patCardNo={orderDetail?.patHisNo}
       />
       <View className={styles.top}>
         <Image
