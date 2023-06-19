@@ -299,7 +299,7 @@ export default () => {
   return (
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择时间') + 1} />
-      {(loading || loading2) && <Loading type="top" />}
+
       <View className={styles.content}>
         <DoctorInfo
           doctorImg={
@@ -350,7 +350,10 @@ export default () => {
         />
 
         <WhiteSpace />
-        {doctorScheduleList?.find(
+        {(loading || loading2) && <Loading type="inline" />}
+        {!loading &&
+        !loading2 &&
+        doctorScheduleList?.find(
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         )?.status === 1 ? (
           <>
