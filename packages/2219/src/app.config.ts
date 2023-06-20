@@ -71,6 +71,12 @@ const subPackages = [
       'feedback/feedback-list/index', // 意见反馈列表
       'feedback/feedback-detail/index', // 意见反馈详情
       'feedback/feedback-add/index', // 新增意见反馈
+      'diagnosis/order-list/index', // 就诊记录
+      'diagnosis/order-detail/index', // 就诊记录详情
+      'diagnosis/order-detail/receiptsDetail', //就诊结算记录详情
+      'diagnosis/order-detail/caseHistory', //门诊病历
+      'diagnosis/order-detail/prescription', //门诊处方详情
+      'diagnosis/order-detail/beInHisDocAd', //住院医嘱
       // 'nucleic/select-combo/index', // 自助核酸检测选择套餐
       // 'nucleic/upload/index', // 网约出租车核酸上传图片
       // 'nucleic/confirm/index', // 自助核酸检测确认订单

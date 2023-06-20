@@ -38,6 +38,11 @@ export const mineNavListConfig =
   PLATFORM !== 'ali'
     ? [
         {
+          title: '就诊记录',
+          url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/diagnosis/order-list/index',
+          image: `${IMAGE_DOMIN}/mine/jzyj.png`,
+        },
+        {
           title: '旧版挂号记录查询',
           url: 'https://mp.cqkqinfo.com/views/p40000/index.html?auth=1#/usercenter/usrinfmng',
           image: `${IMAGE_DOMIN}/mine/gzsc.png`,
