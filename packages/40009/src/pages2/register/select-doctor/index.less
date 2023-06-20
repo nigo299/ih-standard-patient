@@ -1,0 +1,148 @@
+@import '@/styles/index.less';
+
+.content {
+  padding: 24px 20px;
+}
+
+.radiosWrap {
+  overflow: hidden;
+}
+
+.radios {
+  flex-wrap: nowrap !important;
+  overflow: auto;
+}
+
+.radios::-webkit-scrollbar {
+  display: none;
+}
+
+.radio {
+  display: inline-block;
+  line-height: 85px;
+}
+
+.doctor {
+  display: flex;
+  width: 710px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.photo {
+  width: 118px;
+  height: 118px;
+  margin-right: 26px;
+  border-radius: 50%;
+  background-size: cover !important;
+  background-position: initial !important;
+}
+
+.doctorInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.doctorText {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #999999;
+  margin-top: 10px;
+}
+
+.name {
+  font-size: 34px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #333333;
+  display: flex;
+  align-items: center;
+}
+
+.price {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  margin-left: 16px;
+  color: #d95e38;
+}
+
+.subtitle {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  margin-top: 16px;
+  color: #333333;
+}
+
+.left {
+  padding-top: 18px;
+  flex: 1;
+}
+.rests {
+  width: 280px;
+  border: 1px solid @theme-color;
+  border-radius: 10px;
+  height: 72px;
+  display: flex;
+}
+.restPrice {
+  width: 124px;
+  position: relative;
+  height: 100%;
+  font-size: 26px;
+  color: #d95e38;
+}
+.restPriceAfter {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  transform: rotate(45deg);
+  right: -7px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: #fff;
+}
+.restNum {
+  flex: 1;
+  height: 100%;
+  font-size: 26px;
+  background-color: @theme-color;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.disable {
+  border: 1px solid #b4b4b4;
+}
+
+.disable > .restNum {
+  color: #fff;
+  background: #b4b4b4;
+}
+.banner {
+  width: 710px;
+  height: 220px;
+  margin: 0 auto 10px;
+}
+.mediaQrcodeImg {
+  margin-top: 20px;
+  width: 236px !important;
+  height: 236px !important;
+}
+.jumpBtn {
+  width: 396px;
+  height: 54px;
+  // color: #3C9ADC !important;
+  border-radius: 27px;
+  margin: 50px auto;
+  font-size: 28px;
+}
