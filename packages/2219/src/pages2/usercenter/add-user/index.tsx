@@ -646,6 +646,12 @@ export default memo(() => {
                       type="idcard"
                       adjustPosition
                       onChange={(value) => {
+                        // 自动提升大写
+                        if (form.getFieldValue('idType') == '1') {
+                          form.setFieldsValue({
+                            idNo: value?.toUpperCase(),
+                          });
+                        }
                         if (value?.length === 18 && patientType === '1') {
                           form.setFieldsValue({
                             birthday: analyzeIDCard(value).analyzeBirth,
