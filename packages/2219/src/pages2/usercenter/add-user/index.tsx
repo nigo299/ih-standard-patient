@@ -647,7 +647,7 @@ export default memo(() => {
                       adjustPosition
                       onChange={(value) => {
                         // 自动提升大写
-                        if (form.getFieldValue('idType') == '1') {
+                        if (form.getFieldValue('idType') === '1') {
                           form.setFieldsValue({
                             idNo: value?.toUpperCase(),
                           });
