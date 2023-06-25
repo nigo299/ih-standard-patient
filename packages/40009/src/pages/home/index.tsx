@@ -136,7 +136,6 @@ export default () => {
       url: '/pages2/register/department/index?type=day',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
     },
-
     {
       title: '住院服务',
       subTitle: '住院患者贴心服务',
@@ -436,9 +435,11 @@ export default () => {
               //   icon: 'none',
               // });
               // return;
-              navigateTo({
-                url: '/pages/microsite/hospital-summary/index',
-              });
+              // navigateTo({
+              //   url: '/pages/microsite/hospital-summary/index',
+              // });
+              window.location.href =
+                'https://mp.weixin.qq.com/s/3ivW5dTV-HNVnmqEohsJxA';
             }}
           />
         </BackgroundImg>
