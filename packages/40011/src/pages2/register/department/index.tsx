@@ -41,7 +41,7 @@ export default () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
     if (deptList.length === 0) {
-      getDeptList(type);
+      getDeptList(type, hisType);
     }
     setNavigationBar({
       title: '选择科室',

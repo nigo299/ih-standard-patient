@@ -74,7 +74,7 @@ export default createContainer(() => {
     createTime: '',
   });
 
-  const getDeptList = useCallback(async (type: string) => {
+  const getDeptList = useCallback(async (type: string, hisType?: string) => {
     const { data, code } = await useApi.查询科室列表.request();
     const pages = getCurrentPageUrl();
     if (code === 0 && data?.length === 1) {
@@ -86,7 +86,9 @@ export default createContainer(() => {
 
       if (pages?.indexOf('register/department') === -1) {
         navigateTo({
-          url: `/pages2/register/department/index?type=${type}`,
+          url: `/pages2/register/department/index?type=${type}&hisType=${
+            hisType || ''
+          }`,
         });
       }
     }
