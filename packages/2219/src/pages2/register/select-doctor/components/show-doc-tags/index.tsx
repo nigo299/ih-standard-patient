@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { View, navigateTo } from 'remax/one';
 import { Exceed, Shadow, Space, showToast } from '@kqinfo/ui';
 import { IMAGE_DOMIN, specialDepts } from '../../../../../config/constant';
-import styles from '@/pages2/register/select-doctor/components/show-doc-tags/index.less';
+import styles from './index.less';
 import { PreviewImage } from '@/components';
 
 const ShowDocTags = (data: any) => {
@@ -86,18 +86,18 @@ const ShowDocTags = (data: any) => {
                 item?.extPropes?.memo?.indexOf('、'),
               ) || item?.extPropes?.memo}
             </span>
-            {item?.extPropes?.memo?.substring(
-              0,
-              item?.extPropes?.memo?.indexOf('、'),
-            ) && (
-              <span className={styles.thirdTag}>
-                {item?.extPropes?.memo?.substring(
-                  item?.extPropes?.memo?.indexOf('、') + 1,
-                  item?.extPropes?.memo?.length,
-                )}
-              </span>
-            )}
           </Space>
+          {item?.extPropes?.memo?.substring(
+            0,
+            item?.extPropes?.memo?.indexOf('、'),
+          ) && (
+            <span className={styles.thirdTag}>
+              {item?.extPropes?.memo?.substring(
+                item?.extPropes?.memo?.indexOf('、') + 1,
+                item?.extPropes?.memo?.length,
+              )}
+            </span>
+          )}
           <Exceed clamp={1} className={styles.doctorText}>
             {`擅长: ${
               doctorSkill && doctorSkill !== 'null' ? doctorSkill : '暂无'
