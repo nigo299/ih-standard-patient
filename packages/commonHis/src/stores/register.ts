@@ -86,7 +86,9 @@ export default createContainer(() => {
 
       if (pages?.indexOf('register/department') === -1) {
         navigateTo({
-          url: `/pages2/register/department/index?type=${type}&hisType=${hisType}`,
+          url: `/pages2/register/department/index?type=${type}&hisType=${
+            hisType || ''
+          }`,
         });
       }
     }
