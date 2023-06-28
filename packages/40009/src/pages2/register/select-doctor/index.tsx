@@ -122,6 +122,10 @@ export default () => {
         doctorList &&
         doctorList?.filter((doctor) => doctor?.registerFee >= 3000)
       );
+    } else if (doctorType === '普通号') {
+      return (
+        doctorList && doctorList?.filter((doctor) => doctor?.registerFee < 3000)
+      );
     } else {
       return (
         doctorList &&
