@@ -26,9 +26,9 @@ const pages = [
   'pages/waiting/index', // 支付结果等待页
   'pages/webview/index', // 第三方业务链接
   'pages/maintain/index', // 系统维护
-  'pages/sign/userList/index', // 取药签到选择就诊人
-  'pages/sign/sign/index', // 取药签到
-  'pages/sign/list/index', // 取药签到列表
+  // 'pages/sign/userList/index', // 取药签到选择就诊人
+  // 'pages/sign/sign/index', // 取药签到
+  // 'pages/sign/list/index', // 取药签到列表
 ];
 
 const subPackages = [
@@ -65,16 +65,16 @@ const subPackages = [
       'usercenter/revise-user-address/index', // 修改就诊人地址
       'usercenter/ocr-recognition/index', // OCR识别
       'usercenter/face-verify/index', // 人脸识别验证
-      'signin/chooseType/index', // 签到选择类型页面
-      'signin/search/index', // 签到查询就诊人页面
-      'signin/list/index', // 签到列表页面
-      'signin/detail/index', // 签到详情页面
-      'feedback/feedback-list/index', // 意见反馈列表
-      'feedback/feedback-detail/index', // 意见反馈详情
-      'feedback/feedback-add/index', // 新增意见反馈
-      'nucleic/select-combo/index', // 自助核酸检测选择套餐
-      'nucleic/upload/index', // 网约出租车核酸上传图片
-      'nucleic/confirm/index', // 自助核酸检测确认订单
+      // 'signin/chooseType/index', // 签到选择类型页面
+      // 'signin/search/index', // 签到查询就诊人页面
+      // 'signin/list/index', // 签到列表页面
+      // 'signin/detail/index', // 签到详情页面
+      // 'feedback/feedback-list/index', // 意见反馈列表
+      // 'feedback/feedback-detail/index', // 意见反馈详情
+      // 'feedback/feedback-add/index', // 新增意见反馈
+      // 'nucleic/select-combo/index', // 自助核酸检测选择套餐
+      // 'nucleic/upload/index', // 网约出租车核酸上传图片
+      // 'nucleic/confirm/index', // 自助核酸检测确认订单
     ],
   },
   // 适老版页面

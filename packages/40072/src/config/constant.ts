@@ -13,7 +13,7 @@ export const IMAGE_DOMIN = `${
 }`;
 export const HOSPITAL_NAME = '梁平中医院';
 export const HOSPITAL_TEL = '023-63110120';
-export const HIS_ID = '40011';
+export const HIS_ID = '40072';
 export const REQUEST_QUERY = {
   hisId: HIS_ID,
   platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}01`,
