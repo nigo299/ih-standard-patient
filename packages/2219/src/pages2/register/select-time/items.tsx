@@ -72,7 +72,10 @@ export default ({
                     </Text>
                     <Text
                       style={{
-                        backgroundColor: 'green',
+                        backgroundColor:
+                          extPropes?.sourceType?.slice(0, 1) == '0'
+                            ? 'green'
+                            : '#ff9d46',
                         color: 'white',
                         boxSizing: 'border-box',
                         padding: '2px 6px',
