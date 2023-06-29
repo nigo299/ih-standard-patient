@@ -15,6 +15,7 @@ import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import { useHisConfig } from '@/hooks';
+import { set } from 'js-cookie';
 
 export default () => {
   const { config } = useHisConfig();
@@ -234,20 +235,26 @@ export default () => {
           (item: { scheduleId: string }) => item.scheduleId === scheduleId,
         ) as any;
 
-      if (visitBeginTime && visitEndTime && deptId)
-        navigateTo({
-          url: `/pages2/register/confirm/index?deptId=${deptId}&doctorId=${doctorId}&scheduleDate=${date?.format(
-            'YYYY-MM-DD',
-          )}&scheduleId=${scheduleId}&visitBeginTime=${visitBeginTime}&visitEndTime=${visitEndTime}&visitPeriod=${visitPeriod}&sourceType=${sourceType}&hisName=${
-            doctorDetail?.hisDistrict
-          }&level=${level}&title=${title}&doctorName=${doctorName}&regTypes=${extPropes?.sourceType?.slice(
-            1,
-          )}`,
-        });
+      if (visitBeginTime && visitEndTime && deptId) {
+        setScheduleId(scheduleId);
+        setTimeout(() => {
+          setScheduleId('');
+          navigateTo({
+            url: `/pages2/register/confirm/index?deptId=${deptId}&doctorId=${doctorId}&scheduleDate=${date?.format(
+              'YYYY-MM-DD',
+            )}&scheduleId=${scheduleId}&visitBeginTime=${visitBeginTime}&visitEndTime=${visitEndTime}&visitPeriod=${visitPeriod}&sourceType=${sourceType}&hisName=${
+              doctorDetail?.hisDistrict
+            }&level=${level}&title=${title}&doctorName=${doctorName}&regTypes=${extPropes?.sourceType?.slice(
+              1,
+            )}`,
+          });
+        }, 200);
+      }
     },
     [
       date,
       deptId,
+      doctorDetail?.hisDistrict,
       doctorId,
       doctorName,
       doctorScheduleDateDetail?.itemList,
