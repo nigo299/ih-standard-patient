@@ -4,7 +4,8 @@ import { Tab } from '@kqinfo/ui';
 type RestProps = {
   patCardNo?: string;
   current?: string | number | undefined;
-  tabIndex: string | number;
+  tabIndex?: string | number;
+  patHisNo?: string;
   onChange?: ((current: string | number) => void) | undefined;
   setTabIndex: (tabIndex: string | number) => void;
 };
@@ -12,7 +13,7 @@ type RestProps = {
 const ReportTab: React.FC<RestProps> = ({
   tabIndex,
   setTabIndex,
-  patCardNo,
+  patHisNo,
 }) => {
   return (
     <Tab
@@ -20,7 +21,7 @@ const ReportTab: React.FC<RestProps> = ({
       type={'card'}
       onChange={(v) => {
         if (v === 3) {
-          window.location.href = `http://www.cqdent.com:9077/pad/index.html#/examRecordList?username=doctor&pwd=Cqkqyy@2022&patientId=${patCardNo}`;
+          window.location.href = `http://www.cqdent.com:9077/pad/index.html#/examRecordList?username=doctor&pwd=Cqkqyy@2022&patientId=${patHisNo}`;
         } else {
           setTabIndex(v);
         }

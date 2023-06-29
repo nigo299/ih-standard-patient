@@ -9,7 +9,6 @@ import {
   showToast,
   Icon,
   RichText,
-  navigateToMiniProgram,
   PartTitle,
 } from '@kqinfo/ui';
 import {
@@ -556,12 +555,12 @@ export default () => {
             </Space>
           ))}
         </Space>
-        <Banner
+        {/* <Banner
           CommonImg={
             configData?.find((item) => item.configType === 'BANNER')
               ?.bannerInfo || []
           }
-        />
+        /> */}
         <View className={styles.copyRight}>
           <CopyRight
             clear
