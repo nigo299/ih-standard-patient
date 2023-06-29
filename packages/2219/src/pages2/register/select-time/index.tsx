@@ -15,7 +15,6 @@ import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import { useHisConfig } from '@/hooks';
-import { set } from 'js-cookie';
 
 export default () => {
   const { config } = useHisConfig();
