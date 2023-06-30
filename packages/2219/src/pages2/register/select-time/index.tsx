@@ -15,6 +15,7 @@ import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import { useHisConfig } from '@/hooks';
+import qs from 'qs';
 
 export default () => {
   const { config } = useHisConfig();
@@ -234,20 +235,34 @@ export default () => {
           (item: { scheduleId: string }) => item.scheduleId === scheduleId,
         ) as any;
 
-      if (visitBeginTime && visitEndTime && deptId)
+      if (visitBeginTime && visitEndTime && deptId) {
+        const params = {
+          deptId: deptId,
+          doctorId: doctorId,
+          scheduleDate: date?.format('YYYY-MM-DD'),
+          scheduleId: scheduleId,
+          visitBeginTime: visitBeginTime,
+          visitEndTime: visitEndTime,
+          visitPeriod: visitPeriod,
+          sourceType: sourceType,
+          hisName: doctorDetail?.hisDistrict,
+          level: level,
+          title: title,
+          doctorName: doctorName,
+          regTypes: extPropes?.sourceType?.slice(1),
+        };
+        console.log('params', params);
         navigateTo({
-          url: `/pages2/register/confirm/index?deptId=${deptId}&doctorId=${doctorId}&scheduleDate=${date?.format(
-            'YYYY-MM-DD',
-          )}&scheduleId=${scheduleId}&visitBeginTime=${visitBeginTime}&visitEndTime=${visitEndTime}&visitPeriod=${visitPeriod}&sourceType=${sourceType}&hisName=${
-            doctorDetail?.hisDistrict
-          }&level=${level}&title=${title}&doctorName=${doctorName}&regTypes=${extPropes?.sourceType?.slice(
-            1,
-          )}`,
+          url: `/pages2/register/confirm/index?${qs.stringify(params, {
+            encode: false,
+          })}`,
         });
+      }
     },
     [
       date,
       deptId,
+      doctorDetail?.hisDistrict,
       doctorId,
       doctorName,
       doctorScheduleDateDetail?.itemList,
@@ -363,12 +378,7 @@ export default () => {
         )?.status === 1 ? (
           <>
             {morningList?.length > 0 && (
-              <Items
-                items={morningList}
-                title="上午"
-                onChange={handleNext}
-                scheduleId={scheduleId}
-              />
+              <Items items={morningList} title="上午" onChange={handleNext} />
             )}
             {middayList.length > 0 && (
               <Items

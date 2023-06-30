@@ -9,13 +9,11 @@ import { ScheduleType } from '@/apis/register';
 export default ({
   items,
   onChange,
-  scheduleId: selectId,
   title,
 }: {
   items: ScheduleType[];
   title?: string;
   onChange?: (v: string) => void;
-  scheduleId?: string;
 }) => {
   const [folded, setFolded] = useState(false);
   console.log(items);
@@ -60,7 +58,6 @@ export default ({
                   onChange?.(scheduleId);
                 }}
                 className={classNames(styles.item, {
-                  [styles.scheduleOn]: scheduleId === selectId,
                   [styles.disbaled]: Number(leftSource) === 0,
                 })}
               >
@@ -72,7 +69,10 @@ export default ({
                     </Text>
                     <Text
                       style={{
-                        backgroundColor: 'green',
+                        backgroundColor:
+                          extPropes?.sourceType?.slice(0, 1) == '0'
+                            ? 'green'
+                            : '#ff9d46',
                         color: 'white',
                         boxSizing: 'border-box',
                         padding: '2px 6px',

@@ -61,14 +61,22 @@
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 20px;
-  padding: 0 5px;
+  padding: 18px 6px 12px 6px;
   // width: 318px;
   min-height: 96px;
   border-radius: 23px;
   font-size: 24px;
   color: #333;
   border: 1px solid #e2e2e2;
+
+  &:active {
+    background: linear-gradient(rgba(128, 128, 128, 0.3), rgba(128, 128, 128, 0.3));
+    opacity: .9;
+    transition: opacity 0.5s ease;
+  }
 }
+
+
 .items1 {
   // border: 1px solid red;
   display: flex;
@@ -103,10 +111,13 @@
 }
 
 .scheduleOn {
-  font-weight: bold;
-  background-color: @theme-color;
-  border: 1px solid @theme-color;
-  color: #fff;
+  // font-weight: bold;
+  // background-color: @theme-color;
+  // border: 1px solid @theme-color;
+  // color: #fff;
+  background: linear-gradient(rgba(128, 128, 128, 0.3), rgba(128, 128, 128, 0.3));
+  opacity: .9;
+  transition: opacity 0.5s ease;
 }
 
 .items2 > .type {
