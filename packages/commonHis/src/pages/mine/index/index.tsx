@@ -19,7 +19,7 @@ import patientState from '@/stores/patient';
 import globalState from '@/stores/global';
 import styles from './index.less';
 import classNames from 'classnames';
-import { encryptPhone } from '@/utils';
+import { encryptPhone, decrypt } from '@/utils';
 import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
@@ -41,7 +41,8 @@ export default () => {
     },
     needInit: !!selectPatient?.patientId,
   });
-  const { user, getUserInfo } = globalState.useContainer();
+  const { user, getUserInfo, decryptPatName, setDecryptPatName } =
+    globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   usePageEvent('onShow', () => {
@@ -169,7 +170,9 @@ export default () => {
                           alignItems="center"
                           className={styles.patient}
                         >
-                          {patient.patientName}
+                          {decryptPatName
+                            ? decrypt(patient?.encryptPatientName || '')
+                            : patient?.patientName}
                         </Space>
                       </Space>
                       {patient?.patCardNo === selectPatient?.patCardNo && (
@@ -254,7 +257,21 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {selectPatient?.patientName}
+                                {decryptPatName
+                                  ? decrypt(
+                                      selectPatient?.encryptPatientName || '',
+                                    )
+                                  : selectPatient?.patientName}
+                                <Icon
+                                  name="kq-kanjian"
+                                  size={40}
+                                  color={'#333'}
+                                  style={{ marginLeft: '8px' }}
+                                  onTap={(e) => {
+                                    e.stopPropagation();
+                                    setDecryptPatName(!decryptPatName);
+                                  }}
+                                />
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />
@@ -311,7 +328,11 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {selectPatient?.patientName}
+                                {decryptPatName
+                                  ? decrypt(
+                                      selectPatient?.encryptPatientName || '',
+                                    )
+                                  : selectPatient?.patientName}
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
   Image,
@@ -25,7 +25,6 @@ import {
   Price,
   rpxToPx,
   Table,
-  Exceed,
 } from '@kqinfo/ui';
 import showModal from '@/utils/showModal';
 import payState, { OrderInfoType } from '@/stores/pay';
@@ -33,7 +32,7 @@ import setNavigationBar from '@/utils/setNavigationBar';
 import {
   IMAGE_DOMIN,
   PLATFORM,
-  // PAYMENT_SELECTALL,
+  PAYMENT_SELECTALL,
   PAY_TYPE,
 } from '@/config/constant';
 import { decrypt, formDate, returnUrl } from '@/utils';
@@ -77,12 +76,12 @@ export default () => {
     },
     needInit: !!patientId && patientId !== 'null' && patientId !== 'undefined',
   });
-  // const selectAll = useMemo(() => {
-  //   if (selectList.length === 0 || selectList.length !== waitOpList.length) {
-  //     return false;
-  //   }
-  //   return true;
-  // }, [selectList, waitOpList]);
+  const selectAll = useMemo(() => {
+    if (selectList.length === 0 || selectList.length !== waitOpList.length) {
+      return false;
+    }
+    return true;
+  }, [selectList, waitOpList]);
   const handlePay = useCallback(
     async (payAuthNo?: string) => {
       if (process.env.REMAX_APP_PLATFORM === 'app') {
@@ -431,13 +430,42 @@ export default () => {
       </View>
 
       <View className={styles.foot}>
+        {PAYMENT_SELECTALL && (
+          <View
+            className={styles.choose}
+            onTap={() => {
+              if (selectList.length === waitOpList?.length) {
+                setSelectList([]);
+              } else {
+                setSelectList(waitOpList?.map((item) => item.hisOrderNo));
+              }
+            }}
+          >
+            {selectAll ? (
+              <Space
+                justify="center"
+                alignItems="center"
+                className={classNames(styles.select, styles.selectAll)}
+              >
+                <Image
+                  mode="aspectFit"
+                  src={`${IMAGE_DOMIN}/payment/select.png`}
+                  className={styles.selectImg}
+                />
+              </Space>
+            ) : (
+              <View className={classNames(styles.checkBox, styles.mr9)} />
+            )}
+            全选
+          </View>
+        )}
         <View
           className={classNames(styles.total, {
             PAYMENT_SELECTALL: [styles.selectToatl],
           })}
         >
           合计￥
-          {originalList
+          {waitOpList
             ?.reduce((prev, item) => {
               return (prev += selectList.includes(item.hisOrderNo)
                 ? Number(item.totalFee) / 100
@@ -460,7 +488,7 @@ export default () => {
             payFlag || selectList.length === 0 || waitOpList.length === 0
           }
         >
-          立即缴费
+          提交
         </Button>
       </View>
     </View>

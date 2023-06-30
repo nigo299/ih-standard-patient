@@ -33,6 +33,7 @@ export type keys =
   | 'createOpOrderParams'
   | 'patientId'
   | 'debugger'
+  | 'decryptPatName'
   | 'canApplyRefund';
 
 const prefixKey = (key: string) => {
@@ -47,6 +48,7 @@ interface Storage {
   set: {
     (key: keys, value: string): void;
     (key: 'elderly', value: boolean): void;
+    (key: 'decryptPatName', value: boolean): void;
   };
   del: {
     (key: keys): void;

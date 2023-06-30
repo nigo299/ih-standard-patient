@@ -37,8 +37,7 @@ export const ORDER_INVOICE = false;
 // 是否开启二级科室
 export const CHILDREN_DEPTLIST = false;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
-export const PAYMENT_SELECTALL =
-  process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
+export const PAYMENT_SELECTALL = true;
 // 门诊缴费必须全部支付
 export const PAYMENT_SELECTALL_PAY = false;
 // 是否启用H5支付(flase为立即缴费小程序支付)
