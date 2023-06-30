@@ -68,12 +68,14 @@
   font-size: 24px;
   color: #333;
   border: 1px solid #e2e2e2;
+
+  &:active {
+    background: linear-gradient(rgba(128, 128, 128, 0.3), rgba(128, 128, 128, 0.3));
+    opacity: .9;
+    transition: opacity 0.5s ease;
+  }
 }
-.item:hover {
-  background: linear-gradient(rgba(128, 128, 128, 0.3), rgba(128, 128, 128, 0.3));
-  opacity: .9;
-  transition: opacity 0.5s ease;
-}
+
 
 .items1 {
   // border: 1px solid red;

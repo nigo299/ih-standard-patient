@@ -9,13 +9,11 @@ import { ScheduleType } from '@/apis/register';
 export default ({
   items,
   onChange,
-  scheduleId: selectId,
   title,
 }: {
   items: ScheduleType[];
   title?: string;
   onChange?: (v: string) => void;
-  scheduleId?: string;
 }) => {
   const [folded, setFolded] = useState(false);
   console.log(items);
@@ -60,7 +58,6 @@ export default ({
                   onChange?.(scheduleId);
                 }}
                 className={classNames(styles.item, {
-                  [styles.scheduleOn]: scheduleId === selectId,
                   [styles.disbaled]: Number(leftSource) === 0,
                 })}
               >
