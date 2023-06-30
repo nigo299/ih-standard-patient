@@ -119,7 +119,7 @@ export default memo(() => {
                         />
                         <View className={styles.name2}>{`${
                           PatGender[order.patientSex] || ''
-                        } | ${order.patientAge}`}</View>
+                        } | ${order.patientAge}岁`}</View>
                       </Space>
                       <View className={styles.bizName}>{order?.bizName}</View>
                       {order.refundStatus === 1 && (

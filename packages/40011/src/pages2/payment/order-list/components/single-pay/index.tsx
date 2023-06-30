@@ -64,7 +64,7 @@ export default () => {
       patientId,
       idFullTransFlag: '1',
     },
-    needInit: !!patientId,
+    needInit: !!patientId && patientId !== 'null' && patientId !== 'undefined',
   });
   const selectAll = useMemo(() => {
     if (selectList.length === 0 || selectList.length !== waitOpList.length) {
@@ -118,6 +118,7 @@ export default () => {
               extFields: JSON.stringify({
                 idNo: storage.get('idNo'),
               }),
+              hisOrderNo: newHisOrdNums?.split(',')?.[0],
             }
           : params;
       const { code, data, msg } = await useApi.创建门诊缴费订单.request(
