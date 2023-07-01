@@ -19,12 +19,13 @@ import patientState from '@/stores/patient';
 import globalState from '@/stores/global';
 import styles from './index.less';
 import classNames from 'classnames';
-import { encryptPhone, decrypt } from '@/utils';
+import { encryptPhone } from '@/utils';
 import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
 import { handleMineNavTap } from '@/pages/mine/index/utils';
+import useGetPatientInfos from '@/utils/useGetPatientInfos';
 export default () => {
   const { getPatientList, bindPatientList } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
@@ -170,9 +171,7 @@ export default () => {
                           alignItems="center"
                           className={styles.patient}
                         >
-                          {decryptPatName
-                            ? decrypt(patient?.encryptPatientName || '')
-                            : patient?.patientName}
+                          {useGetPatientInfos(patient?.patientId).name}
                         </Space>
                       </Space>
                       {patient?.patCardNo === selectPatient?.patCardNo && (
@@ -257,11 +256,10 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {decryptPatName
-                                  ? decrypt(
-                                      selectPatient?.encryptPatientName || '',
-                                    )
-                                  : selectPatient?.patientName}
+                                {
+                                  useGetPatientInfos(selectPatient?.patientId)
+                                    .name
+                                }
                                 <Icon
                                   name="kq-kanjian"
                                   size={40}
@@ -328,11 +326,10 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {decryptPatName
-                                  ? decrypt(
-                                      selectPatient?.encryptPatientName || '',
-                                    )
-                                  : selectPatient?.patientName}
+                                {
+                                  useGetPatientInfos(selectPatient?.patientId)
+                                    .name
+                                }
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />

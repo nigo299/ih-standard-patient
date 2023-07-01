@@ -5,6 +5,7 @@ import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
 import classNames from 'classnames';
 import styles from './index.less';
 import { QrCodeModal } from '@/components';
+import useGetPatientInfos from '@/utils/useGetPatientInfos';
 
 interface PropsType {
   patientName: string;
@@ -72,7 +73,7 @@ export default ({
             <Space vertical size={24}>
               <Space className={styles.mediItem}>
                 <FormItem label="就诊人" labelWidth={'4em'} />
-                {patientName}
+                {useGetPatientInfos(patientId).name || patientName}
               </Space>
               <Space className={styles.mediItem}>
                 <FormItem label="就诊号" labelWidth={'4em'} />
@@ -95,7 +96,9 @@ export default ({
         </Space>
         <QrCodeModal
           show={show}
-          name={`${patientName} | ${patCardNo}`}
+          name={`${
+            useGetPatientInfos(patientId).name || patientName
+          } | ${patCardNo}`}
           content={patCardNo}
           close={() => setShow(false)}
         />
