@@ -4,7 +4,6 @@ import { Space, BackgroundImg } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import { QrCodeModal } from '@/components';
-import useGetPatientInfos from '@/utils/useGetPatientInfos';
 interface PropsType {
   patientName: string;
   patCardNo: string;
@@ -25,7 +24,6 @@ export default ({
   patientId,
 }: PropsType) => {
   const [show, setShow] = useState(false);
-  const { name } = useGetPatientInfos(patientId as string);
   return (
     <Space vertical alignItems="center" className={styles.card}>
       <BackgroundImg img={`${IMAGE_DOMIN}/jkk.png`} className={styles.jkk}>
@@ -63,7 +61,7 @@ export default ({
       {healthCardId && (
         <QrCodeModal
           show={show}
-          name={`${name} | ${patCardNo}`}
+          name={`${patientName} | ${patCardNo}`}
           content={healthCardId}
           type="health"
           close={() => setShow(false)}

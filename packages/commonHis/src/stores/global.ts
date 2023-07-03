@@ -23,9 +23,6 @@ export interface AlipayUserInfoType {
 
 export default createContainer(() => {
   const [elderly, setElderly] = useState(storage.get('elderly') || false);
-  const [decryptPatName, setDecryptPatName] = useState<string | boolean>(
-    storage.get('decryptPatName') === 'true' || false,
-  ); // 是否解密患者姓名
   const [user, setUser] = useState<UserType>({
     nickName: '',
     headImage: '',
@@ -106,11 +103,6 @@ export default createContainer(() => {
     setElderly: useCallback((elderly: boolean) => {
       storage.set('elderly', elderly);
       setElderly(elderly);
-    }, []),
-    decryptPatName,
-    setDecryptPatName: useCallback((isDecrypt: boolean) => {
-      storage.set('decryptPatName', isDecrypt);
-      setDecryptPatName(isDecrypt);
     }, []),
     user,
     setUser,

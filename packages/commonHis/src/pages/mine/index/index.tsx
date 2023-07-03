@@ -27,7 +27,8 @@ import showTabBar from '@/utils/showTabBar';
 import { handleMineNavTap } from '@/pages/mine/index/utils';
 import useGetPatientInfos from '@/utils/useGetPatientInfos';
 export default () => {
-  const { getPatientList, bindPatientList } = patientState.useContainer();
+  const { getPatientList, bindPatientList, decryptPatName, setDecryptPatName } =
+    patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
   );
@@ -42,11 +43,12 @@ export default () => {
     },
     needInit: !!selectPatient?.patientId,
   });
-  const { user, getUserInfo, decryptPatName, setDecryptPatName } =
-    globalState.useContainer();
+  const { user, getUserInfo } = globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  const { name: selectPatName } = useGetPatientInfos(selectPatient?.patientId);
+  const { patientName: selectPatName } = useGetPatientInfos(
+    selectPatient?.patientId,
+  );
   usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
@@ -144,7 +146,6 @@ export default () => {
                 ignoreNum={5}
               >
                 {bindPatientList.map((patient, index) => {
-                  const { name } = useGetPatientInfos(patient?.patientId);
                   return (
                     <Space key={index} vertical alignItems="center">
                       <Space
@@ -174,7 +175,7 @@ export default () => {
                             alignItems="center"
                             className={styles.patient}
                           >
-                            {name}
+                            {patient?.patientName}
                           </Space>
                         </Space>
                         {patient?.patCardNo === selectPatient?.patCardNo && (
