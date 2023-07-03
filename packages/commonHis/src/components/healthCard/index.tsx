@@ -1,105 +1,68 @@
 import React, { useState } from 'react';
-import { navigateTo, Image, Text, View } from 'remax/one';
-import { Space, QrCode, FormItem } from '@kqinfo/ui';
-import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
-import classNames from 'classnames';
+import { Image, View } from 'remax/one';
+import { Space, BackgroundImg } from '@kqinfo/ui';
+import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import { QrCodeModal } from '@/components';
-
 interface PropsType {
   patientName: string;
   patCardNo: string;
-  className?: string;
-  patientId: string;
-  isDetail?: boolean;
+  idNo: string;
+  qrCode: string;
+  healthCardId: string;
+  errorMsg?: string;
 }
-
 export default ({
-  patCardNo,
-  patientId,
   patientName,
-  isDetail,
-  className,
+  idNo,
+  qrCode,
+  healthCardId,
+  patCardNo,
+  errorMsg,
 }: PropsType) => {
   const [show, setShow] = useState(false);
   return (
-    <Space
-      vertical
-      alignItems="center"
-      className={classNames(styles.card, className)}
-    >
-      <View className={styles.jzk}>
+    <Space vertical alignItems="center" className={styles.card}>
+      <BackgroundImg img={`${IMAGE_DOMIN}/jkk.png`} className={styles.jkk}>
         <Space
-          vertical
           className={styles.content}
-          justify="center"
-          alignItems="flex-start"
-          onTap={(e) => {
-            e.stopPropagation();
-            if (!isDetail) {
-              navigateTo({
-                url: `/pages2/usercenter/user-info/index?patientId=${patientId}`,
-              });
-            }
-          }}
+          justify="space-between"
+          alignItems="flex-end"
         >
-          <Space
-            justify="space-between"
-            alignItems="center"
-            className={styles.mediaTop}
-          >
-            <Space alignItems="center">
-              <Image
-                src={`${IMAGE_DOMIN}/mine/logo.png`}
-                className={styles.logo}
-              />
-              <Text className={styles.title}>{HOSPITAL_NAME}</Text>
-            </Space>
-            <Space
-              justify="center"
-              alignItems="center"
-              className={styles.mediaTag}
-            >
-              电子就诊卡
-            </Space>
+          <Space vertical alignItems="flex-start">
+            <View className={styles.name}>{patientName}</View>
+            <View className={styles.idno}>{idNo}</View>
           </Space>
-
-          <Space
-            justify="space-between"
-            alignItems="flex-end"
-            className={styles.wrap}
-          >
-            <Space vertical size={24}>
-              <Space className={styles.mediItem}>
-                <FormItem label="就诊人" labelWidth={'4em'} />
-                {patientName}
-              </Space>
-              <Space className={styles.mediItem}>
-                <FormItem label="就诊号" labelWidth={'4em'} />
-                {patCardNo}
-              </Space>
-            </Space>
-
-            <Space
-              className={styles.qrcode}
-              onTap={(e) => {
-                e.stopPropagation();
+          <Image
+            src={`data:image/jpeg;base64,${qrCode}`}
+            className={styles.img}
+            onTap={(e) => {
+              e.stopPropagation();
+              if (healthCardId) {
                 setShow(true);
-              }}
-              justify="center"
-              alignItems="center"
-            >
-              <QrCode content={patCardNo || ''} className={styles.qrcodeImg} />
-            </Space>
-          </Space>
+              }
+            }}
+          />
         </Space>
+        {errorMsg && (
+          <Space
+            justify="center"
+            alignItems="center"
+            className={styles.healthPropmt}
+          >
+            {errorMsg || '电子健康卡领取失败!'}
+          </Space>
+        )}
+      </BackgroundImg>
+      {healthCardId && (
         <QrCodeModal
           show={show}
           name={`${patientName} | ${patCardNo}`}
-          content={patCardNo}
+          content={healthCardId}
+          type="health"
           close={() => setShow(false)}
         />
-      </View>
+      )}
     </Space>
   );
 };
