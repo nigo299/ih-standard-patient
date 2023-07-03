@@ -1,10 +1,11 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { navigateTo } from 'remax/one';
 import { createContainer } from 'unstated-next';
 import useApi, { PatientType } from '@/apis/usercenter';
-import { analyzeIDCard } from '@/utils';
+import { analyzeIDCard, decrypt } from '@/utils';
 import storage from '@/utils/storage';
 import { PLATFORM } from '@/config/constant';
+import { typedStorage } from '@/utils/typedStorage';
 export interface OcrInfoType {
   address: string;
   birth: string;
@@ -53,14 +54,30 @@ export default createContainer(() => {
     relationType: 5,
     parentIdType: '',
   });
+  const [decryptPatName, setDecryptPatName] = useState<string | boolean>(
+    typedStorage.get('decryptPatName') || false,
+  ); // 是否解密患者姓名
   // 绑定的患者列表
-  const [bindPatientList, setBindPatientList] = useState<PatientType[]>([]);
+  const [originalBindPatientList, setOriginalBindPatientList] = useState<
+    PatientType[]
+  >([]);
   const [ocrInfo, setOcrInfo] = useState(defualtOcrInfo);
   const [faceInfo, setFaceInfo] = useState({
     name: '',
     idNo: '',
     success: false,
   });
+  const bindPatientList = useMemo(() => {
+    if (decryptPatName) {
+      return originalBindPatientList.map((item) => {
+        return {
+          ...item,
+          patientName: decrypt(item.encryptPatientName),
+        };
+      });
+    }
+    return originalBindPatientList;
+  }, [originalBindPatientList, decryptPatName]);
   const getPatientList = useCallback(
     async (
       jump?: boolean /** jump属性避免在小程序请求接口多次跳转授权页面 */,
@@ -101,7 +118,7 @@ export default createContainer(() => {
             }
           });
         }
-        setBindPatientList(data.cardList);
+        setOriginalBindPatientList(data?.cardList);
       } else {
         setDefaultPatientInfo({
           ...defaultPatientInfo,
@@ -110,23 +127,29 @@ export default createContainer(() => {
           patCardNo: '',
           patientFullIdNo: '',
         });
-        setBindPatientList([]);
+        setOriginalBindPatientList([]);
       }
       return Promise.resolve(data.cardList || []);
     },
-    [defaultPatientInfo, setBindPatientList, setDefaultPatientInfo],
+    [defaultPatientInfo, setOriginalBindPatientList, setDefaultPatientInfo],
   );
   const clearOcrInfo = useCallback(() => setOcrInfo(defualtOcrInfo), []);
   return {
     defaultPatientInfo,
     setDefaultPatientInfo,
+    originalBindPatientList,
+    setOriginalBindPatientList,
     bindPatientList,
-    setBindPatientList,
     getPatientList,
     ocrInfo,
     setOcrInfo,
     clearOcrInfo,
     faceInfo,
     setFaceInfo,
+    decryptPatName,
+    setDecryptPatName: useCallback((isDecrypt: boolean) => {
+      typedStorage.set('decryptPatName', isDecrypt);
+      setDecryptPatName(isDecrypt);
+    }, []),
   };
 });

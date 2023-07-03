@@ -12,7 +12,6 @@ interface PropsType {
   healthCardId: string;
   errorMsg?: string;
 }
-
 export default ({
   patientName,
   idNo,
@@ -55,7 +54,6 @@ export default ({
           </Space>
         )}
       </BackgroundImg>
-
       {healthCardId && (
         <QrCodeModal
           show={show}

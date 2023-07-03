@@ -25,8 +25,10 @@ import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
 import { handleMineNavTap } from '@/pages/mine/index/utils';
+import useGetPatientInfos from '@/utils/useGetPatientInfos';
 export default () => {
-  const { getPatientList, bindPatientList } = patientState.useContainer();
+  const { getPatientList, bindPatientList, decryptPatName, setDecryptPatName } =
+    patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
   );
@@ -44,6 +46,9 @@ export default () => {
   const { user, getUserInfo } = globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+  const { patientName: selectPatName } = useGetPatientInfos(
+    selectPatient?.patientId,
+  );
   usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
@@ -140,44 +145,46 @@ export default () => {
                 size={24}
                 ignoreNum={5}
               >
-                {bindPatientList.map((patient, index) => (
-                  <Space key={index} vertical alignItems="center">
-                    <Space
-                      vertical
-                      justify="space-between"
-                      alignItems="center"
-                      className={classNames(styles.patientWrap, {
-                        [styles.patientWrapActive]:
-                          patient?.patCardNo === selectPatient?.patCardNo,
-                      })}
-                    >
+                {bindPatientList.map((patient, index) => {
+                  return (
+                    <Space key={index} vertical alignItems="center">
                       <Space
-                        justify="center"
+                        vertical
+                        justify="space-between"
                         alignItems="center"
-                        className={styles.patientRound}
-                        onTap={() => {
-                          if (patient.isDefault !== 1) {
-                            useApi.设置默认就诊人.request({
-                              patientId: patient.patientId,
-                            });
-                          }
-                          setSelectPatient(patient);
-                        }}
+                        className={classNames(styles.patientWrap, {
+                          [styles.patientWrapActive]:
+                            patient?.patCardNo === selectPatient?.patCardNo,
+                        })}
                       >
                         <Space
                           justify="center"
                           alignItems="center"
-                          className={styles.patient}
+                          className={styles.patientRound}
+                          onTap={() => {
+                            if (patient.isDefault !== 1) {
+                              useApi.设置默认就诊人.request({
+                                patientId: patient.patientId,
+                              });
+                            }
+                            setSelectPatient(patient);
+                          }}
                         >
-                          {patient.patientName}
+                          <Space
+                            justify="center"
+                            alignItems="center"
+                            className={styles.patient}
+                          >
+                            {patient?.patientName}
+                          </Space>
                         </Space>
+                        {patient?.patCardNo === selectPatient?.patCardNo && (
+                          <View className={styles.defaultText}>默认就诊人</View>
+                        )}
                       </Space>
-                      {patient?.patCardNo === selectPatient?.patCardNo && (
-                        <View className={styles.defaultText}>默认就诊人</View>
-                      )}
                     </Space>
-                  </Space>
-                ))}
+                  );
+                })}
                 {bindPatientList.length < 5 && (
                   <Space
                     vertical
@@ -254,7 +261,17 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {selectPatient?.patientName}
+                                {selectPatName}
+                                <Icon
+                                  name="kq-kanjian"
+                                  size={40}
+                                  color={'#333'}
+                                  style={{ marginLeft: '8px' }}
+                                  onTap={(e) => {
+                                    e.stopPropagation();
+                                    setDecryptPatName(!decryptPatName);
+                                  }}
+                                />
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />
@@ -311,7 +328,7 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {selectPatient?.patientName}
+                                {selectPatName}
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />
@@ -429,7 +446,7 @@ export default () => {
 
       <QrCodeModal
         show={show}
-        name={`${selectPatient?.patientName} | ${selectPatient?.patCardNo}`}
+        name={`${selectPatName} | ${selectPatient?.patCardNo}`}
         content={selectPatient?.patCardNo || ''}
         close={() => {
           setShow(false);
@@ -440,7 +457,7 @@ export default () => {
       <QrCodeModal
         show={show2}
         type="health"
-        name={`${selectPatient?.patientName} | ${selectPatient?.patCardNo}`}
+        name={`${selectPatName} | ${selectPatient?.patCardNo}`}
         content={jkkInfo?.healthCardId || ''}
         close={() => {
           setShow2(false);
