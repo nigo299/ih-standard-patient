@@ -63,9 +63,7 @@ export default ({
       {healthCardId && (
         <QrCodeModal
           show={show}
-          name={`${
-            useGetPatientInfos(patientId as string).name
-          } | ${patCardNo}`}
+          name={`${name} | ${patCardNo}`}
           content={healthCardId}
           type="health"
           close={() => setShow(false)}
