@@ -23,6 +23,7 @@ export default ({
   className,
 }: PropsType) => {
   const [show, setShow] = useState(false);
+  const name = useGetPatientInfos(patientId).name;
   return (
     <Space
       vertical
@@ -73,7 +74,7 @@ export default ({
             <Space vertical size={24}>
               <Space className={styles.mediItem}>
                 <FormItem label="就诊人" labelWidth={'4em'} />
-                {useGetPatientInfos(patientId).name || patientName}
+                {name || patientName}
               </Space>
               <Space className={styles.mediItem}>
                 <FormItem label="就诊号" labelWidth={'4em'} />
@@ -96,9 +97,7 @@ export default ({
         </Space>
         <QrCodeModal
           show={show}
-          name={`${
-            useGetPatientInfos(patientId).name || patientName
-          } | ${patCardNo}`}
+          name={`${name || patientName} | ${patCardNo}`}
           content={patCardNo}
           close={() => setShow(false)}
         />

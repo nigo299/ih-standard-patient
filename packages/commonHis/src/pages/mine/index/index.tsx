@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { View, Text, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -46,6 +46,7 @@ export default () => {
     globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+  const selectPatName = useGetPatientInfos(selectPatient?.patientId).name;
   usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
@@ -142,44 +143,47 @@ export default () => {
                 size={24}
                 ignoreNum={5}
               >
-                {bindPatientList.map((patient, index) => (
-                  <Space key={index} vertical alignItems="center">
-                    <Space
-                      vertical
-                      justify="space-between"
-                      alignItems="center"
-                      className={classNames(styles.patientWrap, {
-                        [styles.patientWrapActive]:
-                          patient?.patCardNo === selectPatient?.patCardNo,
-                      })}
-                    >
+                {bindPatientList.map((patient, index) => {
+                  const name = useGetPatientInfos(patient?.patientId).name;
+                  return (
+                    <Space key={index} vertical alignItems="center">
                       <Space
-                        justify="center"
+                        vertical
+                        justify="space-between"
                         alignItems="center"
-                        className={styles.patientRound}
-                        onTap={() => {
-                          if (patient.isDefault !== 1) {
-                            useApi.设置默认就诊人.request({
-                              patientId: patient.patientId,
-                            });
-                          }
-                          setSelectPatient(patient);
-                        }}
+                        className={classNames(styles.patientWrap, {
+                          [styles.patientWrapActive]:
+                            patient?.patCardNo === selectPatient?.patCardNo,
+                        })}
                       >
                         <Space
                           justify="center"
                           alignItems="center"
-                          className={styles.patient}
+                          className={styles.patientRound}
+                          onTap={() => {
+                            if (patient.isDefault !== 1) {
+                              useApi.设置默认就诊人.request({
+                                patientId: patient.patientId,
+                              });
+                            }
+                            setSelectPatient(patient);
+                          }}
                         >
-                          {useGetPatientInfos(patient?.patientId).name}
+                          <Space
+                            justify="center"
+                            alignItems="center"
+                            className={styles.patient}
+                          >
+                            {name}
+                          </Space>
                         </Space>
+                        {patient?.patCardNo === selectPatient?.patCardNo && (
+                          <View className={styles.defaultText}>默认就诊人</View>
+                        )}
                       </Space>
-                      {patient?.patCardNo === selectPatient?.patCardNo && (
-                        <View className={styles.defaultText}>默认就诊人</View>
-                      )}
                     </Space>
-                  </Space>
-                ))}
+                  );
+                })}
                 {bindPatientList.length < 5 && (
                   <Space
                     vertical
@@ -256,10 +260,7 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {
-                                  useGetPatientInfos(selectPatient?.patientId)
-                                    .name
-                                }
+                                {selectPatName}
                                 <Icon
                                   name="kq-kanjian"
                                   size={40}
@@ -292,7 +293,7 @@ export default () => {
                                 alignItems="center"
                               >
                                 <QrCode
-                                  content={selectPatient?.patCardNo || ''}
+                                  content={selectPatient?.patientId || ''}
                                   className={styles.mediaQrcodeImg}
                                 />
                               </Space>
@@ -326,10 +327,7 @@ export default () => {
                             <Space vertical size={24}>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊人" labelWidth={'4em'} />
-                                {
-                                  useGetPatientInfos(selectPatient?.patientId)
-                                    .name
-                                }
+                                {selectPatName}
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />
@@ -447,7 +445,7 @@ export default () => {
 
       <QrCodeModal
         show={show}
-        name={`${selectPatient?.patientName} | ${selectPatient?.patCardNo}`}
+        name={`${selectPatName} | ${selectPatient?.patCardNo}`}
         content={selectPatient?.patCardNo || ''}
         close={() => {
           setShow(false);
@@ -458,7 +456,7 @@ export default () => {
       <QrCodeModal
         show={show2}
         type="health"
-        name={`${selectPatient?.patientName} | ${selectPatient?.patCardNo}`}
+        name={`${selectPatName} | ${selectPatient?.patCardNo}`}
         content={jkkInfo?.healthCardId || ''}
         close={() => {
           setShow2(false);

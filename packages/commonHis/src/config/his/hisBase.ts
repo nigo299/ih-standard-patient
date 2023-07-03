@@ -40,8 +40,8 @@ type StaticConfig = {
     | 'SOURCE_AND_PRICE'
     | 'ORIGINAL_AND_CURRENT_PRICE'
     | 'SHOW_DOC_TAGS';
-  /** 控制门诊缴费是否支持合单支付: BATCH: 合单支付， SINGLE: 单笔支付，（order-list、order-detail对应不同的ui与逻辑） */
-  clinicPayBatchType: 'SINGLE' | 'BATCH';
+  /** 控制门诊缴费是否支持合单支付: BATCH: 合单支付(his不支持合单)，JOINT(his支持合单支付) SINGLE: 单笔支付，（order-list、order-detail对应不同的ui与逻辑） */
+  clinicPayBatchType: 'SINGLE' | 'BATCH' | 'JOINT';
   /** 支付界面是否显示医保支付弹窗 */
   showMedicalModal: boolean;
   /** 预约挂号中是否显示当日号源 */

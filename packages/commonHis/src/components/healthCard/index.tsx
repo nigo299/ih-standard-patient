@@ -25,6 +25,7 @@ export default ({
   patientId,
 }: PropsType) => {
   const [show, setShow] = useState(false);
+  const name = useGetPatientInfos(patientId as string).name;
   return (
     <Space vertical alignItems="center" className={styles.card}>
       <BackgroundImg img={`${IMAGE_DOMIN}/jkk.png`} className={styles.jkk}>
@@ -34,9 +35,7 @@ export default ({
           alignItems="flex-end"
         >
           <Space vertical alignItems="flex-start">
-            <View className={styles.name}>
-              {useGetPatientInfos(patientId).name || patientName}
-            </View>
+            <View className={styles.name}>{name || patientName}</View>
             <View className={styles.idno}>{idNo}</View>
           </Space>
           <Image
