@@ -294,7 +294,7 @@ export default () => {
                                 alignItems="center"
                               >
                                 <QrCode
-                                  content={selectPatient?.patientId || ''}
+                                  content={selectPatient?.patCardNo || ''}
                                   className={styles.mediaQrcodeImg}
                                 />
                               </Space>
