@@ -355,3 +355,12 @@ export const parseAge = (val: string): number => {
   }
   return Number(val);
 };
+
+export const getPatientAge = (val: string | undefined | number): string => {
+  if (!val) return '未知';
+  if (typeof val === 'number') return val + '岁';
+  if (val.includes('岁')) {
+    return val;
+  }
+  return val + '岁';
+};
