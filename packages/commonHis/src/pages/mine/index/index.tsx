@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -46,7 +46,7 @@ export default () => {
     globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  const selectPatName = useGetPatientInfos(selectPatient?.patientId).name;
+  const { name: selectPatName } = useGetPatientInfos(selectPatient?.patientId);
   usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
@@ -144,7 +144,7 @@ export default () => {
                 ignoreNum={5}
               >
                 {bindPatientList.map((patient, index) => {
-                  const name = useGetPatientInfos(patient?.patientId).name;
+                  const { name } = useGetPatientInfos(patient?.patientId);
                   return (
                     <Space key={index} vertical alignItems="center">
                       <Space

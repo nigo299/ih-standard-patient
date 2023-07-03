@@ -23,7 +23,7 @@ export default ({
   className,
 }: PropsType) => {
   const [show, setShow] = useState(false);
-  const name = useGetPatientInfos(patientId).name;
+  const { name } = useGetPatientInfos(patientId);
   return (
     <Space
       vertical
