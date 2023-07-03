@@ -21,7 +21,6 @@ export default ({
   healthCardId,
   patCardNo,
   errorMsg,
-  patientId,
 }: PropsType) => {
   const [show, setShow] = useState(false);
   return (
