@@ -5,7 +5,6 @@ import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
 import classNames from 'classnames';
 import styles from './index.less';
 import { QrCodeModal } from '@/components';
-
 interface PropsType {
   patientName: string;
   patCardNo: string;
@@ -13,7 +12,6 @@ interface PropsType {
   patientId: string;
   isDetail?: boolean;
 }
-
 export default ({
   patCardNo,
   patientId,
@@ -63,7 +61,6 @@ export default ({
               电子就诊卡
             </Space>
           </Space>
-
           <Space
             justify="space-between"
             alignItems="flex-end"
@@ -79,7 +76,6 @@ export default ({
                 {patCardNo}
               </Space>
             </Space>
-
             <Space
               className={styles.qrcode}
               onTap={(e) => {

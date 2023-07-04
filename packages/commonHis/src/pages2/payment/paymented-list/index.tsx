@@ -94,7 +94,7 @@ export default () => {
                     </Space>
                     <Space className={styles.title}>
                       {`缴费时间 :`}
-                      <Text className={styles.text}>
+                      <Text className={styles.time}>
                         {formDate(order.payedTime)}
                       </Text>
                     </Space>

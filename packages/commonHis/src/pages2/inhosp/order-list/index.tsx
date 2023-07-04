@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, navigateTo } from 'remax/one';
+import { View, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Space, NoData, Shadow, FormItem } from '@kqinfo/ui';
@@ -70,7 +70,10 @@ export default () => {
                         就诊卡号：{item?.patCardNo}
                       </View>
                       <View className={styles.subItem}>
-                        缴费时间：{formDate(item?.payedTime) || '暂无'}
+                        缴费时间：
+                        <Text className={styles.time}>
+                          {formDate(item?.payedTime) || '暂无'}
+                        </Text>
                       </View>
                     </Space>
                     <Space

@@ -1,7 +1,7 @@
 import React, { memo, useMemo, useState } from 'react';
 import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { formDate } from '@/utils';
+import { formDate, getPatientAge } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { WhiteSpace } from '@/components';
 import {
@@ -119,7 +119,7 @@ export default memo(() => {
                         />
                         <View className={styles.name2}>{`${
                           PatGender[order.patientSex] || ''
-                        } | ${order.patientAge}`}</View>
+                        } | ${getPatientAge(order.patientAge)}`}</View>
                       </Space>
                       <View className={styles.bizName}>{order?.bizName}</View>
                       {order.refundStatus === 1 && (

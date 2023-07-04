@@ -4,7 +4,7 @@ import { usePageEvent } from 'remax/macro';
 import { Space, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, IS_DEPT, PLATFORM } from '@/config/constant';
 import { DeptType } from '@/apis/register';
 import regsiterState from '@/stores/register';
 import styles from '@/pages2/register/select-hospital/index.less';
@@ -64,12 +64,28 @@ export default () => {
         <Image
           className={styles.banner}
           src={`${IMAGE_DOMIN}/register/banner.png`}
-          onTap={() =>
-            showToast({
-              icon: 'none',
-              title: '功能暂未开放!',
-            })
-          }
+          onTap={() => {
+            if (!!IS_DEPT) {
+              if (process.env.REMAX_APP_PLATFORM === 'app') {
+                navigateTo({
+                  url: '/pages/home/index',
+                });
+              } else if (PLATFORM === 'web') {
+                window.location.href =
+                  'https://miying.qq.com/guide-h5/home?appid=wx950fe9e111226825';
+              } else {
+                showToast({
+                  icon: 'none',
+                  title: '功能暂未开放!',
+                });
+              }
+            } else {
+              showToast({
+                icon: 'none',
+                title: '功能暂未开放!',
+              });
+            }
+          }}
         />
       </Space>
       <WhiteSpace />
