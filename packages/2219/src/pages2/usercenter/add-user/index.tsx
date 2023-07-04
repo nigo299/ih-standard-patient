@@ -156,6 +156,7 @@ export default memo(() => {
                 checked: false,
               });
             } else {
+              setIsChild(true);
               form.setFieldsValue({
                 checked: false,
                 birthday: analyzeBirth,
@@ -965,10 +966,9 @@ export default memo(() => {
           </>
         )}
 
-        {(!checked ||
-          (selectCard?.idNo &&
-            Number(selectCard.patientAge) < bindcardProdiles?.childrenMaxAge) ||
-          (!isBrithday && isChild)) && (
+        {((selectCard?.idNo &&
+          Number(selectCard.patientAge) < bindcardProdiles?.childrenMaxAge) ||
+          isChild) && (
           <FormItem noStyle>
             {(_, __, { getFieldValue }) => {
               const parentIdType = getFieldValue('parentIdType') || '1';
