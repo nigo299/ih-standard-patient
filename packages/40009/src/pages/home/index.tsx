@@ -247,10 +247,8 @@ export default () => {
           {
             title: '核酸检测',
             subTitle: '',
-            url: '/pages2/nucleic/select-combo/index?type=1',
+            url: '/pages2/nucleic/select-combo/index',
             image: `${IMAGE_DOMIN}/home/hsjc.png`,
-            onClick: () =>
-              (window.location.href = 'https://cqkuanren.mike-x.com/aN5Im'),
           },
           {
             title: '疫苗接种',
@@ -278,20 +276,20 @@ export default () => {
               (window.location.href = 'https://j.youzan.com/k0p99L'),
           },
           {
-            title: '松山文创',
+            title: '9.9暑期活动',
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/sswc.png`,
             onClick: () =>
-              (window.location.href =
-                'https://wx.vzan.com/plug-ins/#/FixupIndex/1269048393?v=1681977679223&templateId=66636&rand=1683515046701&fr=&appid=&shareuid=581520'),
+              (window.location.href = 'https://cqkuanren.mike-x.com/dUa7I'),
           },
           {
             title: '手汗症',
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/shz.png`,
-            onClick: () => (window.location.href = 'https://wsurl.cc/5HufLq'),
+            onClick: () =>
+              (window.location.href = 'https://cqkuanren.mike-x.com/GUbrv'),
           },
           // {
           //   title: '医保电子凭证',
