@@ -729,7 +729,7 @@ export default () => {
         {orderDetail?.canPayFlag === 1 && countdown > 0 && (
           <Button
             type="primary"
-            className={styles.button}
+            className={styles.payButton}
             onTap={() =>
               socialPayAuth().then(() => {
                 carryPay();
