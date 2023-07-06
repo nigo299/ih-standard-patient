@@ -555,6 +555,11 @@ export default memo(() => {
                   label: item?.dictValue,
                   value: item?.dictKey,
                 }))}
+                onChange={(value) => {
+                  if (value === '1') {
+                    setIsChild(true);
+                  }
+                }}
               >
                 请选择
               </Picker>
