@@ -25,5 +25,8 @@
     "build:ali": "cross-env NODE_ENV=production env-cmd -f .env.production.ali remax build -t ali -m",
     "postinstall": "npx patch-package",
     "prepare": "husky install"
+  },
+  "dependencies": {
+    "md5": "^2.3.0"
   }
 }

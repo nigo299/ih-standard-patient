@@ -5,7 +5,7 @@ import registerState from './register';
 import inhospState from './inhosp';
 import globalState from './global';
 import audioState from './audio';
-
+import signState from './sign';
 export default combineProviders([
   globalState.Provider,
   payState.Provider,
@@ -13,4 +13,5 @@ export default combineProviders([
   registerState.Provider,
   inhospState.Provider,
   audioState.Provider,
+  signState.Provider,
 ]);
