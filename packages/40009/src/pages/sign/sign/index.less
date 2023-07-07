@@ -1,0 +1,97 @@
+.pageSignSign {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  .header {
+    width: 100%;
+    height: 700px;
+    background: linear-gradient(0deg, #ffffff, #2780d9);
+    position: absolute;
+    top: 0;
+    z-index: -999;
+  }
+  .signBanner {
+    width: 692.9px;
+    height: 238px;
+    object-fit: cover;
+    margin-top: 30px;
+  }
+  .signContent {
+    width: 90%;
+    height: 550px;
+    background: linear-gradient(0deg, #e7f3ff, #ffffff);
+    border-radius: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px 0;
+    .signSuccess {
+      font-size: 50px;
+      font-weight: bold;
+      color: #1ea685;
+      align-self: center;
+      margin-bottom: 25px;
+    }
+    .serial {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      margin-top: 10px;
+      .serialItem {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        .serialTitle {
+          font-size: 34px;
+          color: #0bc174;
+        }
+        .serialNumber {
+          color: #ff9d46;
+          font-size: 38px;
+          font-weight: bold;
+        }
+        .serialNumber2 {
+          color: #0bc174;
+          font-size: 38px;
+          font-weight: bold;
+        }
+      }
+    }
+    .parTitle {
+      margin-top: 20px;
+      .line {
+        width: 10px;
+        height: 30px;
+        background: #2780d9;
+      }
+      .title {
+        color: #2780d9;
+      }
+    }
+    .listContainer {
+      margin-top: 50px;
+      margin-left: 50px;
+      .labelCls {
+        color: #999999;
+        width: 5em;
+        text-align: justify;
+        text-justify: distribute-all-lines;
+        text-align-last: justify;
+      }
+      .valueCls {
+        color: #333333;
+        margin-left: 10px;
+      }
+    }
+  }
+  .tip {
+    margin-top: 40px !important;
+    margin-left: 40px !important;
+  }
+  .titleCls {
+    color: #ff9d46;
+  }
+}
