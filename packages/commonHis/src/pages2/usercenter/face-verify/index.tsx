@@ -28,11 +28,11 @@ export default () => {
   });
   const { analyzeAge } = analyzeIDCard(faceInfo.idNo);
 
-  useEffect(() => {
-    if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
-      setVisible(true);
-    }
-  }, [analyzeAge, faceVerifyStatus]);
+  // useEffect(() => {
+  //   if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
+  //     setVisible(true);
+  //   }
+  // }, [analyzeAge, faceVerifyStatus]);
   useUnmount(() => {
     if (faceVerifyStatus !== FaceVerifyStatus.成功) {
       setFaceInfo({
@@ -40,6 +40,7 @@ export default () => {
         idNo: '',
         success: false,
       });
+      if (analyzeAge >= 60) setVisible(true);
     }
   });
   const handleSuccess = useCallback(() => {
