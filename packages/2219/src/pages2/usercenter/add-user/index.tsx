@@ -329,46 +329,42 @@ export default memo(() => {
               ? '0'
               : '1',
           };
-          getPatientList().then((res) => {
-            console.log('res', res);
-            if (true) {
-              handleAdd(
-                btnSubType === 'bind'
-                  ? params
-                  : {
-                      ...params,
-                      patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
-                      extFields: {
-                        profession: values['profession'],
-                      },
-                    },
-              ).then((res) => {
-                if (res.code === 0) {
-                  showToast({
-                    title: btnSubType === 'add' ? '建档成功' : '绑定成功',
-                    icon: 'success',
-                  }).then(() => {
-                    if (pageRoute) {
-                      getPatientList().then((res) => {
-                        const patient = res.filter(
-                          (item) => item.patientFullIdNo === values['idNo'],
-                        )[0];
-                        const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
-                        redirectTo({
-                          url,
-                        });
-                      });
-                    } else {
-                      navigateBack();
-                    }
 
-                    setFaceInfo({
-                      idNo: '',
-                      name: '',
-                      success: false,
+          handleAdd(
+            btnSubType === 'bind'
+              ? params
+              : {
+                  ...params,
+                  patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
+                  extFields: {
+                    profession: values['profession'],
+                  },
+                },
+          ).then((res) => {
+            if (res.code === 0) {
+              showToast({
+                title: btnSubType === 'add' ? '建档成功' : '绑定成功',
+                icon: 'success',
+              }).then(() => {
+                if (pageRoute) {
+                  getPatientList().then((res) => {
+                    const patient = res.filter(
+                      (item) => item.patientFullIdNo === values['idNo'],
+                    )[0];
+                    const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
+                    redirectTo({
+                      url,
                     });
                   });
+                } else {
+                  navigateBack();
                 }
+
+                setFaceInfo({
+                  idNo: '',
+                  name: '',
+                  success: false,
+                });
               });
             }
           });
@@ -377,8 +373,7 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles?.childrenMaxAge,
-      bindcardProdiles?.isFace,
+      bindcardProdiles,
       btnSubType,
       config.enableFaceVerify,
       faceInfo,
@@ -389,11 +384,9 @@ export default memo(() => {
       isBrithday,
       ocrInfo.num,
       pageRoute,
-      selectCard.birthday,
-      selectCard.patientAge,
-      selectCard.patientSex,
+      selectCard,
       setFaceInfo,
-      user.phone,
+      user?.phone,
     ],
   );
 
