@@ -329,21 +329,9 @@ export default memo(() => {
               ? '0'
               : '1',
           };
-          let isRepeatedCard;
           getPatientList().then((res) => {
             console.log('res', res);
-            isRepeatedCard = res.some((cardItem) => {
-              const IdNo = decrypt(cardItem?.encryptIdNo);
-              if (IdNo === params.idNo) {
-                showToast({
-                  title: '该就诊人已存在,不能重复绑卡',
-                  icon: 'fail',
-                });
-                return true;
-              }
-            });
-            console.log('isRepeatedCard', isRepeatedCard);
-            if (!isRepeatedCard) {
+            if (true) {
               handleAdd(
                 btnSubType === 'bind'
                   ? params
@@ -389,19 +377,23 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles,
+      bindcardProdiles?.childrenMaxAge,
+      bindcardProdiles?.isFace,
       btnSubType,
-      config,
+      config.enableFaceVerify,
       faceInfo,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
       isBrithday,
+      ocrInfo.num,
       pageRoute,
-      selectCard,
+      selectCard.birthday,
+      selectCard.patientAge,
+      selectCard.patientSex,
       setFaceInfo,
-      user,
+      user.phone,
     ],
   );
 
