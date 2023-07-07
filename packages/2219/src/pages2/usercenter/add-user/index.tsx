@@ -329,58 +329,42 @@ export default memo(() => {
               ? '0'
               : '1',
           };
-          let isRepeatedCard;
-          getPatientList().then((res) => {
-            console.log('res', res);
-            isRepeatedCard = res.some((cardItem) => {
-              const IdNo = decrypt(cardItem?.encryptIdNo);
-              if (IdNo === params.idNo) {
-                showToast({
-                  title: '该就诊人已存在,不能重复绑卡',
-                  icon: 'fail',
-                });
-                return true;
-              }
-            });
-            console.log('isRepeatedCard', isRepeatedCard);
-            if (!isRepeatedCard) {
-              handleAdd(
-                btnSubType === 'bind'
-                  ? params
-                  : {
-                      ...params,
-                      patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
-                      extFields: {
-                        profession: values['profession'],
-                      },
-                    },
-              ).then((res) => {
-                if (res.code === 0) {
-                  showToast({
-                    title: btnSubType === 'add' ? '建档成功' : '绑定成功',
-                    icon: 'success',
-                  }).then(() => {
-                    if (pageRoute) {
-                      getPatientList().then((res) => {
-                        const patient = res.filter(
-                          (item) => item.patientFullIdNo === values['idNo'],
-                        )[0];
-                        const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
-                        redirectTo({
-                          url,
-                        });
-                      });
-                    } else {
-                      navigateBack();
-                    }
 
-                    setFaceInfo({
-                      idNo: '',
-                      name: '',
-                      success: false,
+          handleAdd(
+            btnSubType === 'bind'
+              ? params
+              : {
+                  ...params,
+                  patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
+                  extFields: {
+                    profession: values['profession'],
+                  },
+                },
+          ).then((res) => {
+            if (res.code === 0) {
+              showToast({
+                title: btnSubType === 'add' ? '建档成功' : '绑定成功',
+                icon: 'success',
+              }).then(() => {
+                if (pageRoute) {
+                  getPatientList().then((res) => {
+                    const patient = res.filter(
+                      (item) => item.patientFullIdNo === values['idNo'],
+                    )[0];
+                    const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
+                    redirectTo({
+                      url,
                     });
                   });
+                } else {
+                  navigateBack();
                 }
+
+                setFaceInfo({
+                  idNo: '',
+                  name: '',
+                  success: false,
+                });
               });
             }
           });
@@ -391,17 +375,18 @@ export default memo(() => {
       alipayUserInfo,
       bindcardProdiles,
       btnSubType,
-      config,
+      config.enableFaceVerify,
       faceInfo,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
       isBrithday,
+      ocrInfo.num,
       pageRoute,
       selectCard,
       setFaceInfo,
-      user,
+      user?.phone,
     ],
   );
 
