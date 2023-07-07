@@ -28,11 +28,11 @@ export default () => {
   });
   const { analyzeAge } = analyzeIDCard(faceInfo.idNo);
 
-  // useEffect(() => {
-  // if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
-  //   setVisible(true);
-  // }
-  // }, [analyzeAge, faceVerifyStatus]);
+  useEffect(() => {
+    if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
+      setVisible(true);
+    }
+  }, [analyzeAge, faceVerifyStatus]);
   useUnmount(() => {
     if (faceVerifyStatus !== FaceVerifyStatus.成功) {
       setFaceInfo({
@@ -52,9 +52,6 @@ export default () => {
         icon: 'none',
         title: '身份证信息不能为空!',
       }).then(() => navigateBack());
-    }
-    if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
-      setVisible(true);
     }
     setNavigationBar({
       title: '开始人脸识别',

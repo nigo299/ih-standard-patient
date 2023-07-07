@@ -25,7 +25,7 @@ export interface Options {
 
 export default ({ request_verify_pre_info }: Options) => {
   const [faceVerifyStatus, setFaceVerifyStatus] = useState<FaceVerifyStatus>(
-    FaceVerifyStatus.失败,
+    FaceVerifyStatus.未开始,
   );
   const handleFaceVerify = useCallback(
     () =>
