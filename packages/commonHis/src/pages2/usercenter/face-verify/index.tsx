@@ -40,9 +40,6 @@ export default () => {
         idNo: '',
         success: false,
       });
-      if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
-        setVisible(true);
-      }
     }
   });
   const handleSuccess = useCallback(() => {
@@ -55,6 +52,9 @@ export default () => {
         icon: 'none',
         title: '身份证信息不能为空!',
       }).then(() => navigateBack());
+    }
+    if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
+      setVisible(true);
     }
     setNavigationBar({
       title: '开始人脸识别',
