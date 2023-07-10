@@ -1,0 +1,12 @@
+include:
+  - project: 'fe-his-groups/apps/common'
+    ref: main
+    file: '.gitlab-ci-template.yml'
+
+variables:
+  HIS_ID: 40074
+  ENABLE_H5: 'true'
+   # 是否启用支付宝小程序
+  ENABLE_ALI: 'true'
+  WORK_DIR: 'packages/40074'
+  DIST_PATH: 'packages/40074/dist'
