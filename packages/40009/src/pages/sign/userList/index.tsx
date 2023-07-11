@@ -74,7 +74,8 @@ export default () => {
         getPatientList();
       }
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [md5, refreshTime]);
   return (
     <View className={styles.pageUrmUsrLst}>
       <Modal />
