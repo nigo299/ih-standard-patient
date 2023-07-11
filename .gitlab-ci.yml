@@ -25,4 +25,4 @@ ci:
   script:
     - exit 0
   tags:
-    - kq-test
+    - kq-front-test
