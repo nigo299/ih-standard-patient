@@ -36,7 +36,7 @@ export default () => {
   const {
     request: requestScheduleList,
     loading,
-    data: { data: originScheduleList },
+    data: originData,
   } = useApi.查询科室排班日期({
     initValue: {
       data: [],
@@ -46,6 +46,9 @@ export default () => {
     },
     needInit: !!deptId,
   });
+  const originScheduleList = useMemo(() => {
+    return originData?.data;
+  }, [originData]);
 
   /** 当日挂号的时候不选择日期的号源 */
   const scheduleList = useMemo(() => {

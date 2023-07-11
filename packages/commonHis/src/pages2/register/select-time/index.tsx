@@ -68,7 +68,7 @@ export default () => {
   const {
     request: doctorScheduleRequest,
     loading,
-    data: { data: doctorScheduleList },
+    data: originalData,
   } = useApi.查询医生排班日期({
     initValue: {
       data: [],
@@ -79,6 +79,9 @@ export default () => {
     },
     needInit: !!deptId && !!doctorId,
   });
+  const doctorScheduleList = useMemo(() => {
+    return originalData?.data;
+  }, [originalData]);
   const [scheduleId, setScheduleId] = useState<string>('');
 
   const [date, setDate] = useEffectState(
@@ -99,7 +102,7 @@ export default () => {
   const {
     request: doctoreDateRequest,
     loading: loading2,
-    data: { data: doctorScheduleDateDetail },
+    data: originalData2,
   } = useApi.查询医生排班号源({
     initValue: {
       data: { itemList: [] },
@@ -111,6 +114,9 @@ export default () => {
     },
     needInit: !!deptId && !!doctorId && !!date,
   });
+  const doctorScheduleDateDetail = useMemo(() => {
+    return originalData2?.data;
+  }, [originalData2]);
   const renderDate = (day: dayjs.Dayjs) => {
     const canSelect =
       doctorScheduleList &&
