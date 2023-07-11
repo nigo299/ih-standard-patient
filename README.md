@@ -2,7 +2,7 @@
 
 ## 仓库介绍
 
-> 此仓库是基于 `lerna + yarn` 打造的 `monorepo` 仓库，通用医院模板采用了[沙区妇幼医院](https://ourgit.cqkqinfo.com/fe-his-groups/apps/40064)。
+> 此仓库是基于 `lerna + yarn` 打造的 `monorepo` 仓库，通用医院模板采用了[沙区妇幼医院](https://ourgit.cqkqinfo.com/fe-his-groups/apps/40064)。.
 
 目标在于最大限度复用智慧医院通用的页面和业务逻辑， 主要包括：
 
