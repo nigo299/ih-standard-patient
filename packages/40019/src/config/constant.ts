@@ -9,11 +9,11 @@ export const IMAGE_DOMIN = `${
     ? '/images'
     : PLATFORM === 'web'
     ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40072-his/images'
+    : 'https://tihs.cqkqinfo.com/patients/p40019-his/images'
 }`;
 export const HOSPITAL_NAME = '梁平中医院';
 export const HOSPITAL_TEL = '023-63110120';
-export const HIS_ID = '40072';
+export const HIS_ID = '40019';
 export const REQUEST_QUERY = {
   hisId: HIS_ID,
   platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}01`,

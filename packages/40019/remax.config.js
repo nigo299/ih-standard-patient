@@ -18,7 +18,7 @@ module.exports = {
   configWebpack({ config }) {
     config.plugin('DynamicImportPlugin').use(
       new DynamicImportPlugin({
-        hisId: '40072',
+        hisId: '40019',
       }),
     );
     config.resolve.alias.merge({
