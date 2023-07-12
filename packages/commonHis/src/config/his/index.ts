@@ -1,6 +1,6 @@
 import HisBase from './hisBase';
 import His40070 from './his40070';
-import His40072 from './his40072';
+import His40019 from './his40019';
 import His40074 from './his40074';
 import His40009 from './his40009';
 import His2219 from './his2219';
@@ -24,9 +24,9 @@ export const getHisConfig = () => {
     case '40011':
       cacheHis = new His40011();
       return new His40011();
-    case '40072':
-      cacheHis = new His40072();
-      return new His40072();
+    case '40019':
+      cacheHis = new His40019();
+      return new His40019();
     case '40074':
       cacheHis = new His40074();
       return new His40074();
