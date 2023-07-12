@@ -252,17 +252,20 @@ export default () => {
     });
   });
   const callFun = () => {
+    const CUSTOMER_PHONE = '500-220-177';
+    const COPY = '复制';
+    const options = [CUSTOMER_PHONE, COPY].map((item) => ({
+      label: item,
+      value: item,
+    }));
     ActionSheet.show({
-      items: [
-        { label: '500-220-177', value: '500-220-177' },
-        { label: '复制', value: '复制' },
-      ],
-    }).then(({ label, value }) => {
-      if (label === '500-220-177' && value === '500-220-177') {
-        callPhone('500-220-177');
+      items: options,
+    }).then(({ value }) => {
+      if (value === CUSTOMER_PHONE) {
+        callPhone(CUSTOMER_PHONE);
       }
-      if (label === '复制' && value === '复制') {
-        setClipboardData({ data: '500-220-177' }).then(() =>
+      if (value === COPY) {
+        setClipboardData({ data: CUSTOMER_PHONE }).then(() =>
           showToast({ title: '复制成功' }),
         );
       }
