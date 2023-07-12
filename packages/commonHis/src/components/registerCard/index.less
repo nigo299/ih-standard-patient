@@ -6,7 +6,12 @@
   height: 327px;
   background-size: contain;
 }
-
+.kouQiangPannel {
+  margin: 0 auto;
+  width: 712px;
+  height: 410px;
+  background-size: contain;
+}
 .hospitalName {
   margin-top: 20px;
   font-size: 40px;
@@ -25,6 +30,7 @@
   font-size: 40px;
   font-weight: 400;
   color: #333;
+  display: none;
 }
 .tip {
   margin-top: 13px;
@@ -58,6 +64,9 @@
     > rect:nth-child(1) {
       fill: none !important;
     }
+    //  text {
+    //   display: none !important;
+    // }
   }
 }
 
@@ -67,11 +76,31 @@
   margin-bottom: -10px;
 }
 .KQbarCodeWeb {
-  height: 170px;
-  width: 320px;
-  margin-bottom: -10px;
+  height: 420px;
+  width: 560px;
+  // border: 1px solid red;
+  // margin-bottom: -30px;
+  svg {
+     text {
+      display: none !important;
+    }
+  }
 }
+.kqBarCodeText {
+  // color: red;
+  // border: 1px solid red;
+  font-weight: bold;
+  width: 600px;
+  height: 48px;
+  text-align: center;
+  line-height: 48px;
+  font-size: 40px;
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
 
+}
 .barCodeShow {
   opacity: 0;
 }

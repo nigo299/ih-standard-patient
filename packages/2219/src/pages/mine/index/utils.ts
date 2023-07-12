@@ -14,7 +14,7 @@ export const handleMineNavTap = (
   }
   if (list.title === '报告及影像查询') {
     navigateTo({
-      url: `/pages/report/report-list/index?patientId=${extra?.patientInfo?.patientId}`,
+      url: `/pages/report/report-list/index?patientId=${extra?.patientInfo?.patientId}&patHisNo=${extra?.patientInfo?.patHisNo}`,
     });
     return;
   }

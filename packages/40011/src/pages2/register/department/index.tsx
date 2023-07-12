@@ -41,7 +41,7 @@ export default () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
     if (deptList.length === 0) {
-      getDeptList(type);
+      getDeptList(type, hisType);
     }
     setNavigationBar({
       title: '选择科室',
@@ -66,7 +66,7 @@ export default () => {
                 });
               } else if (PLATFORM === 'web') {
                 window.location.href =
-                  'https://miying.qq.com/guide-h5/home?appid=wxab8f6386222bc56a';
+                  'https://miying.qq.com/guide-h5/home?appid=wx950fe9e111226825';
               } else {
                 showToast({
                   icon: 'none',

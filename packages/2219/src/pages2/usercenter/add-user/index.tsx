@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { View, navigateTo, navigateBack, Image, redirectTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import {
@@ -61,8 +61,14 @@ export default memo(() => {
     idType: string;
     idNo: string;
   }>();
-  const { ocrInfo, clearOcrInfo, faceInfo, setFaceInfo, getPatientList } =
-    patientState.useContainer();
+  const {
+    ocrInfo,
+    clearOcrInfo,
+    faceInfo,
+    setFaceInfo,
+    getPatientList,
+    needGuardian,
+  } = patientState.useContainer();
   const { user, getUserInfo } = globalState.useContainer();
   const { config } = useHisConfig();
   const [addressOptions, setAddressOptions] = useState<CascadePickerOption[]>(
@@ -128,7 +134,12 @@ export default memo(() => {
   const { request: handleAdd, loading: addLoading } = useApi.建档绑卡({
     needInit: false,
   });
-
+  const guardianName = useMemo(() => {
+    if (needGuardian) {
+      return '代理人';
+    }
+    return '监护人';
+  }, [needGuardian]);
   const handleFormSubmit = useCallback(
     async (values: any) => {
       delete values['checked'];
@@ -156,6 +167,7 @@ export default memo(() => {
                 checked: false,
               });
             } else {
+              setIsChild(true);
               form.setFieldsValue({
                 checked: false,
                 birthday: analyzeBirth,
@@ -264,11 +276,11 @@ export default memo(() => {
         if (checkPhoneFlag) {
           // 判断成人儿童表单需要识别的身份信息
           const idNo =
-            values['patientType'] === '1'
+            values['patientType'] === '1' || needGuardian
               ? values['parentIdNo']
               : values['idNo'];
           const name =
-            values['patientType'] === '1'
+            values['patientType'] === '1' || needGuardian
               ? values['parentName']
               : values['patientName'];
           const birthday =
@@ -328,58 +340,42 @@ export default memo(() => {
               ? '0'
               : '1',
           };
-          let isRepeatedCard;
-          getPatientList().then((res) => {
-            console.log('res', res);
-            isRepeatedCard = res.some((cardItem) => {
-              const IdNo = decrypt(cardItem?.encryptIdNo);
-              if (IdNo === params.idNo) {
-                showToast({
-                  title: '该就诊人已存在,不能重复绑卡',
-                  icon: 'fail',
-                });
-                return true;
-              }
-            });
-            console.log('isRepeatedCard', isRepeatedCard);
-            if (!isRepeatedCard) {
-              handleAdd(
-                btnSubType === 'bind'
-                  ? params
-                  : {
-                      ...params,
-                      patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
-                      extFields: {
-                        profession: values['profession'],
-                      },
-                    },
-              ).then((res) => {
-                if (res.code === 0) {
-                  showToast({
-                    title: btnSubType === 'add' ? '建档成功' : '绑定成功',
-                    icon: 'success',
-                  }).then(() => {
-                    if (pageRoute) {
-                      getPatientList().then((res) => {
-                        const patient = res.filter(
-                          (item) => item.patientFullIdNo === values['idNo'],
-                        )[0];
-                        const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
-                        redirectTo({
-                          url,
-                        });
-                      });
-                    } else {
-                      navigateBack();
-                    }
 
-                    setFaceInfo({
-                      idNo: '',
-                      name: '',
-                      success: false,
+          handleAdd(
+            btnSubType === 'bind'
+              ? params
+              : {
+                  ...params,
+                  patientAddress: `${values['birthPlace']} ${values['patientAddress']}`,
+                  extFields: {
+                    profession: values['profession'],
+                  },
+                },
+          ).then((res) => {
+            if (res.code === 0) {
+              showToast({
+                title: btnSubType === 'add' ? '建档成功' : '绑定成功',
+                icon: 'success',
+              }).then(() => {
+                if (pageRoute) {
+                  getPatientList().then((res) => {
+                    const patient = res.filter(
+                      (item) => item.patientFullIdNo === values['idNo'],
+                    )[0];
+                    const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
+                    redirectTo({
+                      url,
                     });
                   });
+                } else {
+                  navigateBack();
                 }
+
+                setFaceInfo({
+                  idNo: '',
+                  name: '',
+                  success: false,
+                });
               });
             }
           });
@@ -390,17 +386,18 @@ export default memo(() => {
       alipayUserInfo,
       bindcardProdiles,
       btnSubType,
-      config,
+      config.enableFaceVerify,
       faceInfo,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
       isBrithday,
+      ocrInfo.num,
       pageRoute,
       selectCard,
       setFaceInfo,
-      user,
+      user?.phone,
     ],
   );
 
@@ -554,6 +551,11 @@ export default memo(() => {
                   label: item?.dictValue,
                   value: item?.dictKey,
                 }))}
+                onChange={(value) => {
+                  if (value === '1') {
+                    setIsChild(true);
+                  }
+                }}
               >
                 请选择
               </Picker>
@@ -965,17 +967,17 @@ export default memo(() => {
           </>
         )}
 
-        {(!checked ||
-          (selectCard?.idNo &&
-            Number(selectCard.patientAge) < bindcardProdiles?.childrenMaxAge) ||
-          (!isBrithday && isChild)) && (
+        {((selectCard?.idNo &&
+          Number(selectCard.patientAge) < bindcardProdiles?.childrenMaxAge) ||
+          isChild ||
+          needGuardian) && (
           <FormItem noStyle>
             {(_, __, { getFieldValue }) => {
               const parentIdType = getFieldValue('parentIdType') || '1';
               return (
                 <>
                   <PartTitle bold className={styles.partTitle2}>
-                    监护人信息
+                    {`${guardianName}信息`}
                   </PartTitle>
                   <Form
                     cell
@@ -985,18 +987,18 @@ export default memo(() => {
                     labelCls={styles.label}
                   >
                     <FormItem
-                      label={'监护人姓名'}
+                      label={`${guardianName}姓名`}
                       name="parentName"
                       rules={[
                         {
                           required: true,
-                          message: '请输入2-8位合法监护人姓名',
+                          message: `请输入2-8位合法${guardianName}姓名`,
                           pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,8}$/,
                         },
                       ]}
                     >
                       <ReInput
-                        placeholder="请输入监护人姓名"
+                        placeholder={`请输入${guardianName}姓名`}
                         type="text"
                         className={styles.reInput}
                         placeholderClassName={styles.placeholder}
@@ -1016,7 +1018,7 @@ export default memo(() => {
                       rules={[
                         {
                           required: true,
-                          message: '请选择监护人证件类型',
+                          message: `请选择${guardianName}证件类型`,
                         },
                       ]}
                     >
@@ -1038,7 +1040,7 @@ export default memo(() => {
                         {
                           type: parentIdType === '1' ? 'idCard' : 'string',
                           required: true,
-                          message: '请输入正确的监护人身份证',
+                          message: `请输入正确的${guardianName}证件号码`,
                         },
                       ]}
                     >
@@ -1048,7 +1050,7 @@ export default memo(() => {
                         placeholderClassName={styles.placeholder}
                         type="idcard"
                         adjustPosition
-                        placeholder={`请输入监护人${
+                        placeholder={`请输入${guardianName}${
                           bindcardProdiles?.idTypes?.filter(
                             (item) => item?.dictKey === parentIdType,
                           )[0]?.dictValue || '身份证'

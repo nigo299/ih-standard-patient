@@ -2,7 +2,7 @@ import CryptoJS from 'crypto-js';
 import { PLATFORM } from '@/config/constant';
 import { reLaunch, redirectTo } from 'remax/one';
 import dayjs from 'dayjs';
-
+import md5 from 'md5';
 export const reLaunchUrl = (url: string) => {
   if (PLATFORM === 'web') {
     redirectTo({
@@ -354,4 +354,16 @@ export const parseAge = (val: string): number => {
     return 0;
   }
   return Number(val);
+};
+
+export const getPatientAge = (val: string | undefined | number): string => {
+  if (!val) return '未知';
+  if (typeof val === 'number') return val + '岁';
+  if (val.includes('岁')) {
+    return val;
+  }
+  return val + '岁';
+};
+export const useMd5 = (value: string) => {
+  return md5(`${value}ASJAS98ASD8A9S8DA98SD8AS98D`);
 };

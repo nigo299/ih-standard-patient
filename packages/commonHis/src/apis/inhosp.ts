@@ -119,6 +119,7 @@ interface OrderDetailType {
   type: number;
   payOrderId: string;
   hisRecepitNo?: string;
+  patientId?: string;
 }
 interface InhospOrderDetialType extends API.ResponseDataType {
   data: OrderDetailType;

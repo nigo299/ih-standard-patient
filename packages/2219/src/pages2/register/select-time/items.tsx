@@ -9,13 +9,11 @@ import { ScheduleType } from '@/apis/register';
 export default ({
   items,
   onChange,
-  scheduleId: selectId,
   title,
 }: {
   items: ScheduleType[];
   title?: string;
   onChange?: (v: string) => void;
-  scheduleId?: string;
 }) => {
   const [folded, setFolded] = useState(false);
   console.log(items);
@@ -60,21 +58,27 @@ export default ({
                   onChange?.(scheduleId);
                 }}
                 className={classNames(styles.item, {
-                  [styles.scheduleOn]: scheduleId === selectId,
                   [styles.disbaled]: Number(leftSource) === 0,
                 })}
               >
                 <View className={styles.items1}>
                   <View className={styles.itemsText}>序号: {visitQueue}</View>
                   <View>
+                    <Text>
+                      {visitBeginTime?.slice(0, 5)}-{visitEndTime?.slice(0, 5)}
+                    </Text>
                     <Text
                       style={{
-                        backgroundColor: 'green',
+                        backgroundColor:
+                          extPropes?.sourceType?.slice(0, 1) == '0'
+                            ? 'green'
+                            : '#ff9d46',
                         color: 'white',
                         boxSizing: 'border-box',
-                        padding: '0 4px',
-                        borderRadius: '2px',
-                        marginRight: '2px',
+                        padding: '2px 6px',
+                        borderRadius: '8px',
+                        marginRight: '8px',
+                        marginLeft: '8px',
                       }}
                     >
                       {extPropes?.sourceType?.slice(0, 1) == '0'
@@ -82,26 +86,24 @@ export default ({
                         : '复诊'}
                     </Text>
                     <Text
-                      style={{
-                        backgroundColor: '#ff9d46',
-                        color: 'white',
-                        boxSizing: 'border-box',
-                        padding: '0 4px',
-                        borderRadius: '2px',
-                      }}
-                    >
-                      {extPropes?.sourceType?.slice(1)}
-                    </Text>
+                      className={styles.type}
+                      style={{ color: 'red', marginLeft: '70px' }}
+                    >{`价格: ¥${(registerFee / 100).toFixed(2)}`}</Text>
                   </View>
                 </View>
                 <View className={styles.items2}>
-                  {visitBeginTime?.slice(0, 5)}-{visitEndTime?.slice(0, 5)}
+                  <Text
+                    style={{
+                      color: '#ff9d46',
+                      boxSizing: 'border-box',
+                      wordBreak: 'break-all',
+                      lineHeight: '20px',
+                    }}
+                  >
+                    {extPropes?.sourceType?.slice(1)}
+                  </Text>
                   {/* <View className={styles.type}>普通</View> {`余 : ${leftSource}`} */}
                   {/* <View className={styles.type}>{`余号: ${1}`}</View> */}
-                  <View
-                    className={styles.type}
-                    style={{ color: '#ff9d46' }}
-                  >{`价格: ¥${(registerFee / 100).toFixed(2)}`}</View>
                 </View>
               </View>
             ),

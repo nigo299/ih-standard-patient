@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'remax/one';
+import { View, Text } from 'remax/one';
 import { Space, QrCode, BarCode, BackgroundImg } from '@kqinfo/ui';
 import { QrCodeModalOld } from '@/components';
 import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
@@ -24,9 +24,24 @@ export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
     <Space justify="center">
       <BackgroundImg
         innerProps={{ className: styles.pannel }}
-        imgProps={{ className: styles.pannel }}
+        imgProps={{
+          className:
+            config.registerCardChange === 'DEFAULT_STYLE'
+              ? styles.pannel
+              : styles.kouQiangPannel,
+        }}
         img={`${IMAGE_DOMIN}/payment/bg.png`}
       >
+        {config.registerCardChange === '2219_STYLE' && (
+          <View className={styles.kqBarCodeText}>
+            ID
+            <Text style={{ marginLeft: '16px', marginRight: '16px' }}>
+              {patCardNo}
+            </Text>
+            (扫码签到)
+          </View>
+        )}
+
         <Space vertical justify="center" alignItems="center">
           {config.registerCardChange === 'DEFAULT_STYLE' && (
             <View className={styles.hospitalName}>{hospitalName}</View>
@@ -60,7 +75,6 @@ export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
             )}
             {patCardNo && (
               <BarCode
-                // style={{ width: 130, height: 66 }}
                 content={patCardNo}
                 className={classNames(styles.barCode, {
                   [styles.barCodeWeb]: PLATFORM === 'web',
@@ -84,13 +98,14 @@ export default ({ payName, patCardNo, healthCardNo, hospitalName }: IProps) => {
           </Space>
 
           <View className={styles.tip}>
-            {payName === 'register'
-              ? `${
-                  healthCardNo ? '(电子健康卡)' : '(就诊卡号)'
-                }就诊时出示点击可放大显示`
-              : `${
-                  healthCardNo ? '(电子健康卡)' : '(就诊卡号)'
-                }取药时出示点击可放大显示`}
+            {config.registerCardChange !== '2219_STYLE' &&
+              (payName === 'register'
+                ? `${
+                    healthCardNo ? '(电子健康卡)' : '(就诊卡号)'
+                  }就诊时出示点击可放大显示`
+                : `${
+                    healthCardNo ? '(电子健康卡)' : '(就诊卡号)'
+                  }取药时出示点击可放大显示`)}
           </View>
 
           <QrCodeModalOld
