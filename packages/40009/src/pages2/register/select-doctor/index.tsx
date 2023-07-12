@@ -1,19 +1,30 @@
 import React, { useState, useMemo } from 'react';
-import { View, navigateTo } from 'remax/one';
+import { View, navigateTo, Image } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME, STEP_ITEMS } from '@/config/constant';
 import { DeptInfo, Calendar } from '@/pages2/register/components';
-import { NoData, Space, Loading, Radio } from '@kqinfo/ui';
+import {
+  NoData,
+  Space,
+  Loading,
+  Radio,
+  QrCode,
+  Button,
+  ActionSheet,
+  setClipboardData,
+  showToast,
+} from '@kqinfo/ui';
 import dayjs from 'dayjs';
 import useGetParams from '@/utils/useGetParams';
+import callPhone from '@/utils/callPhone';
 import { useEffectState } from 'parsec-hooks';
 import useApi from '@/apis/register';
 import useMicrositeApi from '@/apis/microsite';
 import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
-import styles from 'commonHis/src/pages2/register/select-doctor/index.less';
+import styles from './index.less';
 import { useHisConfig } from '@/hooks';
 import ShowPrice from 'commonHis/src/pages2/register/select-doctor/components/show-price';
 import ShowSource from 'commonHis/src/pages2/register/select-doctor/components/show-source';
@@ -190,37 +201,45 @@ export default () => {
       return <View />;
     }
   };
-  const renderCanChoose = (day: dayjs.Dayjs) => {
-    if (type === 'reserve') {
-      return scheduleList?.some(({ scheduleDate, status }) => {
-        if (config.showTodayRegisterSourceInReserve) {
-          return day.isSame(scheduleDate) && status === 1;
-        }
-        return (
-          scheduleDate !== dayjs().format('YYYY-MM-DD') &&
-          day.isSame(scheduleDate) &&
-          status === 1
-        );
-      });
-    } else if (type === 'day') {
-      return scheduleList?.some(
-        ({ scheduleDate, status }) =>
-          scheduleDate === dayjs().format('YYYY-MM-DD') &&
-          day.isSame(scheduleDate) &&
-          status === 1,
-      );
-    } else {
-      return scheduleList?.some(
-        ({ scheduleDate, status }) => day.isSame(scheduleDate) && status === 1,
-      );
-    }
-  };
-
+  // const renderCanChoose = (day: dayjs.Dayjs) => {
+  //   if (type === 'reserve') {
+  //     return scheduleList?.some(({ scheduleDate, status }) => {
+  //       if (config.showTodayRegisterSourceInReserve) {
+  //         return day.isSame(scheduleDate) && status === 1;
+  //       }
+  //       return (
+  //         scheduleDate !== dayjs().format('YYYY-MM-DD') &&
+  //         day.isSame(scheduleDate) &&
+  //         status === 1
+  //       );
+  //     });
+  //   } else if (type === 'day') {
+  //     return scheduleList?.some(
+  //       ({ scheduleDate, status }) =>
+  //         scheduleDate === dayjs().format('YYYY-MM-DD') &&
+  //         day.isSame(scheduleDate) &&
+  //         status === 1,
+  //     );
+  //   } else {
+  //     return scheduleList?.some(
+  //       ({ scheduleDate, status }) => day.isSame(scheduleDate) && status === 1,
+  //     );
+  //   }
+  // };
+  const [isSpecial, setIsSpecial] = useState(false);
   useUpdateEffect(() => {
     if (deptDetail?.name) {
       setDeptDetail(deptDetail);
     }
+    if (deptDetail?.hospitalDeptName?.includes('特需')) {
+      setIsSpecial(true);
+    }
   }, [deptDetail]);
+
+  const jumpCustomer = () => {
+    window.location.href =
+      'https://shop96487807.youzan.com/v3/message/live-qrcode/member?kdtId=96295639&activitiesId=125617';
+  };
 
   usePageEvent('onShow', () => {
     /** 优化小程序跳转授权返回后不自动请求接口 */
@@ -232,8 +251,29 @@ export default () => {
       title: '选择医生',
     });
   });
+  const callFun = () => {
+    const CUSTOMER_PHONE = '500-220-177';
+    const COPY = '复制';
+    const options = [CUSTOMER_PHONE, COPY].map((item) => ({
+      label: item,
+      value: item,
+    }));
+    ActionSheet.show({
+      items: options,
+    }).then(({ value }) => {
+      if (value === CUSTOMER_PHONE) {
+        callPhone(CUSTOMER_PHONE);
+      }
+      if (value === COPY) {
+        setClipboardData({ data: CUSTOMER_PHONE }).then(() =>
+          showToast({ title: '复制成功' }),
+        );
+      }
+    });
+  };
   return (
     <View>
+      <ActionSheet />
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择医生') + 1} />
       <View className={styles.content}>
         <DeptInfo
@@ -251,11 +291,7 @@ export default () => {
         <WhiteSpace />
         <Calendar
           renderDot={renderDate}
-          renderDisable={
-            config.showFullSourceDay
-              ? undefined
-              : (day: dayjs.Dayjs) => !renderCanChoose(day)
-          }
+          renderDisable={undefined}
           current={date}
           limit={config.regCalendarNumberOfDays}
           showDoctor
@@ -336,6 +372,30 @@ export default () => {
           <NoData />
         )}
       </View>
+      {isSpecial && !loading && !loading2 && newDoctorList?.length === 0 && (
+        <View>
+          <Space justify="center" flexWrap="wrap">
+            <Image
+              className={styles.banner}
+              src={`${IMAGE_DOMIN}/register/banner1.png`}
+              onTap={() => callFun()}
+            />
+            <QrCode
+              content={
+                'https://shop96487807.youzan.com/v3/message/live-qrcode/member?kdtId=96295639&activitiesId=125617'
+              }
+              className={styles.mediaQrcodeImg}
+            />
+          </Space>
+          <Button
+            type="primary"
+            className={styles.jumpBtn}
+            onTap={() => jumpCustomer()}
+          >
+            点击跳转，添加您的专属客服
+          </Button>
+        </View>
+      )}
     </View>
   );
 };
