@@ -229,6 +229,11 @@ export default () => {
     }
   }, [deptDetail]);
 
+  const jumpCustomer = () => {
+    window.location.href =
+      'https://shop96487807.youzan.com/v3/message/live-qrcode/member?kdtId=96295639&activitiesId=125617';
+  };
+
   usePageEvent('onShow', () => {
     /** 优化小程序跳转授权返回后不自动请求接口 */
     if (deptId) {
@@ -366,11 +371,17 @@ export default () => {
               onTap={() => callFun()}
             />
             <QrCode
-              content={'1233333333' || ''}
+              content={
+                'https://shop96487807.youzan.com/v3/message/live-qrcode/member?kdtId=96295639&activitiesId=125617'
+              }
               className={styles.mediaQrcodeImg}
             />
           </Space>
-          <Button type="primary" className={styles.jumpBtn}>
+          <Button
+            type="primary"
+            className={styles.jumpBtn}
+            onTap={() => jumpCustomer()}
+          >
             点击跳转，添加您的专属客服
           </Button>
         </View>
