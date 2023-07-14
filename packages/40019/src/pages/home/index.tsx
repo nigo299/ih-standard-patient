@@ -106,7 +106,6 @@ export default () => {
       ),
       url: '/pages2/register/department/index?type=default',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
-      new: true,
       // open: process.env.REMAX_APP_PLATFORM === 'production' && true,
     },
     {
@@ -118,7 +117,6 @@ export default () => {
       ),
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
       image: `${IMAGE_DOMIN}/home/mzjf.png`,
-      new: true,
       // open: process.env.REMAX_APP_PLATFORM === 'production' && true,
     },
     {
@@ -167,9 +165,9 @@ export default () => {
     {
       title: '当日挂号',
       // subTitle: '到院患者当日挂号',
-      subTitle: <View style={{ color: '#666' }}>快速咨询医生</View>,
+      subTitle: <View style={{ color: '#666' }}>当班医生号源</View>,
       url: '/pages2/register/select-hospital/index?type=reserve',
-      image: `${IMAGE_DOMIN}/home/zyfw.png`,
+      image: `${IMAGE_DOMIN}/home/drgh.png`,
     },
     {
       title: '住院服务',
@@ -555,12 +553,12 @@ export default () => {
             </Space>
           ))}
         </Space>
-        {/* <Banner
+        <Banner
           CommonImg={
             configData?.find((item) => item.configType === 'BANNER')
               ?.bannerInfo || []
           }
-        /> */}
+        />
         <View className={styles.copyRight}>
           <CopyRight
             clear
