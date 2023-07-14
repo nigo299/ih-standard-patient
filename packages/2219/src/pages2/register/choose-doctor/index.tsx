@@ -48,7 +48,7 @@ export default () => {
         <DeptInfo
           deptImg={deptDetail?.img || `${IMAGE_DOMIN}/register/dept.png`}
           hospitalName={HOSPITAL_NAME}
-          deptName={deptDetail?.hospitalDeptName || '本院区'}
+          deptName={deptDetail?.name || '本院区'}
           tag={deptDetail?.hisDistrict}
           summary={`简介: ${deptDetail?.summary || '暂无'}`}
           onDetailTap={() =>
