@@ -5,7 +5,8 @@ export default class His40011 extends HisBase {
     super('40011');
     this.config = Object.assign(this.config, {
       defaultAddress: '重庆市-市辖区-梁平区',
-      clinicPayBatchType: 'SINGLE',
+      clinicPayBatchType: 'JOINT',
+      isShowOutPayDetails: true,
     });
   }
 }

@@ -262,17 +262,34 @@ export default () => {
 
   const getWaitOpList = useCallback(async () => {
     setLoading(true);
-    const { data, code } = await useApi.查询门诊待缴费列表.request(
-      patientId
-        ? {
-            patientId,
-          }
-        : {
-            patCardNo,
-            scanFlag: '1',
-            extFields: JSON.stringify({ scanType }),
-          },
-    );
+    const { data, code } = await useApi.查询门诊待缴费列表
+      .request(
+        patientId
+          ? {
+              patientId,
+            }
+          : {
+              patCardNo,
+              scanFlag: '1',
+              extFields: JSON.stringify({ scanType }),
+            },
+      )
+      .catch((data) => {
+        if (data?.data?.data === null) {
+          showModal({
+            title: '提示',
+            content: '当前就诊人暂无待缴费记录, 请重新选择就诊人!',
+          }).then(({ confirm }) => {
+            if (confirm) {
+              redirectTo({
+                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
+              });
+            } else {
+              navigateBack();
+            }
+          });
+        }
+      });
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
       if (PAYMENT_SELECTALL_PAY) {
@@ -280,7 +297,7 @@ export default () => {
       } else {
         setSelectList([data[0].hisOrderNo]);
       }
-    } else if (data?.length === 0) {
+    } else if (data?.length === 0 || data === null) {
       showModal({
         title: '提示',
         content: '当前就诊人暂无待缴费记录, 请重新选择就诊人!',
