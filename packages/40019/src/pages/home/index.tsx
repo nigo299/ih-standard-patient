@@ -166,7 +166,7 @@ export default () => {
       title: '当日挂号',
       // subTitle: '到院患者当日挂号',
       subTitle: <View style={{ color: '#666' }}>当班医生号源</View>,
-      url: '/pages2/register/select-hospital/index?type=reserve',
+      url: '/pages2/register/department/index?type=day',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
     },
     {
