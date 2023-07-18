@@ -266,16 +266,33 @@ export default () => {
 
   const getWaitOpList = useCallback(async () => {
     setLoading(true);
-    const { data, code } = await useApi.查询门诊待缴费列表.request(
-      patientId
-        ? {
-            patientId,
-          }
-        : {
-            patCardNo,
-            scanFlag: '1',
-          },
-    );
+    const { data, code } = await useApi.查询门诊待缴费列表
+      .request(
+        patientId
+          ? {
+              patientId,
+            }
+          : {
+              patCardNo,
+              scanFlag: '1',
+            },
+      )
+      .catch((e) => {
+        if (e.data.data === null || e.data.data === undefined) {
+          showModal({
+            title: '提示',
+            content: '当前就诊人暂无待缴费记录, 请重新选择就诊人!',
+          }).then(({ confirm }) => {
+            if (confirm) {
+              redirectTo({
+                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
+              });
+            } else {
+              navigateBack();
+            }
+          });
+        }
+      });
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
       if (PAYMENT_SELECTALL_PAY) {
