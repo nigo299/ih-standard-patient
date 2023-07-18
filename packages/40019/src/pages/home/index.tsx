@@ -63,6 +63,7 @@ export default () => {
   const [show, setShow] = useState(false);
   const [registerMode, setRegisterMode] = useState('');
   const { clearCountdownTimer } = useDownCount();
+  const [regInfo, setRegInfo] = useState<any>();
   const {
     data: { data: configList },
   } = useApi.查询配置列表({
@@ -89,6 +90,14 @@ export default () => {
   } = useApi.注意事项内容查询({
     params: {
       noticeType: 'GHXZ',
+      noticeMethod: 'WBK',
+    },
+  });
+  const {
+    data: { data: infoData3 },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'DRGHXZ',
       noticeMethod: 'WBK',
     },
   });
@@ -243,16 +252,14 @@ export default () => {
       {
         title: '健康宣教',
         subTitle: '',
-        open: true,
         image: `${IMAGE_DOMIN}/home/jkxj.png`,
-        url: '',
+        url: '/pages/microsite/hospital-article/index?type=140&title=%E5%81%A5%E5%BA%B7%E5%AE%A3%E6%95%99',
       },
       {
         title: '意见反馈',
         subTitle: '',
-        open: true,
         image: `${IMAGE_DOMIN}/home/yjfk.png`,
-        url: '',
+        url: '/pages2/feedback/feedback-list/index',
       },
       // {
       //   title: '满意度调查',
@@ -293,8 +300,15 @@ export default () => {
         setPageStyle({
           overflow: 'hidden',
         });
-        if (infoData2?.[0]?.noticeInfo) setShow(true);
-        else {
+        if (infoData2?.[0]?.noticeInfo && nav.title === '预约挂号') {
+          setRegInfo(infoData2);
+          setShow(true);
+          return;
+        } else if (infoData3?.[0]?.noticeInfo && nav.title === '当日挂号') {
+          setRegInfo(infoData3);
+          setShow(true);
+          return;
+        } else {
           setPageStyle({
             overflow: 'inherit',
           });
@@ -348,7 +362,7 @@ export default () => {
         url: nav.url,
       });
     },
-    [getDeptList, getPatientList, infoData2, patientId],
+    [getDeptList, getPatientList, infoData2, infoData3, patientId],
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
@@ -570,7 +584,7 @@ export default () => {
       <RegisterNotice
         show={show}
         close={() => setShow(false)}
-        content={infoData2?.[0]?.noticeInfo || ''}
+        content={regInfo?.[0]?.noticeInfo || ''}
         confirm={() => {
           if (
             registerMode.includes('reserve') &&
