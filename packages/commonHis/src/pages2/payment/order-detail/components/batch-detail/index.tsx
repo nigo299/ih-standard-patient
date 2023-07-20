@@ -31,7 +31,7 @@ import {
   PAY_TYPE,
   PLATFORM,
 } from '@/config/constant';
-import { decrypt, formDate, returnUrl } from '@/utils';
+import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
 import useCommApi from '@/apis/common';
 import styles from '@/pages2/payment/order-detail/components/batch-detail/index.less';
 import useRegisterApi, { MedicalPayType } from '@/apis/register';
@@ -93,7 +93,7 @@ export default () => {
       label: '就诊人',
       text: `${orderDetail?.patientName} | ${
         PatGender[orderDetail?.patientSex] || ''
-      } | ${orderDetail?.patientAge}岁`,
+      } | ${getPatientAge(orderDetail?.patientAge)}`,
     },
     {
       label: '就诊号',

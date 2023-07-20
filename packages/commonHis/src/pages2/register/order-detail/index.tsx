@@ -5,6 +5,7 @@ import {
   decrypt,
   formDate,
   getBrowserUa,
+  getPatientAge,
   getUrlParams,
   returnUrl,
 } from '@/utils';
@@ -232,7 +233,7 @@ export default () => {
           doctorName: doctorName,
           patientName: `${patientName} | ${
             PatGender[patientSex] || ''
-          } | ${patientAge}岁`,
+          } | ${getPatientAge(patientAge)}`,
           patCardNo,
           patientFullIdNo: decrypt(encryptPatientIdNo),
           registerTime: `${formDate(visitDate).slice(

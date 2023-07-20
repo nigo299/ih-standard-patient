@@ -8,7 +8,7 @@ import { ListItem, WhiteSpace, RegisterCard } from '@/components';
 import useGetParams from '@/utils/useGetParams';
 import { Form, PartTitle, Table, Space } from '@kqinfo/ui';
 import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
-import { formDate } from '@/utils';
+import { formDate, getPatientAge } from '@/utils';
 import { useHisConfig } from '@/hooks';
 import { PatGender } from '@/config/dict';
 
@@ -61,7 +61,9 @@ export default () => {
   const infoList = [
     {
       label: '就诊人',
-      text: `${patientName} | ${PatGender[gender] || ''} | ${age}岁`,
+      text: `${patientName} | ${PatGender[gender] || ''} | ${getPatientAge(
+        age,
+      )}`,
     },
     {
       label: '就诊号',

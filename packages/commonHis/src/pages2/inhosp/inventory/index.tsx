@@ -11,6 +11,7 @@ import reportCmPV from '@/alipaylog/reportCmPV';
 import useGetParams from '@/utils/useGetParams';
 import { PatGender } from '@/config/dict';
 import useGetExpensesDayDetailExtFields from '@/pages2/inhosp/inventory/hooks/useGetExpensesDayDetailExtFields';
+import { getPatientAge } from '@/utils';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -73,7 +74,7 @@ export default () => {
                 {liveData?.patientName}
                 <View className={styles.patInfo}>
                   {PatGender[liveData?.patientSex] || ''}
-                  {liveData?.patientAge}岁
+                  {getPatientAge(liveData?.patientAge)}
                 </View>
               </Space>
               <Space alignItems="center" className={styles.date}>
