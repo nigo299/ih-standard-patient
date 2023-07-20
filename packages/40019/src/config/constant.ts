@@ -35,7 +35,7 @@ export const NUCLEIC_HID = 9;
 // 是否需要订单详情中电子发票
 export const ORDER_INVOICE = false;
 // 是否开启二级科室
-export const CHILDREN_DEPTLIST = true;
+export const CHILDREN_DEPTLIST = false;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
   process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
@@ -54,10 +54,10 @@ export const IS_DEPT = PLATFORM !== 'ali';
 
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {
-  longitude: 108.165027,
-  latitude: 29.288444,
+  longitude: 107.793987,
+  latitude: 30.669321,
   name: HOSPITAL_NAME,
-  address: '自治县高家台街47号',
+  address: '重庆市梁平区人民西路251号',
 };
 export const WEB_ADDRESS = `https://mapapi.qq.com/web/mapComponents/locationMarker/v/index.html?marker=coord:${ADDRESS.latitude},${ADDRESS.longitude};title:${HOSPITAL_NAME};addr:${ADDRESS.address}&key=TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU&referer=myapp&ch=uri-api&ADTAG=uri-api.myapp`;
 

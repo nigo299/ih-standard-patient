@@ -32,9 +32,26 @@ export default () => {
   const [liveData, setLiveData] = useState<InhospPatientType>();
   const [form] = Form.useForm();
   const getInhospPatientInfo = useCallback(async () => {
-    const { data, code } = await useApi.查询住院信息.request({
-      patientId: defaPatientId || patientId,
-    });
+    const { data, code } = await useApi.查询住院信息
+      .request({
+        patientId: defaPatientId || patientId,
+      })
+      .catch((data) => {
+        if (data?.data?.data === null) {
+          showModal({
+            title: '提示',
+            content: '未查询到住院信息, 请重新选择就诊人!',
+          }).then(({ confirm }) => {
+            if (confirm) {
+              redirectTo({
+                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
+              });
+            } else {
+              navigateBack();
+            }
+          });
+        }
+      });
     if (code === 0 && data?.patientName) {
       setInhospPatientInfo(data);
       setLiveData(data);
