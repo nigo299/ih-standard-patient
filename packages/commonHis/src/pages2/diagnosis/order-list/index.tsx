@@ -19,6 +19,7 @@ import useApi from '@/apis/common';
 import useGetParams from '@/utils/useGetParams';
 import dayjs from 'dayjs';
 import { PatGender } from '@/config/dict';
+import { getPatientAge } from '@/utils';
 
 export default () => {
   const { patHisNo } = useGetParams<{ patHisNo: string }>();
@@ -91,7 +92,7 @@ export default () => {
                     {PatGender[resultData?.patSex] || ''}
                   </FormItem>
                   <FormItem label={'年龄'} className={styles.itemText}>
-                    {resultData?.patAge + '岁'}
+                    {getPatientAge(resultData?.patAge)}
                   </FormItem>
                 </Space>
                 <FormItem label={'创建时间'}>{resultData?.createTime}</FormItem>

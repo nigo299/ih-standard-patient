@@ -10,7 +10,7 @@ import payState from '@/stores/pay';
 import patientState from '@/stores/patient';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
-import { returnUrl } from '@/utils';
+import { getPatientAge, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import styles from './index.less';
 import { PatGender } from '@/config/dict';
@@ -63,7 +63,7 @@ export default () => {
           doctorName: data?.doctorName,
           patientName: `${patientName} | ${
             PatGender[waitOpList[0].gender] || ''
-          } | ${waitOpList[0].age || '未知'}岁`,
+          } | ${getPatientAge(waitOpList[0].age)}`,
           patCardNo,
           totalFee: data.totalFee,
           orderId: data.orderId,

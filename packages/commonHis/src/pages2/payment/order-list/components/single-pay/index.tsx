@@ -34,7 +34,7 @@ import {
   PAYMENT_SELECTALL_PAY,
   PAY_TYPE,
 } from '@/config/constant';
-import { decrypt, formDate, returnUrl } from '@/utils';
+import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Tip } from '@/components';
 import styles from '@/pages2/payment/order-list/components/single-pay/index.less';
@@ -142,7 +142,7 @@ export default () => {
         doctorName: data?.doctorName,
         patientName: `${waitOpList[0].patientName} | ${
           PatGender[waitOpList[0].gender] || ''
-        } | ${waitOpList[0].age || '未知'}岁`,
+        } | ${getPatientAge(waitOpList[0].age)}`,
         // patientName: `${waitOpList[0].patientName} | ${
         //   waitOpList[0].gender === 'M' ? '男' : '女'
         // }`,
@@ -398,9 +398,9 @@ export default () => {
                       !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
                     }
                   >
-                    {`${item.patientName} ${PatGender[item.gender] || ''} | ${
-                      item.age
-                    }岁`}
+                    {`${item.patientName} ${
+                      PatGender[item.gender] || ''
+                    } | ${getPatientAge(item.age)}`}
                   </View>
                   <View className={styles.td}>
                     <FormItem

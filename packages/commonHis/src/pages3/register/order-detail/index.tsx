@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, Image, reLaunch } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { formDate, returnUrl } from '@/utils';
+import { formDate, getPatientAge, returnUrl } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import useGetParams from '@/utils/useGetParams';
 import { Button, Space, ReInput, showToast } from '@kqinfo/ui';
@@ -147,7 +147,7 @@ export default () => {
           doctorName: doctorName,
           patientName: `${patientName} | ${
             PatGender[patientSex] || ''
-          } | ${patientAge}岁`,
+          } | ${getPatientAge(patientAge)}`,
           patCardNo,
           registerTime: `${formDate(visitDate).slice(
             0,

@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { View, navigateTo, Text, reLaunch, navigateBack } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { decrypt, getCurrentPageUrl, sleep } from '@/utils';
+import { decrypt, getCurrentPageUrl, getPatientAge, sleep } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import {
   WhiteSpace,
@@ -167,7 +167,7 @@ export default () => {
       text: selectedPatient?.patientName
         ? `${selectedPatient?.patientName} | ${
             PatGender[selectedPatient?.patientSex] || ''
-          } | ${selectedPatient?.patientAge || '未知'}岁`
+          } | ${getPatientAge(selectedPatient?.patientAge)}`
         : '-',
     },
   ];
@@ -348,7 +348,7 @@ export default () => {
             // patientName: selectedPatient?.patientName,
             patientName: `${selectedPatient?.patientName} | ${
               PatGender[selectedPatient?.patientSex] || ''
-            } | ${selectedPatient?.patientAge || '未知'}岁`,
+            } | ${getPatientAge(selectedPatient?.patientAge)}`,
             patCardNo: selectedPatient?.patHisNo,
             patientFullIdNo: decrypt(selectedPatient?.encryptIdNo),
             registerTime: `${scheduleDate} ${visitBeginTime}-${visitEndTime}`,

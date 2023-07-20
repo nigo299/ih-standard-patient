@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, navigateTo, reLaunch, Text, Image } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { analyzeIDCard } from '@/utils';
+import { analyzeIDCard, getPatientAge } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { ListItem, TextAudio } from '@/components';
 import { PartTitle, Button, Space, showToast } from '@kqinfo/ui';
@@ -176,9 +176,9 @@ export default () => {
             <Text>{`性别:   ${
               PatGender[defaultPatientInfo?.patientSex] || ''
             }`}</Text>
-            <Text className={styles.headText2}>{`年龄:   ${
-              defaultPatientInfo?.patientAge || ''
-            }岁`}</Text>
+            <Text className={styles.headText2}>{`年龄:   ${getPatientAge(
+              defaultPatientInfo?.patientAge,
+            )}`}</Text>
           </View>
         </View>
       </Space>

@@ -9,6 +9,7 @@ import useApi from '@/apis/report';
 import useGetParams from '@/utils/useGetParams';
 import styles from './index.less';
 import { PatGender } from '@/config/dict';
+import { getPatientAge } from '@/utils';
 
 export default () => {
   const {
@@ -95,9 +96,9 @@ export default () => {
           </View>
           <View className={styles.headText}>
             <Text>{`性别:   ${PatGender[detailData?.patSex] || ''}`}</Text>
-            <Text className={styles.headText2}>{`年龄:   ${
-              detailData?.patAge || ''
-            }岁`}</Text>
+            <Text className={styles.headText2}>{`年龄:   ${getPatientAge(
+              detailData?.patAge,
+            )}`}</Text>
           </View>
         </View>
       </Space>
