@@ -555,7 +555,6 @@ export default () => {
             configData?.find((item) => item.configType === 'BANNER')
               ?.bannerInfo || []
           }
-          interval={3000}
         />
         <View className={styles.copyRight}>
           <CopyRight

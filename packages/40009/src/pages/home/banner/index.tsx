@@ -15,15 +15,14 @@ export default ({
 }) => {
   return (
     <Swiper
-      interval={1000}
+      interval={3000}
       indicatorDots
       autoplay
-      // onChange={console.log}
       className={styles.banner2}
       items={Object.values(CommonImg).map((img) => ({
         node: (
           <Image
-            src={`${img.imgUrl}?x-oss-process=image/resize,h_182,m_lfit`}
+            src={`${img.imgUrl}?x-oss-process=image/resize,h_480,m_lfit`}
             className={styles.banner2}
             onTap={() => {
               if (img.jumpType === 'H5') {
