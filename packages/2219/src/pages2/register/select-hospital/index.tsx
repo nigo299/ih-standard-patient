@@ -101,9 +101,11 @@ export default () => {
                 onTap={() => handleSelect(item)}
               >
                 <View className={styles.name}>{item.name}</View>
-                <View className={styles.address}>{`地址：${
-                  item.address || '暂无'
-                }`}</View>
+                {item?.address && item?.address !== '暂无' && (
+                  <View
+                    className={styles.address}
+                  >{`地址：${item.address}`}</View>
+                )}
               </View>
             </View>
           ))}
