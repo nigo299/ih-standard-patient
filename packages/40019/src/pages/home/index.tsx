@@ -253,7 +253,7 @@ export default () => {
         title: '健康宣教',
         subTitle: '',
         image: `${IMAGE_DOMIN}/home/jkxj.png`,
-        url: '/pages/microsite/hospital-article/index?type=140&title=%E5%81%A5%E5%BA%B7%E5%AE%A3%E6%95%99',
+        url: '/pages/microsite/hospital-article/index?type=156&title=%E5%81%A5%E5%BA%B7%E5%AE%A3%E6%95%99',
       },
       {
         title: '意见反馈',
