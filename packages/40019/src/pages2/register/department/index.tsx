@@ -89,7 +89,7 @@ export default () => {
         }}
         placeholder={'输入医生姓名、科室名称进行搜索'}
         showBtn
-        style={{ flex: 0, marginTop: '50px' }}
+        style={{ flex: 0, marginTop: '0px' }}
       />
       <WhiteSpace />
       {/* 二级科室 */}
