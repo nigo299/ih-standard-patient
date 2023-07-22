@@ -389,21 +389,23 @@ export default {
         params,
       }),
   ),
-  门诊就诊记录详情: createApiHooks((params: { recordId?: string }) =>
-    request.get<outPatientRecord>(
-      '/api/intelligent/ihis/visit/record/outpatient',
-      {
-        params,
-      },
-    ),
+  门诊就诊记录详情: createApiHooks(
+    (params: { recordId?: string; extFields?: string }) =>
+      request.get<outPatientRecord>(
+        '/api/intelligent/ihis/visit/record/outpatient',
+        {
+          params,
+        },
+      ),
   ),
-  住院就诊记录详情: createApiHooks((params: { recordId?: string }) =>
-    request.get<outPatientRecord>(
-      '/api/intelligent/ihis/visit/record/inhospital',
-      {
-        params,
-      },
-    ),
+  住院就诊记录详情: createApiHooks(
+    (params: { recordId?: string; extFields?: string }) =>
+      request.get<outPatientRecord>(
+        '/api/intelligent/ihis/visit/record/inhospital',
+        {
+          params,
+        },
+      ),
   ),
   门诊结算详情: createApiHooks(
     (params: { recordId?: string; feeType?: string }) =>

@@ -17,6 +17,7 @@ import useCaseHisState from './useCaseHisState';
 import usePreScptState from './usePreScptState';
 import { navigateTo } from 'remax/one';
 import { PatGender } from '@/config/dict';
+import useGetParams from '@/utils/useGetParams';
 const recordTypes: any = {
   OPD: '门诊',
   IPD: '住院',
@@ -246,12 +247,17 @@ const ExpandView = ({
   );
 };
 export default ({ visitId, type }: { visitId: string; type: string }) => {
+  const { patCardNo, patHisNo } = useGetParams<{
+    patCardNo: string;
+    patHisNo: string;
+  }>();
   const [, setCaseHis] = useCaseHisState();
   const {
     data: { data: detaildata },
   } = useApi.门诊就诊记录详情({
     params: {
       recordId: visitId,
+      extFields: JSON.stringify({ patCardNo, patHisNo }),
     },
     needInit: type === 'OPD',
   });
@@ -260,6 +266,7 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
   } = useApi.住院就诊记录详情({
     params: {
       recordId: visitId,
+      extFields: JSON.stringify({ patCardNo, patHisNo }),
     },
     needInit: type === 'IPD',
   });
