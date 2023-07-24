@@ -390,7 +390,7 @@ export default {
       }),
   ),
   门诊就诊记录详情: createApiHooks(
-    (params: { recordId?: string; extFields?: any }) =>
+    (params: { recordId?: string; patCardNo?: string; patHisNo?: string }) =>
       request.get<outPatientRecord>(
         '/api/intelligent/ihis/visit/record/outpatient',
         {

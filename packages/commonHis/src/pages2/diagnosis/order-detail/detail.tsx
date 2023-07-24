@@ -257,7 +257,8 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
   } = useApi.门诊就诊记录详情({
     params: {
       recordId: visitId,
-      extFields: { patCardNo, patHisNo },
+      patCardNo,
+      patHisNo,
     },
     needInit: type === 'OPD',
   });
