@@ -124,19 +124,6 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
                 </FormItem>
               );
             })}
-            <Space justify="center">
-              <Button
-                type={'default'}
-                size={'tiny'}
-                onTap={() => {
-                  navigateTo({
-                    url: `/pages2/diagnosis/order-detail/receiptsDetail?type=${type}&&visitId=${visitId}`,
-                  });
-                }}
-              >
-                {type === 'OPD' ? '门诊费用清单' : '费用结算信息'}
-              </Button>
-            </Space>
           </Form>
         </Space>
         <Space vertical>
