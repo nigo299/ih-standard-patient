@@ -247,18 +247,12 @@ const ExpandView = ({
   );
 };
 export default ({ visitId, type }: { visitId: string; type: string }) => {
-  const { patCardNo, patHisNo } = useGetParams<{
-    patCardNo: string;
-    patHisNo: string;
-  }>();
   const [, setCaseHis] = useCaseHisState();
   const {
     data: { data: detaildata },
   } = useApi.门诊就诊记录详情({
     params: {
       recordId: visitId,
-      patCardNo,
-      patHisNo,
     },
     needInit: type === 'OPD',
   });
@@ -267,7 +261,6 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
   } = useApi.住院就诊记录详情({
     params: {
       recordId: visitId,
-      extFields: JSON.stringify({ patCardNo, patHisNo }),
     },
     needInit: type === 'IPD',
   });
