@@ -17,7 +17,6 @@ import useCaseHisState from './useCaseHisState';
 import usePreScptState from './usePreScptState';
 import { navigateTo } from 'remax/one';
 import { PatGender } from '@/config/dict';
-import useGetParams from '@/utils/useGetParams';
 const recordTypes: any = {
   OPD: '门诊',
   IPD: '住院',
