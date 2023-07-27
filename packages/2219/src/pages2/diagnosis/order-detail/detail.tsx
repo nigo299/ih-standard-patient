@@ -1,13 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import {
-  Space,
-  FormItem,
-  Form,
-  useTitle,
-  PartTitle,
-  Icon,
-  Button,
-} from '@kqinfo/ui';
+import React, { useEffect, useMemo } from 'react';
+import { Space, FormItem, Form, useTitle, PartTitle, Icon } from '@kqinfo/ui';
 import styles from './index.less';
 import useApi from '@/apis/common';
 import useCaseHisState from './useCaseHisState';
