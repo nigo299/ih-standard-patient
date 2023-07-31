@@ -168,7 +168,7 @@ export default () => {
       title: '当日挂号',
       // subTitle: '到院患者当日挂号',
       subTitle: <View style={{ color: '#666' }}>快速咨询医生</View>,
-      url: '/pages2/register/select-hospital/index?type=reserve',
+      url: '/pages2/register/department/index?type=day',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
     },
     {
@@ -242,13 +242,13 @@ export default () => {
         image: `${IMAGE_DOMIN}/home/lydh.png`,
         onClick: () => openLocation(),
       },
-      {
-        title: '云影像',
-        subTitle: '',
-        open: true,
-        image: `${IMAGE_DOMIN}/home/yyx.png`,
-        url: '',
-      },
+      // {
+      //   title: '云影像',
+      //   subTitle: '',
+      //   open: true,
+      //   image: `${IMAGE_DOMIN}/home/yyx.png`,
+      //   url: '',
+      // },
       // {
       //   title: '满意度调查',
       //   subTitle: '',
