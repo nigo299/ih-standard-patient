@@ -10,8 +10,9 @@ import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import classNames from 'classnames';
 import { PatGender } from '@/config/dict';
-
+import { useHisConfig } from '@/hooks';
 export default memo(() => {
+  const { config } = useHisConfig();
   const { pageRoute } = useGetParams<{
     pageRoute: string;
   }>();
@@ -106,7 +107,7 @@ export default memo(() => {
                   }}
                 />
 
-                {patient?.patCardNo}
+                {patient?.[config?.patCardNoValue]}
               </Space>
               <Image
                 src={`${IMAGE_DOMIN}/usercenter/bg.png`}

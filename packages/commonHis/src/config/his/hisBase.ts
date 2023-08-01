@@ -27,6 +27,7 @@ export default class BaseHis {
       registerCardChange: 'DEFAULT_STYLE',
       showRegisterNoticeScrollText: true,
       isMergeIndex: false,
+      patCardNoValue: 'patCardNo',
     };
   }
 }
@@ -76,4 +77,6 @@ type StaticConfig = {
   showRegisterNoticeScrollText: boolean;
   /** 是否为融合首页 */
   isMergeIndex: boolean;
+  /** patCardNo取值 */
+  patCardNoValue: 'patCardNo' | 'patHisNo';
 };
