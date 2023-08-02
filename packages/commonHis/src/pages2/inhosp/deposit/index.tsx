@@ -183,11 +183,11 @@ export default () => {
               setInputVal('');
               return;
             }
-            if (+v > 5000 || +v < 0 || !r.test(v)) {
-              // if (+v > 5000 || +v < 0) {
-              showToast({ icon: 'none', title: '输入5000以内整数金额' });
-              return;
-            }
+            // if (+v > 5000 || +v < 0 || !r.test(v)) {
+            //   // if (+v > 5000 || +v < 0) {
+            //   showToast({ icon: 'none', title: '输入5000以内整数金额' });
+            //   return;
+            // }
             setPayCash(v);
             setActiveIndex(10);
             setInputVal(v);
