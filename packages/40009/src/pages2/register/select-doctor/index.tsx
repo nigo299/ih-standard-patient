@@ -201,31 +201,31 @@ export default () => {
       return <View />;
     }
   };
-  // const renderCanChoose = (day: dayjs.Dayjs) => {
-  //   if (type === 'reserve') {
-  //     return scheduleList?.some(({ scheduleDate, status }) => {
-  //       if (config.showTodayRegisterSourceInReserve) {
-  //         return day.isSame(scheduleDate) && status === 1;
-  //       }
-  //       return (
-  //         scheduleDate !== dayjs().format('YYYY-MM-DD') &&
-  //         day.isSame(scheduleDate) &&
-  //         status === 1
-  //       );
-  //     });
-  //   } else if (type === 'day') {
-  //     return scheduleList?.some(
-  //       ({ scheduleDate, status }) =>
-  //         scheduleDate === dayjs().format('YYYY-MM-DD') &&
-  //         day.isSame(scheduleDate) &&
-  //         status === 1,
-  //     );
-  //   } else {
-  //     return scheduleList?.some(
-  //       ({ scheduleDate, status }) => day.isSame(scheduleDate) && status === 1,
-  //     );
-  //   }
-  // };
+  const renderCanChoose = (day: dayjs.Dayjs) => {
+    if (type === 'reserve') {
+      return scheduleList?.some(({ scheduleDate, status }) => {
+        if (config.showTodayRegisterSourceInReserve) {
+          return day.isSame(scheduleDate) && status === 1;
+        }
+        return (
+          scheduleDate !== dayjs().format('YYYY-MM-DD') &&
+          day.isSame(scheduleDate) &&
+          status === 1
+        );
+      });
+    } else if (type === 'day') {
+      return scheduleList?.some(
+        ({ scheduleDate, status }) =>
+          scheduleDate === dayjs().format('YYYY-MM-DD') &&
+          day.isSame(scheduleDate) &&
+          status === 1,
+      );
+    } else {
+      return scheduleList?.some(
+        ({ scheduleDate, status }) => day.isSame(scheduleDate) && status === 1,
+      );
+    }
+  };
   const [isSpecial, setIsSpecial] = useState(false);
   useUpdateEffect(() => {
     if (deptDetail?.name) {
@@ -291,10 +291,11 @@ export default () => {
         <WhiteSpace />
         <Calendar
           renderDot={renderDate}
-          renderDisable={undefined}
+          renderDisable={(day: dayjs.Dayjs) => !renderCanChoose(day)}
           current={date}
           limit={config.regCalendarNumberOfDays}
           showDoctor
+          disabledCanChoose={true}
           deptId={deptId}
           onChange={(
             day:
