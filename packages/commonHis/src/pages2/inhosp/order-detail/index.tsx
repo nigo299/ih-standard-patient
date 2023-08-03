@@ -10,8 +10,10 @@ import useApi from '@/apis/inhosp';
 import styles from './index.less';
 import { formDate } from '@/utils';
 import useCommApi from '@/apis/common';
+import { useHisConfig } from '@/hooks';
 
 export default () => {
+  const { config } = useHisConfig();
   const { orderId } = useGetParams<{ orderId: string }>();
   const {
     data: { data: orderDetail },
@@ -29,7 +31,7 @@ export default () => {
     },
     {
       label: '就诊卡号',
-      text: orderDetail?.patCardNo,
+      text: orderDetail?.[config?.patCardNoValue],
     },
     {
       label: '住院号',

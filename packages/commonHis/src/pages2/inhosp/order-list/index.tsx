@@ -8,8 +8,9 @@ import useApi from '@/apis/inhosp';
 import styles from './index.less';
 import { formDate } from '@/utils';
 import CustomerReported from '@/components/customerReported';
-
+import { useHisConfig } from '@/hooks';
 export default () => {
+  const { config } = useHisConfig();
   const {
     data: { data: inpatientList },
   } = useApi.查询住院订单列表({
@@ -67,7 +68,7 @@ export default () => {
                         住院科室：{item?.deptName || '暂无'}
                       </View>
                       <View className={styles.subItem}>
-                        就诊卡号：{item?.patCardNo}
+                        就诊卡号：{item?.[config?.patCardNoValue]}
                       </View>
                       <View className={styles.subItem}>
                         缴费时间：

@@ -139,7 +139,7 @@ export default () => {
     },
     {
       label: '就诊卡号',
-      text: orderDetail?.patCardNo,
+      text: orderDetail?.[config?.patCardNoValue],
     },
   ];
 
@@ -536,7 +536,7 @@ export default () => {
           <View className={styles.statusInfo}>
             {orderDetail?.status === 'S' &&
               `${registerSuccessTips}
-              就诊卡号：${orderDetail?.patCardNo}`}
+              就诊卡号：${orderDetail?.[config?.patCardNoValue]}`}
             {orderDetail?.status === 'L' &&
               '请在锁号的时候内完成支付，否则将取消号源'}
             {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}
@@ -558,7 +558,7 @@ export default () => {
         payName="register"
         hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
         healthCardNo={jkkInfo?.healthCardId}
-        patCardNo={orderDetail?.patCardNo}
+        patCardNo={orderDetail?.[config?.patCardNoValue]}
       />
       <Form className={styles.content} form={form}>
         <ListTitle
