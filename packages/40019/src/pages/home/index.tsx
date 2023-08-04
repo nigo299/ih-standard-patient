@@ -261,20 +261,35 @@ export default () => {
         image: `${IMAGE_DOMIN}/home/yjfk.png`,
         url: '/pages2/feedback/feedback-list/index',
       },
-      // {
-      //   title: '满意度调查',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/myddc.png`,
-      //   onClick: () =>
-      //     (window.location.href = 'https://wj.qq.com/s2/5190318/2a67/'),
-      // },
+      {
+        title: '统一预约',
+        subTitle: '',
+        url: '/pages2/usercenter/select-user/index?type=tyyy',
+        image: `${IMAGE_DOMIN}/home/tyyy.png`,
+      },
+      {
+        title: '智能随访',
+        subTitle: '',
+        url: '',
+        image: `${IMAGE_DOMIN}/home/znsw.png`,
+        onClick: () =>
+          (window.location.href =
+            'https://tihs.cqkqinfo.com/patients/follow40019-dev/'),
+      },
+      {
+        title: '数字胶片',
+        subTitle: '',
+        url: '',
+        image: `${IMAGE_DOMIN}/home/znsw.png`,
+        onClick: () =>
+          (window.location.href =
+            'https://mdmis.cqdhc.com/mobile/index.html#/login/?hospitalCode=125002284518280508'),
+      },
       {
         title: '',
         subTitle: '',
-        open: true,
-        image: ``,
         url: '',
+        image: ``,
       },
     ];
   const onNavClick = useCallback(
