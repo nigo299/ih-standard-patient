@@ -151,7 +151,7 @@ export default () => {
                 if (!purchaseList?.[0]?.type) {
                   showToast({
                     icon: 'none',
-                    title: '暂无更多健康宣教!',
+                    title: '暂无更多采购专栏!',
                   });
                   return;
                 }
