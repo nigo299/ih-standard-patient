@@ -18,7 +18,7 @@
     ]
   },
   "dependencies": {
-    "@kqinfo/ui": "^1.16.31",
+    "@kqinfo/ui": "^1.16.44",
     "@tybys/jweixin": "^1.6.10007",
     "ahooks": "^3.6.2",
     "antd-mobile": "^5.20.0",
