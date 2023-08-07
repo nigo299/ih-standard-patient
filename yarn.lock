@@ -2337,10 +2337,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kqinfo/ui@^1.16.31":
-  version "1.16.31"
-  resolved "https://registry.npmmirror.com/@kqinfo/ui/-/ui-1.16.31.tgz#38e6f1b40f19e3dcca6cc8b3a6a886f79c802368"
-  integrity sha512-XhMuUFr6bsmHiuoe4+/D+5iWWEaq/5i/bXOhr3SgdwpGkW3rT+2ZYU5nO7GWkb/3KestEuBnalnr4NFyigetgw==
+"@kqinfo/ui@^1.16.44":
+  version "1.16.44"
+  resolved "https://registry.npmmirror.com/@kqinfo/ui/-/ui-1.16.44.tgz#a1afc496e000530f7b8f46538746e156b8a95ed3"
+  integrity sha512-H42aVa0WU6YtriTs+ZJF78hCETTdTr+YqCMtFkrzhuXDq6ETp1ts57s2mFp+0qEgrpVYLknGyN92/hfWRNkf0w==
   dependencies:
     "@antv/f2" "^3.8.10-beta.1"
     "@flyskywhy/react-native-gcanvas" "^2.3.7"
@@ -3920,11 +3920,6 @@
   integrity sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==
   dependencies:
     "@types/node" "*"
-
-"@types/md5@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.npmmirror.com/@types/md5/-/md5-2.3.2.tgz#529bb3f8a7e9e9f621094eb76a443f585d882528"
-  integrity sha512-v+JFDu96+UYJ3/UWzB0mEglIS//MZXgRaJ4ubUPwOM0gvLc/kcQ3TWNYwENEK7/EcXGQVrW8h/XqednSjBd/Og==
 
 "@types/mem-fs-editor@^7.0.2":
   version "7.0.2"
