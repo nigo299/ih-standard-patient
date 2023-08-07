@@ -193,6 +193,7 @@ export default () => {
         >
           <Button
             type="primary"
+            style={{ backgroundColor: '#33abe2', border: 'none' }}
             className={styles.button}
             onTap={() => {
               if (!selectReason && !id) {

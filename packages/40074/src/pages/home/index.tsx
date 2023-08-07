@@ -264,6 +264,13 @@ export default () => {
         image: ``,
         url: '',
       },
+      {
+        title: '',
+        subTitle: '',
+        open: true,
+        image: ``,
+        url: '',
+      },
     ];
   const onNavClick = useCallback(
     async (nav: NavType) => {
@@ -402,21 +409,6 @@ export default () => {
         </Space>
       </BackgroundImg>
       <Space vertical className={styles.content}>
-        <View
-          className={styles.toSearch}
-          onTap={() => {
-            navigateTo({
-              url: '/pages2/register/search-doctor/index?q=&type=default',
-            });
-          }}
-        >
-          <Icon
-            name={'kq-search'}
-            className={styles.searchIcon}
-            color={'#CCCCCC'}
-          />
-          <Text>搜索科室</Text>
-        </View>
         <Space justify="space-between" className={styles.nav}>
           {homeMainNavConfig.map((nav) => (
             <Space
@@ -548,12 +540,12 @@ export default () => {
             </Space>
           ))}
         </Space>
-        {/* <Banner
+        <Banner
           CommonImg={
             configData?.find((item) => item.configType === 'BANNER')
               ?.bannerInfo || []
           }
-        /> */}
+        />
         <View className={styles.copyRight}>
           <CopyRight
             clear
