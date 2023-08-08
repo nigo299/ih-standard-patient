@@ -303,26 +303,30 @@ export default () => {
         }
       }
       setPayFlag(true);
-      const { code, data, msg } = await useApi.锁号.request({
-        deptId,
-        doctorId,
-        scheduleDate,
-        scheduleId,
-        visitBeginTime,
-        visitEndTime,
-        visitPeriod,
-        patientId: selectedPatient?.patientId,
-        sourceType,
-        title,
-        level,
-        doctorName,
-        medinsureChannel:
-          PLATFORM === 'ali'
-            ? 3
-            : process.env.REMAX_APP_PLATFORM === 'app'
-            ? 1
-            : 2,
-      });
+      const { code, data, msg } = await useApi.锁号
+        .request({
+          deptId,
+          doctorId,
+          scheduleDate,
+          scheduleId,
+          visitBeginTime,
+          visitEndTime,
+          visitPeriod,
+          patientId: selectedPatient?.patientId,
+          sourceType,
+          title,
+          level,
+          doctorName,
+          medinsureChannel:
+            PLATFORM === 'ali'
+              ? 3
+              : process.env.REMAX_APP_PLATFORM === 'app'
+              ? 1
+              : 2,
+        })
+        .finally(() => {
+          setPayFlag(false);
+        });
       if (code === 0 && data.orderId) {
         const orderDetail = await useApi.查询挂号订单详情.request({
           orderId: data.orderId,
