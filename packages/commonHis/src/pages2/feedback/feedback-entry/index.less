@@ -1,0 +1,178 @@
+@import '@/styles/index.less';
+.pageFeedbackAdd {
+  width: 100vw;
+  height: 100vh;
+  background-color: #eeeeee;
+  box-sizing: border-box;
+  padding-bottom: 90px;
+  overflow-y: auto;
+  position: relative;
+}
+.pageFeedbackAddTop {
+  width: 100%;
+  background: #ffffff;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.feedbackAddBanner {
+  width: 100%;
+  height: 155px;
+}
+.feedbackAddReason {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 26px;
+  padding-bottom: 6px;
+}
+.feedbackAddReasons {
+  margin-top: 26px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 0 20px;
+}
+.feedbackAddReasonItem {
+  width: 324px;
+  height: 62px;
+  background: #e9f7fb;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.feedbackAddReasonItem1 {
+  width: 218px;
+  height: 62px;
+  background: #e9f7fb;
+}
+.feedbackAddReasonItem2 {
+  background: @theme-color2;
+}
+.feedbackAddReasonItemText {
+  font-size: 30px;
+  font-weight: 400;
+  color: #333333;
+  line-height: 30px;
+}
+.feedbackAddReasonItemText1 {
+  color: #ffffff;
+}
+.feedbackAddComplaints {
+  width: 100%;
+  height: 315px;
+  background: #ffffff;
+  border-radius: 20px;
+  margin: 20px 0;
+  box-sizing: border-box;
+  padding: 28px 0 44px;
+}
+.feedbackAddComplaints1 {
+  margin-top: 0;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+.feedbackAddComplaintsTextareaBox {
+  width: 100%;
+  margin-top: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.feedbackAddComplaintsTextarea {
+  width: 710px;
+  height: 189px;
+  background: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 26px 20px;
+  font-size: 30px;
+  font-weight: 400;
+}
+.feedbackAddImages {
+  width: 100%;
+  height: 267px;
+  background: #ffffff;
+  border-radius: 20px;
+  margin-bottom: 58px;
+  box-sizing: border-box;
+  padding-top: 28px;
+}
+.feedbackAddImagesSubTitle {
+  font-size: 30px;
+  font-weight: 400;
+  color: #999999;
+}
+.feedbackAddImagesUpload {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 18px;
+  margin-top: 42px;
+}
+.feedbackAddButton {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.feedbackAddButton1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 80px;
+}
+
+.uploadImg {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.uploadImgItem {
+  width: 111px;
+  height: 111px;
+  margin-left: 36px;
+  position: relative;
+}
+.uploadImgItemFirst {
+  margin-left: 0;
+}
+.uploadImgItemImage {
+  width: 111px;
+  height: 111px;
+  img {
+    visibility: initial !important;
+    width: 111px !important;
+    height: 111px !important;
+  }
+}
+.uploadImgItemDelete {
+  position: absolute;
+  top: -10px;
+  right: -6px;
+  font-size: 30px;
+}
+.uploadImgIcon {
+  width: 115px;
+  height: 115px;
+  margin-left: 30px;
+}
+.fixedBottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-bottom: 40px;
+  text-align: center;
+}
