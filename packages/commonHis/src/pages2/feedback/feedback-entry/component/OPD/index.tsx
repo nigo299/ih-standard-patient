@@ -1,26 +1,14 @@
 import React, { useState } from 'react';
 import { IMAGE_DOMIN, IS_FEEDBACL } from '@/config/constant';
-import {
-  Button,
-  Icon,
-  // Loading,
-  PartTitle,
-  previewImage,
-  ReTextarea,
-  showToast,
-  Space,
-} from '@kqinfo/ui';
-import { View, Image, Text, navigateBack } from '@remax/one';
-import classNames from 'classnames';
-import Form, { Field } from 'rc-field-form';
+import { Form, ReInput, Button } from '@kqinfo/ui';
+import { View, Image, Text } from '@remax/one';
+
 import useApi from '@/apis/feedback';
-import { useUpload } from '@/hooks';
 import useGetParams from '@/utils/useGetParams';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
 import globalState from '@/stores/global';
-import styles from '@/pages2/feedback/feedback-add/index.less';
-import CustomerReported from '@/components/customerReported';
+import styles from './index.less';
 
 export default () => {
   const { initWxSDK } = globalState.useContainer();
@@ -31,12 +19,82 @@ export default () => {
     doctorName: string;
     doctorId: string;
   }>();
-
+  const [form] = Form.useForm();
+  const handleFormSubmit = async (values: any) => {
+    // dosomething
+  };
+  const [patCardNo, setPatCardNo] = useState('');
+  const [patName, setPatName] = useState('');
   usePageEvent('onShow', () => {
     initWxSDK();
     setNavigationBar({
       title: '意见反馈',
     });
   });
-  return <View className={styles.pageFeedbackAdd}>{'xxx'}</View>;
+  const items = [
+    {
+      label: '门诊号',
+      value: patCardNo,
+      setValue: setPatCardNo,
+    },
+    {
+      label: '患者姓名',
+      value: patName,
+      setValue: setPatName,
+    },
+  ];
+  return (
+    <View className={styles.page}>
+      <Image
+        src={`${IMAGE_DOMIN}/feedback/OPDbanner.png`}
+        className={styles.bg}
+      />
+      <Image src={`${IMAGE_DOMIN}/feedback/logo.png`} className={styles.logo} />
+      <View className={styles.box}>
+        {items.map((item) => (
+          <Item
+            key={item.label}
+            label={item.label}
+            value={item.value}
+            setValue={item.setValue}
+          />
+        ))}
+      </View>
+      <Button
+        type="primary"
+        className={styles.btn}
+        onTap={() => {
+          handleFormSubmit('xx');
+        }}
+      >
+        下一步
+      </Button>
+    </View>
+  );
+};
+
+const Item = ({
+  label,
+  value,
+  setValue,
+}: {
+  label: string;
+  value: string;
+  setValue: (v: string) => void;
+}) => {
+  return (
+    <View className={styles.item}>
+      <View className={styles.label}>
+        <Text style={{ color: ' #BB3C59' }}>*</Text>
+        {label}
+      </View>
+      <ReInput
+        value={value}
+        className={styles.input}
+        onChange={(v) => {
+          setValue(v as string);
+        }}
+      />
+    </View>
+  );
 };

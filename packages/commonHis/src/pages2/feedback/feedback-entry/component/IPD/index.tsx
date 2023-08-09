@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IMAGE_DOMIN, IS_FEEDBACL } from '@/config/constant';
-import { Form, ReInput } from '@kqinfo/ui';
+import { Form, ReInput, Button } from '@kqinfo/ui';
 import { View, Image, Text } from '@remax/one';
 
 import useApi from '@/apis/feedback';
@@ -23,8 +23,9 @@ export default () => {
   const handleFormSubmit = async (values: any) => {
     // dosomething
   };
-  const [patCardNo, setPatCardNo] = useState('');
+  const [bedNo, setBedNo] = useState('');
   const [patName, setPatName] = useState('');
+  const [deptName, setDeptName] = useState('');
   usePageEvent('onShow', () => {
     initWxSDK();
     setNavigationBar({
@@ -33,14 +34,19 @@ export default () => {
   });
   const items = [
     {
-      label: '门诊号',
-      value: patCardNo,
-      setValue: setPatCardNo,
-    },
-    {
       label: '患者姓名',
       value: patName,
       setValue: setPatName,
+    },
+    {
+      label: '住院床号',
+      value: bedNo,
+      setValue: setBedNo,
+    },
+    {
+      label: '住院科室',
+      value: deptName,
+      setValue: setDeptName,
     },
   ];
   return (
@@ -59,21 +65,16 @@ export default () => {
             setValue={item.setValue}
           />
         ))}
-        {/* <View className={styles.item}>
-          <View className={styles.label}>
-            <Text style={{ color: ' #BB3C59' }}>*</Text>
-            {'门诊号'}
-          </View>
-          <ReInput value={'xxxx'} className={styles.input} />
-        </View>
-        <View className={styles.item}>
-          <View className={styles.label}>
-            <Text style={{ color: ' #BB3C59' }}>*</Text>
-            {'患者姓名'}
-          </View>
-          <ReInput value={'xxxx'} className={styles.input} />
-        </View> */}
       </View>
+      <Button
+        type="primary"
+        className={styles.btn}
+        onTap={() => {
+          handleFormSubmit('xx');
+        }}
+      >
+        下一步
+      </Button>
     </View>
   );
 };
@@ -97,7 +98,7 @@ const Item = ({
         value={value}
         className={styles.input}
         onChange={(v) => {
-          setValue(v);
+          setValue(v as string);
         }}
       />
     </View>

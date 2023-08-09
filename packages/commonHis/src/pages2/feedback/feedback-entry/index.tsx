@@ -36,7 +36,7 @@ export default () => {
     });
   });
   return (
-    <View className={styles.pageFeedbackAdd}>
+    <View>
       {type === 'IPD' && <IPD />}
       {type === 'OPD' && <OPD />}
     </View>
