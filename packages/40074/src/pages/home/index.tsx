@@ -558,6 +558,7 @@ export default () => {
         show={show}
         close={() => setShow(false)}
         content={infoData2?.[0]?.noticeInfo || ''}
+        confirmButtonStyle={{ backgroundColor: '#48A8DD', border: 'none' }}
         confirm={() => {
           if (
             registerMode.includes('reserve') &&

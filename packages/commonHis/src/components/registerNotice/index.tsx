@@ -15,9 +15,16 @@ interface Props {
   confirm: () => void;
   close: () => void;
   content: string;
+  confirmButtonStyle?: React.CSSProperties;
 }
 
-export default ({ show, confirm, close, content }: Props) => {
+export default ({
+  show,
+  confirm,
+  close,
+  content,
+  confirmButtonStyle,
+}: Props) => {
   const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
   useEffect(() => {
     return () => {
@@ -159,6 +166,7 @@ export default ({ show, confirm, close, content }: Props) => {
               [styles.confirmBtnDisabled]: countdown > 0,
             })}
             disabled={countdown > 0}
+            style={confirmButtonStyle}
             onTap={() => {
               confirm();
               setPageStyle({

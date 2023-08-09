@@ -54,10 +54,10 @@ export const IS_DEPT = false;
 
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {
-  longitude: 108.165027,
-  latitude: 29.288444,
+  longitude: 108.112431,
+  latitude: 29.99397,
   name: HOSPITAL_NAME,
-  address: '自治县高家台街47号',
+  address: '重庆市石柱土家族自治县东岳庙街28号',
 };
 export const WEB_ADDRESS = `https://mapapi.qq.com/web/mapComponents/locationMarker/v/index.html?marker=coord:${ADDRESS.latitude},${ADDRESS.longitude};title:${HOSPITAL_NAME};addr:${ADDRESS.address}&key=TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU&referer=myapp&ch=uri-api&ADTAG=uri-api.myapp`;
 
