@@ -32,7 +32,7 @@ import {
   APPID,
 } from '@/config/constant';
 import usePayApi from '@/apis/pay';
-import { formDate, getBrowserUa, getUrlParams } from '@/utils';
+import { formDate, getBrowserUa, getPatientAge, getUrlParams } from '@/utils';
 import useCommApi from '@/apis/common';
 import styles from '@/pages2/payment/order-detail/components/single-detail/index.less';
 import { MedicalPayType } from '@/apis/register';
@@ -84,7 +84,7 @@ export default () => {
       label: '就诊人',
       text: `${orderDetail?.patientName} | ${
         PatGender[orderDetail?.patientSex] || ''
-      } | ${orderDetail?.patientAge}岁`,
+      } | ${getPatientAge(orderDetail?.patientAge)}`,
     },
     {
       label: '就诊号',

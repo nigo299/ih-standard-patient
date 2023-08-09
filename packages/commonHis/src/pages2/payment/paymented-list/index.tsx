@@ -2,7 +2,7 @@ import React from 'react';
 import { View, navigateTo, Text } from 'remax/one';
 import { Shadow, NoData, Space, Exceed, FormItem } from '@kqinfo/ui';
 import { usePageEvent } from 'remax/macro';
-import { formDate } from '@/utils';
+import { formDate, getPatientAge } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { WhiteSpace } from '@/components';
 import useApi from '@/apis/payment';
@@ -56,7 +56,7 @@ export default () => {
                         />
                         <View className={styles.name2}>{`${
                           PatGender[order.patientSex] || ''
-                        } | ${order.patientAge}岁`}</View>
+                        } | ${getPatientAge(order.patientAge)}`}</View>
                       </Space>
                       <Space className={styles.price}>
                         ￥{Number(order.totalFee / 100).toFixed(2)}

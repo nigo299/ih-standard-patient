@@ -34,7 +34,7 @@ import {
   PAYMENT_SELECTALL_PAY,
   PAY_TYPE,
 } from '@/config/constant';
-import { decrypt, formDate, returnUrl } from '@/utils';
+import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Tip } from '@/components';
 import styles from '@/pages2/payment/order-list/components/single-pay/index.less';
@@ -142,7 +142,7 @@ export default () => {
         doctorName: data?.doctorName,
         patientName: `${waitOpList[0].patientName} | ${
           PatGender[waitOpList[0].gender] || ''
-        } | ${waitOpList[0].age || '未知'}岁`,
+        } | ${getPatientAge(waitOpList[0].age)}`,
         // patientName: `${waitOpList[0].patientName} | ${
         //   waitOpList[0].gender === 'M' ? '男' : '女'
         // }`,
@@ -262,17 +262,34 @@ export default () => {
 
   const getWaitOpList = useCallback(async () => {
     setLoading(true);
-    const { data, code } = await useApi.查询门诊待缴费列表.request(
-      patientId
-        ? {
-            patientId,
-          }
-        : {
-            patCardNo,
-            scanFlag: '1',
-            extFields: JSON.stringify({ scanType }),
-          },
-    );
+    const { data, code } = await useApi.查询门诊待缴费列表
+      .request(
+        patientId
+          ? {
+              patientId,
+            }
+          : {
+              patCardNo,
+              scanFlag: '1',
+              extFields: JSON.stringify({ scanType }),
+            },
+      )
+      .catch((data) => {
+        if (data?.data?.data === null) {
+          showModal({
+            title: '提示',
+            content: '当前就诊人暂无待缴费记录, 请重新选择就诊人!',
+          }).then(({ confirm }) => {
+            if (confirm) {
+              redirectTo({
+                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
+              });
+            } else {
+              navigateBack();
+            }
+          });
+        }
+      });
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
       if (PAYMENT_SELECTALL_PAY) {
@@ -280,7 +297,7 @@ export default () => {
       } else {
         setSelectList([data[0].hisOrderNo]);
       }
-    } else if (data?.length === 0) {
+    } else if (data?.length === 0 || data === null) {
       showModal({
         title: '提示',
         content: '当前就诊人暂无待缴费记录, 请重新选择就诊人!',
@@ -381,9 +398,9 @@ export default () => {
                       !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
                     }
                   >
-                    {`${item.patientName} ${PatGender[item.gender] || ''} | ${
-                      item.age
-                    }岁`}
+                    {`${item.patientName} ${
+                      PatGender[item.gender] || ''
+                    } | ${getPatientAge(item.age)}`}
                   </View>
                   <View className={styles.td}>
                     <FormItem

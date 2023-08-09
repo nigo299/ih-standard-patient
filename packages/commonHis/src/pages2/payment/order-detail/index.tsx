@@ -10,7 +10,10 @@ export default () => {
     return <BatchDetail />;
   }
 
-  if (config.clinicPayBatchType === 'SINGLE') {
+  if (
+    config.clinicPayBatchType === 'SINGLE' ||
+    config.clinicPayBatchType === 'JOINT'
+  ) {
     return <SingleDetail />;
   }
 };

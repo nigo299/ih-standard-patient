@@ -40,9 +40,9 @@ export default () => {
   usePageEvent('onShow', async () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
-    if (deptList.length === 0) {
-      getDeptList(type, hisType);
-    }
+    // if (deptList.length === 0) {
+    //   getDeptList(type, hisType);
+    // }
     setNavigationBar({
       title: '选择科室',
     });

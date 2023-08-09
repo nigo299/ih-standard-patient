@@ -51,15 +51,25 @@ const ShowPrice = (data: any) => {
           className={styles.photo}
         />
         <View className={styles.doctorInfo}>
-          <View style={{ display: 'flex' }}>
-            <View className={styles.left}>
-              <View className={styles.name}>{name}</View>
+          {name?.includes('特需') ? (
+            <Space vertical style={{ marginTop: '-8px' }}>
+              <View className={styles.left}>
+                <View className={styles.name}>{name}</View>
+              </View>
+              <View className={styles.subtitle}>
+                {`${deptName} | ${title || ''}`}
+              </View>
+            </Space>
+          ) : (
+            <View style={{ display: 'flex' }}>
+              <View className={styles.left}>
+                <View className={styles.name}>{name}</View>
+              </View>
+              <View className={styles.subtitle}>
+                {`${deptName} | ${title || ''}`}
+              </View>
             </View>
-            <View className={styles.subtitle}>
-              {`${deptName} | ${title || ''}`}
-            </View>
-          </View>
-
+          )}
           <Exceed clamp={1} className={styles.doctorText}>
             {`擅长: ${
               doctorSkill && doctorSkill !== 'null' ? doctorSkill : '暂无'
