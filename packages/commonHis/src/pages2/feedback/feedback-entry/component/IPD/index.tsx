@@ -24,6 +24,7 @@ export default () => {
     // dosomething
   };
   const [patCardNo, setPatCardNo] = useState('');
+  const [patName, setPatName] = useState('');
   usePageEvent('onShow', () => {
     initWxSDK();
     setNavigationBar({
@@ -33,7 +34,13 @@ export default () => {
   const items = [
     {
       label: '门诊号',
-      value: 'xxxx',
+      value: patCardNo,
+      setValue: setPatCardNo,
+    },
+    {
+      label: '患者姓名',
+      value: patName,
+      setValue: setPatName,
     },
   ];
   return (
@@ -44,7 +51,15 @@ export default () => {
       />
       <Image src={`${IMAGE_DOMIN}/feedback/logo.png`} className={styles.logo} />
       <View className={styles.box}>
-        <View className={styles.item}>
+        {items.map((item) => (
+          <Item
+            key={item.label}
+            label={item.label}
+            value={item.value}
+            setValue={item.setValue}
+          />
+        ))}
+        {/* <View className={styles.item}>
           <View className={styles.label}>
             <Text style={{ color: ' #BB3C59' }}>*</Text>
             {'门诊号'}
@@ -57,17 +72,34 @@ export default () => {
             {'患者姓名'}
           </View>
           <ReInput value={'xxxx'} className={styles.input} />
-        </View>
+        </View> */}
       </View>
     </View>
   );
 };
 
-const Item = ({ label, value }: { label: string; value: string }) => {
+const Item = ({
+  label,
+  value,
+  setValue,
+}: {
+  label: string;
+  value: string;
+  setValue: (v: string) => void;
+}) => {
   return (
     <View className={styles.item}>
-      <View className={styles.label}>{'xxx'}</View>
-      <ReInput value={'xxxx'} />
+      <View className={styles.label}>
+        <Text style={{ color: ' #BB3C59' }}>*</Text>
+        {label}
+      </View>
+      <ReInput
+        value={value}
+        className={styles.input}
+        onChange={(v) => {
+          setValue(v);
+        }}
+      />
     </View>
   );
 };
