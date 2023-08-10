@@ -276,6 +276,7 @@ export default () => {
           {
             title: '数字胶片',
             subTitle: '',
+            patientId: true,
             url: '',
             image: `${IMAGE_DOMIN}/home/znsw.png`,
             onClick: () =>
@@ -285,9 +286,8 @@ export default () => {
           {
             title: '体检中心',
             subTitle: '',
-            url: '',
             image: `${IMAGE_DOMIN}/home/tjzx.png`,
-            onClick: () => (window.location.href = 'http://183.65.22.8:8190'),
+            url: '/pages2/usercenter/select-user/index?type=tjzx',
           },
           {
             title: '采购专栏',

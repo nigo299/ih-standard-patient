@@ -6,12 +6,16 @@ import { usePageEvent } from 'remax/macro';
 import IPD from './component/IPD';
 import OPD from './component/OPD';
 export default () => {
-  const { type = 'IPD' } = useGetParams<{
-    type: string;
-    deptName: string;
+  const {
+    hisId,
+    dept,
+    deptId = undefined,
+    no = undefined,
+  } = useGetParams<{
+    hisId: string;
+    dept: string;
     deptId: string;
-    doctorName: string;
-    doctorId: string;
+    no: string;
   }>();
 
   usePageEvent('onShow', () => {
@@ -21,8 +25,8 @@ export default () => {
   });
   return (
     <View>
-      {type === 'IPD' && <IPD />}
-      {type === 'OPD' && <OPD />}
+      {deptId && <IPD dept={dept} hisId={hisId} deptId={deptId} />}
+      {no && <OPD hisId={hisId} no={no} />}
     </View>
   );
 };

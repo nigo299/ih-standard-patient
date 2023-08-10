@@ -1,33 +1,61 @@
 import React, { useState } from 'react';
 import { IMAGE_DOMIN, IS_FEEDBACL } from '@/config/constant';
-import { Form, ReInput, Button } from '@kqinfo/ui';
+import { Form, ReInput, Button, showToast } from '@kqinfo/ui';
 import { View, Image, Text } from '@remax/one';
-
 import useApi from '@/apis/feedback';
-import useGetParams from '@/utils/useGetParams';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
-import globalState from '@/stores/global';
 import styles from './index.less';
+import qs from 'qs';
 
-export default () => {
-  const { initWxSDK } = globalState.useContainer();
-  const { type = undefined } = useGetParams<{
-    type: string;
-    deptName: string;
-    deptId: string;
-    doctorName: string;
-    doctorId: string;
-  }>();
-  const [form] = Form.useForm();
-  const handleFormSubmit = async (values: any) => {
-    // dosomething
+export default ({ hisId, dept, deptId }) => {
+  const handleFormSubmit = async () => {
+    if (!bedNo) {
+      showToast({
+        title: '请输入床号',
+        icon: 'fail',
+      });
+      return;
+    }
+    if (!patName) {
+      showToast({
+        title: '请输入患者姓名',
+        icon: 'fail',
+      });
+      return;
+    }
+    const data = await useApi.查询患者住院.request({
+      hisId,
+      number: bedNo,
+      patName,
+      dept,
+      deptId,
+    });
+    if (data?.data) {
+      const infoData = data?.data;
+      const params = {
+        name: infoData?.patName,
+        inpDeptName: infoData?.inpDeptName,
+        inpBedNo: infoData?.inpBedNo,
+        doctor: infoData?.inpDoctor,
+        adtaTime: infoData?.adtaTime,
+        outTime: infoData?.outTime,
+        inpPnurs: infoData?.inpPnurs,
+      };
+      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=6a26311d0ce94a4f916515ef280bc55e&${qs.stringify(
+        params,
+      )}`;
+      return;
+    }
+    showToast({
+      title: '未查询到患者信息，请重新输入',
+      icon: 'fail',
+    });
   };
   const [bedNo, setBedNo] = useState('');
   const [patName, setPatName] = useState('');
-  const [deptName, setDeptName] = useState('');
+  const [deptName, setDeptName] = useState(dept);
   usePageEvent('onShow', () => {
-    initWxSDK();
     setNavigationBar({
       title: '意见反馈',
     });

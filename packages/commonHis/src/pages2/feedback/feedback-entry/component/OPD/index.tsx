@@ -1,32 +1,58 @@
 import React, { useState } from 'react';
-import { IMAGE_DOMIN, IS_FEEDBACL } from '@/config/constant';
-import { Form, ReInput, Button } from '@kqinfo/ui';
+import { IMAGE_DOMIN } from '@/config/constant';
+import { ReInput, Button, showToast } from '@kqinfo/ui';
 import { View, Image, Text } from '@remax/one';
-
 import useApi from '@/apis/feedback';
-import useGetParams from '@/utils/useGetParams';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
 import globalState from '@/stores/global';
 import styles from './index.less';
+import qs from 'qs';
 
-export default () => {
-  const { initWxSDK } = globalState.useContainer();
-  const { type = undefined } = useGetParams<{
-    type: string;
-    deptName: string;
-    deptId: string;
-    doctorName: string;
-    doctorId: string;
-  }>();
-  const [form] = Form.useForm();
-  const handleFormSubmit = async (values: any) => {
-    // dosomething
+export default ({ hisId, no }: { hisId: string; no: string }) => {
+  const handleFormSubmit = async () => {
+    if (!patCardNo) {
+      showToast({
+        title: '请输入门诊号',
+        icon: 'fail',
+      });
+      return;
+    }
+    if (!patName) {
+      showToast({
+        title: '请输入患者姓名',
+        icon: 'fail',
+      });
+      return;
+    }
+    const data = await useApi.查询患者门诊.request({
+      hisId,
+      number: patCardNo,
+      patName,
+    });
+    if (data?.data) {
+      const infoData = data?.data;
+      const params = {
+        name: infoData?.patName,
+        outpNo: infoData?.outpNo,
+        patAge: infoData?.patAge,
+        doctor: infoData?.doctor,
+        adtaTime: infoData?.adtaTime,
+      };
+      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&${qs.stringify(
+        params,
+      )}`;
+    } else {
+      showToast({
+        title: '未查询到患者信息，请重新输入',
+        icon: 'fail',
+      });
+    }
+    console.log('data', data);
   };
-  const [patCardNo, setPatCardNo] = useState('');
+  const [patCardNo, setPatCardNo] = useState(no);
   const [patName, setPatName] = useState('');
   usePageEvent('onShow', () => {
-    initWxSDK();
     setNavigationBar({
       title: '意见反馈',
     });
@@ -64,7 +90,7 @@ export default () => {
         type="primary"
         className={styles.btn}
         onTap={() => {
-          handleFormSubmit('xx');
+          handleFormSubmit();
         }}
       >
         下一步
