@@ -188,95 +188,134 @@ export default () => {
     },
   ];
   const homeCardNavConfig =
-    // PLATFORM === 'ali'
-    //   ? [
-    //       {
-    //         title: '核酸检测',
-    //         subTitle: '',
-    //         url: '/pages2/nucleic/upload/index',
-    //         image: `${IMAGE_DOMIN}/home/hsjc.png`,
-    //       },
-    //       {
-    //         title: '微官网',
-    //         subTitle: '医院信息门户',
-    //         url: '/pages/microsite/home/index',
-    //         image: `${IMAGE_DOMIN}/home/wgw.png`,
-    //         patientId: true,
-    //       },
-    //       {
-    //         title: '来院导航',
-    //         subTitle: '导航来院不迷路',
-    //         url: '/pages2/register',
-    //         image: `${IMAGE_DOMIN}/home/lydh.png`,
-    //         onClick: () => openLocation(),
-    //       },
-    //       {
-    //         title: '就医指南',
-    //         subTitle: '',
-    //         open: true,
-    //         url: '/pages/microsite/article-detail/index?id=643',
-    //         image: `${IMAGE_DOMIN}/home/wgw.png`,
-    //         patientId: true,
-    //       },
-    //     ]
-    //   :
-    [
-      // {
-      //   title: '排队进度',
-      //   subTitle: '前面还有多少人',
-      //   url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-      //   image: `${IMAGE_DOMIN}/home/pdjd.png`,
-      //   open: true,
-      // },
-      {
-        title: '微官网',
-        subTitle: '医院信息门户',
-        url: '/pages/microsite/home/index',
-        image: `${IMAGE_DOMIN}/home/wgw.png`,
-        patientId: true,
-      },
-      // {
-      //   title: '核酸检测',
-      //   subTitle: '快速核酸检测开单',
-      //   url: '/pages2/nucleic/select-combo/index?type=1',
-      //   image: `${IMAGE_DOMIN}/home/hsjc.png`,
-      //   titleColor: '#2EBDC7',
-      // },
-      {
-        title: '来院导航',
-        subTitle: '导航来院不迷路',
-        url: '/pages2/register',
-        image: `${IMAGE_DOMIN}/home/lydh.png`,
-        onClick: () => openLocation(),
-      },
-      {
-        title: '健康宣教',
-        subTitle: '',
-        image: `${IMAGE_DOMIN}/home/jkxj.png`,
-        url: '/pages/microsite/hospital-article/index?type=156&title=%E5%81%A5%E5%BA%B7%E5%AE%A3%E6%95%99',
-      },
-      {
-        title: '意见反馈',
-        subTitle: '',
-        image: `${IMAGE_DOMIN}/home/yjfk.png`,
-        url: '/pages2/feedback/feedback-list/index',
-      },
-      // {
-      //   title: '满意度调查',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/myddc.png`,
-      //   onClick: () =>
-      //     (window.location.href = 'https://wj.qq.com/s2/5190318/2a67/'),
-      // },
-      {
-        title: '',
-        subTitle: '',
-        open: true,
-        image: ``,
-        url: '',
-      },
-    ];
+    PLATFORM === 'ali'
+      ? [
+          {
+            title: '微官网',
+            subTitle: '医院信息门户',
+            url: '/pages/microsite/home/index',
+            image: `${IMAGE_DOMIN}/home/wgw.png`,
+            patientId: true,
+          },
+          {
+            title: '来院导航',
+            subTitle: '导航来院不迷路',
+            url: '/pages2/register',
+            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            onClick: () => openLocation(),
+          },
+          {
+            title: '健康宣教',
+            subTitle: '',
+            image: `${IMAGE_DOMIN}/home/jkxj.png`,
+            url: '/pages/microsite/hospital-article/index?type=156&title=%E5%81%A5%E5%BA%B7%E5%AE%A3%E6%95%99',
+          },
+          {
+            title: '意见反馈',
+            subTitle: '',
+            image: `${IMAGE_DOMIN}/home/yjfk.png`,
+            url: '/pages2/feedback/feedback-list/index',
+          },
+        ]
+      : [
+          // {
+          //   title: '排队进度',
+          //   subTitle: '前面还有多少人',
+          //   url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+          //   image: `${IMAGE_DOMIN}/home/pdjd.png`,
+          //   open: true,
+          // },
+          {
+            title: '微官网',
+            subTitle: '医院信息门户',
+            url: '/pages/microsite/home/index',
+            image: `${IMAGE_DOMIN}/home/wgw.png`,
+            patientId: true,
+          },
+          // {
+          //   title: '核酸检测',
+          //   subTitle: '快速核酸检测开单',
+          //   url: '/pages2/nucleic/select-combo/index?type=1',
+          //   image: `${IMAGE_DOMIN}/home/hsjc.png`,
+          //   titleColor: '#2EBDC7',
+          // },
+          {
+            title: '来院导航',
+            subTitle: '导航来院不迷路',
+            url: '/pages2/register',
+            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            onClick: () => openLocation(),
+          },
+          {
+            title: '健康宣教',
+            subTitle: '',
+            image: `${IMAGE_DOMIN}/home/jkxj.png`,
+            url: '/pages/microsite/hospital-article/index?type=156&title=%E5%81%A5%E5%BA%B7%E5%AE%A3%E6%95%99',
+          },
+          {
+            title: '意见反馈',
+            subTitle: '',
+            image: `${IMAGE_DOMIN}/home/yjfk.png`,
+            url: '/pages2/feedback/feedback-list/index',
+          },
+          {
+            title: '统一预约',
+            subTitle: '',
+            url: '/pages2/usercenter/select-user/index?type=tyyy',
+            image: `${IMAGE_DOMIN}/home/tyyy.png`,
+          },
+          {
+            title: '智能随访',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/znsw.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://tihs.cqkqinfo.com/patients/follow40019-dev/'),
+          },
+          {
+            title: '数字胶片',
+            subTitle: '',
+            patientId: true,
+            url: '',
+            image: `${IMAGE_DOMIN}/home/znsw.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://mdmis.cqdhc.com/mobile/index.html#/login/?hospitalCode=125002284518280508'),
+          },
+          {
+            title: '体检中心',
+            subTitle: '',
+            image: `${IMAGE_DOMIN}/home/tjzx.png`,
+            url: '/pages2/usercenter/select-user/index?type=tjzx',
+          },
+          {
+            title: '采购专栏',
+            subTitle: '',
+            url: `/pages/microsite/hospital-article/index?type=156&title=${encodeURIComponent(
+              '采购专栏',
+            )}`,
+            image: `${IMAGE_DOMIN}/home/cgzl.png`,
+          },
+          {
+            title: '',
+            subTitle: '',
+            url: '',
+            image: ``,
+          },
+          {
+            title: '',
+            subTitle: '',
+            url: '',
+            image: ``,
+          },
+          {
+            title: '',
+            subTitle: '',
+            url: '',
+            image: ``,
+          },
+        ];
   const onNavClick = useCallback(
     async (nav: NavType) => {
       if (nav?.open) {

@@ -43,8 +43,15 @@ export default () => {
   const handlePay = useCallback(async () => {
     if (inhospPatientInfo?.patientName) {
       setPayFlag(true);
-      const { admissionNum, hisName, patCardNo, patientName, deptName, idNo } =
-        inhospPatientInfo;
+      const {
+        admissionNum,
+        hisName,
+        patCardNo,
+        patientName,
+        deptName,
+        idNo,
+        patientAge,
+      } = inhospPatientInfo;
       const { code, data, msg } = await useApi.生成住院订单.request({
         patientId,
         admissionNum,
@@ -78,7 +85,7 @@ export default () => {
             doctorName: '',
             patientName: `${patientName} | ${
               PatGender[analyzeIDCard(idNo)?.analyzeSex as string] || ''
-            } | ${analyzeIDCard(idNo)?.analyzeAge || '未知'}岁`,
+            } | ${analyzeIDCard(idNo)?.analyzeAge || patientAge}岁`,
             patCardNo: patCardNo,
             totalFee: Number(new BigNumber(payCash).times(100)),
             orderId: data.orderId,
