@@ -42,9 +42,14 @@ export default ({ hisId, dept, deptId }) => {
         outTime: infoData?.outTime,
         inpPnurs: infoData?.inpPnurs,
       };
-      const paramsStr = JSON.stringify(params);
-      const base64Str = btoa(unescape(encodeURIComponent(paramsStr)));
-      // window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Str}`;
+      const paramsStr = encodeURIComponent(JSON.stringify(params));
+      // 将字符串转换为 Uint8Array 格式
+      const encoder = new TextEncoder();
+      const dataStr = encoder.encode(paramsStr);
+
+      // 使用 TextDecoder 进行 Base64 编码
+      const base64Encoded = btoa(String.fromCharCode.apply(null, dataStr));
+      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey-dev/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Encoded}`;
       return;
     }
     showToast({
