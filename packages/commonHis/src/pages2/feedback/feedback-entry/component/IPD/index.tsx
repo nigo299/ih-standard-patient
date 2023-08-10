@@ -28,7 +28,7 @@ export default ({ hisId, dept, deptId }) => {
       hisId,
       number: bedNo,
       patName,
-      dept,
+      dept: deptName,
       deptId,
     });
     if (data?.data) {
@@ -44,7 +44,7 @@ export default ({ hisId, dept, deptId }) => {
       };
       const paramsStr = JSON.stringify(params);
       const base64Str = btoa(unescape(encodeURIComponent(paramsStr)));
-      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Str}`;
+      // window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Str}`;
       return;
     }
     showToast({
@@ -98,7 +98,7 @@ export default ({ hisId, dept, deptId }) => {
         type="primary"
         className={styles.btn}
         onTap={() => {
-          handleFormSubmit('xx');
+          handleFormSubmit();
         }}
       >
         下一步
