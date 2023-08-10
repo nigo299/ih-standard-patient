@@ -39,9 +39,9 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
         doctor: infoData?.doctor,
         adtaTime: infoData?.adtaTime,
       };
-      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&${qs.stringify(
-        params,
-      )}`;
+      const paramsStr = JSON.stringify(params);
+      const base64Str = btoa(unescape(encodeURIComponent(paramsStr)));
+      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&personInfo=${base64Str}`;
     } else {
       showToast({
         title: '未查询到患者信息，请重新输入',
