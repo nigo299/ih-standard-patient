@@ -9,6 +9,7 @@ import { usePageEvent } from 'remax/macro';
 import styles from './index.less';
 
 export default ({ hisId, dept, deptId }) => {
+  const [loading, setLoading] = useState(false);
   const handleFormSubmit = async () => {
     if (!bedNo) {
       showToast({
@@ -24,6 +25,7 @@ export default ({ hisId, dept, deptId }) => {
       });
       return;
     }
+    setLoading(true);
     const data = await useApi.查询患者住院.request({
       hisId,
       number: bedNo,
@@ -43,6 +45,7 @@ export default ({ hisId, dept, deptId }) => {
           title: '提示',
           content: '您已提交本次住院的满意度调查，请勿重复提交',
         });
+        setLoading(false);
         return;
       }
       const params = {
@@ -54,6 +57,7 @@ export default ({ hisId, dept, deptId }) => {
         outTime: infoData?.outTime,
         inpPnurs: infoData?.inpPnurs,
       };
+      setLoading(false);
       const paramsStr = encodeURIComponent(JSON.stringify(params));
       // 将字符串转换为 Uint8Array 格式
       const encoder = new TextEncoder();
@@ -64,6 +68,7 @@ export default ({ hisId, dept, deptId }) => {
       window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey-dev/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Encoded}`;
       return;
     }
+    setLoading(false);
     showToast({
       title: '未查询到患者信息，请重新输入',
       icon: 'fail',

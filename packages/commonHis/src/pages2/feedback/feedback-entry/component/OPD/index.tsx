@@ -9,6 +9,7 @@ import styles from './index.less';
 import showModal from '@/utils/showModal';
 
 export default ({ hisId, no }: { hisId: string; no: string }) => {
+  const [loading, setLoading] = useState(false);
   const handleFormSubmit = async () => {
     if (!patCardNo) {
       showToast({
@@ -24,6 +25,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
       });
       return;
     }
+    setLoading(true);
     const data = await useApi.查询患者门诊.request({
       hisId,
       number: patCardNo,
@@ -40,6 +42,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
           title: '提示',
           content: '您已提交本次门诊的满意度调查，请勿重复提交',
         });
+        setLoading(false);
         return;
       }
       const params = {
@@ -56,6 +59,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
 
       // 使用 TextDecoder 进行 Base64 编码
       const base64Encoded = btoa(String.fromCharCode.apply(null, dataStr));
+      setLoading(false);
       window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey-dev/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&personInfo=${base64Encoded}`;
     } else {
       showToast({
@@ -63,7 +67,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
         icon: 'fail',
       });
     }
-    console.log('data', data);
+    setLoading(false);
   };
   const [patCardNo, setPatCardNo] = useState(no);
   const [patName, setPatName] = useState('');
@@ -103,6 +107,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
       </View>
       <Button
         type="primary"
+        disabled={loading}
         className={styles.btn}
         onTap={() => {
           handleFormSubmit();
