@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { IMAGE_DOMIN, IS_FEEDBACL } from '@/config/constant';
-import { Form, ReInput, Button, showToast } from '@kqinfo/ui';
+import { ReInput, Button, showToast } from '@kqinfo/ui';
+import showModal from '@/utils/showModal';
 import { View, Image, Text } from '@remax/one';
 import useApi from '@/apis/feedback';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
 import styles from './index.less';
-import qs from 'qs';
 
 export default ({ hisId, dept, deptId }) => {
   const handleFormSubmit = async () => {
@@ -31,8 +31,20 @@ export default ({ hisId, dept, deptId }) => {
       dept: deptName,
       deptId,
     });
+
     if (data?.data) {
       const infoData = data?.data;
+      const hasWritenData = await useApi.用户是否已经填写过问卷.request({
+        publishKey: '6a26311d0ce94a4f916515ef280bc55e',
+        userKey: infoData?.patName + infoData?.adtaTime,
+      });
+      if (hasWritenData?.data) {
+        showModal({
+          title: '提示',
+          content: '您已提交本次住院的满意度调查，请勿重复提交',
+        });
+        return;
+      }
       const params = {
         name: infoData?.patName,
         inpDeptName: infoData?.inpDeptName,

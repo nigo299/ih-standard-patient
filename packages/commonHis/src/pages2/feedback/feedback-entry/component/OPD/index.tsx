@@ -5,9 +5,8 @@ import { View, Image, Text } from '@remax/one';
 import useApi from '@/apis/feedback';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
-import globalState from '@/stores/global';
 import styles from './index.less';
-import qs from 'qs';
+import showModal from '@/utils/showModal';
 
 export default ({ hisId, no }: { hisId: string; no: string }) => {
   const handleFormSubmit = async () => {
@@ -32,6 +31,17 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
     });
     if (data?.data) {
       const infoData = data?.data;
+      const hasWritenData = await useApi.用户是否已经填写过问卷.request({
+        publishKey: 'fd4eed4b24ae4935bfa39766dbdaff3d',
+        userKey: infoData?.patName + infoData?.outpNo,
+      });
+      if (hasWritenData?.data) {
+        showModal({
+          title: '提示',
+          content: '您已提交本次门诊的满意度调查，请勿重复提交',
+        });
+        return;
+      }
       const params = {
         name: infoData?.patName,
         outpNo: infoData?.outpNo,
