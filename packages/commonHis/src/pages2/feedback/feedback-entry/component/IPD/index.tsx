@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { IMAGE_DOMIN, IS_FEEDBACL } from '@/config/constant';
-import { Form, ReInput, Button, showToast } from '@kqinfo/ui';
+import { ReInput, Button, showToast } from '@kqinfo/ui';
+import showModal from '@/utils/showModal';
 import { View, Image, Text } from '@remax/one';
 import useApi from '@/apis/feedback';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
 import styles from './index.less';
-import qs from 'qs';
 
 export default ({ hisId, dept, deptId }) => {
+  const [loading, setLoading] = useState(false);
   const handleFormSubmit = async () => {
     if (!bedNo) {
       showToast({
@@ -24,15 +25,29 @@ export default ({ hisId, dept, deptId }) => {
       });
       return;
     }
+    setLoading(true);
     const data = await useApi.查询患者住院.request({
       hisId,
       number: bedNo,
       patName,
-      dept,
+      dept: deptName,
       deptId,
     });
+
     if (data?.data) {
       const infoData = data?.data;
+      const hasWritenData = await useApi.用户是否已经填写过问卷.request({
+        publishKey: '6a26311d0ce94a4f916515ef280bc55e',
+        userKey: infoData?.patName + infoData?.adtaTime,
+      });
+      if (hasWritenData?.data) {
+        showModal({
+          title: '提示',
+          content: '您已提交本次住院的满意度调查，请勿重复提交',
+        });
+        setLoading(false);
+        return;
+      }
       const params = {
         name: infoData?.patName,
         inpDeptName: infoData?.inpDeptName,
@@ -42,11 +57,18 @@ export default ({ hisId, dept, deptId }) => {
         outTime: infoData?.outTime,
         inpPnurs: infoData?.inpPnurs,
       };
-      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=6a26311d0ce94a4f916515ef280bc55e&${qs.stringify(
-        params,
-      )}`;
+      setLoading(false);
+      const paramsStr = encodeURIComponent(JSON.stringify(params));
+      // 将字符串转换为 Uint8Array 格式
+      const encoder = new TextEncoder();
+      const dataStr = encoder.encode(paramsStr);
+
+      // 使用 TextDecoder 进行 Base64 编码
+      const base64Encoded = btoa(String.fromCharCode.apply(null, dataStr));
+      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey-dev/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Encoded}`;
       return;
     }
+    setLoading(false);
     showToast({
       title: '未查询到患者信息，请重新输入',
       icon: 'fail',
@@ -98,7 +120,7 @@ export default ({ hisId, dept, deptId }) => {
         type="primary"
         className={styles.btn}
         onTap={() => {
-          handleFormSubmit('xx');
+          handleFormSubmit();
         }}
       >
         下一步

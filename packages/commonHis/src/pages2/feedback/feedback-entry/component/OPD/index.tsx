@@ -5,11 +5,11 @@ import { View, Image, Text } from '@remax/one';
 import useApi from '@/apis/feedback';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
-import globalState from '@/stores/global';
 import styles from './index.less';
-import qs from 'qs';
+import showModal from '@/utils/showModal';
 
 export default ({ hisId, no }: { hisId: string; no: string }) => {
+  const [loading, setLoading] = useState(false);
   const handleFormSubmit = async () => {
     if (!patCardNo) {
       showToast({
@@ -25,6 +25,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
       });
       return;
     }
+    setLoading(true);
     const data = await useApi.查询患者门诊.request({
       hisId,
       number: patCardNo,
@@ -32,6 +33,18 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
     });
     if (data?.data) {
       const infoData = data?.data;
+      const hasWritenData = await useApi.用户是否已经填写过问卷.request({
+        publishKey: 'fd4eed4b24ae4935bfa39766dbdaff3d',
+        userKey: infoData?.patName + infoData?.outpNo,
+      });
+      if (hasWritenData?.data) {
+        showModal({
+          title: '提示',
+          content: '您已提交本次门诊的满意度调查，请勿重复提交',
+        });
+        setLoading(false);
+        return;
+      }
       const params = {
         name: infoData?.patName,
         outpNo: infoData?.outpNo,
@@ -39,16 +52,22 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
         doctor: infoData?.doctor,
         adtaTime: infoData?.adtaTime,
       };
-      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&${qs.stringify(
-        params,
-      )}`;
+      const paramsStr = encodeURIComponent(JSON.stringify(params));
+      // 将字符串转换为 Uint8Array 格式
+      const encoder = new TextEncoder();
+      const dataStr = encoder.encode(paramsStr);
+
+      // 使用 TextDecoder 进行 Base64 编码
+      const base64Encoded = btoa(String.fromCharCode.apply(null, dataStr));
+      setLoading(false);
+      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey-dev/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&personInfo=${base64Encoded}`;
     } else {
       showToast({
         title: '未查询到患者信息，请重新输入',
         icon: 'fail',
       });
     }
-    console.log('data', data);
+    setLoading(false);
   };
   const [patCardNo, setPatCardNo] = useState(no);
   const [patName, setPatName] = useState('');
@@ -88,6 +107,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
       </View>
       <Button
         type="primary"
+        disabled={loading}
         className={styles.btn}
         onTap={() => {
           handleFormSubmit();

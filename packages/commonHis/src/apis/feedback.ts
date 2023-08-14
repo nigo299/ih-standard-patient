@@ -117,6 +117,18 @@ export default {
         data: any;
       }>(`/api/kaiqiao/survey/inpatient`, params),
   ),
+  用户是否已经填写过问卷: createApiHooks(
+    (params: { publishKey: string; userKey: string }) =>
+      request.get<{
+        code: number;
+        msg: string;
+        data: any;
+      }>(`/api/kaiqiao/survey/finished`, {
+        params: {
+          ...params,
+        },
+      }),
+  ),
   OSS签名: createApiHooks(() =>
     request.post<{
       code: number;
