@@ -34,7 +34,7 @@ export default memo(() => {
         window.location.href = `http://183.65.22.8:8085/#/?patientId=${patient?.patientId}`;
       }
       if (type === 'tjzx') {
-        window.location.href = `http://183.65.22.8:8190/MedicalHomePage?peId=${patient?.patientId}`;
+        window.location.href = `http://183.65.22.8:8190/MedicalHomePage?peId=${patient?.patHisNo}`;
       }
       if (pageRoute) {
         if (defaultPatientInfo.patientId === patient.patientId) {
