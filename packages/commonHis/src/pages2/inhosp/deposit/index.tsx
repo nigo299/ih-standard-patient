@@ -51,6 +51,7 @@ export default () => {
         deptName,
         idNo,
         patientAge,
+        patientSex,
       } = inhospPatientInfo;
       const { code, data, msg } = await useApi.生成住院订单.request({
         patientId,
@@ -83,9 +84,9 @@ export default () => {
             hisName: hisName,
             deptName,
             doctorName: '',
-            patientName: `${patientName} | ${
-              PatGender[analyzeIDCard(idNo)?.analyzeSex as string] || ''
-            } | ${analyzeIDCard(idNo)?.analyzeAge || patientAge}岁`,
+            patientName: `${patientName} | ${PatGender[patientSex] || ''} | ${
+              analyzeIDCard(idNo)?.analyzeAge || patientAge
+            }岁`,
             patCardNo: patCardNo,
             totalFee: Number(new BigNumber(payCash).times(100)),
             orderId: data.orderId,

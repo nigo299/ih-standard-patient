@@ -340,6 +340,7 @@ export default () => {
           overflow: 'hidden',
         });
         if (infoData2?.[0]?.noticeInfo && nav.title === '预约挂号') {
+          setRegisterMode(nav?.url);
           setRegInfo(infoData2);
           setShow(true);
           return;
@@ -626,7 +627,8 @@ export default () => {
         content={regInfo?.[0]?.noticeInfo || ''}
         confirm={() => {
           if (
-            registerMode.includes('reserve') &&
+            (registerMode.includes('reserve') ||
+              registerMode.includes('default')) &&
             registerMode.includes('register/department')
           ) {
             getDeptList('reserve');
