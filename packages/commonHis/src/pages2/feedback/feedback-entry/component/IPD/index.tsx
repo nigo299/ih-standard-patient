@@ -65,7 +65,7 @@ export default ({ hisId, dept, deptId }) => {
 
       // 使用 TextDecoder 进行 Base64 编码
       const base64Encoded = btoa(String.fromCharCode.apply(null, dataStr));
-      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey-dev/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Encoded}`;
+      window.location.href = `https://ihs.cqkqinfo.com/patients/p2214-survey/#/?key=6a26311d0ce94a4f916515ef280bc55e&personInfo=${base64Encoded}`;
       return;
     }
     setLoading(false);
@@ -119,6 +119,7 @@ export default ({ hisId, dept, deptId }) => {
       <Button
         type="primary"
         className={styles.btn}
+        disabled={loading}
         onTap={() => {
           handleFormSubmit();
         }}

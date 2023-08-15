@@ -60,7 +60,7 @@ export default ({ hisId, no }: { hisId: string; no: string }) => {
       // 使用 TextDecoder 进行 Base64 编码
       const base64Encoded = btoa(String.fromCharCode.apply(null, dataStr));
       setLoading(false);
-      window.location.href = `https://tihs.cqkqinfo.com/patients/p2214-survey-dev/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&personInfo=${base64Encoded}`;
+      window.location.href = `https://ihs.cqkqinfo.com/patients/p2214-survey/#/?key=fd4eed4b24ae4935bfa39766dbdaff3d&personInfo=${base64Encoded}`;
     } else {
       showToast({
         title: '未查询到患者信息，请重新输入',
