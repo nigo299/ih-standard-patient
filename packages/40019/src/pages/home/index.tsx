@@ -292,7 +292,7 @@ export default () => {
           {
             title: '采购专栏',
             subTitle: '',
-            url: `/pages/microsite/hospital-article/index?type=156&title=${encodeURIComponent(
+            url: `/pages/microsite/hospital-article/index?type=157&title=${encodeURIComponent(
               '采购专栏',
             )}`,
             image: `${IMAGE_DOMIN}/home/cgzl.png`,
