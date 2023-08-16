@@ -216,6 +216,14 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/yjfk.png`,
             url: '/pages2/feedback/feedback-list/index',
           },
+          {
+            title: '采购专栏',
+            subTitle: '',
+            url: `/pages/microsite/hospital-article/index?type=157&title=${encodeURIComponent(
+              '采购专栏',
+            )}`,
+            image: `${IMAGE_DOMIN}/home/cgzl.png`,
+          },
         ]
       : [
           // {
@@ -271,7 +279,7 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/znsw.png`,
             onClick: () =>
               (window.location.href =
-                'https://tihs.cqkqinfo.com/patients/follow40019-dev/'),
+                'https://ihs.cqkqinfo.com/patients/follow40019/'),
           },
           {
             title: '数字胶片',
