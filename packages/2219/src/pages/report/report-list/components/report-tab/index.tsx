@@ -21,7 +21,7 @@ const ReportTab: React.FC<RestProps> = ({
       type={'card'}
       onChange={(v) => {
         if (v === 3) {
-          window.location.href = `http://www.cqdent.com:9077/pad/index.html#/examRecordList?username=doctor&pwd=Cqkqyy@2022&patientId=${patHisNo}`;
+          window.location.href = `http://www.cqdent.com:9077/pad/index.html#/examRecordList?username=doctor&pwd=DJpacs@#2022$&patientId=${patHisNo}`;
         } else {
           setTabIndex(v);
         }
