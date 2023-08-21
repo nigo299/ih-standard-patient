@@ -24,7 +24,7 @@ const ReportTab: React.FC<RestProps> = ({
         if (v === 3) {
           window.location.href = `http://www.cqdent.com:9077/pad/index.html#/examRecordList?username=${encryptDes(
             'doctor',
-          )}&pwd=${encryptDes(`DJpacs@#2022$`)}$&patientId=${encryptDes(
+          )}&pwd=${encryptDes(`DJpacs@#2022$`)}&patientId=${encryptDes(
             patHisNo,
           )}`;
         } else {
