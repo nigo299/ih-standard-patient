@@ -330,6 +330,19 @@ export const encrypt = (plaintText = '') => {
   encryptedBase64Str = encryptedBase64Str.replace(/\+/g, '-');
   return encryptedBase64Str;
 };
+// 口腔医院DES加密
+export const encryptDes = (plaintText = '') => {
+  if (!plaintText) return;
+  const key = CryptoJS.enc.Utf8.parse('0eb78322'); // 密钥
+  const iv = CryptoJS.enc.Utf8.parse('0eb78322'); // 向量
+  const ciphertext = CryptoJS.DES.encrypt(plaintText, key, {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7,
+  });
+  const encryptedHexStr = ciphertext.ciphertext.toString(CryptoJS.enc.Hex);
+  return encryptedHexStr;
+};
 // 解密
 export const decrypt = (encryptedBase64Str = '') => {
   if (!encryptedBase64Str) return;
