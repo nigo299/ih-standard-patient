@@ -56,6 +56,7 @@ import { useHisConfig } from '@/hooks';
 import {
   visitTime,
   registerSuccessTips,
+  RegisterCardPatientNo,
 } from '@/pages2/register/order-detail/utils';
 
 const cancelItems = [
@@ -559,7 +560,7 @@ export default () => {
         payName="register"
         hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
         healthCardNo={jkkInfo?.healthCardId}
-        patCardNo={orderDetail?.patCardNo}
+        patCardNo={orderDetail?.[RegisterCardPatientNo]}
       />
       <Form className={styles.content} form={form}>
         <ListTitle
