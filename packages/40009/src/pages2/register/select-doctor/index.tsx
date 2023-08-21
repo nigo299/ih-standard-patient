@@ -231,7 +231,7 @@ export default () => {
     if (deptDetail?.name) {
       setDeptDetail(deptDetail);
     }
-    if (deptDetail?.hospitalDeptName?.includes('特需')) {
+    if (deptDetail?.name?.includes('特需')) {
       setIsSpecial(true);
     }
   }, [deptDetail]);
