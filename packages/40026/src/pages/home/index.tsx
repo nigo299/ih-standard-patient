@@ -111,7 +111,7 @@ export default () => {
           报告结果<Text style={{ color: '#FF9743' }}>实时查询</Text>
         </View>
       ),
-      url: `/pages/report/report-list/index?patientId=${patientId}`,
+      url: `/pages2/usercenter/select-user/index?pageRoute=/pages/report/report-list/index`,
       image: `${IMAGE_DOMIN}/home/bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
@@ -287,17 +287,17 @@ export default () => {
               });
             });
           } else {
-            if (nav.title === '报告查询') {
-              navigateTo({
-                url: `${nav.url}${
-                  patient.filter((item) => item.isDefault === 1)[0].patientId
-                }`,
-              });
-            } else {
-              navigateTo({
-                url: nav.url,
-              });
-            }
+            // if (nav.title === '报告查询') {
+            //   navigateTo({
+            //     url: `${nav.url}${
+            //       patient.filter((item) => item.isDefault === 1)[0].patientId
+            //     }`,
+            //   });
+            // } else {
+            navigateTo({
+              url: nav.url,
+            });
+            // }
           }
         });
         return;
