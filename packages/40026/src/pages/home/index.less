@@ -1,4 +1,4 @@
-@import '@/styles/index.less';
+@import '../../styles/index.less';
 .bannerImg {
   position: relative;
   display: block;
@@ -13,41 +13,30 @@
   }
   image {
     width: 100%;
-    height: 256px;
+    height: 256px !important;
   }
   overflow: hidden;
 }
-.hisContainer {
-  position: absolute;
-  top: 24px;
-  left: 30px;
-}
 
-.hisTitle {
-  font-size: 26px;
-  font-family: Microsoft YaHei;
-  color: #fafafa;
-  margin-left: 19px;
-  text-shadow: 0px 5px 7px #51583b;
-}
-.hisLogo {
-  width: 57px !important;
-  height: 57px !important;
-}
 .microsite {
   position: absolute;
-  top: 111px;
-  right: 30px;
+  top: 115px;
+  left: 44px;
   width: 153px;
   height: 50px;
-  background: #6289ce;
+  background: @theme-color;
   border-radius: 25px;
   font-weight: bold;
-  color: #fff;
+  color: #fafafa;
   font-size: 26px;
   &:active {
     opacity: 0.7;
   }
+}
+
+.banner2 {
+  width: 100%;
+  height: 200px;
 }
 
 .content {
@@ -78,7 +67,6 @@
 
 .nav {
   font-size: 24px;
-  margin-top: 4px;
   // font-weight: 300;
 }
 
@@ -97,18 +85,17 @@
 .navNewImg {
   position: absolute;
   top: 5px;
-  right: 0;
-  width: 53px !important;
-  height: 26px !important;
+  right: 18px;
+  width: 53px;
+  height: 26px;
 }
 
 .navLsnlImg {
   position: absolute;
   top: -10px;
-  //left: 80px;
-  right: 0;
-  width: 113px !important;
-  height: 33px !important;
+  left: 80px;
+  width: 113px;
+  height: 33px;
 }
 
 .navTitle {
@@ -119,84 +106,25 @@
 }
 
 .subNav {
-  margin-top: 50px;
+  margin-top: 52px;
 }
-.subNavImage2 {
-  position: relative;
-  display: block;
-  width: 48%;
-  height: 218px;
-  image {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 218px;
-  }
-  > div {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 218px;
-  }
-  &:active {
-    opacity: 0.7;
-  }
-}
-.navRightConfig {
-  width: 330px;
-  height: 105px;
-  margin-bottom: 22px;
-}
-.subNavWrap2 {
-  position: relative;
-  width: 330px;
-  height: 114px;
-  padding: 23px 0 0 35px;
-  margin-bottom: 20px;
-  box-shadow: 4px 4px 4px 4px #ffffff;
-  border-radius: 20px;
 
-  &:active {
-    opacity: 0.7;
-  }
-}
-.subNavImage3 {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 98px;
-  image {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 98px;
-  }
-  > div {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 98px;
-  }
-  &:active {
-    opacity: 0.7;
-  }
-}
 .subNavImage {
   position: relative;
   display: block;
   width: 48%;
-  height: 142px;
+  height: 174px;
   image {
     display: block;
     margin: 0;
     width: 100%;
-    height: 142px;
+    height: 174px;
   }
   > div {
     display: block;
     margin: 0;
     width: 100%;
-    height: 142px;
+    height: 174px;
   }
   &:active {
     opacity: 0.7;
@@ -205,32 +133,19 @@
 
 .subNavWrap {
   position: absolute;
-  top: 22px;
+  top: 24px;
   left: 32px;
 }
 
 .subNavTitle {
   font-size: 32px;
   font-weight: bold;
-  color: @black-800;
+  color: #19b9a6;
 }
-.subNavSubTitle {
-  margin-top: 16px;
-  font-size: 22px;
-  color: #666;
-  z-index: 2;
+
+.subNavTitle1 {
+  color: #e7b632;
 }
-.navConfigBk2 {
-  position: absolute;
-  bottom: 18px;
-  right: 17px;
-  width: 72px;
-  height: 72px;
-  object-fit: cover;
-}
-//.subNavTitle1 {
-//  color: #333;
-//}
 
 .subNavSubTitle {
   margin-top: 11px;
@@ -258,15 +173,12 @@
 }
 
 .cardNav {
-  margin: 28px 0 20px 0;
-  padding: 34px 0 22px 0;
-  //background: #ffffff;
-  background: linear-gradient(180deg, rgba(#FFE4EB, 0.75), #fff 50%);
-  border-radius: 20px;
+  width: 100%;
+  margin: 20px 0;
+  background: #ffffff;
 }
 
 .card {
-  position: relative;
   width: 158px;
   border-radius: 20px;
   &:active {
@@ -274,22 +186,24 @@
   }
 }
 
-.cardTag {
-  position: absolute;
-  bottom: 3px;
-  width: 141px;
-  height: 31px;
-}
-
 .cardImg {
+  margin-top: 34px;
   width: 80px;
   height: 80px;
 }
 
+.card:nth-child(5),
+.card:nth-child(6),
+.card:nth-child(7),
+.card:nth-child(8) {
+  .cardImg {
+    margin-top: 0;
+  }
+}
+
 .cardTitle {
-  margin: 18px 0 40px 0;
+  margin: 24px 0 38px 0;
   font-size: 26px;
-  text-align: center;
   color: #333333;
 }
 

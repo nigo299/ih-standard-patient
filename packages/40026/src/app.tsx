@@ -6,7 +6,7 @@ import './app.less';
 const App: React.FC = (props) => {
   return (
     <StateProviders>
-      <ConfigProvider brandPrimary={'#ee5b94'}>
+      <ConfigProvider brandPrimary={'#5CA3F3'}>
         {props.children as React.ReactElement}
       </ConfigProvider>
     </StateProviders>
