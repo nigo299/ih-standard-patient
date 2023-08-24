@@ -62,7 +62,7 @@ export default () => {
     {
       title: '住院服务',
       subTitle: '住院患者贴心服务',
-      url: `/pages2/inhosp/home/index?patientId=${patientId}`,
+      url: `/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index`,
       image: `${IMAGE_DOMIN}/home/zyfw.png`,
     },
     {
