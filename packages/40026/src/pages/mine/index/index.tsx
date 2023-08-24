@@ -49,7 +49,7 @@ export default () => {
           className={styles.addCard}
           onTap={() => {
             navigateTo({
-              url: '/pages2/usercenter/adduser/index',
+              url: '/pages2/usercenter/add-user/index',
             });
           }}
         >

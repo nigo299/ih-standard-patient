@@ -25,7 +25,7 @@ export default (props: PropsType) => (
       justify="center"
       onTap={() =>
         navigateTo({
-          url: `/pages2/usercenter/userinfo/index?patientId=${props.patientId}`,
+          url: `/pages2/usercenter/user-info/index?patientId=${props.patientId}`,
         })
       }
     >
