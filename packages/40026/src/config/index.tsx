@@ -36,6 +36,11 @@ export const mineMainNavConfig = [
 
 export const mineNavListConfig = [
   {
+    title: '就诊人管理',
+    url: '/pages2/usercenter/user-list/index',
+    image: `${IMAGE_DOMIN}/mine/jzrgl.png`,
+  },
+  {
     title: '关注/收藏',
     url: '/pages/collect/index',
     image: `${IMAGE_DOMIN}/mine/gzsc.png`,
@@ -44,7 +49,6 @@ export const mineNavListConfig = [
     title: '意见反馈',
     url: '/pages2/feedback/feedback-list/index',
     image: `${IMAGE_DOMIN}/mine/yjfk.png`,
-    open: false,
   },
 ];
 
