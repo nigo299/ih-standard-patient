@@ -49,6 +49,7 @@ export const mineNavListConfig = [
     title: '意见反馈',
     url: '/pages2/feedback/feedback-list/index',
     image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+    open: true,
   },
 ];
 
