@@ -129,7 +129,7 @@ export default () => {
 
     let canSelectAndHasSource;
 
-    if (type === 'reserve') {
+    if (type === 'reserve' || type === 'default') {
       canSelectAndHasSource = doctorScheduleList?.some(
         ({ scheduleDate, status }) =>
           scheduleDate !== dayjs().format('YYYY-MM-DD') &&
