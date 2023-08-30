@@ -167,19 +167,21 @@ export default () => {
   }, [orderDetail]);
 
   useEffect(() => {
-    getWaitList({
-      ...JSON.parse(storage.get('waitPayListParams') || ''),
-    }).then((r) => {
-      if (r.code === 0 && r.data?.length >= 1) {
-        const selectedHisSerilNo = r.data.find(
-          (item) => item.hisSerilNo === orderDetail?.hisSerialNo,
-        )?.hisSerilNo;
-        setLeftNum(
-          r.data.filter((item) => item.hisSerilNo === selectedHisSerilNo)
-            ?.length || 0,
-        );
-      }
-    });
+    if (storage?.get('waitPayListParams')) {
+      getWaitList({
+        ...JSON.parse(storage.get('waitPayListParams') || ''),
+      }).then((r) => {
+        if (r.code === 0 && r.data?.length >= 1) {
+          const selectedHisSerilNo = r.data.find(
+            (item) => item.hisSerilNo === orderDetail?.hisSerialNo,
+          )?.hisSerilNo;
+          setLeftNum(
+            r.data.filter((item) => item.hisSerilNo === selectedHisSerilNo)
+              ?.length || 0,
+          );
+        }
+      });
+    }
   }, [getWaitList, orderDetail]);
 
   useEffect(() => {
