@@ -622,7 +622,7 @@ const ListItem = ({
               />
 
               <Exceed className={styles.payName} clamp={1}>
-                {item?.hisOrderNo.split('#')[0] || '暂无'}
+                {item?.hisOrderNo.split('|')[0] || '暂无'}
               </Exceed>
             </View>
             <View className={styles.td}>
