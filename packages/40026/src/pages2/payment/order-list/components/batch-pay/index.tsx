@@ -296,6 +296,11 @@ export default () => {
               patientName,
             }),
       );
+      data.sort((a, b) => {
+        const aNum = parseInt(a.hisOrderNo.split('|')[1]);
+        const bNum = parseInt(b.hisOrderNo.split('|')[1]);
+        return aNum - bNum;
+      });
       setOriginalList(data);
       const diffsArr: string[] = [];
       data?.forEach((item) => {
