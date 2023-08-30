@@ -361,25 +361,33 @@ export default () => {
     return !!list.find((item) => selectList.includes(item.hisOrderNo))
       ?.hisOrderNo;
   };
-
+  const getPatCardNo = (hisOrderNo: string) => {
+    return hisOrderNo.split('|')[1];
+  };
   const onListSelect = (hisSerilNo: string) => {
-    console.log('originalList', originalList);
-    console.log('hisSerilNo', hisSerilNo);
     const selected = originalList.find(
       (item) => item.hisSerilNo === hisSerilNo,
     );
     const selectedHisOrderNo = selected?.hisOrderNo;
-    console.log('selected', selected);
     if (selectList.includes(selectedHisOrderNo || '')) {
       setSelectList((prev) =>
         prev.filter((subItem) => subItem !== selectedHisOrderNo),
       );
     } else {
-      const list =
-        waitOpList
-          ?.find((item) => item.hisSerilNo === hisSerilNo)
-          ?.list.map((item) => item.hisOrderNo) || [];
-      setSelectList([...selectList, ...list]);
+      const cardNo = getPatCardNo(selectedHisOrderNo as string);
+      if (selectList?.some((item) => getPatCardNo(item) !== cardNo)) {
+        setSelectList(
+          waitOpList
+            ?.find((item) => item.hisSerilNo === hisSerilNo)
+            ?.list?.map((item) => item.hisOrderNo) || [],
+        );
+      } else {
+        const list =
+          waitOpList
+            ?.find((item) => item.hisSerilNo === hisSerilNo)
+            ?.list?.map((item) => item.hisOrderNo) || [];
+        setSelectList([...selectList, ...list]);
+      }
     }
   };
 
