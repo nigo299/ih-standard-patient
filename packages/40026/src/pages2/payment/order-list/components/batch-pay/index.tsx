@@ -687,13 +687,6 @@ const ListItem = ({
               ]}
             />
             <Space justify="space-between" className={styles.tableFooter}>
-              <FormItem label={'公卫免费金额'}>
-                <Price
-                  price={Number(item.medicalFee)}
-                  bigScale={1}
-                  className={styles.footPrice}
-                />
-              </FormItem>
               <FormItem label={'合计金额'}>
                 <Price
                   price={item.itemList
