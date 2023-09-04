@@ -6,7 +6,7 @@ import { Space, BackgroundImg, Picker, Icon, Table } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
 import useApi from '@/apis/inhosp';
 import dayjs from 'dayjs';
-import styles from './index.less';
+import styles from 'commonHis/src/pages2/inhosp/inventory/index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import useGetParams from '@/utils/useGetParams';
 import { PatGender } from '@/config/dict';
@@ -81,6 +81,7 @@ export default () => {
               </Space>
               <Space alignItems="center" className={styles.date}>
                 <Picker
+                  value={selectDate}
                   mode={'date'}
                   onChange={(v) => setSelectDate(String(v))}
                   start={liveData?.inDate.slice(0, 10)}
