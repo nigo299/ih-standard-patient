@@ -81,6 +81,7 @@ export default () => {
               </Space>
               <Space alignItems="center" className={styles.date}>
                 <Picker
+                  value={selectDate}
                   mode={'date'}
                   onChange={(v) => setSelectDate(String(v))}
                   start={liveData?.inDate.slice(0, 10)}
