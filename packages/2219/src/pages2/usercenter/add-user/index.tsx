@@ -291,7 +291,6 @@ export default memo(() => {
             values['idType'] === '1' &&
             config.enableFaceVerify &&
             PLATFORM === 'web' &&
-            btnSubType === 'add' &&
             bindcardProdiles?.isFace === 1 &&
             !faceInfo.success &&
             faceInfo.idNo !== idNo &&
