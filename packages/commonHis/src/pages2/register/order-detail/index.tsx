@@ -165,7 +165,7 @@ export default () => {
         text: orderDetail?.orderId,
       },
       {
-        label: '交易单号',
+        label: '业务订单号',
         text: orderDetail?.payOrderId || '暂无',
       },
       {
