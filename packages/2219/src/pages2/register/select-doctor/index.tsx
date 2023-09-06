@@ -273,8 +273,6 @@ export default () => {
 
   useEffect(() => {
     if (deptId === '30312001') {
-      console.log('1233');
-
       setDeptDetail({
         name: '儿童牙病',
         hisDistrict: '冉家坝院区',
@@ -295,6 +293,22 @@ export default () => {
         name: '儿童牙外伤',
         hisDistrict: '冉家坝院区',
         summary: '诊疗范围为儿童乳牙和年轻恒牙外伤。',
+      });
+    }
+    if (deptId === '30303001') {
+      setDeptDetail({
+        name: '儿童牙病',
+        hisDistrict: '上清寺院区',
+        summary:
+          '诊疗范围为儿童牙体龋病、非龋病疾病、牙髓病、根尖周疾病，儿童口腔舒适治疗。',
+      });
+    }
+    if (deptId === '30303002') {
+      setDeptDetail({
+        name: '儿童早期矫治',
+        hisDistrict: '上清寺院区',
+        summary:
+          '诊疗范围为儿童各类错颌畸形的早期矫治（如牙列拥挤，反合，上牙前突，阻生牙等）；儿童口腔不良习惯的阻断治疗（如口呼吸，咬唇，吐舌等）。',
       });
     }
   }, [deptId, setDeptDetail]);

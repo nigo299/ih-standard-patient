@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { navigateTo, View } from 'remax/one';
 import styles from './index.less';
 import patientState from '@/stores/patient';
@@ -54,6 +54,8 @@ export default () => {
     setNavigationBar({
       title: '选择就诊人',
     });
+  });
+  useEffect(() => {
     if (md5 && refreshTime) {
       console.log(useMd5(refreshTime), 'useMd5(refreshTime)');
       const newRefreshTime = Number(refreshTime);
@@ -72,8 +74,8 @@ export default () => {
         getPatientList();
       }
     }
-  });
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [md5, refreshTime]);
   return (
     <View className={styles.pageUrmUsrLst}>
       <Modal />

@@ -1,0 +1,113 @@
+@import '@/styles/index.less';
+.page {
+  position: relative;
+}
+.wrap {
+  padding: 20px;
+}
+
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 260px;
+  background: @theme-color;
+}
+.card {
+  width: 710px;
+  height: 356px;
+  position: relative;
+  margin-top: 57px;
+  margin-bottom: 25px;
+  > image:nth-child(1) {
+    width: 100%;
+    height: 100%;
+  }
+  // 兼容web
+  > div {
+    display: block;
+    margin: 0;
+    width: 710px;
+    height: 356px;
+  }
+}
+.inner {
+  height: 100%;
+  width: 100%;
+  padding-top: 70px;
+}
+
+.avatars {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  margin-left: -50px;
+  width: 120px;
+  height: 120px;
+  // background: @theme-color;
+  border-radius: 50%;
+}
+
+.avatar {
+  width: 115px !important;
+  height: 115px !important;
+}
+.userInfo {
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ml {
+  margin: 10px 0 20px 50px;
+  font-size: 34px;
+}
+
+.qh {
+  width: 40px;
+  height: 40px;
+  margin-left: 14px;
+  background: #10629b;
+  border-radius: 50%;
+}
+
+.change {
+  height: 35px;
+  width: 35px;
+}
+.flex {
+  width: 100%;
+  color: #fff2aa;
+  margin-top: 37px;
+}
+.count {
+  color: #10629b;
+  font-weight: normal;
+  font-size: 56px;
+}
+.desc {
+  font-size: 30px;
+  color: black;
+}
+.line {
+  width: 1px;
+  height: 44px;
+  margin-bottom: 20px;
+  background: #fff;
+}
+.formItem {
+  box-sizing: border-box;
+  padding: 30px 20px !important;
+  font-size: 34px;
+  font-weight: 400;
+  color: #333333;
+  border-bottom: none !important;
+}
+.itemCell {
+  color: #10629b !important;
+  font-size: 34px;
+}

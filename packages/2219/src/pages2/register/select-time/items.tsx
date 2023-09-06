@@ -85,10 +85,9 @@ export default ({
                         ? '初诊'
                         : '复诊'}
                     </Text>
-                    <Text
-                      className={styles.type}
-                      style={{ color: 'red', marginLeft: '70px' }}
-                    >{`价格: ¥${(registerFee / 100).toFixed(2)}`}</Text>
+                    <Text className={styles.typeText}>{`价格: ¥${(
+                      registerFee / 100
+                    ).toFixed(2)}`}</Text>
                   </View>
                 </View>
                 <View className={styles.items2}>

@@ -28,10 +28,10 @@ const ShowPrice = (data: any) => {
       <View
         className={styles.doctor}
         onTap={() => {
-          if (item.leftSource > 0) {
+          if (item?.leftSource > 0) {
             navigateTo({
               url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${
-                item.doctorId
+                item?.doctorId
               }&scheduleDate=${date.format(
                 'YYYY-MM-DD',
               )}&doctorName=${name}&sourceType=${sourceType}&type=${type}&level=${level}&title=${title}`,
@@ -51,15 +51,25 @@ const ShowPrice = (data: any) => {
           className={styles.photo}
         />
         <View className={styles.doctorInfo}>
-          <View style={{ display: 'flex' }}>
-            <View className={styles.left}>
-              <View className={styles.name}>{name}</View>
+          {name?.includes('特需') ? (
+            <Space vertical style={{ marginTop: '-8px' }}>
+              <View className={styles.left}>
+                <View className={styles.name}>{name}</View>
+              </View>
+              <View className={styles.subtitle}>
+                {`${deptName} | ${title || ''}`}
+              </View>
+            </Space>
+          ) : (
+            <View style={{ display: 'flex' }}>
+              <View className={styles.left}>
+                <View className={styles.name}>{name}</View>
+              </View>
+              <View className={styles.subtitle}>
+                {`${deptName} | ${title || ''}`}
+              </View>
             </View>
-            <View className={styles.subtitle}>
-              {`${deptName} | ${title || ''}`}
-            </View>
-          </View>
-
+          )}
           <Exceed clamp={1} className={styles.doctorText}>
             {`擅长: ${
               doctorSkill && doctorSkill !== 'null' ? doctorSkill : '暂无'
@@ -77,7 +87,7 @@ const ShowPrice = (data: any) => {
               </View>
               <View
                 className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item.status === 2,
+                  [styles.disable]: leftSource === 0 || item?.status === 2,
                 })}
               >
                 <Space
@@ -114,7 +124,7 @@ const ShowPrice = (data: any) => {
               </View>
               <View
                 className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item.status === 2,
+                  [styles.disable]: leftSource === 0 || item?.status === 2,
                 })}
               >
                 <Space
@@ -151,7 +161,7 @@ const ShowPrice = (data: any) => {
               </View>
               <View
                 className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item.status === 2,
+                  [styles.disable]: leftSource === 0 || item?.status === 2,
                 })}
               >
                 <Space
@@ -188,7 +198,7 @@ const ShowPrice = (data: any) => {
               </View>
               <View
                 className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item.status === 2,
+                  [styles.disable]: leftSource === 0 || item?.status === 2,
                 })}
               >
                 <Space
@@ -225,7 +235,7 @@ const ShowPrice = (data: any) => {
               </View>
               <View
                 className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item.status === 2,
+                  [styles.disable]: leftSource === 0 || item?.status === 2,
                 })}
               >
                 <Space

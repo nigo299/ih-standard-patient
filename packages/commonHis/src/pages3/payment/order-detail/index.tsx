@@ -7,7 +7,7 @@ import useApi from '@/apis/payment';
 import { Table, Space, PartTitle } from '@kqinfo/ui';
 import { ListItem, ListTitle, RegisterCardOld } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME, HOSPITAL_TEL } from '@/config/constant';
-import { formDate } from '@/utils';
+import { formDate, getPatientAge } from '@/utils';
 import styles from './index.less';
 import { PatGender } from '@/config/dict';
 
@@ -34,7 +34,7 @@ export default () => {
     },
     {
       label: '年龄',
-      text: `${orderDetail?.patientAge}岁`,
+      text: `${getPatientAge(orderDetail?.patientAge)}`,
     },
     {
       label: '就诊号',

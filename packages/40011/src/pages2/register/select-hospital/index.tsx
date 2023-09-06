@@ -12,11 +12,12 @@ import useGetParams from '@/utils/useGetParams';
 
 export default () => {
   const { type, summary, doctor } = useGetParams<{
-    type: 'reserve' | 'day';
+    type: 'reserve' | 'day' | 'default';
     summary: string;
     doctor: string;
   }>();
-  const { hospitalList, setDeptList } = regsiterState.useContainer();
+  const { hospitalList, setDeptList, getDeptList } =
+    regsiterState.useContainer();
   const handleSelect = useCallback(
     ({ children: dept, name }: { children: DeptType[]; name: string }) => {
       setDeptList(hospitalList?.[1]?.children || []);
@@ -98,9 +99,7 @@ export default () => {
           <View
             className={styles.item}
             onTap={() => {
-              navigateTo({
-                url: `/pages2/register/department/index?type=${type}&hisType=1`,
-              });
+              getDeptList(type, '1');
             }}
           >
             <View className={styles.name}>{'靛水新城分院'}</View>
@@ -117,9 +116,7 @@ export default () => {
           <View
             className={styles.item}
             onTap={() => {
-              navigateTo({
-                url: `/pages2/register/department/index?type=${type}&hisType=2`,
-              });
+              getDeptList(type, '2');
             }}
           >
             <View className={styles.name}>{'老院区'}</View>

@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { View, navigateTo, navigateBack, Image, redirectTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import {
@@ -61,8 +61,14 @@ export default memo(() => {
     idType: string;
     idNo: string;
   }>();
-  const { ocrInfo, clearOcrInfo, faceInfo, setFaceInfo, getPatientList } =
-    patientState.useContainer();
+  const {
+    ocrInfo,
+    clearOcrInfo,
+    faceInfo,
+    setFaceInfo,
+    getPatientList,
+    needGuardian,
+  } = patientState.useContainer();
   const { user, getUserInfo } = globalState.useContainer();
   const { config } = useHisConfig();
   const [addressOptions, setAddressOptions] = useState<CascadePickerOption[]>(
@@ -128,7 +134,12 @@ export default memo(() => {
   const { request: handleAdd, loading: addLoading } = useApi.建档绑卡({
     needInit: false,
   });
-
+  const guardianName = useMemo(() => {
+    if (needGuardian) {
+      return '代理人';
+    }
+    return '监护人';
+  }, [needGuardian]);
   const handleFormSubmit = useCallback(
     async (values: any) => {
       delete values['checked'];
@@ -200,6 +211,7 @@ export default memo(() => {
         });
         setCardList(options);
         setSelectCard(options[0]);
+        console.log('options', options);
         if (options.length !== 0) {
           setTimeout(() => {
             form.setFieldsValue({
@@ -232,6 +244,7 @@ export default memo(() => {
                   form.setFieldsValue({
                     patientType: '1',
                   });
+                  setIsChild(true);
                 } else {
                   form.setFieldsValue({
                     parentName: options[0]?.parentName,
@@ -245,6 +258,7 @@ export default memo(() => {
         return;
       }
       if (btnSubType === 'add' || btnSubType === 'bind') {
+        console.log('valuesadd', values);
         /** 这几个字段均为查询就诊人展示作用 */
         delete values['brithdayed'];
         delete values['patientSexed'];
@@ -265,11 +279,11 @@ export default memo(() => {
         if (checkPhoneFlag) {
           // 判断成人儿童表单需要识别的身份信息
           const idNo =
-            values['patientType'] === '1'
+            values['patientType'] === '1' || needGuardian || isChild
               ? values['parentIdNo']
               : values['idNo'];
           const name =
-            values['patientType'] === '1'
+            values['patientType'] === '1' || needGuardian || isChild
               ? values['parentName']
               : values['patientName'];
           const birthday =
@@ -280,7 +294,6 @@ export default memo(() => {
             values['idType'] === '1' &&
             config.enableFaceVerify &&
             PLATFORM === 'web' &&
-            btnSubType === 'add' &&
             bindcardProdiles?.isFace === 1 &&
             !faceInfo.success &&
             faceInfo.idNo !== idNo &&
@@ -373,20 +386,24 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles,
+      bindcardProdiles?.childrenMaxAge,
+      bindcardProdiles?.isFace,
       btnSubType,
       config.enableFaceVerify,
-      faceInfo,
+      faceInfo?.idNo,
+      faceInfo?.name,
+      faceInfo?.success,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
       isBrithday,
+      needGuardian,
       ocrInfo.num,
       pageRoute,
       selectCard,
       setFaceInfo,
-      user?.phone,
+      user.phone,
     ],
   );
 
@@ -958,14 +975,15 @@ export default memo(() => {
 
         {((selectCard?.idNo &&
           Number(selectCard.patientAge) < bindcardProdiles?.childrenMaxAge) ||
-          isChild) && (
+          isChild ||
+          needGuardian) && (
           <FormItem noStyle>
             {(_, __, { getFieldValue }) => {
               const parentIdType = getFieldValue('parentIdType') || '1';
               return (
                 <>
                   <PartTitle bold className={styles.partTitle2}>
-                    监护人信息
+                    {`${guardianName}信息`}
                   </PartTitle>
                   <Form
                     cell
@@ -975,18 +993,18 @@ export default memo(() => {
                     labelCls={styles.label}
                   >
                     <FormItem
-                      label={'监护人姓名'}
+                      label={`${guardianName}姓名`}
                       name="parentName"
                       rules={[
                         {
                           required: true,
-                          message: '请输入2-8位合法监护人姓名',
+                          message: `请输入2-8位合法${guardianName}姓名`,
                           pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,8}$/,
                         },
                       ]}
                     >
                       <ReInput
-                        placeholder="请输入监护人姓名"
+                        placeholder={`请输入${guardianName}姓名`}
                         type="text"
                         className={styles.reInput}
                         placeholderClassName={styles.placeholder}
@@ -1006,7 +1024,7 @@ export default memo(() => {
                       rules={[
                         {
                           required: true,
-                          message: '请选择监护人证件类型',
+                          message: `请选择${guardianName}证件类型`,
                         },
                       ]}
                     >
@@ -1028,7 +1046,7 @@ export default memo(() => {
                         {
                           type: parentIdType === '1' ? 'idCard' : 'string',
                           required: true,
-                          message: '请输入正确的监护人身份证',
+                          message: `请输入正确的${guardianName}证件号码`,
                         },
                       ]}
                     >
@@ -1038,7 +1056,7 @@ export default memo(() => {
                         placeholderClassName={styles.placeholder}
                         type="idcard"
                         adjustPosition
-                        placeholder={`请输入监护人${
+                        placeholder={`请输入${guardianName}${
                           bindcardProdiles?.idTypes?.filter(
                             (item) => item?.dictKey === parentIdType,
                           )[0]?.dictValue || '身份证'

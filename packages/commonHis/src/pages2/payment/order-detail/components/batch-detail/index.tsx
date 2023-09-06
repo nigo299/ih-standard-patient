@@ -31,7 +31,7 @@ import {
   PAY_TYPE,
   PLATFORM,
 } from '@/config/constant';
-import { decrypt, formDate, returnUrl } from '@/utils';
+import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
 import useCommApi from '@/apis/common';
 import styles from '@/pages2/payment/order-detail/components/batch-detail/index.less';
 import useRegisterApi, { MedicalPayType } from '@/apis/register';
@@ -93,7 +93,7 @@ export default () => {
       label: '就诊人',
       text: `${orderDetail?.patientName} | ${
         PatGender[orderDetail?.patientSex] || ''
-      } | ${orderDetail?.patientAge}岁`,
+      } | ${getPatientAge(orderDetail?.patientAge)}`,
     },
     {
       label: '就诊号',
@@ -167,19 +167,21 @@ export default () => {
   }, [orderDetail]);
 
   useEffect(() => {
-    getWaitList({
-      ...JSON.parse(storage.get('waitPayListParams') || ''),
-    }).then((r) => {
-      if (r.code === 0 && r.data?.length >= 1) {
-        const selectedHisSerilNo = r.data.find(
-          (item) => item.hisSerilNo === orderDetail?.hisSerialNo,
-        )?.hisSerilNo;
-        setLeftNum(
-          r.data.filter((item) => item.hisSerilNo === selectedHisSerilNo)
-            ?.length || 0,
-        );
-      }
-    });
+    if (storage?.get('waitPayListParams')) {
+      getWaitList({
+        ...JSON.parse(storage.get('waitPayListParams') || ''),
+      }).then((r) => {
+        if (r.code === 0 && r.data?.length >= 1) {
+          const selectedHisSerilNo = r.data.find(
+            (item) => item.hisSerilNo === orderDetail?.hisSerialNo,
+          )?.hisSerilNo;
+          setLeftNum(
+            r.data.filter((item) => item.hisSerilNo === selectedHisSerilNo)
+              ?.length || 0,
+          );
+        }
+      });
+    }
   }, [getWaitList, orderDetail]);
 
   useEffect(() => {

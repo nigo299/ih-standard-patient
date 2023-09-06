@@ -95,6 +95,40 @@ export default {
         data: null;
       }>(`/api/ihis/user/complaints/appendReply`, null, { params }),
   ),
+  查询患者门诊: createApiHooks(
+    (params: { hisId: string; patName: string; number: string }) =>
+      request.post<{
+        code: number;
+        msg: string;
+        data: any;
+      }>(`/api/kaiqiao/survey/outpatient`, params),
+  ),
+  查询患者住院: createApiHooks(
+    (params: {
+      hisId: string;
+      patName: string;
+      number: string;
+      dept: string;
+      deptId: string;
+    }) =>
+      request.post<{
+        code: number;
+        msg: string;
+        data: any;
+      }>(`/api/kaiqiao/survey/inpatient`, params),
+  ),
+  用户是否已经填写过问卷: createApiHooks(
+    (params: { publishKey: string; userKey: string }) =>
+      request.get<{
+        code: number;
+        msg: string;
+        data: any;
+      }>(`/api/kaiqiao/survey/finished`, {
+        params: {
+          ...params,
+        },
+      }),
+  ),
   OSS签名: createApiHooks(() =>
     request.post<{
       code: number;

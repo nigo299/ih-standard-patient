@@ -5,6 +5,7 @@ import {
   decrypt,
   formDate,
   getBrowserUa,
+  getPatientAge,
   getUrlParams,
   returnUrl,
 } from '@/utils';
@@ -55,6 +56,7 @@ import { useHisConfig } from '@/hooks';
 import {
   visitTime,
   registerSuccessTips,
+  RegisterCardPatientNo,
 } from '@/pages2/register/order-detail/utils';
 
 const cancelItems = [
@@ -164,7 +166,7 @@ export default () => {
         text: orderDetail?.orderId,
       },
       {
-        label: '交易单号',
+        label: '业务订单号',
         text: orderDetail?.payOrderId || '暂无',
       },
       {
@@ -232,7 +234,7 @@ export default () => {
           doctorName: doctorName,
           patientName: `${patientName} | ${
             PatGender[patientSex] || ''
-          } | ${patientAge}岁`,
+          } | ${getPatientAge(patientAge)}`,
           patCardNo,
           patientFullIdNo: decrypt(encryptPatientIdNo),
           registerTime: `${formDate(visitDate).slice(
@@ -558,7 +560,7 @@ export default () => {
         payName="register"
         hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
         healthCardNo={jkkInfo?.healthCardId}
-        patCardNo={orderDetail?.[config?.patCardNoValue]}
+        patCardNo=patCardNo={orderDetail?.[config?.patCardNoValue]}
       />
       <Form className={styles.content} form={form}>
         <ListTitle

@@ -11,6 +11,8 @@ import styles from './index.less';
 import classNames from 'classnames';
 import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
+import { getPatientAge } from '@/utils';
+
 export default memo(() => {
   const { config } = useHisConfig();
   const { pageRoute } = useGetParams<{
@@ -87,9 +89,9 @@ export default memo(() => {
                     color: 'inherit',
                   }}
                 />
-                {`${PatGender[patient.patientSex] || ''} | ${
-                  patient.patientAge
-                }岁`}
+                {`${PatGender[patient.patientSex] || ''} | ${getPatientAge(
+                  patient.patientAge,
+                )}`}
               </Space>
               <Space
                 className={classNames(styles.text, {

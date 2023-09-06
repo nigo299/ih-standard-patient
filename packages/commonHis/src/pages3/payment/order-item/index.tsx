@@ -9,6 +9,7 @@ import useGetParams from '@/utils/useGetParams';
 import { PartTitle } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
 import { PatGender } from '@/config/dict';
+import { getPatientAge } from '@/utils';
 
 export default () => {
   const {
@@ -49,7 +50,7 @@ export default () => {
     },
     {
       label: '年龄',
-      text: `${waitOpDetail?.age}岁`,
+      text: `${getPatientAge(waitOpDetail?.age)}`,
     },
     {
       label: '就诊号',

@@ -67,6 +67,7 @@ export default createContainer(() => {
     idNo: '',
     success: false,
   });
+  const [needGuardian, setNeedGuardian] = useState(false);
   const bindPatientList = useMemo(() => {
     if (decryptPatName) {
       return originalBindPatientList.map((item) => {
@@ -151,5 +152,7 @@ export default createContainer(() => {
       typedStorage.set('decryptPatName', isDecrypt);
       setDecryptPatName(isDecrypt);
     }, []),
+    needGuardian,
+    setNeedGuardian,
   };
 });

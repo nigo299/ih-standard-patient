@@ -23,6 +23,10 @@ import {
   Exceed,
   Space,
   Loading,
+  Price,
+  Fold,
+  Table,
+  rpxToPx,
 } from '@kqinfo/ui';
 import showModal from '@/utils/showModal';
 import payState, { OrderInfoType } from '@/stores/pay';
@@ -34,7 +38,8 @@ import {
   PAYMENT_SELECTALL_PAY,
   PAY_TYPE,
 } from '@/config/constant';
-import { decrypt, formDate, returnUrl } from '@/utils';
+import { FormInstance } from 'rc-field-form/es/interface';
+import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Tip } from '@/components';
 import styles from './index.less';
@@ -42,8 +47,9 @@ import reportCmPV from '@/alipaylog/reportCmPV';
 import storage from '@/utils/storage';
 import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
-
+import { useHisConfig } from '@/hooks';
 export default () => {
+  const { config } = useHisConfig();
   const { setOrderInfo } = payState.useContainer();
   const { patientId, patCardNo } = useGetParams<{
     patientId: string;
@@ -72,6 +78,7 @@ export default () => {
     }
     return true;
   }, [waitOpList?.length, selectList.length]);
+
   const handlePay = useCallback(
     async (payAuthNo?: string) => {
       if (process.env.REMAX_APP_PLATFORM === 'app') {
@@ -259,16 +266,33 @@ export default () => {
 
   const getWaitOpList = useCallback(async () => {
     setLoading(true);
-    const { data, code } = await useApi.查询门诊待缴费列表.request(
-      patientId
-        ? {
-            patientId,
-          }
-        : {
-            patCardNo,
-            scanFlag: '1',
-          },
-    );
+    const { data, code } = await useApi.查询门诊待缴费列表
+      .request(
+        patientId
+          ? {
+              patientId,
+            }
+          : {
+              patCardNo,
+              scanFlag: '1',
+            },
+      )
+      .catch((e) => {
+        if (e.data.data === null || e.data.data === undefined) {
+          showModal({
+            title: '提示',
+            content: '当前就诊人暂无待缴费记录, 请重新选择就诊人!',
+          }).then(({ confirm }) => {
+            if (confirm) {
+              redirectTo({
+                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
+              });
+            } else {
+              navigateBack();
+            }
+          });
+        }
+      });
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
       if (PAYMENT_SELECTALL_PAY) {
@@ -322,112 +346,137 @@ export default () => {
       <View className={styles.list}>
         {waitOpList &&
           waitOpList?.length >= 1 &&
-          waitOpList?.map((item) => (
-            <View
-              key={item.hisOrderNo}
-              className={styles.item}
-              onTap={() => {
-                navigateTo({
-                  url: `/pages2/payment/order-item/index?hisOrderNo=${encodeURIComponent(
-                    item.hisOrderNo,
-                  )}&deptName=${item.deptName}&doctorName=${
-                    item.doctorName
-                  }&patientName=${item.patientName}&patientId=${
-                    item.patientId
-                  }&patCardNo=${item.patCardNo}&date=${item.date}&gender=${
-                    item.gender
-                  }&age=${item.age}`,
-                });
-              }}
-            >
-              <View className={styles.price}>{`¥${(
-                Number(item.totalFee) / 100
-              ).toFixed(2)}`}</View>
-              <View className={styles.infoWrap}>
+          waitOpList?.map((item) => {
+            if (!config.isShowOutPayDetails) {
+              return (
                 <View
-                  className={styles.checkBoxWrap}
-                  onTap={(event) =>
-                    !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
-                  }
+                  key={item.hisOrderNo}
+                  className={styles.showDetailItem}
+                  onTap={() => {
+                    navigateTo({
+                      url: `/pages2/payment/order-item/index?hisOrderNo=${encodeURIComponent(
+                        item.hisOrderNo,
+                      )}&deptName=${item.deptName}&doctorName=${
+                        item.doctorName
+                      }&patientName=${item.patientName}&patientId=${
+                        item.patientId
+                      }&patCardNo=${item.patCardNo}&date=${item.date}&gender=${
+                        item.gender
+                      }&age=${item.age}`,
+                    });
+                  }}
                 >
-                  {!PAYMENT_SELECTALL_PAY && (
-                    <>
-                      {selectList.includes(item.hisOrderNo) ? (
-                        <Space
-                          justify="center"
-                          alignItems="center"
-                          className={styles.select}
-                        >
-                          <Image
-                            mode="aspectFit"
-                            src={`${IMAGE_DOMIN}/payment/select.png`}
-                            className={styles.selectImg}
-                          />
-                        </Space>
-                      ) : (
-                        <View className={styles.checkBox} />
+                  <View className={styles.price}>{`¥${(
+                    Number(item.totalFee) / 100
+                  ).toFixed(2)}`}</View>
+                  <View className={styles.infoWrap}>
+                    <View
+                      className={styles.checkBoxWrap}
+                      onTap={(event) =>
+                        !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
+                      }
+                    >
+                      {!PAYMENT_SELECTALL_PAY && (
+                        <>
+                          {selectList.includes(item.hisOrderNo) ? (
+                            <Space
+                              justify="center"
+                              alignItems="center"
+                              className={styles.select}
+                            >
+                              <Image
+                                mode="aspectFit"
+                                src={`${IMAGE_DOMIN}/payment/select.png`}
+                                className={styles.selectImg}
+                              />
+                            </Space>
+                          ) : (
+                            <View className={styles.checkBox} />
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                </View>
-                <Form className={styles.info} form={form}>
-                  <View
-                    className={styles.title}
-                    onTap={(event) =>
-                      !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
-                    }
-                  >
-                    {`${item.patientName} ${
-                      item.gender === 'M' ? '男' : '女'
-                    } | ${item.age}`}
-                  </View>
-                  <View className={styles.td}>
-                    <FormItem
-                      label={'开单医生'}
-                      labelWidth={'4em'}
-                      className={styles.label}
-                      onTap={(event) =>
-                        !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
-                      }
-                    />
-                    <View>{item.doctorName}</View>
-                  </View>
-                  <View className={styles.td}>
-                    <FormItem
-                      label="检查项目"
-                      labelWidth={'4em'}
-                      className={styles.label}
-                      onTap={(event) =>
-                        !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
-                      }
-                    />
+                    </View>
+                    <Form className={styles.info} form={form}>
+                      <View
+                        className={styles.title}
+                        onTap={(event) =>
+                          !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
+                        }
+                      >
+                        {`${item.patientName} ${
+                          item.gender === 'M' ? '男' : '女'
+                        } | ${getPatientAge(item.age)}`}
+                      </View>
+                      <View className={styles.td}>
+                        <FormItem
+                          label={'开单医生'}
+                          labelWidth={'4em'}
+                          className={styles.label}
+                          onTap={(event) =>
+                            !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
+                          }
+                        />
+                        <View>{item.doctorName}</View>
+                      </View>
+                      <View className={styles.td}>
+                        <FormItem
+                          label="检查项目"
+                          labelWidth={'4em'}
+                          className={styles.label}
+                          onTap={(event) =>
+                            !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
+                          }
+                        />
 
-                    <Exceed className={styles.payName} clamp={1}>
-                      {item.payName || '暂无'}
-                    </Exceed>
+                        <Exceed className={styles.payName} clamp={1}>
+                          {item.payName || '暂无'}
+                        </Exceed>
+                      </View>
+                      <View className={styles.td}>
+                        <FormItem
+                          label="开单时间"
+                          labelWidth={'4em'}
+                          className={styles.label}
+                          onTap={(event) =>
+                            !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
+                          }
+                        />
+                        <View>{formDate(item.date) || '暂无'}</View>
+                      </View>
+                    </Form>
                   </View>
-                  <View className={styles.td}>
-                    <FormItem
-                      label="开单时间"
-                      labelWidth={'4em'}
-                      className={styles.label}
-                      onTap={(event) =>
-                        !PAYMENT_SELECTALL_PAY && onSelectAll(event, item)
-                      }
+                  <View className={styles.arrowWrap}>
+                    <Image
+                      mode="aspectFit"
+                      src={`${IMAGE_DOMIN}/payment/arrow.png`}
+                      className={styles.arrow}
                     />
-                    <View>{formDate(item.date) || '暂无'}</View>
                   </View>
-                </Form>
-              </View>
-              <View className={styles.arrowWrap}>
-                <Image
-                  mode="aspectFit"
-                  src={`${IMAGE_DOMIN}/payment/arrow.png`}
-                  className={styles.arrow}
-                />
-              </View>
-            </View>
-          ))}
+                </View>
+              );
+            } else {
+              return (
+                <Space vertical key={item.hisOrderNo}>
+                  <Space
+                    onTap={(event) => {
+                      event.stopPropagation();
+                      !PAYMENT_SELECTALL_PAY && onSelectAll(event, item);
+                    }}
+                  />
+                  <ListItem
+                    key={item.hisOrderNo}
+                    item={{
+                      ...item,
+                      patientName: item.patientName,
+                    }}
+                    form={form}
+                    selectList={selectList}
+                    onSelectAll={onSelectAll}
+                  />
+                </Space>
+              );
+            }
+          })}
       </View>
 
       <View className={styles.tips}>
@@ -507,5 +556,173 @@ export default () => {
         </Button>
       </View>
     </View>
+  );
+};
+const ListItem = ({
+  onSelectAll,
+  selectList,
+  item,
+  form,
+}: {
+  onSelectAll: (event: TapEvent, item: WaitpayType) => void;
+  item: WaitpayType;
+  selectList: string[];
+  form: FormInstance;
+}) => {
+  const [folded, setFolded] = useState(true);
+  return (
+    <Space vertical className={styles.item} alignItems={'stretch'}>
+      <Space
+        alignItems={'center'}
+        onTap={() => {
+          navigateTo({
+            url: `/pages2/payment/order-item/index?hisOrderNo=${encodeURIComponent(
+              item.hisOrderNo,
+            )}&deptName=${item.deptName}&doctorName=${
+              item.doctorName
+            }&patientName=${item.patientName}&patientId=${
+              item.patientId && item.patientId !== 'null' ? item.patientId : ''
+            }&patCardNo=${item.patCardNo}&date=${item.date}&gender=${
+              item.gender || ''
+            }&age=${item.age || ''}`,
+          });
+        }}
+      >
+        <View className={styles.infoWrap}>
+          <View
+            className={styles.checkBoxWrap}
+            onTap={(event) => {
+              onSelectAll(event, item);
+            }}
+          >
+            <>
+              {selectList.includes(item.hisOrderNo) ? (
+                <Space
+                  justify="center"
+                  alignItems="center"
+                  className={styles.select}
+                >
+                  <Image
+                    mode="aspectFit"
+                    src={`${IMAGE_DOMIN}/payment/select.png`}
+                    className={styles.selectImg}
+                  />
+                </Space>
+              ) : (
+                <View className={styles.checkBox} />
+              )}
+            </>
+          </View>
+          <Form className={styles.info} form={form}>
+            <View
+              className={styles.title}
+              onTap={(event) => {
+                onSelectAll(event, item);
+              }}
+            >
+              {`${item.patientName} ${
+                item.gender === 'M' ? '男' : '女'
+              } | ${getPatientAge(item.age)}`}
+            </View>
+            <View className={styles.td}>
+              <FormItem
+                label={'开单医生'}
+                labelWidth={'4em'}
+                className={styles.label}
+                onTap={(event) => {
+                  onSelectAll(event, item);
+                }}
+              />
+              <View>{item.doctorName}</View>
+            </View>
+            <View className={styles.td}>
+              <FormItem
+                label="处方号"
+                labelWidth={'4em'}
+                className={styles.label}
+                onTap={(event) => {
+                  onSelectAll(event, item);
+                }}
+              />
+
+              <Exceed className={styles.payName} clamp={1}>
+                {item?.hisOrderNo.split('#')[0] || '暂无'}
+              </Exceed>
+            </View>
+            <View className={styles.td}>
+              <FormItem
+                label="开单时间"
+                labelWidth={'4em'}
+                className={styles.label}
+                onTap={(event) => {
+                  onSelectAll(event, item);
+                }}
+              />
+              <View>{formDate(item.date) || '暂无'}</View>
+            </View>
+          </Form>
+        </View>
+        <View className={styles.arrowWrap}>
+          <Image
+            mode="aspectFit"
+            src={`${IMAGE_DOMIN}/payment/arrow.png`}
+            className={styles.arrow}
+          />
+        </View>
+      </Space>
+      <Space vertical>
+        <Space
+          className={styles.itemFoot}
+          justify={'space-between'}
+          alignItems={'center'}
+        >
+          <Price
+            price={+item.totalFee}
+            bigScale={1}
+            className={styles.footPrice}
+          />
+          <Space onTap={() => setFolded(!folded)} className={styles.linkBtn}>
+            {folded ? '展开' : '收起'}明细
+          </Space>
+        </Space>
+        <Fold folded={folded}>
+          <Space vertical className={styles.tableWrap}>
+            <Table
+              shadow={false}
+              dataSource={item.itemList}
+              className={styles.table}
+              align={'between'}
+              columns={[
+                { title: '药品名称', dataIndex: 'itemName' },
+                { title: '单位', dataIndex: 'itemUnit' },
+                { title: '次数', dataIndex: 'itemNum' },
+                {
+                  title: '单价',
+                  dataIndex: 'totalFee',
+                  render: (v) => (
+                    <Price
+                      price={+v}
+                      bigScale={1}
+                      style={{ fontSize: rpxToPx(26), color: '#333333' }}
+                    />
+                  ),
+                },
+              ]}
+            />
+            <Space justify="space-between" className={styles.tableFooter}>
+              <FormItem label={'合计金额'}>
+                <Price
+                  price={item.itemList
+                    .map(({ totalFee }) => +totalFee)
+                    .reduce((v1, v2) => v1 + v2, 0)}
+                  bigScale={1}
+                  className={styles.footPrice}
+                />
+              </FormItem>
+            </Space>
+          </Space>
+        </Fold>
+      </Space>
+    </Space>
   );
 };
