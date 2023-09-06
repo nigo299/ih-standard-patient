@@ -17,7 +17,7 @@ import {
   IS_FEEDBACL,
   isDev,
 } from '@/config/constant';
-import { CopyRight, WxOpenLaunchWeapp } from '@/components';
+import { CopyRight, TabBar, WxOpenLaunchWeapp } from '@/components';
 import patientState from '@/stores/patient';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
@@ -638,7 +638,7 @@ export default () => {
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
       </Dialog> */}
-      {/*{PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}*/}
+      {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}
     </View>
   );
 };
