@@ -19,7 +19,7 @@ import useGetParams from '@/utils/useGetParams';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
 import globalState from '@/stores/global';
-import styles from '@/pages2/feedback/feedback-add/index.less';
+import styles from './index.less';
 import CustomerReported from '@/components/customerReported';
 
 export default () => {
@@ -46,7 +46,7 @@ export default () => {
 
   const [selectReason, setSelectReason] = useState('');
   usePageEvent('onShow', () => {
-    initWxSDK();
+    initWxSDK().catch((e) => console.log(e, 'eee'));
     setNavigationBar({
       title: '意见反馈',
     });
@@ -193,6 +193,7 @@ export default () => {
         >
           <Button
             type="primary"
+            style={{ backgroundColor: '#33abe2', border: 'none' }}
             className={styles.button}
             onTap={() => {
               if (!selectReason && !id) {

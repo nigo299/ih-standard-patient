@@ -249,6 +249,7 @@ export default memo(() => {
             type="primary"
             className={styles.button}
             onTap={() => form.submit()}
+            style={{ backgroundColor: '#33ABE2' }}
           >
             登录
           </Button>

@@ -26,7 +26,9 @@ import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
 import { handleMineNavTap } from '@/pages/mine/index/utils';
 import useGetPatientInfos from '@/utils/useGetPatientInfos';
+import { useHisConfig } from '@/hooks';
 export default () => {
+  const { config } = useHisConfig();
   const { getPatientList, bindPatientList, decryptPatName, setDecryptPatName } =
     patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
@@ -275,7 +277,7 @@ export default () => {
                               </Space>
                               <Space className={styles.mediItem}>
                                 <FormItem label="就诊号" labelWidth={'4em'} />
-                                {selectPatient?.patCardNo}
+                                {selectPatient?.[config?.patCardNoValue]}
                               </Space>
                             </Space>
                             <Space

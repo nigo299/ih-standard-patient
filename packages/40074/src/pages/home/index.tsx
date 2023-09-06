@@ -168,7 +168,7 @@ export default () => {
       title: '当日挂号',
       // subTitle: '到院患者当日挂号',
       subTitle: <View style={{ color: '#666' }}>快速咨询医生</View>,
-      url: '/pages2/register/select-hospital/index?type=reserve',
+      url: '/pages2/register/department/index?type=day',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
     },
     {
@@ -242,13 +242,13 @@ export default () => {
         image: `${IMAGE_DOMIN}/home/lydh.png`,
         onClick: () => openLocation(),
       },
-      {
-        title: '云影像',
-        subTitle: '',
-        open: true,
-        image: `${IMAGE_DOMIN}/home/yyx.png`,
-        url: '',
-      },
+      // {
+      //   title: '云影像',
+      //   subTitle: '',
+      //   open: true,
+      //   image: `${IMAGE_DOMIN}/home/yyx.png`,
+      //   url: '',
+      // },
       // {
       //   title: '满意度调查',
       //   subTitle: '',
@@ -257,6 +257,13 @@ export default () => {
       //   onClick: () =>
       //     (window.location.href = 'https://wj.qq.com/s2/5190318/2a67/'),
       // },
+      {
+        title: '',
+        subTitle: '',
+        open: true,
+        image: ``,
+        url: '',
+      },
       {
         title: '',
         subTitle: '',
@@ -402,21 +409,6 @@ export default () => {
         </Space>
       </BackgroundImg>
       <Space vertical className={styles.content}>
-        <View
-          className={styles.toSearch}
-          onTap={() => {
-            navigateTo({
-              url: '/pages2/register/search-doctor/index?q=&type=default',
-            });
-          }}
-        >
-          <Icon
-            name={'kq-search'}
-            className={styles.searchIcon}
-            color={'#CCCCCC'}
-          />
-          <Text>搜索科室</Text>
-        </View>
         <Space justify="space-between" className={styles.nav}>
           {homeMainNavConfig.map((nav) => (
             <Space
@@ -548,12 +540,12 @@ export default () => {
             </Space>
           ))}
         </Space>
-        {/* <Banner
+        <Banner
           CommonImg={
             configData?.find((item) => item.configType === 'BANNER')
               ?.bannerInfo || []
           }
-        /> */}
+        />
         <View className={styles.copyRight}>
           <CopyRight
             clear
@@ -566,6 +558,7 @@ export default () => {
         show={show}
         close={() => setShow(false)}
         content={infoData2?.[0]?.noticeInfo || ''}
+        confirmButtonStyle={{ backgroundColor: '#48A8DD', border: 'none' }}
         confirm={() => {
           if (
             registerMode.includes('reserve') &&

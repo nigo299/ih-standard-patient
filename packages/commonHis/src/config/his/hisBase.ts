@@ -27,6 +27,7 @@ export default class BaseHis {
       registerCardChange: 'DEFAULT_STYLE',
       showRegisterNoticeScrollText: true,
       isMergeIndex: false,
+      patCardNoValue: 'patCardNo',
       isShowOutPayDetails: false,
     };
   }
@@ -79,4 +80,6 @@ type StaticConfig = {
   isMergeIndex: boolean;
   /** 是否展示门诊支付列表的明细 */
   isShowOutPayDetails: boolean;
+  /** patCardNo取值 */
+  patCardNoValue: 'patCardNo' | 'patHisNo';
 };

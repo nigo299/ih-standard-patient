@@ -1,7 +1,7 @@
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
 export const THEME_COLOR = '#ee5b94';
-export const THEME_COLOR2 = '#ee5b94';
+export const THEME_COLOR2 = '#da6693';
 export const STEP_COLOR = '#ffffff';
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
 export const IMAGE_DOMIN = `${
@@ -35,7 +35,7 @@ export const NUCLEIC_HID = 9;
 // 是否需要订单详情中电子发票
 export const ORDER_INVOICE = false;
 // 是否开启二级科室
-export const CHILDREN_DEPTLIST = true;
+export const CHILDREN_DEPTLIST = false;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
   process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
@@ -50,14 +50,14 @@ export const APPID = PLATFORM === 'ali' ? '2021002125656335' : '';
 // 是否开启意见反馈（小桥医助小程序）
 export const IS_FEEDBACL = PLATFORM !== 'ali' && true;
 // 是否开启挂号科室选择界面智能导诊功能
-export const IS_DEPT = PLATFORM !== 'ali';
+export const IS_DEPT = false;
 
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {
-  longitude: 108.165027,
-  latitude: 29.288444,
+  longitude: 108.112431,
+  latitude: 29.99397,
   name: HOSPITAL_NAME,
-  address: '自治县高家台街47号',
+  address: '重庆市石柱土家族自治县东岳庙街28号',
 };
 export const WEB_ADDRESS = `https://mapapi.qq.com/web/mapComponents/locationMarker/v/index.html?marker=coord:${ADDRESS.latitude},${ADDRESS.longitude};title:${HOSPITAL_NAME};addr:${ADDRESS.address}&key=TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU&referer=myapp&ch=uri-api&ADTAG=uri-api.myapp`;
 

@@ -14,7 +14,6 @@ import {
   useGetExpensesDayDetailExtFields,
   defaultExpensesDayCheckDate,
 } from '@/pages2/inhosp/inventory/hooks/useGetExpensesDayDetailExtFields';
-import { getPatientAge } from '@/utils';
 
 export default () => {
   const { patientId } = useGetParams<{ patientId: string }>();
@@ -77,11 +76,12 @@ export default () => {
                 {liveData?.patientName}
                 <View className={styles.patInfo}>
                   {PatGender[liveData?.patientSex] || ''}
-                  {getPatientAge(liveData?.patientAge)}
+                  {liveData?.patientAge}岁
                 </View>
               </Space>
               <Space alignItems="center" className={styles.date}>
                 <Picker
+                  value={selectDate}
                   mode={'date'}
                   onChange={(v) => setSelectDate(String(v))}
                   start={liveData?.inDate.slice(0, 10)}

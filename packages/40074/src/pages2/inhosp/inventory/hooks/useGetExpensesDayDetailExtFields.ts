@@ -9,4 +9,6 @@ export const useGetExpensesDayDetailExtFields = (_: HooksProps) => {
   return undefined;
 };
 
-export const defaultExpensesDayCheckDate = dayjs().format('YYYY-MM-DD');
+export const defaultExpensesDayCheckDate = dayjs()
+  .subtract(1, 'day')
+  .format('YYYY-MM-DD');
