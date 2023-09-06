@@ -560,7 +560,7 @@ export default () => {
         payName="register"
         hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
         healthCardNo={jkkInfo?.healthCardId}
-        patCardNo=patCardNo={orderDetail?.[config?.patCardNoValue]}
+        patCardNo={orderDetail?.[RegisterCardPatientNo]}
       />
       <Form className={styles.content} form={form}>
         <ListTitle
