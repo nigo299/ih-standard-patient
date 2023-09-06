@@ -245,10 +245,12 @@ export default () => {
                 'https://mp.weixin.qq.com/s/MpE57S9X_owVuTDNP_3SaA'),
           },
           {
-            title: '核酸检测',
+            title: '健康体检',
             subTitle: '',
-            url: '/pages2/nucleic/select-combo/index',
+            url: '',
             image: `${IMAGE_DOMIN}/home/hsjc.png`,
+            onClick: () =>
+              (window.location.href = 'https://cqkuanren.mike-x.com/zqDya'),
           },
           {
             title: '疫苗接种',
@@ -276,7 +278,7 @@ export default () => {
               (window.location.href = 'https://j.youzan.com/k0p99L'),
           },
           {
-            title: '9.9暑期活动',
+            title: '松山商城',
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/sswc.png`,
