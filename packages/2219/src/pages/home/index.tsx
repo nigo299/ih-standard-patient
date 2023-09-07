@@ -638,7 +638,7 @@ export default () => {
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
       </Dialog> */}
-      {/*{PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}*/}
+      {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}
     </View>
   );
 };
