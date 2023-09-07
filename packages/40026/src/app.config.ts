@@ -73,6 +73,7 @@ const subPackages = [
       'feedback/feedback-detail/index', // 意见反馈详情
       'feedback/feedback-add/index', // 新增意见反馈
       'nucleic/select-combo/index', // 自助核酸检测选择套餐
+      'invoice/invoice-list/index', // 发票列表
       // 'nucleic/upload/index', // 网约出租车核酸上传图片
       // 'nucleic/confirm/index', // 自助核酸检测确认订单
     ],
