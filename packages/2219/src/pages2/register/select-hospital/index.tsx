@@ -49,7 +49,7 @@ export default () => {
           icon: 'success',
         }).then(() => {
           window.location.href =
-            'https://appsp.zcareze.com/appsp/h5/authorize?appid=wx5da34ab726d31047&authType=0&authMode=userinfo&address=page%3DnewRegistration%2FwithCode%2F11%2F7%2F006%2F%2F%2F%2F%2F%2F%2F';
+            'https://appsp.zcareze.com/appsp/h5/authorize?appid=wx5da34ab726d31047&authType=0&authMode=userinfo&address=page%3DnewRegistration%2FwithCode%2F11%2F7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2Fhandle';
         });
 
         return;
