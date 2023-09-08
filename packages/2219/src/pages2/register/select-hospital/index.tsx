@@ -34,19 +34,18 @@ export default () => {
     regsiterState.useContainer();
   const handleSelect = useCallback(
     ({ children: dept, name }: { children: DeptType[]; name: string }) => {
-      if (name === '附三院口腔门诊部') {
+      if (name === '附三院门诊部') {
         showToast({
-          title: '即将为你跳转至“重庆医科大学附属第三医院”预约挂号系统。',
+          title: '即将为你跳转至“附三院门诊部”预约挂号系统。',
           icon: 'success',
         }).then(() => {
           window.location.href =
             'https://m.hsyuntai.com/med/hp/hospitals/100039/hos/registration/departmentDetails/2//1315922/?deptName=%E5%8F%A3%E8%85%94%E7%A7%91';
         });
         return;
-      } else if (name === '重庆医科大学附属口腔医院(龙湖光年门诊部)') {
+      } else if (name === '大学城门诊部') {
         showToast({
-          title:
-            '即将为你跳转至“重庆医科大学附属口腔医院(龙湖光年门诊部)”预约挂号系统。',
+          title: '即将为你跳转至“大学城门诊部”预约挂号系统。',
           icon: 'success',
         }).then(() => {
           window.location.href =
