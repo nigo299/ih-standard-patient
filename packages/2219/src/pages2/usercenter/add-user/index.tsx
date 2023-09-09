@@ -240,11 +240,11 @@ export default memo(() => {
                 Number(options[0]?.patientAge) <
                 bindcardProdiles?.childrenMaxAge
               ) {
+                setIsChild(true);
                 if (!data[0].parentName) {
                   form.setFieldsValue({
                     patientType: '1',
                   });
-                  setIsChild(true);
                 } else {
                   form.setFieldsValue({
                     parentName: options[0]?.parentName,
