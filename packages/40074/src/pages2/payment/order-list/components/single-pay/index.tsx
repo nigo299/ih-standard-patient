@@ -338,7 +338,7 @@ export default () => {
                     item.doctorName
                   }&patientName=${item.patientName}&patientId=${
                     item.patientId
-                  }&patCardNo=${item.patCardNo}&date=${item.date}&gender=${
+                  }&patCardNo=${item?.patHisNo}&date=${item.date}&gender=${
                     item.gender
                   }&age=${item.age}`,
                 });
