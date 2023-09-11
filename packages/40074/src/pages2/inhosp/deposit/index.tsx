@@ -117,7 +117,7 @@ export default () => {
             <Space className={styles.userName}>
               {inhospPatientInfo?.patientName}
             </Space>
-            <Space>{inhospPatientInfo?.patCardNo}</Space>
+            <Space>{inhospPatientInfo?.admissionNum}</Space>
           </Space>
         </Space>
         <BackgroundImg
