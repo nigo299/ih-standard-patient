@@ -34,7 +34,7 @@ export default () => {
     regsiterState.useContainer();
   const handleSelect = useCallback(
     ({ children: dept, name }: { children: DeptType[]; name: string }) => {
-      if (name === '附三院门诊部') {
+      if (name === '附三院门诊') {
         showToast({
           title: '即将为你跳转至“附三院门诊部”预约挂号系统。',
           icon: 'success',
@@ -43,7 +43,7 @@ export default () => {
             'https://m.hsyuntai.com/med/hp/hospitals/100039/hos/registration/departmentDetails/2//1315922/?deptName=%E5%8F%A3%E8%85%94%E7%A7%91';
         });
         return;
-      } else if (name === '大学城门诊部') {
+      } else if (name === '大学城门诊') {
         showToast({
           title: '即将为你跳转至“大学城门诊部”预约挂号系统。',
           icon: 'success',
