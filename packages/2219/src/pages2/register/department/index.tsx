@@ -15,7 +15,7 @@ import globalState from '@/stores/global';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 import reportCmPV from '@/alipaylog/reportCmPV';
-// import Search from '@/pages2/register/search-doctor/search';
+import Search from '@/pages2/register/search-doctor/search';
 // import useApi from '@/apis/common';
 // import { useHisConfig } from '@/hooks';
 
@@ -96,7 +96,7 @@ export default () => {
           }}
         />
       </Space> */}
-      {/* <Search
+      <Search
         onConfirm={(val) => {
           navigateTo({
             url: `/pages2/register/search-doctor/index?q=${val}&type=${type}`,
@@ -104,8 +104,8 @@ export default () => {
         }}
         placeholder={'输入医生姓名、科室名称进行搜索'}
         showBtn
-        style={{ flex: 0 }}
-      /> */}
+        style={{ flex: 0, marginLeft: '20px' }}
+      />
       <WhiteSpace />
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
