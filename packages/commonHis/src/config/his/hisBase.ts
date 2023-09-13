@@ -29,6 +29,7 @@ export default class BaseHis {
       isMergeIndex: false,
       patCardNoValue: 'patCardNo',
       isShowOutPayDetails: false,
+      isPaymentDefaultSelectAll: false,
     };
   }
 }
@@ -82,4 +83,6 @@ type StaticConfig = {
   isShowOutPayDetails: boolean;
   /** patCardNo取值 */
   patCardNoValue: 'patCardNo' | 'patHisNo';
+  /** 门诊缴费是否默认全选 */
+  isPaymentDefaultSelectAll: boolean;
 };
