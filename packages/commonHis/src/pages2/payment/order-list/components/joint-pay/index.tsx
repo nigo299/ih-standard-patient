@@ -37,7 +37,6 @@ import {
   PAYMENT_SELECTALL,
   PAYMENT_SELECTALL_PAY,
   PAY_TYPE,
-  HIS_ID,
 } from '@/config/constant';
 import { FormInstance } from 'rc-field-form/es/interface';
 import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
