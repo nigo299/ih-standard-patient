@@ -763,7 +763,7 @@ export default () => {
             取消挂号
           </Button>
         )}
-        {orderDetail?.canCancelFlag !== 1 && (
+        {/* {orderDetail?.canCancelFlag !== 1 && (
           <Button
             type={'primary'}
             className={styles.button}
@@ -778,7 +778,7 @@ export default () => {
           >
             刷新订单状态
           </Button>
-        )}
+        )} */}
       </View>
 
       <Dialog
