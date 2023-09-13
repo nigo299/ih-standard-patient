@@ -37,6 +37,7 @@ import {
   PAYMENT_SELECTALL,
   PAYMENT_SELECTALL_PAY,
   PAY_TYPE,
+  HIS_ID,
 } from '@/config/constant';
 import { FormInstance } from 'rc-field-form/es/interface';
 import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
@@ -295,7 +296,7 @@ export default () => {
       });
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
-      if (PAYMENT_SELECTALL_PAY) {
+      if (PAYMENT_SELECTALL_PAY || HIS_ID === '40019') {
         setSelectList(data?.map((item) => item.hisOrderNo));
       } else {
         setSelectList([data[0].hisOrderNo]);
