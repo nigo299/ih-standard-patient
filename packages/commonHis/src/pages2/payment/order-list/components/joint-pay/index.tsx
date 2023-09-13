@@ -296,7 +296,7 @@ export default () => {
       });
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
-      if (PAYMENT_SELECTALL_PAY || HIS_ID === '40019') {
+      if (config.isPaymentDefaultSelectAll) {
         setSelectList(data?.map((item) => item.hisOrderNo));
       } else {
         setSelectList([data[0].hisOrderNo]);
