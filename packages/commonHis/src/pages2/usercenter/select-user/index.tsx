@@ -29,7 +29,7 @@ export default memo(() => {
   });
   const onCardClick = useCallback(
     async (patient: PatientType) => {
-      const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
+      const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}&idNo=${patient.encryptIdNo}&patName=${patient.encryptPatientName}`;
       // 首页点进来直接切换默认就诊人
       if (pageRoute) {
         if (defaultPatientInfo.patientId === patient.patientId) {

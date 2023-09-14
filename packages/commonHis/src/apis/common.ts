@@ -37,6 +37,7 @@ export interface InvoiceType extends API.ResponseDataType {
       billQRCode: string;
       pictureNetUrl: string;
       pictureUrl: string;
+      noteType?: string;
       createTime: string;
       channelMode: string;
       random: string;

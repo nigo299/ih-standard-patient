@@ -106,6 +106,12 @@ export default () => {
       new: false,
       onClick: () => openLocation(),
     },
+    {
+      title: '电子发票',
+      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/invoice/invoice-list/index',
+      image: `${IMAGE_DOMIN}/home/lydh.png`,
+      new: false,
+    },
   ];
   usePageEvent('onShow', () => {
     setNavigationBar({
