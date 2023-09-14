@@ -31,7 +31,7 @@ import showTabBar from '@/utils/showTabBar';
 import styles from './index.less';
 // import useApi from '@/apis/microsite';
 import useApi from '@/apis/common';
-import storage from '@/utils/storage';
+// import storage from '@/utils/storage';
 import dayjs from 'dayjs';
 import openLocation from 'commonHis/src/utils/openLocation';
 
@@ -638,7 +638,7 @@ export default () => {
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
       </Dialog> */}
-      {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}
+      {/* {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />} */}
     </View>
   );
 };
