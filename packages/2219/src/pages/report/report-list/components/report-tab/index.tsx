@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tab } from '@kqinfo/ui';
-
+import {reportCheckTabs} from '@/config/constant'
 type RestProps = {
   patCardNo?: string;
   current?: string | number | undefined;
@@ -26,11 +26,7 @@ const ReportTab: React.FC<RestProps> = ({
           setTabIndex(v);
         }
       }}
-      tabs={[
-        { content: '检验报告', index: 1 },
-        { content: '检查报告', index: 2 },
-        { content: '检查影像', index: 3 },
-      ]}
+      tabs={reportCheckTabs}
     />
   );
 };

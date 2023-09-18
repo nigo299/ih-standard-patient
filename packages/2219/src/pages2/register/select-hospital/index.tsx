@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, Image, navigateTo, reLaunch } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 // import useApi from '@/apis/common';
@@ -32,6 +32,12 @@ export default () => {
   // }, [infoData, summary]);
   const { hospitalList, setDeptList, getDeptList } =
     regsiterState.useContainer();
+  const filterHospitalList = useMemo(() => {
+    if (PLATFORM !== 'web') {
+      return hospitalList?.splice(0, 3);
+    }
+    return hospitalList;
+  }, [hospitalList]);
   const handleSelect = useCallback(
     ({ children: dept, name }: { children: DeptType[]; name: string }) => {
       if (name === '附三院口腔门诊部') {
@@ -89,7 +95,7 @@ export default () => {
       <WhiteSpace />
       <View className={styles.lists}>
         {!summary &&
-          hospitalList?.map((item, index) => (
+          filterHospitalList?.map((item, index) => (
             <View className={styles.itemWrap} key={index}>
               <Image
                 src={`${IMAGE_DOMIN}/register/districtBg.png`}

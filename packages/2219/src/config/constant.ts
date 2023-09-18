@@ -115,3 +115,13 @@ export const specialDepts = [
   deptChildrenRanJiaBa,
   deptChildrenShangQingSi,
 ].flatMap((deptChildren) => deptChildren.map((dept) => dept.no));
+
+// 报告查询tabs
+export const reportCheckTabs = PLATFORM === 'web' ? [
+  { content: '检验报告', index: 1 },
+  { content: '检查报告', index: 2 },
+  { content: '检查影像', index: 3 },
+] : [
+  { content: '检验报告', index: 1 },
+  { content: '检查报告', index: 2 },
+]
