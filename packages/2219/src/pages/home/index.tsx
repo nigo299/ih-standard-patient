@@ -176,11 +176,11 @@ export default () => {
       titleColor: '#3990E9',
     },
     {
-      title: '核酸检测',
-      subTitle: '快速核酸检测开单',
-      url: '/pages2/nucleic/select-combo/index?type=1',
-      image: `${IMAGE_DOMIN}/home/hsjc.png`,
       titleColor: '#2EBDC7',
+      title: '排队进度',
+      subTitle: '前面还有多少人',
+      url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+      image: `${IMAGE_DOMIN}/home/pdjd.png`,
     },
   ];
 
@@ -188,12 +188,6 @@ export default () => {
     const arr =
       PLATFORM === 'web'
         ? [
-            {
-              title: '排队进度',
-              subTitle: '前面还有多少人',
-              url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-              image: `${IMAGE_DOMIN}/home/pdjd.png`,
-            },
             {
               title: '微官网',
               subTitle: '医院信息门户',
@@ -210,12 +204,6 @@ export default () => {
             },
           ]
         : [
-            {
-              title: '排队进度',
-              subTitle: '前面还有多少人',
-              url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-              image: `${IMAGE_DOMIN}/home/pdjd.png`,
-            },
             {
               title: '微官网',
               subTitle: '医院信息门户',
