@@ -226,7 +226,7 @@ export default () => {
             {ORDER_INVOICE &&
             orderDetail?.payStatus === 1 &&
             orderDetail?.status === 'S' &&
-            orderDetail?.totalFee > 0 ? (
+            (orderDetail?.totalFee > 0 || PLATFORM === 'ali') ? (
               <Platform platform={['web']}>
                 <View
                   style={{ color: '#3b98c3' }}

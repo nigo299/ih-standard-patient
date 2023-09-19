@@ -490,7 +490,8 @@ export default memo(() => {
         <PartTitle
           bold
           action={
-            bindcardProdiles?.isOcr === 1 && (
+            bindcardProdiles?.isOcr === 1 &&
+            PLATFORM === 'web' && (
               <Button
                 type="primary"
                 onTap={() =>
