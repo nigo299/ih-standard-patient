@@ -25,7 +25,7 @@ export default () => {
     reportCmPV({ title: '预约挂号' });
     console.log(deptList, 'deptList');
     if (deptList.length === 0) {
-      getDeptList(type);
+      getDeptList('dept');
     }
     setNavigationBar({
       title: '科室介绍',
@@ -77,7 +77,7 @@ export default () => {
                 navigateTo({
                   url: `/pages/microsite/doctor-summary/index?deptId=${id}&scheduleDate=${dayjs()?.format(
                     'YYYY-MM-DD',
-                  )}&type=${type}`,
+                  )}&type=default`,
                 });
                 return;
               }
@@ -114,7 +114,7 @@ export default () => {
                 navigateTo({
                   url: `/pages/microsite/doctor-summary/index?deptId=${
                     dept.no
-                  }&scheduleDate=${dayjs().format('YYYY-MM-DD')}&type=${type}`,
+                  }&scheduleDate=${dayjs().format('YYYY-MM-DD')}&type=default}`,
                 });
                 return;
               }

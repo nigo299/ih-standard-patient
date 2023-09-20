@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { Space, showToast } from '@kqinfo/ui';
 import styles from './index.less';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import openLocation from '@/utils/openLocation';
 import regsiterState from '@/stores/register';
 export default () => {
@@ -12,6 +12,7 @@ export default () => {
     icon: string;
     title: string;
     action: string;
+    open?: boolean;
     onTap?: () => void;
   }> = [
     {
@@ -37,6 +38,7 @@ export default () => {
       action: '/pages/microsite/dept-summary/index?type=default&doctor=true',
       icon: `${IMAGE_DOMIN}/microsite/ysjs.png`,
       key: 3,
+      open: PLATFORM === 'ali',
     },
     {
       title: '来院导航',
@@ -59,8 +61,13 @@ export default () => {
         nav.onTap();
         return;
       }
-      if (nav?.title === '科室介绍' || nav?.title === '医生介绍') {
-        getDeptList('default');
+      if (nav?.title === '科室介绍') {
+        getDeptList('dept');
+        return;
+      }
+      if (nav?.title === '医生介绍') {
+        getDeptList('doctor');
+        return;
       }
       navigateTo({
         url: nav.action,

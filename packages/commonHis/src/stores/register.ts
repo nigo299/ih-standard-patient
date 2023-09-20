@@ -9,13 +9,14 @@ import {
 import { DeptDetailType } from '@/apis/microsite';
 import useApi from '@/apis/register';
 import { getCurrentPageUrl } from '@/utils';
+import { PLATFORM } from '@/config/constant';
 
 export interface IProps {
   deptId: string;
   doctorId: string;
   scheduleId: string;
 }
-
+const aliHospitalList = ['冉家坝', '上清寺', '沙坪坝'];
 export default createContainer(() => {
   const [hospitalList, setHospitalList] = useState<DeptType[]>([]);
   const [deptList, setDeptList] = useState<DeptType[]>([]);
@@ -94,15 +95,22 @@ export default createContainer(() => {
     }
     if (code === 0 && data?.length > 1) {
       console.log(pages, 'pages');
-      setHospitalList(data);
-      if (pages?.indexOf('doctor') !== -1) {
+      if (PLATFORM === 'ali') {
+        const list = data.filter((item) => {
+          return aliHospitalList.find((i) => item.name.includes(i));
+        });
+        setHospitalList(list);
+      } else {
+        setHospitalList(data);
+      }
+      if (type === 'doctor') {
         redirectTo({
-          url: `/pages2/register/select-hospital/index?type=${type}&summary=true&doctor=true`,
+          url: `/pages2/register/select-hospital/index?type=default&summary=true&doctor=true`,
         });
         return;
-      } else if (pages?.indexOf('summary') !== -1) {
+      } else if (type === 'dept') {
         redirectTo({
-          url: `/pages2/register/select-hospital/index?type=${type}&summary=true`,
+          url: `/pages2/register/select-hospital/index?type=default&summary=true`,
         });
         return;
       }
