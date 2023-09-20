@@ -204,13 +204,13 @@ export default () => {
             },
           ]
         : [
-            {
-              title: '微官网',
-              subTitle: '医院信息门户',
-              url: '/pages/microsite/home/index',
-              image: `${IMAGE_DOMIN}/home/wgw.png`,
-              patientId: true,
-            },
+            // {
+            //   title: '微官网',
+            //   subTitle: '医院信息门户',
+            //   url: '/pages/microsite/home/index',
+            //   image: `${IMAGE_DOMIN}/home/wgw.png`,
+            //   patientId: true,
+            // },
             {
               title: '来院导航',
               subTitle: '到院路线地图导航',
@@ -311,10 +311,11 @@ export default () => {
           navigateTo({
             url: nav.url,
           });
+          return;
         }
         // }
 
-        setRegisterMode(nav?.url);
+        // setRegisterMode(nav?.url);
         return;
       }
       if (!patientId && !nav.patientId) {
