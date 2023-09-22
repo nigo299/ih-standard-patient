@@ -73,7 +73,7 @@ const ShowDocTags = (data: any) => {
               >
                 {item.status === 0 && '停诊'}
                 {item.status === 1 &&
-                  `余号: ${leftSource > 0 ? leftSource : 0}`}
+                  `余号: ${leftSource > 0 ? leftSource : '满号'}`}
                 {item.status === 2 && '满诊'}
               </Space>
             </View>

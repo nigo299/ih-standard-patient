@@ -30,7 +30,7 @@ import ShowPrice from 'commonHis/src/pages2/register/select-doctor/components/sh
 import ShowSource from 'commonHis/src/pages2/register/select-doctor/components/show-source';
 import ShowDocTags from 'commonHis/src/pages2/register/select-doctor/components/show-doc-tags';
 enum DoctorType {
-  all = '仅展示有号',
+  all = '当日出诊医生',
   normal = '急诊号',
   expert = '专家号',
   night = '普通号',
@@ -127,7 +127,7 @@ export default () => {
         prev?.leftSource === 0 ? 1 : next?.leftSource === 0 ? -1 : 0,
       );
     }
-    if (doctorType === '仅展示有号') {
+    if (doctorType === '当日出诊医生') {
       return (
         doctorList && doctorList?.filter((doctor) => doctor.leftSource > 0)
       );
@@ -317,7 +317,7 @@ export default () => {
               onChange={(v) => setDoctorType(v as DoctorType)}
             >
               {[
-                { value: '仅展示有号', label: '仅展示有号' },
+                { value: '当日出诊医生', label: '当日出诊医生' },
                 { value: '专家号', label: '专家号' },
                 { value: '普通号', label: '普通号' },
                 { value: '义诊号', label: '义诊号' },
