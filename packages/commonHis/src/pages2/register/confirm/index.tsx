@@ -134,6 +134,7 @@ export default () => {
   ];
 
   const medicalPay = useMemo(() => {
+    return true;
     return (
       hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 ||
       hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1

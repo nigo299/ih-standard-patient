@@ -106,10 +106,10 @@ export default () => {
             ? 1
             : 2,
       };
-      const medicalPay =
-        (hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 ||
-          hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1) &&
-        patientId;
+      const medicalPay = true;
+      // (hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 ||
+      //   hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1) &&
+      // patientId;
       const payMentParams =
         medicalPay || process.env.REMAX_APP_PLATFORM === 'app'
           ? {

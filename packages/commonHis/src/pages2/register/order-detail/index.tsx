@@ -200,9 +200,9 @@ export default () => {
 
   const carryPay = useCallback(
     async (payAuthNo?: string) => {
-      const medicalPay =
-        hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 ||
-        hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1;
+      const medicalPay = true;
+      // hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 ||
+      // hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1;
       setPayFlag(true);
       const {
         data: {
