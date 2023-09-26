@@ -129,7 +129,7 @@ export default () => {
             </View>
           ))}
       </View>
-      {!summary && PLATFORM === 'web' && (
+      {!summary && (
         <Space
           className={styles.ball}
           justify="center"
