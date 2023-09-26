@@ -77,7 +77,7 @@ const ShowPrice = (data: any) => {
           </Exceed>
         </View>
         {extFields?.timeFlag1 &&
-          extFields?.timeFlag1?.split('|')[1] !== '0' && (
+          extFields?.timeFlag1?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
                 上午 总号{extFields.timeFlag1?.split('|')[0]} |
@@ -85,36 +85,52 @@ const ShowPrice = (data: any) => {
                   余号{extFields.timeFlag1?.split('|')[1]}
                 </Text>
               </View>
-              <View
-                className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item?.status === 2,
-                })}
-              >
-                <Space
-                  className={styles.restPrice}
-                  alignItems="center"
-                  justify="center"
+              {extFields?.timeFlag1?.split('|')[1] !== '0' ? (
+                <View
+                  className={classNames(styles.rests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  <View className={styles.restPriceAfter} />
-                  {extFields.doctorInitialRegFee === '0'
-                    ? ''
-                    : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
-                </Space>
-                <Space
-                  className={styles.restNum}
-                  alignItems="center"
-                  justify="center"
+                  <Space
+                    className={styles.restPrice}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    <View className={styles.restPriceAfter} />
+                    {extFields.doctorInitialRegFee === '0'
+                      ? ''
+                      : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
+                  </Space>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    ¥
+                    {(extFields.timeFlag1?.split('|')[2] &&
+                      (extFields.timeFlag1?.split('|')[2] - 0)?.toFixed(2)) ||
+                      (registerFee / 100).toFixed(2)}
+                  </Space>
+                </View>
+              ) : (
+                <View
+                  className={classNames(styles.fullRests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  ¥
-                  {(extFields.timeFlag1?.split('|')[2] &&
-                    (extFields.timeFlag1?.split('|')[2] - 0)?.toFixed(2)) ||
-                    (registerFee / 100).toFixed(2)}
-                </Space>
-              </View>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    满诊
+                  </Space>
+                </View>
+              )}
             </Space>
           )}
         {extFields?.timeFlag2 &&
-          extFields?.timeFlag2?.split('|')[1] !== '0' && (
+          extFields?.timeFlag2?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
                 下午 总号{extFields.timeFlag2?.split('|')[0]} |
@@ -122,36 +138,52 @@ const ShowPrice = (data: any) => {
                   余号{extFields.timeFlag2?.split('|')[1]}
                 </Text>
               </View>
-              <View
-                className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item?.status === 2,
-                })}
-              >
-                <Space
-                  className={styles.restPrice}
-                  alignItems="center"
-                  justify="center"
+              {extFields?.timeFlag2?.split('|')[1] !== '0' ? (
+                <View
+                  className={classNames(styles.rests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  <View className={styles.restPriceAfter} />
-                  {extFields.doctorInitialRegFee === '0'
-                    ? ''
-                    : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
-                </Space>
-                <Space
-                  className={styles.restNum}
-                  alignItems="center"
-                  justify="center"
+                  <Space
+                    className={styles.restPrice}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    <View className={styles.restPriceAfter} />
+                    {extFields.doctorInitialRegFee === '0'
+                      ? ''
+                      : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
+                  </Space>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    ¥
+                    {(extFields.timeFlag2?.split('|')[2] &&
+                      (extFields.timeFlag2?.split('|')[2] - 0)?.toFixed(2)) ||
+                      (registerFee / 100).toFixed(2)}
+                  </Space>
+                </View>
+              ) : (
+                <View
+                  className={classNames(styles.fullRests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  ¥
-                  {(extFields.timeFlag2?.split('|')[2] &&
-                    (extFields.timeFlag2?.split('|')[2] - 0)?.toFixed(2)) ||
-                    (registerFee / 100).toFixed(2)}
-                </Space>
-              </View>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    满诊
+                  </Space>
+                </View>
+              )}
             </Space>
           )}
         {extFields?.timeFlag3 &&
-          extFields?.timeFlag3?.split('|')[1] !== '0' && (
+          extFields?.timeFlag3?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
                 晚上 总号{extFields.timeFlag3?.split('|')[0]} |
@@ -159,36 +191,52 @@ const ShowPrice = (data: any) => {
                   余号{extFields.timeFlag3?.split('|')[1]}
                 </Text>
               </View>
-              <View
-                className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item?.status === 2,
-                })}
-              >
-                <Space
-                  className={styles.restPrice}
-                  alignItems="center"
-                  justify="center"
+              {extFields?.timeFlag3?.split('|')[1] !== '0' ? (
+                <View
+                  className={classNames(styles.rests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  <View className={styles.restPriceAfter} />
-                  {extFields.doctorInitialRegFee === '0'
-                    ? ''
-                    : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
-                </Space>
-                <Space
-                  className={styles.restNum}
-                  alignItems="center"
-                  justify="center"
+                  <Space
+                    className={styles.restPrice}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    <View className={styles.restPriceAfter} />
+                    {extFields.doctorInitialRegFee === '0'
+                      ? ''
+                      : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
+                  </Space>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    ¥
+                    {(extFields.timeFlag3?.split('|')[2] &&
+                      (extFields.timeFlag3?.split('|')[2] - 0)?.toFixed(2)) ||
+                      (registerFee / 100).toFixed(2)}
+                  </Space>
+                </View>
+              ) : (
+                <View
+                  className={classNames(styles.fullRests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  ¥
-                  {(extFields.timeFlag3?.split('|')[2] &&
-                    (extFields.timeFlag3?.split('|')[2] - 0)?.toFixed(2)) ||
-                    (registerFee / 100).toFixed(2)}
-                </Space>
-              </View>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    满诊
+                  </Space>
+                </View>
+              )}
             </Space>
           )}
         {extFields?.timeFlag4 &&
-          extFields?.timeFlag4?.split('|')[1] !== '0' && (
+          extFields?.timeFlag4?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
                 白天 总号{extFields.timeFlag4?.split('|')[0]} |
@@ -196,36 +244,52 @@ const ShowPrice = (data: any) => {
                   余号{extFields.timeFlag4?.split('|')[1]}
                 </Text>
               </View>
-              <View
-                className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item?.status === 2,
-                })}
-              >
-                <Space
-                  className={styles.restPrice}
-                  alignItems="center"
-                  justify="center"
+              {extFields?.timeFlag4?.split('|')[1] !== '0' ? (
+                <View
+                  className={classNames(styles.rests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  <View className={styles.restPriceAfter} />
-                  {extFields.doctorInitialRegFee === '0'
-                    ? ''
-                    : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
-                </Space>
-                <Space
-                  className={styles.restNum}
-                  alignItems="center"
-                  justify="center"
+                  <Space
+                    className={styles.restPrice}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    <View className={styles.restPriceAfter} />
+                    {extFields.doctorInitialRegFee === '0'
+                      ? ''
+                      : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
+                  </Space>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    ¥
+                    {(extFields.timeFlag4?.split('|')[2] &&
+                      (extFields.timeFlag4?.split('|')[2] - 0)?.toFixed(2)) ||
+                      (registerFee / 100).toFixed(2)}
+                  </Space>
+                </View>
+              ) : (
+                <View
+                  className={classNames(styles.fullRests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  ¥
-                  {(extFields.timeFlag4?.split('|')[2] &&
-                    (extFields.timeFlag4?.split('|')[2] - 0)?.toFixed(2)) ||
-                    (registerFee / 100).toFixed(2)}
-                </Space>
-              </View>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    满诊
+                  </Space>
+                </View>
+              )}
             </Space>
           )}
         {extFields?.timeFlag5 &&
-          extFields?.timeFlag5?.split('|')[1] !== '0' && (
+          extFields?.timeFlag5?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
                 全天 总号{extFields.timeFlag5?.split('|')[0]} |
@@ -233,32 +297,48 @@ const ShowPrice = (data: any) => {
                   余号{extFields.timeFlag5?.split('|')[1]}
                 </Text>
               </View>
-              <View
-                className={classNames(styles.rests, {
-                  [styles.disable]: leftSource === 0 || item?.status === 2,
-                })}
-              >
-                <Space
-                  className={styles.restPrice}
-                  alignItems="center"
-                  justify="center"
+              {extFields?.timeFlag5?.split('|')[1] !== '0' ? (
+                <View
+                  className={classNames(styles.rests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  <View className={styles.restPriceAfter} />
-                  {extFields.doctorInitialRegFee === '0'
-                    ? ''
-                    : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
-                </Space>
-                <Space
-                  className={styles.restNum}
-                  alignItems="center"
-                  justify="center"
+                  <Space
+                    className={styles.restPrice}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    <View className={styles.restPriceAfter} />
+                    {extFields.doctorInitialRegFee === '0'
+                      ? ''
+                      : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
+                  </Space>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    ¥
+                    {(extFields.timeFlag5?.split('|')[2] &&
+                      (extFields.timeFlag5?.split('|')[2] - 0)?.toFixed(2)) ||
+                      (registerFee / 100).toFixed(2)}
+                  </Space>
+                </View>
+              ) : (
+                <View
+                  className={classNames(styles.fullRests, {
+                    [styles.disable]: leftSource === 0 || item?.status === 2,
+                  })}
                 >
-                  ¥
-                  {(extFields.timeFlag5?.split('|')[2] &&
-                    (extFields.timeFlag5?.split('|')[2] - 0)?.toFixed(2)) ||
-                    (registerFee / 100).toFixed(2)}
-                </Space>
-              </View>
+                  <Space
+                    className={styles.restNum}
+                    alignItems="center"
+                    justify="center"
+                  >
+                    满诊
+                  </Space>
+                </View>
+              )}
             </Space>
           )}
       </View>

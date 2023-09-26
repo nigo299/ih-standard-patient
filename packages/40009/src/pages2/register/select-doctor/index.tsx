@@ -34,6 +34,7 @@ enum DoctorType {
   normal = '急诊号',
   expert = '专家号',
   night = '普通号',
+  free = '义诊号',
 }
 
 export default () => {
@@ -128,17 +129,27 @@ export default () => {
       );
     }
     if (doctorType === '当日出诊医生') {
-      return (
-        doctorList && doctorList?.filter((doctor) => doctor.leftSource > 0)
-      );
+      return doctorList && doctorList;
     } else if (doctorType === '专家号') {
+      console.log('doctorList', doctorList);
       return (
         doctorList &&
-        doctorList?.filter((doctor) => doctor?.registerFee >= 3000)
+        doctorList?.filter(
+          (doctor) =>
+            doctor?.title?.includes('主任') && doctor?.registerFee > 0,
+        )
       );
     } else if (doctorType === '普通号') {
       return (
-        doctorList && doctorList?.filter((doctor) => doctor?.registerFee < 3000)
+        doctorList &&
+        doctorList?.filter(
+          (doctor) =>
+            !doctor?.title?.includes('主任') && doctor?.registerFee > 0,
+        )
+      );
+    } else if (doctorType === '义诊号') {
+      return (
+        doctorList && doctorList?.filter((doctor) => doctor?.registerFee === 0)
       );
     } else {
       return (
