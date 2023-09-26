@@ -80,7 +80,7 @@ const ShowPrice = (data: any) => {
           extFields?.timeFlag1?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
-                下午 总号{extFields.timeFlag1?.split('|')[0]} |
+                上午 总号{extFields.timeFlag1?.split('|')[0]} |
                 <Text className={styles.rightSource}>
                   余号{extFields.timeFlag1?.split('|')[1]}
                 </Text>
@@ -186,7 +186,7 @@ const ShowPrice = (data: any) => {
           extFields?.timeFlag3?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
-                下午 总号{extFields.timeFlag3?.split('|')[0]} |
+                晚上 总号{extFields.timeFlag3?.split('|')[0]} |
                 <Text className={styles.rightSource}>
                   余号{extFields.timeFlag3?.split('|')[1]}
                 </Text>
@@ -239,7 +239,7 @@ const ShowPrice = (data: any) => {
           extFields?.timeFlag4?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
-                下午 总号{extFields.timeFlag4?.split('|')[0]} |
+                白天 总号{extFields.timeFlag4?.split('|')[0]} |
                 <Text className={styles.rightSource}>
                   余号{extFields.timeFlag4?.split('|')[1]}
                 </Text>
@@ -292,7 +292,7 @@ const ShowPrice = (data: any) => {
           extFields?.timeFlag5?.split('|')[0] !== '0' && (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
-                下午 总号{extFields.timeFlag5?.split('|')[0]} |
+                全天 总号{extFields.timeFlag5?.split('|')[0]} |
                 <Text className={styles.rightSource}>
                   余号{extFields.timeFlag5?.split('|')[1]}
                 </Text>
