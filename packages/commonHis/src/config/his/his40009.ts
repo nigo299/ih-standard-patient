@@ -12,7 +12,7 @@ export default class His40009 extends HisBase {
       showCalenderInTodayRegister: false,
       showSelectTypeInTodayRegister: false,
       registerNoticeText:
-        '重要通知：重庆松山医院智慧医院界面于4月26日升级改版，使用过程中如有任何疑问请联系客服（电话：19922878076）反馈，我们将及时处理您的需求，感谢您的支持！',
+        '重要通知：重庆松山医院金秋惠民活动开始啦！2023.9.29-2023.10.6门诊挂号免费，门诊放射、超声检查8折（限自费）。',
     });
   }
 }
