@@ -439,7 +439,7 @@ export default () => {
               //   url: '/pages/microsite/hospital-summary/index',
               // });
               window.location.href =
-                'https://mp.weixin.qq.com/s/Lx6LGHPcX1iRRGyN6Ln27w';
+                'https://mp.weixin.qq.com/s/CG4ABUl0K0ySc2IY4JtCfQ';
             }}
           />
         </BackgroundImg>
