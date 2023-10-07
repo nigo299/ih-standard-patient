@@ -309,7 +309,7 @@ export default () => {
   );
   const cancelRegisterPay = useCallback(
     async (payAuthNo?: string, cancelValStorage?: string) => {
-      if (!cancelVal && !cancelValStorage) {
+      if ((!cancelVal || cancelVal === 'undefined') && !cancelValStorage) {
         showToast({
           title: '请选择取消原因!',
         });
