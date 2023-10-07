@@ -12,7 +12,7 @@ export default class His40009 extends HisBase {
       showCalenderInTodayRegister: false,
       showSelectTypeInTodayRegister: false,
       registerNoticeText:
-        '重要通知：重庆松山医院金秋惠民活动开始啦！2023.9.29-2023.10.6门诊挂号免费，门诊放射、超声检查8折（限自费）。',
+        '重要通知：即日起-2023年12月31日（工作日下午及周末）门诊普通诊察费免费，专家诊察费5折优惠；60岁以上人群享受全天门诊普通诊察费免费，专家诊察费5折优惠。',
     });
   }
 }
