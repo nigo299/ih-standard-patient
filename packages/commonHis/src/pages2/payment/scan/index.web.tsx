@@ -19,9 +19,13 @@ export default () => {
         });
         return;
       }
+      const scanParams = JSON.stringify({
+        patCardNo,
+        scanType,
+      });
       // 支付宝小程序
       window.location.href = `https://render.alipay.com/p/s/i/?scheme=${encodeURIComponent(
-        `alipays://platformapi/startapp?appId=${APPID}&page=pages2/payment/order-list/index&patCardNo=${patCardNo}&scanType=${scanType}`,
+        `alipays://platformapi/startapp?appId=${APPID}&page=pages2/payment/order-list/index?params=${scanParams}`,
       )}`;
     }
     if (getBrowserUa() === 'wechat') {
