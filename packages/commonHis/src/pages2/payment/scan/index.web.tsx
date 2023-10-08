@@ -21,7 +21,7 @@ export default () => {
       }
       // 支付宝小程序
       window.location.href = `https://render.alipay.com/p/s/i/?scheme=${encodeURIComponent(
-        `alipays://platformapi/startapp?appId=${APPID}&page=pages2/payment/order-list/index&query=${encodeURIComponent(
+        `alipays://platformapi/startapp?appId=${APPID}&page=pages2/payment/order-list/index?${encodeURIComponent(
           `patCardNo=${patCardNo}&scanType=${scanType}`,
         )}`,
       )}`;
