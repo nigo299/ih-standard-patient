@@ -414,36 +414,36 @@ export default () => {
             </Button>
           )}
 
-        {/* {mode === 'medical' &&
-          hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 && */}
-        {mode === 'medical' && PLATFORM === 'ali' && (
-          <Button
-            type="primary"
-            className={classNames(styles.medInsureBtn, {
-              [styles.disabled]:
-                decrypt(userInfoData?.data?.aliPayCertNo || '') !==
-                patientFullIdNo,
-            })}
-            onTap={() => {
-              if (
-                decrypt(userInfoData?.data?.aliPayCertNo || '') !==
-                patientFullIdNo
-              ) {
-                showToast({
-                  duration: 1000,
-                  icon: 'none',
-                  title: '非本人暂不支持医保在线支付',
-                });
-              } else {
-                hanldeMedInsurePay();
-              }
-            }}
-            disabled={payDisabled2 || payLoading}
-            loading={aliPayLoading}
-          >
-            医保移动支付
-          </Button>
-        )}
+        {mode === 'medical' &&
+          hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
+          PLATFORM === 'ali' && (
+            <Button
+              type="primary"
+              className={classNames(styles.medInsureBtn, {
+                [styles.disabled]:
+                  decrypt(userInfoData?.data?.aliPayCertNo || '') !==
+                  patientFullIdNo,
+              })}
+              onTap={() => {
+                if (
+                  decrypt(userInfoData?.data?.aliPayCertNo || '') !==
+                  patientFullIdNo
+                ) {
+                  showToast({
+                    duration: 1000,
+                    icon: 'none',
+                    title: '非本人暂不支持医保在线支付',
+                  });
+                } else {
+                  hanldeMedInsurePay();
+                }
+              }}
+              disabled={payDisabled2 || payLoading}
+              loading={aliPayLoading}
+            >
+              医保移动支付
+            </Button>
+          )}
 
         {hidden !== '1' && (
           <Button
