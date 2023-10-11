@@ -13,7 +13,7 @@ export default ({
     jumpUrl: string;
     appId: string;
   }[];
-  interval: number;
+  interval?: number;
 }) => {
   return (
     <Swiper
