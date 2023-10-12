@@ -1,0 +1,126 @@
+@import '@/styles/index.less';
+.page {
+  position: relative;
+  background: @theme-color;
+  height: calc(100vh - 140px);
+  padding-top: 40px;
+  // overflow: hidden;
+}
+
+.banner {
+  height: 200px;
+  width: 100%;
+}
+
+.addCard {
+  position: absolute;
+  top: 40px;
+  width: calc(100% - 40px);
+  height: 160px;
+  margin-left: 20px;
+  padding: 30px 27px !important;
+  border-radius: 20px;
+  background: white;
+}
+
+.addImg {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.addTitle {
+  font-weight: bold;
+  color: @theme-color;
+  font-size: 34px;
+}
+
+.addSubTitle {
+  color: #cccccc;
+  font-size: 28px;
+}
+
+.mediCard {
+  position: absolute;
+  top: 15px;
+  width: 100%;
+  z-index: 9;
+}
+
+.content {
+  position: absolute;
+  top: 250px;
+  width: calc(100% - 40px);
+  height: calc(100% - 290px);
+  padding: 30px 20px !important;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  background: #fff;
+}
+
+.conentPadding {
+  padding-top: 140px !important;
+  height: calc(100% - 390px);
+}
+
+@media screen and (min-width: 480px) {
+  .content {
+    height: 90%;
+  }
+  .conentPadding {
+    height: 90%;
+  }
+}
+
+.box {
+  width: 216px;
+  height: 200px;
+  background: linear-gradient(0deg, #f9fbfe, #f0f6fc);
+  border-radius: 20px;
+}
+
+.boxImg {
+  width: 108px;
+  height: 108px;
+}
+
+.boxText {
+  margin-top: 10px;
+  color: #666666;
+  font-size: 30px;
+}
+
+.list {
+  height: 105px;
+  margin-top: 20px;
+}
+
+.listLeftImg {
+  width: 100px;
+  height: 100px;
+  margin: 10px 5px 0 -15px;
+}
+
+.listItem {
+  position: relative;
+  width: 100%;
+  font-size: 30px;
+  color: @black-300;
+  &::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    border-bottom: 2px solid #e0e0e0;
+    -webkit-transform: scaleY(0.5);
+    transform: scaleY(0.5);
+    content: '';
+  }
+}
+
+.listRightImg {
+  width: 100px;
+  height: 100px;
+  margin-right: -20px;
+}

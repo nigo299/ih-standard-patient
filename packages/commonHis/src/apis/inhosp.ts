@@ -77,6 +77,7 @@ interface OrderListType {
   createTime: string;
   orderId: string;
   patCardNo: string;
+  patHisNo?: string;
   patCardType: 21;
   patientName: string;
   payStatus: number;
@@ -102,6 +103,7 @@ interface OrderDetailType {
   hisName: string;
   orderId: string;
   patCardNo: string;
+  patHisNo?: string;
   patientName: string;
   payFee: number;
   payStatus: number;

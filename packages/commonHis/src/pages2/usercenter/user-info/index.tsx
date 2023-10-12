@@ -21,6 +21,7 @@ import styles from './index.less';
 import { IDTYPES, PLATFORM } from '@/config/constant';
 import showModal from '@/utils/showModal';
 import { PatGender } from '@/config/dict';
+import { useHisConfig } from '@/hooks';
 
 const tabs = [
   { content: '就诊卡', index: 1 },
@@ -28,6 +29,7 @@ const tabs = [
 ];
 
 export default memo(() => {
+  const { config } = useHisConfig();
   const { bindPatientList, defaultPatientInfo, setDefaultPatientInfo } =
     patientState.useContainer();
   const { patientId, tab = '1' } = useGetParams<{
@@ -162,7 +164,7 @@ export default memo(() => {
             {selectTab === 1 ? (
               <MediCardS
                 patientId={userInfo?.patientId}
-                patCardNo={userInfo?.patCardNo || ''}
+                patCardNo={userInfo?.[config?.patCardNoValue] || ''}
                 patientName={userInfo?.patientName}
                 isDetail={true}
               />

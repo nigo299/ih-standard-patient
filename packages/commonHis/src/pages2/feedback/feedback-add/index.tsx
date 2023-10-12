@@ -19,7 +19,7 @@ import useGetParams from '@/utils/useGetParams';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { usePageEvent } from 'remax/macro';
 import globalState from '@/stores/global';
-import styles from './index.less';
+import styles from '@/pages2/feedback/feedback-add/index.less';
 import CustomerReported from '@/components/customerReported';
 
 export default () => {

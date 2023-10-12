@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -17,7 +17,7 @@ import {
   IS_FEEDBACL,
   isDev,
 } from '@/config/constant';
-import { CopyRight, TabBar, WxOpenLaunchWeapp } from '@/components';
+import { CopyRight, WxOpenLaunchWeapp } from '@/components';
 import patientState from '@/stores/patient';
 import regsiterState from '@/stores/register';
 import globalState from '@/stores/global';
@@ -31,7 +31,7 @@ import showTabBar from '@/utils/showTabBar';
 import styles from './index.less';
 // import useApi from '@/apis/microsite';
 import useApi from '@/apis/common';
-import storage from '@/utils/storage';
+// import storage from '@/utils/storage';
 import dayjs from 'dayjs';
 import openLocation from 'commonHis/src/utils/openLocation';
 
@@ -176,11 +176,11 @@ export default () => {
       titleColor: '#3990E9',
     },
     {
+      title: '核酸检测',
+      subTitle: '快速核酸检测开单',
+      url: '/pages2/nucleic/select-combo/index?type=1',
+      image: `${IMAGE_DOMIN}/home/hsjc.png`,
       titleColor: '#2EBDC7',
-      title: '排队进度',
-      subTitle: '前面还有多少人',
-      url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-      image: `${IMAGE_DOMIN}/home/pdjd.png`,
     },
   ];
 
@@ -188,6 +188,12 @@ export default () => {
     const arr =
       PLATFORM === 'web'
         ? [
+            {
+              title: '排队进度',
+              subTitle: '前面还有多少人',
+              url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+              image: `${IMAGE_DOMIN}/home/pdjd.png`,
+            },
             {
               title: '微官网',
               subTitle: '医院信息门户',
@@ -204,6 +210,12 @@ export default () => {
             },
           ]
         : [
+            {
+              title: '排队进度',
+              subTitle: '前面还有多少人',
+              url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+              image: `${IMAGE_DOMIN}/home/pdjd.png`,
+            },
             {
               title: '微官网',
               subTitle: '医院信息门户',
@@ -311,11 +323,10 @@ export default () => {
           navigateTo({
             url: nav.url,
           });
-          return;
         }
         // }
 
-        // setRegisterMode(nav?.url);
+        setRegisterMode(nav?.url);
         return;
       }
       if (!patientId && !nav.patientId) {
@@ -353,9 +364,10 @@ export default () => {
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
-    // window.location.href =
-    //   'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
-
+    if (PLATFORM === 'web') {
+      window.location.href =
+        'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
+    }
     showTabBar();
     setPageStyle({
       overflow: 'inherit',
@@ -365,10 +377,6 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  // useEffect(() => {
-  //   window.location.href =
-  //     'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
-  // }, []);
 
   // useEffect(() => {
   //   hideTabBar();
@@ -627,7 +635,7 @@ export default () => {
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
       </Dialog> */}
-      {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}
+      {/* {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />} */}
     </View>
   );
 };

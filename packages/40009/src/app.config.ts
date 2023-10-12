@@ -65,10 +65,10 @@ const subPackages = [
       'usercenter/revise-user-address/index', // 修改就诊人地址
       'usercenter/ocr-recognition/index', // OCR识别
       'usercenter/face-verify/index', // 人脸识别验证
-      // 'signin/chooseType/index', // 签到选择类型页面
-      // 'signin/search/index', // 签到查询就诊人页面
-      // 'signin/list/index', // 签到列表页面
-      // 'signin/detail/index', // 签到详情页面
+      'signin/chooseType/index', // 签到选择类型页面
+      'signin/search/index', // 签到查询就诊人页面
+      'signin/list/index', // 签到列表页面
+      'signin/detail/index', // 签到详情页面
       'feedback/feedback-list/index', // 意见反馈列表
       'feedback/feedback-detail/index', // 意见反馈详情
       'feedback/feedback-add/index', // 新增意见反馈

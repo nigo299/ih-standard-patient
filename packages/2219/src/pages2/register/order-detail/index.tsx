@@ -90,17 +90,15 @@ export default () => {
       const time = new Date(`2000-01-01T${orderDetail.visitBeginTime}`);
       time.setMinutes(time.getMinutes() - 10);
 
-      let formattedTime = time.toLocaleTimeString('en-US', {
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-
       const hour = time.getHours();
-      const period = hour < 12 ? '上午' : '下午';
-      formattedTime = `${period} ${formattedTime}`;
+      const minute = time.getMinutes();
 
-      return formattedTime;
+      const formattedHour = String(hour).padStart(2, '0');
+      const formattedMinute = String(minute).padStart(2, '0');
+
+      const period = hour < 12 ? '上午' : '下午';
+
+      return `${period} ${formattedHour}:${formattedMinute}`;
     }
     return '';
   }, [orderDetail]);

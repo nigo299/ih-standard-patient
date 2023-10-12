@@ -29,15 +29,15 @@ const App: React.FC = (props) => {
       );
     }
     // 限制只有开通了的渠道才能使用应用
-    if (
-      PLATFORM !== 'wechat' &&
-      PLATFORM !== 'ali' &&
-      getBrowserUa() !== 'wechat' &&
-      getBrowserUa() !== 'alipay' &&
-      process.env.REMAX_APP_PLATFORM !== 'app'
-    ) {
-      reLaunchUrl('/pages/maintain/index');
-    }
+    // if (
+    //   PLATFORM !== 'wechat' &&
+    //   PLATFORM !== 'ali' &&
+    //   getBrowserUa() !== 'wechat' &&
+    //   getBrowserUa() !== 'alipay' &&
+    //   process.env.REMAX_APP_PLATFORM !== 'app'
+    // ) {
+    //   reLaunchUrl('/pages/maintain/index');
+    // }
     // 线上医保App环境直接授权跳转
     const href = window?.location?.href;
     if (

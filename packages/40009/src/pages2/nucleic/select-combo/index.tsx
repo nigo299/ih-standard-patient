@@ -173,7 +173,7 @@ export default () => {
         <View className={styles.box}>
           <View className={styles.popTitle}>温馨提示：</View>
           <View className={styles.popText}>
-            核酸采集点工作时间：8:00-12:00；
+            核酸采集点工作时间：周一、周四上午8:00-12:00；
             号源每日08:00更新，如有需求，请提前预约。
           </View>
         </View>

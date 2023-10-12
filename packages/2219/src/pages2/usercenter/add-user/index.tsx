@@ -211,6 +211,7 @@ export default memo(() => {
         });
         setCardList(options);
         setSelectCard(options[0]);
+        console.log('options', options);
         if (options.length !== 0) {
           setTimeout(() => {
             form.setFieldsValue({
@@ -239,6 +240,7 @@ export default memo(() => {
                 Number(options[0]?.patientAge) <
                 bindcardProdiles?.childrenMaxAge
               ) {
+                setIsChild(true);
                 if (!data[0].parentName) {
                   form.setFieldsValue({
                     patientType: '1',
@@ -256,6 +258,7 @@ export default memo(() => {
         return;
       }
       if (btnSubType === 'add' || btnSubType === 'bind') {
+        console.log('valuesadd', values);
         /** 这几个字段均为查询就诊人展示作用 */
         delete values['brithdayed'];
         delete values['patientSexed'];
@@ -276,11 +279,11 @@ export default memo(() => {
         if (checkPhoneFlag) {
           // 判断成人儿童表单需要识别的身份信息
           const idNo =
-            values['patientType'] === '1' || needGuardian
+            values['patientType'] === '1' || needGuardian || isChild
               ? values['parentIdNo']
               : values['idNo'];
           const name =
-            values['patientType'] === '1' || needGuardian
+            values['patientType'] === '1' || needGuardian || isChild
               ? values['parentName']
               : values['patientName'];
           const birthday =
@@ -383,20 +386,24 @@ export default memo(() => {
     },
     [
       alipayUserInfo,
-      bindcardProdiles,
+      bindcardProdiles?.childrenMaxAge,
+      bindcardProdiles?.isFace,
       btnSubType,
       config.enableFaceVerify,
-      faceInfo,
+      faceInfo?.idNo,
+      faceInfo?.name,
+      faceInfo?.success,
       form,
       getPatientList,
       handleAdd,
       handleSearch,
       isBrithday,
+      needGuardian,
       ocrInfo.num,
       pageRoute,
       selectCard,
       setFaceInfo,
-      user?.phone,
+      user.phone,
     ],
   );
 

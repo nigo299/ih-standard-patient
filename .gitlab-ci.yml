@@ -7,6 +7,9 @@ include:
   - local: 'packages/40070/.gitlab-ci.yml'
     rules:
       - if: $CI_COMMIT_BRANCH =~ /^40070-.*/ || $CI_COMMIT_TAG =~ /^release-40070-.*/
+  - local: 'packages/40026/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^40026-.*/ || $CI_COMMIT_TAG =~ /^release-40026-.*/
   - local: 'packages/40009/.gitlab-ci.yml'
     rules:
       - if: $CI_COMMIT_BRANCH =~ /^40009.*/ || $CI_COMMIT_TAG =~ /^release-40009.*/
@@ -16,6 +19,9 @@ include:
   - local: 'packages/2219/.gitlab-ci.yml'
     rules:
       - if: $CI_COMMIT_BRANCH =~ /^2219.*/ || $CI_COMMIT_TAG =~ /^release-2219.*/
+  - local: 'packages/40074/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^40074.*/ || $CI_COMMIT_TAG =~ /^release-40074.*/
   - local: 'packages/40019/.gitlab-ci.yml'
     rules:
       - if: $CI_COMMIT_BRANCH =~ /^40019.*/ || $CI_COMMIT_TAG =~ /^release-40019.*/

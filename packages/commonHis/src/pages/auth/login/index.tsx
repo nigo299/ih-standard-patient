@@ -19,7 +19,7 @@ import { showToast } from '@kqinfo/ui';
 import useAuthApi from '@/apis/login';
 import storage from '@/utils/storage';
 import patientState from '@/stores/patient';
-import styles from './index.less';
+import styles from '@/pages/auth/login/index.less';
 import classNames from 'classnames';
 import useGetParams from '@/utils/useGetParams';
 

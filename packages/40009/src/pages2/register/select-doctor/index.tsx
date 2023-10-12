@@ -30,10 +30,11 @@ import ShowPrice from 'commonHis/src/pages2/register/select-doctor/components/sh
 import ShowSource from 'commonHis/src/pages2/register/select-doctor/components/show-source';
 import ShowDocTags from 'commonHis/src/pages2/register/select-doctor/components/show-doc-tags';
 enum DoctorType {
-  all = '仅展示有号',
+  all = '当日出诊医生',
   normal = '急诊号',
   expert = '专家号',
   night = '普通号',
+  free = '义诊号',
 }
 
 export default () => {
@@ -127,18 +128,28 @@ export default () => {
         prev?.leftSource === 0 ? 1 : next?.leftSource === 0 ? -1 : 0,
       );
     }
-    if (doctorType === '仅展示有号') {
-      return (
-        doctorList && doctorList?.filter((doctor) => doctor.leftSource > 0)
-      );
+    if (doctorType === '当日出诊医生') {
+      return doctorList && doctorList;
     } else if (doctorType === '专家号') {
+      console.log('doctorList', doctorList);
       return (
         doctorList &&
-        doctorList?.filter((doctor) => doctor?.registerFee >= 3000)
+        doctorList?.filter(
+          (doctor) =>
+            doctor?.title?.includes('主任') && doctor?.registerFee > 0,
+        )
       );
     } else if (doctorType === '普通号') {
       return (
-        doctorList && doctorList?.filter((doctor) => doctor?.registerFee < 3000)
+        doctorList &&
+        doctorList?.filter(
+          (doctor) =>
+            !doctor?.title?.includes('主任') && doctor?.registerFee > 0,
+        )
+      );
+    } else if (doctorType === '义诊号') {
+      return (
+        doctorList && doctorList?.filter((doctor) => doctor?.registerFee === 0)
       );
     } else {
       return (
@@ -231,7 +242,7 @@ export default () => {
     if (deptDetail?.name) {
       setDeptDetail(deptDetail);
     }
-    if (deptDetail?.hospitalDeptName?.includes('特需')) {
+    if (deptDetail?.name?.includes('特需')) {
       setIsSpecial(true);
     }
   }, [deptDetail]);
@@ -317,7 +328,7 @@ export default () => {
               onChange={(v) => setDoctorType(v as DoctorType)}
             >
               {[
-                { value: '仅展示有号', label: '仅展示有号' },
+                { value: '当日出诊医生', label: '当日出诊医生' },
                 { value: '专家号', label: '专家号' },
                 { value: '普通号', label: '普通号' },
                 { value: '义诊号', label: '义诊号' },

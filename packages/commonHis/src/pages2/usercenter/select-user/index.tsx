@@ -10,9 +10,11 @@ import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import classNames from 'classnames';
 import { PatGender } from '@/config/dict';
+import { useHisConfig } from '@/hooks';
 import { getPatientAge } from '@/utils';
 
 export default memo(() => {
+  const { config } = useHisConfig();
   const { pageRoute } = useGetParams<{
     pageRoute: string;
   }>();
@@ -27,7 +29,7 @@ export default memo(() => {
   });
   const onCardClick = useCallback(
     async (patient: PatientType) => {
-      const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
+      const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}&idNo=${patient.encryptIdNo}&patName=${patient.encryptPatientName}`;
       // 首页点进来直接切换默认就诊人
       if (pageRoute) {
         if (defaultPatientInfo.patientId === patient.patientId) {
@@ -107,7 +109,7 @@ export default memo(() => {
                   }}
                 />
 
-                {patient?.patCardNo}
+                {patient?.[config?.patCardNoValue]}
               </Space>
               <Image
                 src={`${IMAGE_DOMIN}/usercenter/bg.png`}

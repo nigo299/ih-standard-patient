@@ -56,6 +56,7 @@ import { useHisConfig } from '@/hooks';
 import {
   visitTime,
   registerSuccessTips,
+  RegisterCardPatientNo,
 } from '@/pages2/register/order-detail/utils';
 
 const cancelItems = [
@@ -140,7 +141,7 @@ export default () => {
     },
     {
       label: '就诊卡号',
-      text: orderDetail?.patCardNo,
+      text: orderDetail?.[config?.patCardNoValue],
     },
   ];
 
@@ -165,7 +166,7 @@ export default () => {
         text: orderDetail?.orderId,
       },
       {
-        label: '交易单号',
+        label: '业务订单号',
         text: orderDetail?.payOrderId || '暂无',
       },
       {
@@ -308,7 +309,7 @@ export default () => {
   );
   const cancelRegisterPay = useCallback(
     async (payAuthNo?: string, cancelValStorage?: string) => {
-      if (!cancelVal && !cancelValStorage) {
+      if ((!cancelVal || cancelVal === 'undefined') && !cancelValStorage) {
         showToast({
           title: '请选择取消原因!',
         });
@@ -537,7 +538,7 @@ export default () => {
           <View className={styles.statusInfo}>
             {orderDetail?.status === 'S' &&
               `${registerSuccessTips}
-              就诊卡号：${orderDetail?.patCardNo}`}
+              就诊卡号：${orderDetail?.[config?.patCardNoValue]}`}
             {orderDetail?.status === 'L' &&
               '请在锁号的时候内完成支付，否则将取消号源'}
             {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}
@@ -559,7 +560,7 @@ export default () => {
         payName="register"
         hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
         healthCardNo={jkkInfo?.healthCardId}
-        patCardNo={orderDetail?.patCardNo}
+        patCardNo={orderDetail?.[RegisterCardPatientNo]}
       />
       <Form className={styles.content} form={form}>
         <ListTitle
