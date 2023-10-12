@@ -16,7 +16,7 @@ export const HOSPITAL_TEL = '023-88860111';
 export const HIS_ID = '2219';
 export const REQUEST_QUERY = {
   hisId: HIS_ID,
-  platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}01`,
+  platformId: PLATFORM === 'ali' ? `${HIS_ID}04` : `${HIS_ID}01`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10
