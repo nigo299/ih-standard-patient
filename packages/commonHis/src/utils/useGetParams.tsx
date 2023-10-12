@@ -1,4 +1,4 @@
-import { useQuery } from 'remax';
+import { useQuery } from '@kqinfo/ui';
 
 /**
  * 将当前路径url字符串转为对象格式

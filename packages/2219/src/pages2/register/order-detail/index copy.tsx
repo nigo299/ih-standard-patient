@@ -90,15 +90,17 @@ export default () => {
       const time = new Date(`2000-01-01T${orderDetail.visitBeginTime}`);
       time.setMinutes(time.getMinutes() - 10);
 
+      let formattedTime = time.toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+
       const hour = time.getHours();
-      const minute = time.getMinutes();
-
-      const formattedHour = String(hour).padStart(2, '0');
-      const formattedMinute = String(minute).padStart(2, '0');
-
       const period = hour < 12 ? '上午' : '下午';
+      formattedTime = `${period} ${formattedTime}`;
 
-      return `${period} ${formattedHour}:${formattedMinute}`;
+      return formattedTime;
     }
     return '';
   }, [orderDetail]);
@@ -125,6 +127,7 @@ export default () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showTip, setShowTip] = useState(false);
   const [cancelVal, setCancelVal] = useState('');
+  const [refreshOrderStatus, setRefreshOrderStatus] = useState(false);
   const [form] = Form.useForm();
   const [toggle, setToggle] = useState([true, false]);
   const cancelExtFields = useGetCancelOrderExtFields({ orderDetail });
@@ -224,7 +227,7 @@ export default () => {
             {ORDER_INVOICE &&
             orderDetail?.payStatus === 1 &&
             orderDetail?.status === 'S' &&
-            (orderDetail?.totalFee > 0 || PLATFORM === 'ali') ? (
+            orderDetail?.totalFee > 0 ? (
               <Platform platform={['web']}>
                 <View
                   style={{ color: '#3b98c3' }}
@@ -577,6 +580,7 @@ export default () => {
           content={orderDetail?.payStatus === 1 ? '正在退款' : '正在退号'}
         />
       )}
+      {refreshOrderStatus && <Loading content={'正在刷新订单'} />}
       {orderDetail?.preSettlementResult && (
         <MedicallItem
           show={medicalInfo}
@@ -675,7 +679,9 @@ export default () => {
           )}
           {orderDetail?.status === 'F' &&
             orderDetail?.refundList?.length >= 1 &&
-            orderDetail.refundList[0].refundDesc}
+            (orderDetail?.refundList[0]?.refundDesc?.includes('异常')
+              ? '请刷新订单状态，或等待人工处理，若核实挂号未成功，退款金额将于1-7个工作日自动原路返回到您的支付账户。'
+              : orderDetail?.refundList[0]?.refundDesc)}
         </View>
         {countdown > 0 && orderDetail?.canPayFlag === 1 && (
           <View className={styles.leftPayTime}>
@@ -757,6 +763,22 @@ export default () => {
             取消挂号
           </Button>
         )}
+        {/* {orderDetail?.canCancelFlag !== 1 && (
+          <Button
+            type={'primary'}
+            className={styles.button}
+            disabled={refreshOrderStatus}
+            loading={refreshOrderStatus}
+            onTap={() => {
+              setRefreshOrderStatus(true);
+              setTimeout(() => {
+                setRefreshOrderStatus(false);
+              }, 9000);
+            }}
+          >
+            刷新订单状态
+          </Button>
+        )} */}
       </View>
 
       <Dialog

@@ -192,6 +192,7 @@ export default () => {
                   request({
                     // transformCode: 'KQ00007',
                     patCardNo,
+                    patHisNo,
                     queueType: String(tab.type),
                   }).then((res) => {
                     const data = res?.data?.recordList;

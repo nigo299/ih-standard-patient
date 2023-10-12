@@ -497,7 +497,8 @@ export default memo(() => {
         <PartTitle
           bold
           action={
-            bindcardProdiles?.isOcr === 1 && (
+            bindcardProdiles?.isOcr === 1 &&
+            PLATFORM === 'web' && (
               <Button
                 type="primary"
                 onTap={() =>
@@ -533,8 +534,11 @@ export default memo(() => {
           labelWidth={'4em'}
           requiredMark={false}
         >
-          {!checked && bindcardProdiles?.patientTypes && (
+          {bindcardProdiles?.patientTypes && (
             <FormItem
+              className={classNames({
+                [styles.hideItem]: checked,
+              })}
               label={'就诊人类型'}
               name="patientType"
               initialValue={'0'}

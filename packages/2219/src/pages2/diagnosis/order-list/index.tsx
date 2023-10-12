@@ -19,7 +19,6 @@ import useApi from '@/apis/common';
 import useGetParams from '@/utils/useGetParams';
 import dayjs from 'dayjs';
 import { PatGender } from '@/config/dict';
-import { getPatientAge } from '@/utils';
 import qs from 'qs';
 
 export default () => {
@@ -89,70 +88,15 @@ export default () => {
                   <FormItem label={'就诊卡'}>{patHisNo}</FormItem>
                 </Space>
                 <Space justify={'space-between'}>
-                  <FormItem label={'性别'}>
-                    {PatGender[resultData?.patSex] || ''}
-                  </FormItem>
+                  <FormItem label={'性别'}>{resultData?.patSex || ''}</FormItem>
                   <FormItem label={'年龄'} className={styles.itemText}>
-                    {getPatientAge(resultData?.patAge)}
+                    {resultData?.patAge + '岁'}
                   </FormItem>
                 </Space>
-                <FormItem label={'创建时间'}>{resultData?.createTime}</FormItem>
               </Space>
             )}
           </Space>
         </Form>
-        <DropDownMenu showModal={false} className={styles.menu}>
-          <DropDownMenuItem
-            title={
-              rangeDate[0]
-                ? `${dayjs(rangeDate[0]).format('YYYY/MM/DD')}~${dayjs(
-                    rangeDate[1],
-                  ).format('YYYY/MM/DD')}`
-                : '就诊时间'
-            }
-            className={styles.dropLeft}
-            arrowsSize={18}
-            maxHeight={'100vh'}
-          >
-            <Space vertical>
-              <Space className={styles.calenderfoot}>
-                <Space className={styles.footItem}>
-                  {rangeDate[0]
-                    ? `${dayjs(rangeDate[0]).format('YYYY/MM/DD')}~${dayjs(
-                        rangeDate[1],
-                      ).format('YYYY/MM/DD')}`
-                    : '就诊时间'}
-                </Space>
-                <Space
-                  className={styles.footItemActive}
-                  onTap={() => {
-                    setRangeDate([]);
-                  }}
-                >
-                  清空
-                </Space>
-              </Space>
-              <Calendar.Picker
-                range={true}
-                current={rangeDate}
-                onChange={(v: any[]) => {
-                  if (!v[1]) {
-                    return;
-                  }
-                  setRangeDate(v);
-                  console.log(v);
-                }}
-              />
-            </Space>
-          </DropDownMenuItem>
-          <DropDownMenuItem
-            title={'就诊类别'}
-            options={options1}
-            value={recordType}
-            onChange={setRecordType}
-            arrowsSize={18}
-          />
-        </DropDownMenu>
         <Space
           className={styles.content}
           flex={1}

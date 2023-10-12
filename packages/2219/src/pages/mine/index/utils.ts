@@ -31,9 +31,9 @@ export const handleMineNavTap = (
       window.location.href = list?.url;
       return;
     }
-    navigateTo({
-      url: list?.url,
-    });
     return;
   }
+  navigateTo({
+    url: list?.url,
+  });
 };
