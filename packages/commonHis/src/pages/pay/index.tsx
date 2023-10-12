@@ -400,7 +400,7 @@ export default () => {
         </View>
       </View>
       <View className={styles.buttons}>
-        {(mode === 'medical' ||
+        {(mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1) &&
           getBrowserUa() === 'wechat' && (
             <Button
@@ -414,7 +414,7 @@ export default () => {
             </Button>
           )}
 
-        {(mode === 'medical' ||
+        {(mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1) &&
           PLATFORM === 'ali' && (
             <Button
