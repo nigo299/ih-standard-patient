@@ -98,12 +98,12 @@ export const mineNavListConfig =
           url: '/pages/collect/index',
           image: `${IMAGE_DOMIN}/mine/gzsc.png`,
         },
-        {
-          title: '意见反馈',
-          url: '/pages2/feedback/feedback-list/index',
-          image: `${IMAGE_DOMIN}/mine/yjfk.png`,
-          open: false,
-        },
+        // {
+        //   title: '意见反馈',
+        //   url: '/pages2/feedback/feedback-list/index',
+        //   image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+        //   open: false,
+        // },
       ];
 
 export const inhospMoneys = [

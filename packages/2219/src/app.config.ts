@@ -67,10 +67,10 @@ const subPackages = [
       'usercenter/revise-user-phone/index', // 修改就诊人手机号
       'usercenter/revise-user-address/index', // 修改就诊人地址
       'usercenter/ocr-recognition/index', // OCR识别
-      'usercenter/face-verify/index', // 人脸识别验证
-      'feedback/feedback-list/index', // 意见反馈列表
-      'feedback/feedback-detail/index', // 意见反馈详情
-      'feedback/feedback-add/index', // 新增意见反馈
+      // 'usercenter/face-verify/index', // 人脸识别验证
+      // 'feedback/feedback-list/index', // 意见反馈列表
+      // 'feedback/feedback-detail/index', // 意见反馈详情
+      // 'feedback/feedback-add/index', // 新增意见反馈
       'diagnosis/order-list/index', // 就诊记录
       'diagnosis/order-detail/index', // 就诊记录详情
       'diagnosis/order-detail/receiptsDetail', //就诊结算记录详情
