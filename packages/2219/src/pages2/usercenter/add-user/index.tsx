@@ -258,7 +258,6 @@ export default memo(() => {
         return;
       }
       if (btnSubType === 'add' || btnSubType === 'bind') {
-        console.log('valuesadd', values);
         /** 这几个字段均为查询就诊人展示作用 */
         delete values['brithdayed'];
         delete values['patientSexed'];
@@ -293,6 +292,7 @@ export default memo(() => {
           if (
             values['idType'] === '1' &&
             config.enableFaceVerify &&
+            analyzeIDCard(values.idNo).analyzeAge < 60 &&
             PLATFORM === 'web' &&
             bindcardProdiles?.isFace === 1 &&
             !faceInfo.success &&
