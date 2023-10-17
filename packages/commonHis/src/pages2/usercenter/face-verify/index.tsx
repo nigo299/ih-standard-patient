@@ -16,7 +16,8 @@ import { useUnmount } from 'ahooks';
 
 export default () => {
   const { elderly } = globalState.useContainer();
-  const { faceInfo, setFaceInfo } = patientState.useContainer();
+  const { faceInfo, setFaceInfo, setNeedGuardian } =
+    patientState.useContainer();
   const [visible, setVisible] = useState(false);
   const { handleFaceVerify, faceVerifyStatus } = useFaceVerify({
     name: faceInfo.name,
@@ -30,7 +31,7 @@ export default () => {
 
   useEffect(() => {
     if (faceVerifyStatus === FaceVerifyStatus.失败 && analyzeAge >= 60) {
-      // setNeedGuardian(true);
+      setNeedGuardian(true);
       setVisible(true);
     }
   }, [analyzeAge, faceVerifyStatus]);
