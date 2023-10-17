@@ -120,6 +120,7 @@ export default () => {
               }),
             ),
           }))}
+          menuMode="singleCol"
           className={styles.menu}
           leftActiveCls={styles.leftActive}
           leftItemCls={styles.leftItem}

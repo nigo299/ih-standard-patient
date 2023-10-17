@@ -175,13 +175,13 @@ export default () => {
       image: `${IMAGE_DOMIN}/home/zyfw.png`,
       titleColor: '#3990E9',
     },
-    {
-      title: '核酸检测',
-      subTitle: '快速核酸检测开单',
-      url: '/pages2/nucleic/select-combo/index?type=1',
-      image: `${IMAGE_DOMIN}/home/hsjc.png`,
-      titleColor: '#2EBDC7',
-    },
+    // {
+    //   title: '核酸检测',
+    //   subTitle: '快速核酸检测开单',
+    //   url: '/pages2/nucleic/select-combo/index?type=1',
+    //   image: `${IMAGE_DOMIN}/home/hsjc.png`,
+    //   titleColor: '#2EBDC7',
+    // },
   ];
 
   const homeCardNavConfig = useMemo(() => {

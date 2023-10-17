@@ -68,6 +68,7 @@ export default memo(() => {
     setFaceInfo,
     getPatientList,
     needGuardian,
+    setNeedGuardian,
   } = patientState.useContainer();
   const { user, getUserInfo } = globalState.useContainer();
   const { config } = useHisConfig();
@@ -279,11 +280,15 @@ export default memo(() => {
         if (checkPhoneFlag) {
           // 判断成人儿童表单需要识别的身份信息
           const idNo =
-            values['patientType'] === '1' || needGuardian || isChild
+            values['patientType'] === '1' ||
+            (needGuardian && values['parentName']) ||
+            isChild
               ? values['parentIdNo']
               : values['idNo'];
           const name =
-            values['patientType'] === '1' || needGuardian || isChild
+            values['patientType'] === '1' ||
+            (needGuardian && values['parentName']) ||
+            isChild
               ? values['parentName']
               : values['patientName'];
           const birthday =
@@ -488,8 +493,9 @@ export default memo(() => {
   useEffect(() => {
     return () => {
       clearCountdownTimer();
+      setNeedGuardian(false);
     };
-  }, [clearCountdownTimer]);
+  }, [clearCountdownTimer, setNeedGuardian]);
 
   return (
     <View className={styles.page}>
@@ -1001,7 +1007,7 @@ export default memo(() => {
                       name="parentName"
                       rules={[
                         {
-                          required: true,
+                          required: !needGuardian,
                           message: `请输入2-8位合法${guardianName}姓名`,
                           pattern: /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,8}$/,
                         },
@@ -1027,7 +1033,7 @@ export default memo(() => {
                       }
                       rules={[
                         {
-                          required: true,
+                          required: !needGuardian,
                           message: `请选择${guardianName}证件类型`,
                         },
                       ]}
@@ -1049,7 +1055,7 @@ export default memo(() => {
                       rules={[
                         {
                           type: parentIdType === '1' ? 'idCard' : 'string',
-                          required: true,
+                          required: !needGuardian,
                           message: `请输入正确的${guardianName}证件号码`,
                         },
                       ]}
