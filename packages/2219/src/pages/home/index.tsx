@@ -48,7 +48,6 @@ export interface NavType {
 }
 
 export default () => {
-  console.log(isDev, 'isDev');
   console.log(process.env.REMAX_APP_PLATFORM, 'process.env.REMAX_APP_PLATFORM');
   const {
     defaultPatientInfo: { patientId },
@@ -364,7 +363,7 @@ export default () => {
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
-    if (PLATFORM === 'web') {
+    if (PLATFORM === 'web' && !isDev) {
       window.location.href =
         'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
     }
