@@ -22,7 +22,7 @@ const ReportTab: React.FC<RestProps> = ({
       type={'card'}
       onChange={(v) => {
         if (v === 3) {
-          window.location.href = `http://www.cqdent.com:9077/pad/index.html#/examRecordList?username=${encryptDes(
+          window.location.href = `https://pacs.cqdent.com/pad/index.html#/examRecordList?username=${encryptDes(
             'doctor',
           )}&pwd=${encryptDes(`DJpacs@#2022$`)}&patientId=${encryptDes(
             patHisNo,

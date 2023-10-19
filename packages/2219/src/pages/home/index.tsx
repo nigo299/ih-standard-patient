@@ -48,7 +48,6 @@ export interface NavType {
 }
 
 export default () => {
-  console.log(isDev, 'isDev');
   console.log(process.env.REMAX_APP_PLATFORM, 'process.env.REMAX_APP_PLATFORM');
   const {
     defaultPatientInfo: { patientId },
