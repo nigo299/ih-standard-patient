@@ -400,20 +400,19 @@ export default () => {
         </View>
       </View>
       <View className={styles.buttons}>
-        {/* {mode === 'medical' &&
+        {mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 &&
-          getBrowserUa() === 'wechat' && ( */}
-        {getBrowserUa() === 'wechat' && (
-          <Button
-            type="primary"
-            className={styles.medInsureBtn}
-            onTap={hanldeMedInsurePay}
-            disabled={payDisabled2 || payLoading}
-            loading={wechatPayLoading}
-          >
-            医保移动支付
-          </Button>
-        )}
+          getBrowserUa() === 'wechat' && (
+            <Button
+              type="primary"
+              className={styles.medInsureBtn}
+              onTap={hanldeMedInsurePay}
+              disabled={payDisabled2 || payLoading}
+              loading={wechatPayLoading}
+            >
+              医保移动支付
+            </Button>
+          )}
 
         {mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&

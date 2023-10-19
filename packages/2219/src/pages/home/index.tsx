@@ -363,10 +363,10 @@ export default () => {
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
-    // if (PLATFORM === 'web' && !isDev) {
-    //   window.location.href =
-    //     'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
-    // }
+    if (PLATFORM === 'web' && !isDev) {
+      window.location.href =
+        'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
+    }
     showTabBar();
     setPageStyle({
       overflow: 'inherit',
