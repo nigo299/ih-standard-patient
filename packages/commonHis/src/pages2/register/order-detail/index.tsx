@@ -483,6 +483,14 @@ export default () => {
   usePageEvent('onHide', () => {
     clearCountdownTimer();
   });
+
+  const orderStatusName = useMemo(() => {
+    if (orderDetail?.status === 'S') {
+      if (orderDetail?.bizName === '预约挂号') return '预约成功';
+      return '挂号成功';
+    }
+    return orderDetail?.statusName;
+  }, [orderDetail]);
   return (
     <View className={styles.wrap}>
       {loading && (
@@ -525,7 +533,7 @@ export default () => {
               alignItems={'center'}
               justify={'space-between'}
             >
-              {orderDetail?.statusName}
+              {orderStatusName}
               {(orderDetail?.status === 'F' || orderDetail?.status === 'C') && (
                 <CustomerReported
                   whereShowCode={
