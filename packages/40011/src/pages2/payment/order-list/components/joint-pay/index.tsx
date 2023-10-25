@@ -292,10 +292,10 @@ export default () => {
       //遍历取出所有
       waitPayList?.[0].list.forEach((listItem) => {
         //判断勾选当天所有的处方
-        const isToday = dayjs(listItem?.date)?.isSame(dayjs(), 'day');
-        if (isToday) {
-          WaitPayHisOrderNoArrs.push(listItem?.hisOrderNo);
-        }
+        // const isToday = dayjs(listItem?.date)?.isSame(dayjs(), 'day');
+        // if (isToday) {
+        WaitPayHisOrderNoArrs.push(listItem?.hisOrderNo);
+        // }
       });
       setSelectList(WaitPayHisOrderNoArrs);
     } else if (data?.length === 0) {
