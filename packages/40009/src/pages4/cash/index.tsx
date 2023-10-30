@@ -1,289 +1,467 @@
-import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
+import React, { useCallback, useState, useEffect } from 'react';
+import { View, navigateBack, reLaunch, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
+import { date2hour, decrypt, getBrowserUa, reLaunchUrl } from '@/utils';
+import { useDownCount } from 'parsec-hooks';
+import { Price } from '@/components';
+import useApi, { ChoosepayType } from '@/apis/pay';
+import useRegisterApi from '@/apis/register';
 import setNavigationBar from '@/utils/setNavigationBar';
-import {
-  Button,
-  ColorText,
-  NoData,
-  showToast,
-  Space,
-  Calendar,
-  Loading,
-  Exceed,
-} from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
+import useLoginApi from '@/apis/login';
+import usePatientApi from '@/apis/usercenter';
+import { Button, Shadow, Space, Tip, showModal, showToast } from '@kqinfo/ui';
+import payState, { OrderInfoType } from '@/stores/pay';
+// import globalState from '@/stores/global';
+import { PAY_TYPE, HOSPITAL_NAME, PLATFORM, APPID } from '@/config/constant';
+import { ListItem } from '@/components';
 import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
+import monitor from '@/alipaylog/monitor';
+import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
+import storage from '@/utils/storage';
+import { useLockFn } from 'ahooks';
 import styles from './index.less';
-import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
+import { useHisConfig } from '@/hooks';
 
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const { mode = '', hidden = '0' } = useGetParams<{
+    mode: string;
+    hidden: string;
+  }>();
+  const { config } = useHisConfig();
   const {
-    request,
-    loading,
-    data: { data },
-  } = useApi.透传字段({
-    params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
+    orderInfo: {
+      deptName,
+      doctorName,
+      doctorTitle,
+      patCardNo,
+      hisName,
+      registerTime,
+      patientName,
+      bizType,
+      totalFee,
+      orderId,
+      payOrderId,
+      patientFullIdNo,
+      extFields,
+      h5PayUrl = '',
     },
+    setOrderInfo,
+  } = payState.useContainer();
+  // const { elderly } = globalState.useContainer();
+  const { loading: payLoading, request: payRequest } = useApi.缴费支付下单({
     needInit: false,
   });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
+  const { data: hospitialConfigData } = usePatientApi.获取医院挷卡配置信息({
+    needInit: true,
+  });
+  const { loading: aliPayLoading, request: aliPayRequest } =
+    useApi.支付宝医保免密授权({
+      needInit: false,
+    });
+  const { loading: wechatPayLoading, request: wechatPayRequest } =
+    useApi.微信医保渠道免密授权URL获取({
+      needInit: false,
+    });
+  const { data: userInfoData } = useLoginApi.获取用户信息({
+    needInit: PLATFORM === 'ali',
+  });
+  const [payDisabled, setPaydisabled] = useState(false);
+  const [payDisabled2, setPaydisabled2] = useState(false);
+  const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
+  const columns = [
+    {
+      key: PAY_TYPE[bizType].title,
+      title: '业务类型',
+    },
+    {
+      key: HOSPITAL_NAME || hisName,
+      title: '就诊院区',
+    },
+    {
+      key: deptName || '暂无',
+      title: '合诊团队',
+    },
+    {
+      key: deptName || '暂无',
+      title: '会诊时间',
+    },
+  ];
+  const columns2 = [
+    {
+      key: patientName,
+      title: '就诊人',
+    },
+    {
+      key: patCardNo,
+      title: '就诊卡号',
+    },
+  ];
+
+  const chooseWechatAppPay = useCallback(
+    async (data: ChoosepayType) => {
+      const { requestPayment } = require('remax/wechat');
+      const { timeStamp, nonceStr, signType, paySign, packages } = data;
+      // 唤起微信支付
+      let requestPaymentRes;
+      try {
+        requestPaymentRes = await requestPayment({
+          timeStamp,
+          nonceStr,
+          package: packages,
+          signType,
+          paySign,
+        });
+      } catch (error) {
+        requestPaymentRes = error;
+      }
+      if (requestPaymentRes.errMsg === 'requestPayment:fail cancel') {
+        // 取消支付
+        showToast({
+          title: '取消支付!',
+          icon: 'fail',
+        });
+        setPaydisabled2(false);
+        setPaydisabled(false);
+      } else if (requestPaymentRes.errMsg === 'requestPayment:ok') {
+        // 支付成功
+        showToast({
+          title: '支付成功!',
+          icon: 'success',
+        }).then(() => {
+          reLaunch({
+            url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
+          });
+        });
+      } else {
+        // 支付失败
+        showToast({
+          title: '支付失败，请稍后重试!',
+          icon: 'fail',
+        }).then(() => navigateBack());
+      }
+    },
+    [bizType, orderId],
   );
-  usePageEvent('onShow', async () => {
-    request();
-    if (!defaultPatientInfo?.patientName) {
-      getPatientList(false).then((res) => {
-        if (res.length === 0) {
-          showToast({
-            title: '请先添加就诊人!',
-            icon: 'none',
-            mask: true,
-          }).then(() => {
-            navigateTo({
-              url: `/pages2/usercenter/add-user/index`,
+  const chooseAliAppPay = useCallback(
+    async (tradeNO: string) => {
+      const { tradePay } = require('remax/ali');
+      const result = await tradePay({
+        tradeNO,
+      });
+      if (result.resultCode === '9000') {
+        showToast({
+          title: '支付成功!',
+          icon: 'success',
+        }).then(() => {
+          if (deptName?.includes('核酸检测')) {
+            monitor.api({
+              api: '核酸检测预约',
+              success: true,
+              c1: 'taSR_YL',
+              time: 200,
             });
+          }
+          reLaunch({
+            url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
+          });
+          return;
+        });
+      } else if (result.resultCode === '6001') {
+        // 取消支付
+        showToast({
+          title: '取消支付!',
+          icon: 'fail',
+        });
+        setPaydisabled2(false);
+        setPaydisabled(false);
+      } else {
+        // 支付失败
+        showToast({
+          title: '支付失败，请稍后重试!',
+          icon: 'fail',
+        }).then(() => navigateBack());
+      }
+    },
+    [bizType, deptName, orderId],
+  );
+  const handlePay = useCallback(async () => {
+    setPaydisabled2(true);
+    setPaydisabled(true);
+    if (PLATFORM === 'web') {
+      window.location.href = h5PayUrl;
+      return;
+    }
+    const { data, code, msg } = await payRequest({
+      orderId: payOrderId,
+    });
+    if (code === 0) {
+      if (PLATFORM === 'wehcat' && data?.paySign) {
+        chooseWechatAppPay(data);
+      }
+      if (PLATFORM === 'ali' && data?.alipayTradeNo) {
+        chooseAliAppPay(data?.alipayTradeNo);
+      }
+    } else {
+      showToast({
+        title: msg || '支付下单失败，请稍后重试',
+        icon: 'fail',
+      });
+      setPaydisabled2(false);
+      setPaydisabled(false);
+    }
+  }, [chooseAliAppPay, chooseWechatAppPay, h5PayUrl, payOrderId, payRequest]);
+  const hanldeMedInsurePay = useCallback(async () => {
+    setPaydisabled2(true);
+    setPaydisabled(true);
+    storage.set(
+      'medinsurePayOrderInfo',
+      JSON.stringify({
+        deptName,
+        doctorName,
+        doctorTitle,
+        patCardNo,
+        hisName,
+        registerTime,
+        patientName,
+        patientFullIdNo,
+        bizType,
+        totalFee,
+        orderId,
+        payOrderId,
+        extFields,
+        h5PayUrl,
+      }),
+    );
+    try {
+      if (PLATFORM === 'ali') {
+        const aliPayReqBizNo = `${payOrderId}${new Date().getTime()}`;
+        storage.set('aliPayReqBizNo', aliPayReqBizNo);
+        const { code, data, msg } = await aliPayRequest({
+          reqBizNo: aliPayReqBizNo,
+          totalAmount: String(totalFee),
+          callUrl: `alipays://platformapi/startapp?appId=${APPID}&page=pages/medical/order-item/index`,
+          bizChannel: 'insuranceAliPay',
+        });
+        if (code === 0 && data?.authUrl) {
+          navigateToAlipayPage({
+            path: encodeURI(data.authUrl),
+          });
+        } else {
+          showToast({
+            icon: 'fail',
+            title: msg || '医保授权链接返回失败',
           });
         }
-      });
+      }
+      if (getBrowserUa() === 'wechat') {
+        const { code, msg, data } = await wechatPayRequest({
+          callUrl: encodeURIComponent(
+            `${window?.location?.origin}${window?.location?.pathname}#/pages/medical/order-item/index`,
+          ),
+          bizChannel: 'insuranceWxPay',
+        });
+        if (code === 0 && data?.authUrl) {
+          window.location.href = data.authUrl;
+        } else {
+          showToast({
+            icon: 'fail',
+            title: msg || '医保授权链接返回失败',
+          });
+        }
+      }
+    } finally {
+      setPaydisabled2(false);
+      setPaydisabled(false);
     }
+  }, [
+    aliPayRequest,
+    bizType,
+    deptName,
+    doctorName,
+    doctorTitle,
+    extFields,
+    h5PayUrl,
+    hisName,
+    orderId,
+    patCardNo,
+    patientFullIdNo,
+    patientName,
+    payOrderId,
+    registerTime,
+    totalFee,
+    wechatPayRequest,
+  ]);
+  usePageEvent('onShow', async () => {
     setNavigationBar({
-      title: '核酸检测',
+      title: '收银台',
     });
+    // const medinsurePayOrderInfo = storage.get('medinsurePayOrderInfo');
+    // if (medinsurePayOrderInfo && !payOrderId) {
+    //   setOrderInfo(JSON.parse(medinsurePayOrderInfo) as OrderInfoType);
+    // }
+    // if (!medinsurePayOrderInfo && !payOrderId) {
+    //   showToast({
+    //     icon: 'fail',
+    //     title: '支付数据丢失, 请重新下单!',
+    //   }).then(() => {
+    //     reLaunchUrl('/pages/home/index');
+    //   });
+    //   return;
+    // }
+    // if (mode === 'medical' && config.showMedicalModal) {
+    //   showModal({
+    //     title: '提示',
+    //     content: '医保移动支付仅支持患者本人电子医保凭证使用!',
+    //     showCancel: false,
+    //     confirmText: '我知道了',
+    //   });
+    // }
+    // if (bizType === 'YYGH' || bizType === 'DBGH') {
+    //   const { data } = await useRegisterApi.查询挂号订单详情.request({
+    //     orderId,
+    //   });
+    //   if (data?.leftPayTime > 0) {
+    //     setCountdown(data.leftPayTime).then(() => {
+    //       setPaydisabled(true);
+    //     });
+    //   } else {
+    //     setCountdown(0);
+    //     setPaydisabled(true);
+    //   }
+    // }
   });
+  useEffect(() => {
+    return () => {
+      clearCountdownTimer();
+    };
+  }, [clearCountdownTimer]);
   return (
-    <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
-      <Mask
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-      >
-        <Space vertical className={styles.calendar}>
-          <Space justify="space-between" className={styles.calendarWrap}>
-            <ColorText fontWeight={600}>日期选择</ColorText>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/close.png`}
-              className={styles.calendarImg}
-              onTap={() => {
-                setShow(false);
-              }}
-            />
-          </Space>
-          <Calendar
-            listEndDay={dayjs().add(1, 'month')}
-            onChange={(
-              day:
-                | dayjs.Dayjs
-                | [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined],
-            ) => {
-              if (!Array.isArray(day)) {
-                setSelectDate(dayjs(day).format('YYYY-MM-DD'));
-                setShow(false);
-              }
-            }}
-          />
-        </Space>
-      </Mask>
-
-      <Space className={styles.top} alignItems="flex-start">
-        <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
-          <View>核酸检测</View>
-        </Space>
-      </Space>
-      <Space className={styles.content} vertical>
-        <Space
-          className={styles.comboUser}
-          justify="space-around"
-          alignItems="center"
-        >
-          <Space
-            vertical
-            size={20}
-            onTap={() =>
-              redirectTo({
-                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/nucleic/select-combo/index',
-              })
-            }
-            className={styles.comboUserWrap}
+    <View
+      className={classNames(styles.page, {
+        // [styles.elderly]: elderly,
+      })}
+    >
+      {countdown > 0 && (
+        <View className={styles.tips}>
+          请在 {date2hour(countdown * 1000)} 内完成支付
+        </View>
+      )}
+      <View className={styles.content}>
+        <View className={styles.cards}>
+          <Shadow
+            card
+            // card={!elderly}
           >
             <Space
-              className={styles.userName}
+              vertical
               justify="center"
               alignItems="center"
+              className={styles['pay-price']}
             >
-              {defaultPatientInfo.patientName || '暂无'}
-              <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
+              <View className={styles['pay-price-title']}>支付金额(元)</View>
+              <Price
+                payFee={Number(totalFee)}
+                // elderly={elderly}
               />
             </Space>
-            <View className={styles.userText}>切换当前就诊人</View>
-          </Space>
-          <Space
-            vertical
-            size={20}
-            // onTap={() => {
-            //   setShow(true);
-            // }}
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {selectDate}
-              {/* <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              /> */}
-            </Space>
-            <View className={styles.userText}>预约核酸检测时间</View>
-          </Space>
-        </Space>
-        <View className={styles.box}>
-          <View className={styles.popTitle}>温馨提示：</View>
-          <View className={styles.popText}>
-            核酸采集点工作时间：周一、周四上午8:00-12:00；
-            号源每日08:00更新，如有需求，请提前预约。
-          </View>
+          </Shadow>
         </View>
-        {data?.data?.items?.length > 0 ? (
-          <>
-            {data?.data?.items.map((item: NucleType) => {
-              const { nucleicName } = item;
-              return (
-                <Space
-                  className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
-                  })}
-                  key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
-                  vertical
-                  // size={30}
-                  // ignoreNum={4}
-                  justify="center"
-                >
-                  {resourceId === item.resourceId && (
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/active.png`}
-                      className={styles.activeImg}
-                    />
-                  )}
-                  <Exceed className={styles.nucleicName}>
-                    {item.nucleicName}
-                  </Exceed>
-                  <Space alignItems="center" className={styles.regFee}>
-                    <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
-                  </Space>
-                  <View className={styles.solid} />
+        <View className={styles.items}>
+          {columns.map(
+            (item, i) =>
+              item.key && (
+                <ListItem
+                  key={i}
+                  label={item.title}
+                  text={item.key}
+                  // elderly={elderly}
+                />
+              ),
+          )}
 
-                  <Space alignItems="center" className={styles.itemText}>
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/wh.png`}
-                      className={styles.whImg}
-                    />
-                    <View>
-                      {nucleicName.includes('黄码') && (
-                        <ColorText>健康码状态为无码、黄码人员</ColorText>
-                      )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
-                          '核酸检测（出租网约车免费）（绿码）',
-                        )) &&
-                        '新型冠状病毒核酸检测（混采10:1）'}
+          <View className={styles.dotted} />
+          {columns2.map((item, i) => (
+            <ListItem
+              key={i}
+              label={item.title}
+              text={item.key}
+              // elderly={elderly}
+            />
+          ))}
+        </View>
+      </View>
+      <View className={styles.buttons}>
+        {mode === 'medical' &&
+          hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 &&
+          getBrowserUa() === 'wechat' && (
+            <Button
+              type="primary"
+              className={styles.medInsureBtn}
+              onTap={hanldeMedInsurePay}
+              disabled={payDisabled2 || payLoading}
+              loading={wechatPayLoading}
+            >
+              医保移动支付
+            </Button>
+          )}
 
-                      {nucleicName.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
-                    </View>
-                  </Space>
-                  {/*<Image*/}
-                  {/*  className={styles.nucleImg}*/}
-                  {/*  src={*/}
-                  {/*    nucleicName.includes('核酸检测（混检）（绿码')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/lm.png`*/}
-                  {/*      : nucleicName.includes('核酸检测（黄码/无码）')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/hmwm.png`*/}
-                  {/*      : nucleicName.includes(*/}
-                  {/*          '核酸检测（出租网约车免费）（绿码）',*/}
-                  {/*        )*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/czclm.png`*/}
-                  {/*      : `${IMAGE_DOMIN}/nucleic/czchm.png`*/}
-                  {/*  }*/}
-                  {/*/>*/}
-                </Space>
-              );
-            })}
+        {mode === 'medical' &&
+          hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
+          PLATFORM === 'ali' && (
+            <Button
+              type="primary"
+              className={classNames(styles.medInsureBtn, {
+                [styles.disabled]:
+                  decrypt(userInfoData?.data?.aliPayCertNo || '') !==
+                  patientFullIdNo,
+              })}
+              onTap={() => {
+                if (
+                  decrypt(userInfoData?.data?.aliPayCertNo || '') !==
+                  patientFullIdNo
+                ) {
+                  showToast({
+                    duration: 1000,
+                    icon: 'none',
+                    title: '非本人暂不支持医保在线支付',
+                  });
+                } else {
+                  hanldeMedInsurePay();
+                }
+              }}
+              disabled={payDisabled2 || payLoading}
+              loading={aliPayLoading}
+            >
+              医保移动支付
+            </Button>
+          )}
 
-            <Space className={styles.tip}>
-              <ColorText>*</ColorText>
-              <View> 我院提供绿码核酸单检服务</View>
-            </Space>
-          </>
-        ) : (
-          <NoData />
+        {hidden !== '1' && (
+          <Button
+            type="primary"
+            onTap={useLockFn(handlePay)}
+            disabled={payDisabled}
+            loading={payLoading}
+          >
+            {mode === 'medical' ? '自费支付' : '立即支付'}
+          </Button>
         )}
-      </Space>
-      <Space className={styles.footer}>
-        <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>{!!resourceId ? '1' : '0'}</ColorText>个项目
-        </Space>
-        <Button
-          className={styles.button}
-          type="primary"
-          disabled={
-            data?.data?.item?.length === 0 ||
-            !resourceId ||
-            !defaultPatientInfo.patientName
-          }
-          onTap={(e) => {
-            e.stopPropagation();
-
-            const selectNucle = data?.data?.items?.filter(
-              (item: NucleType) => item.resourceId === resourceId,
-            );
-            if (selectNucle?.[0]?.nucleicName) {
-              const { nucleicName, endTime, startTime, resourceId, regFee } =
-                selectNucle[0];
-              navigateTo({
-                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-              });
-            }
-          }}
-        >
-          下一步
-        </Button>
-      </Space>
+      </View>
+      <Tip
+        style={{ marginTop: '160px', marginLeft: '20px' }}
+        items={[
+          <View key={'tip'} className={styles.tipText}>
+            1.目前仅支持自费会诊
+          </View>,
+          <View key={'tip'} className={styles.tipText}>
+            1.目前仅支持自费会诊
+          </View>,
+          <View key={'tip'} className={styles.tipText}>
+            1.目前仅支持自费会诊
+          </View>,
+        ]}
+      />
     </View>
   );
 };

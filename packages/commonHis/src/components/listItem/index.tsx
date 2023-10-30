@@ -8,11 +8,13 @@ export default ({
   text,
   elderly,
   className,
+  aligin,
 }: {
   label?: string;
   text?: string | ReactNode;
   elderly?: boolean;
   className?: string;
+  aligin?: string;
 }) => {
   return (
     <Space
@@ -29,7 +31,9 @@ export default ({
         colon
         labelWidth={'4em'}
       />
-      <Space style={{ flexWrap: 'wrap', width: '100%' }}>
+      <Space
+        style={{ flexWrap: 'wrap', width: '100%', justifyContent: aligin }}
+      >
         <Exceed className={(classNames(styles.text), className)}>
           {text || '暂无'}
         </Exceed>
