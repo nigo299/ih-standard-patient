@@ -1,9 +1,12 @@
 import React from 'react';
-import { View, Image, Text } from 'remax/one';
+import { View, Image, Text, navigateTo } from 'remax/one';
 import { Shadow, Space, Exceed, Price, Button } from '@kqinfo/ui';
 import userSrc from '../assets/images/user.png';
 import styles from './index.less';
 const ListItem: React.FC = () => {
+  const handleTap = () => {
+    navigateTo({ url: '/pages4/booking/team/detail' });
+  };
   return (
     <Shadow>
       <View className={styles.box}>
@@ -31,7 +34,12 @@ const ListItem: React.FC = () => {
               }}
             >
               <Text className={styles.commonColor}> ￥{300}/次</Text>
-              <Button type={'primary'} block={false} size="small">
+              <Button
+                type={'primary'}
+                block={false}
+                size="small"
+                onTap={() => handleTap()}
+              >
                 预约会诊
               </Button>
             </View>

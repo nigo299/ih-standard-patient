@@ -61,22 +61,6 @@ export default () => {
     data?.data?.items?.[0]?.resourceId || '',
   );
   usePageEvent('onShow', async () => {
-    // request();
-    // if (!defaultPatientInfo?.patientName) {
-    //   getPatientList(false).then((res) => {
-    //     if (res.length === 0) {
-    //       showToast({
-    //         title: '请先添加就诊人!',
-    //         icon: 'none',
-    //         mask: true,
-    //       }).then(() => {
-    //         navigateTo({
-    //           url: `/pages2/usercenter/add-user/index`,
-    //         });
-    //       });
-    //     }
-    //   });
-    // }
     setNavigationBar({
       title: '多学科门诊',
     });
