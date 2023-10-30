@@ -1,0 +1,20 @@
+.wrap{
+  position: relative;
+  width:100px;
+font-size: 28px;
+font-family: PingFang SC;
+font-weight: 400;
+color: #666666;
+padding-right:30px;
+display:flex;
+align-items: center;
+justify-content: space-between;
+margin-right:10px;
+  &::after{
+    content:':';
+    position: absolute;
+    right:0;
+    top:50%;
+    transform: translateY(-50%);
+  }
+}
