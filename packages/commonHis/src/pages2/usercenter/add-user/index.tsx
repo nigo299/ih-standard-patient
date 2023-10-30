@@ -146,7 +146,6 @@ export default memo(() => {
             icon: 'none',
             title: '无建档信息，请建档',
           });
-
           if (values['idType'] === '1') {
             setChecked(false);
             const { analyzeAge, analyzeBirth, analyzeSex } = analyzeIDCard(
@@ -155,13 +154,20 @@ export default memo(() => {
             if (analyzeAge >= bindcardProdiles?.childrenMaxAge) {
               form.setFieldsValue({
                 checked: false,
+                birthday: analyzeBirth,
+                patientSex: analyzeSex,
+                patientName: values['patientName'],
+                idNo: values['idNo'],
               });
             } else {
+              console.log('values', values);
               form.setFieldsValue({
                 checked: false,
                 birthday: analyzeBirth,
                 patientSex: analyzeSex,
                 patientType: '1',
+                patientName: 'xxxx',
+                idNo: '123333',
               });
             }
           } else {
@@ -172,6 +178,7 @@ export default memo(() => {
           }
           return;
         }
+        return;
         const options = data?.map((x: HisCardType) => ({
           value: x.patCardNo,
           label: `就诊卡-${x.patCardNo}`,
