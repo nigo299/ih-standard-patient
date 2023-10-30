@@ -117,6 +117,24 @@ const subPackages = [
       // 'queue/index', // 排队进度
     ],
   },
+  //线下MDT
+  {
+    root: 'pages4',
+    pages: [
+      'home/index', // MDT首页
+      'booking/team/index', //MDT预约团队
+      'booking/team/detail', //MDT预约团队详情
+      'booking/team/expert', //MDT预约医生
+      'booking/schedule/index', //MDT预约排班
+      'booking/agreement/index', //MDT预约协议
+      'booking/confirm/index', //MDT预约确认
+      'cash/index', //MDT收银台
+      'dataUpload/index', //MDT资料上传
+      'apply/index', //MDT申请
+      'bookRecords/index', //MDT预约记录
+      'bookRecords/detail', //MDT预约记录详情
+    ],
+  },
 ];
 
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
