@@ -8,9 +8,10 @@ import { PatientType } from '@/apis/usercenter';
 import patientState from '@/stores/patient';
 import { QrCodeModal, Tip } from '@/components';
 import { IDTYPES, THEME_COLOR2 } from '@/config/constant';
-import styles from './index.less';
-
+import styles from '@/pages2/usercenter/user-list/index.less';
+import { useHisConfig } from '@/hooks';
 export default memo(() => {
+  const { config } = useHisConfig();
   const { pageRoute } = useGetParams<{
     pageRoute: string;
   }>();
@@ -65,7 +66,7 @@ export default memo(() => {
               />
             </Space>
             <View className={styles['card__subtitle']}>
-              NO.{patient?.patCardNo}
+              NO.{patient?.[config?.patCardNoValue]}
             </View>
             <Space justify="space-between" alignItems="flex-end">
               <Space vertical>

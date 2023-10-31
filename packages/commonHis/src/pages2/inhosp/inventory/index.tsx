@@ -10,7 +10,10 @@ import styles from './index.less';
 import reportCmPV from '@/alipaylog/reportCmPV';
 import useGetParams from '@/utils/useGetParams';
 import { PatGender } from '@/config/dict';
-import useGetExpensesDayDetailExtFields from '@/pages2/inhosp/inventory/hooks/useGetExpensesDayDetailExtFields';
+import {
+  useGetExpensesDayDetailExtFields,
+  defaultExpensesDayCheckDate,
+} from '@/pages2/inhosp/inventory/hooks/useGetExpensesDayDetailExtFields';
 import { getPatientAge } from '@/utils';
 
 export default () => {
@@ -23,7 +26,7 @@ export default () => {
     },
     needInit: !!patientId,
   });
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const [selectDate, setSelectDate] = useState(defaultExpensesDayCheckDate);
 
   const extFields = useGetExpensesDayDetailExtFields({ liveData });
 

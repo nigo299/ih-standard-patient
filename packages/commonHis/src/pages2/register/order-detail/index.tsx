@@ -141,7 +141,7 @@ export default () => {
     },
     {
       label: '就诊卡号',
-      text: orderDetail?.patCardNo,
+      text: orderDetail?.[config?.patCardNoValue],
     },
   ];
 
@@ -309,7 +309,7 @@ export default () => {
   );
   const cancelRegisterPay = useCallback(
     async (payAuthNo?: string, cancelValStorage?: string) => {
-      if (!cancelVal && !cancelValStorage) {
+      if ((!cancelVal || cancelVal === 'undefined') && !cancelValStorage) {
         showToast({
           title: '请选择取消原因!',
         });
@@ -483,6 +483,14 @@ export default () => {
   usePageEvent('onHide', () => {
     clearCountdownTimer();
   });
+
+  const orderStatusName = useMemo(() => {
+    if (orderDetail?.status === 'S') {
+      if (orderDetail?.bizName === '预约挂号') return '预约成功';
+      return '挂号成功';
+    }
+    return orderDetail?.statusName;
+  }, [orderDetail]);
   return (
     <View className={styles.wrap}>
       {loading && (
@@ -525,7 +533,7 @@ export default () => {
               alignItems={'center'}
               justify={'space-between'}
             >
-              {orderDetail?.statusName}
+              {orderStatusName}
               {(orderDetail?.status === 'F' || orderDetail?.status === 'C') && (
                 <CustomerReported
                   whereShowCode={
@@ -538,7 +546,7 @@ export default () => {
           <View className={styles.statusInfo}>
             {orderDetail?.status === 'S' &&
               `${registerSuccessTips}
-              就诊卡号：${orderDetail?.patCardNo}`}
+              就诊卡号：${orderDetail?.[config?.patCardNoValue]}`}
             {orderDetail?.status === 'L' &&
               '请在锁号的时候内完成支付，否则将取消号源'}
             {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}

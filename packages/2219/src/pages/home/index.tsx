@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -48,7 +48,6 @@ export interface NavType {
 }
 
 export default () => {
-  console.log(isDev, 'isDev');
   console.log(process.env.REMAX_APP_PLATFORM, 'process.env.REMAX_APP_PLATFORM');
   const {
     defaultPatientInfo: { patientId },
@@ -175,13 +174,13 @@ export default () => {
       image: `${IMAGE_DOMIN}/home/zyfw.png`,
       titleColor: '#3990E9',
     },
-    {
-      title: '核酸检测',
-      subTitle: '快速核酸检测开单',
-      url: '/pages2/nucleic/select-combo/index?type=1',
-      image: `${IMAGE_DOMIN}/home/hsjc.png`,
-      titleColor: '#2EBDC7',
-    },
+    // {
+    //   title: '核酸检测',
+    //   subTitle: '快速核酸检测开单',
+    //   url: '/pages2/nucleic/select-combo/index?type=1',
+    //   image: `${IMAGE_DOMIN}/home/hsjc.png`,
+    //   titleColor: '#2EBDC7',
+    // },
   ];
 
   const homeCardNavConfig = useMemo(() => {
@@ -364,9 +363,10 @@ export default () => {
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
-
+    if (PLATFORM === 'web') {
+      window.location.href =
+        'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
+    }
     showTabBar();
     setPageStyle({
       overflow: 'inherit',
@@ -376,10 +376,6 @@ export default () => {
       title: HOSPITAL_NAME,
     });
   });
-  useEffect(() => {
-    window.location.href =
-      'https://ihs.cqkqinfo.com/patients/p2219/#/home/indexNew';
-  }, []);
 
   // useEffect(() => {
   //   hideTabBar();

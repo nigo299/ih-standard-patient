@@ -39,8 +39,10 @@ import { MedicalPayType } from '@/apis/register';
 import storage from '@/utils/storage';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import { PatGender } from '@/config/dict';
+import { useHisConfig } from '@/hooks';
 
 export default () => {
+  const { config } = useHisConfig();
   const { orderId } = useGetParams<{ orderId: string }>();
   const {
     data: { data: orderDetail },
@@ -332,7 +334,7 @@ export default () => {
           payName="payment"
           hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
           healthCardNo={jkkInfo?.healthCardId}
-          patCardNo={orderDetail?.patCardNo}
+          patCardNo={orderDetail?.[config?.patCardNoValue]}
         />
       )}
 

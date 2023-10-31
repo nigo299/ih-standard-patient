@@ -13,8 +13,8 @@ const pages = [
   'pages/auth/getuserinfo/index', // 授权登陆页
   'pages/auth/agreement/index', // 用户授权协议
   'pages/auth/login/index', // 登录注册页
-  // 'pages/medical/order-item/index', // 医保费用确认支付以及明细
-  // 'pages/medical/order-detail/index', // 医保支付详情
+  'pages/medical/order-item/index', // 医保费用确认支付以及明细
+  'pages/medical/order-detail/index', // 医保支付详情
   'pages/pay/index', // 收银台
   'pages/waiting/index', // 支付结果等待页
   'pages/webview/index', // 第三方业务链接
@@ -80,8 +80,8 @@ const subPackages = [
       // 'nucleic/select-combo/index', // 自助核酸检测选择套餐
       // 'nucleic/upload/index', // 网约出租车核酸上传图片
       // 'nucleic/confirm/index', // 自助核酸检测确认订单
-      // 'cloudFlashPay/order-list/index', // 云闪付门诊待缴费列表
-      // 'cloudFlashPay/order-detail/index', // 云闪付门门诊缴费订单详情
+      'cloudFlashPay/order-list/index', // 云闪付门诊待缴费列表
+      'cloudFlashPay/order-detail/index', // 云闪付门门诊缴费订单详情
     ],
   },
   {

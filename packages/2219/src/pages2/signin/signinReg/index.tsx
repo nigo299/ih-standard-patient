@@ -111,11 +111,12 @@ export default () => {
       let res: any;
       if (signinType) {
         console.log(beaconsRef.current, 'beaconsRef.current');
-        if (!beaconsRef.current.length) {
-          return;
-        }
+        // if (!beaconsRef.current.length) {
+        //   return;
+        // }
+        console.log('在执行');
         params = {
-          blueTooth: {
+          blueTooth: JSON.stringify({
             sectionName: signIn.hospitalCode, // 院区名称（bb,sqs）,
             deptName: signIn.deptName,
             // deptName: '签到围栏',
@@ -128,8 +129,8 @@ export default () => {
               { value: '1918FC80B1113441A9ACB1001C2FE510', key: '0000' },
               { value: 'FDA50693A4E24FB1AFCFC6EB07647825', key: '0001' },
             ],
-          },
-          signIn,
+          }),
+          signIn: JSON.stringify(signIn),
           hisOrdNum: signIn.hisOrdNum,
           // dev: '1',
         };

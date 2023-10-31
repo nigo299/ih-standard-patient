@@ -7,16 +7,16 @@ export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选�
 export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
-    : PLATFORM === 'web'
+    : PLATFORM === 'web' || PLATFORM === 'ali'
     ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
+    : 'https://tihs.cqkqinfo.com/patients/p2219-his/images'
 }`;
 export const HOSPITAL_NAME = '重庆医科大学附属口腔医院';
 export const HOSPITAL_TEL = '023-88860111';
 export const HIS_ID = '2219';
 export const REQUEST_QUERY = {
   hisId: HIS_ID,
-  platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}01`,
+  platformId: PLATFORM === 'ali' ? `${HIS_ID}04` : `${HIS_ID}01`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10
@@ -115,3 +115,16 @@ export const specialDepts = [
   deptChildrenRanJiaBa,
   deptChildrenShangQingSi,
 ].flatMap((deptChildren) => deptChildren.map((dept) => dept.no));
+
+// 报告查询tabs
+export const reportCheckTabs =
+  PLATFORM === 'web'
+    ? [
+        { content: '检验报告', index: 1 },
+        { content: '检查报告', index: 2 },
+        { content: '检查影像', index: 3 },
+      ]
+    : [
+        { content: '检验报告', index: 1 },
+        { content: '检查报告', index: 2 },
+      ];

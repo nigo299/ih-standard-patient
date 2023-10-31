@@ -99,6 +99,7 @@ export default () => {
       const selectItem =
         originalList?.find((item) => selectList.includes(item.hisOrderNo)) ||
         ({} as WaitpayType);
+
       if (
         !selectItem?.patientInfo?.encryptIdNo &&
         !selectItem?.patientInfo?.patientName &&
@@ -138,7 +139,7 @@ export default () => {
               extFields: JSON.stringify({
                 idNo: storage.get('idNo'),
               }),
-              hisOrderNo: newHisOrdNums?.split(',')?.[0],
+              hisOrderNo: newHisOrdNums,
             }
           : params;
       const { code, data, msg } = await useApi.创建门诊缴费订单.request(
@@ -291,10 +292,10 @@ export default () => {
       //遍历取出所有
       waitPayList?.[0].list.forEach((listItem) => {
         //判断勾选当天所有的处方
-        const isToday = dayjs(listItem?.date)?.isSame(dayjs(), 'day');
-        if (isToday) {
-          WaitPayHisOrderNoArrs.push(listItem?.hisOrderNo);
-        }
+        // const isToday = dayjs(listItem?.date)?.isSame(dayjs(), 'day');
+        // if (isToday) {
+        WaitPayHisOrderNoArrs.push(listItem?.hisOrderNo);
+        // }
       });
       setSelectList(WaitPayHisOrderNoArrs);
     } else if (data?.length === 0) {

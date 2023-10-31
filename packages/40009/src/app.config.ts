@@ -65,10 +65,10 @@ const subPackages = [
       'usercenter/revise-user-address/index', // 修改就诊人地址
       'usercenter/ocr-recognition/index', // OCR识别
       'usercenter/face-verify/index', // 人脸识别验证
-      // 'signin/chooseType/index', // 签到选择类型页面
-      // 'signin/search/index', // 签到查询就诊人页面
-      // 'signin/list/index', // 签到列表页面
-      // 'signin/detail/index', // 签到详情页面
+      'signin/chooseType/index', // 签到选择类型页面
+      'signin/search/index', // 签到查询就诊人页面
+      'signin/list/index', // 签到列表页面
+      'signin/detail/index', // 签到详情页面
       'feedback/feedback-list/index', // 意见反馈列表
       'feedback/feedback-detail/index', // 意见反馈详情
       'feedback/feedback-add/index', // 新增意见反馈
@@ -115,6 +115,24 @@ const subPackages = [
       // 'register/history-depts/index', // 历史科室记录
       // 'register/history-doctors/index', // 历史医生记录
       // 'queue/index', // 排队进度
+    ],
+  },
+  //线下MDT
+  {
+    root: 'pages4',
+    pages: [
+      'home/index', // MDT首页
+      'booking/team/index', //MDT预约团队
+      'booking/team/detail', //MDT预约团队详情
+      'booking/team/expert', //MDT预约医生
+      'booking/schedule/index', //MDT预约排班
+      'booking/agreement/index', //MDT预约协议
+      'booking/confirm/index', //MDT预约确认
+      'cash/index', //MDT收银台
+      'dataUpload/index', //MDT资料上传
+      'apply/index', //MDT申请
+      'bookRecords/index', //MDT预约记录
+      'bookRecords/detail', //MDT预约记录详情
     ],
   },
 ];

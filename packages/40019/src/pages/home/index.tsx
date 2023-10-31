@@ -195,7 +195,6 @@ export default () => {
             subTitle: '医院信息门户',
             url: '/pages/microsite/home/index',
             image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
           },
           {
             title: '来院导航',
@@ -207,6 +206,7 @@ export default () => {
           {
             title: '健康宣教',
             subTitle: '',
+            patientId: true,
             image: `${IMAGE_DOMIN}/home/jkxj.png`,
             url: '/pages/microsite/hospital-article/index?type=156&title=%E5%81%A5%E5%BA%B7%E5%AE%A3%E6%95%99',
           },
@@ -238,7 +238,6 @@ export default () => {
             subTitle: '医院信息门户',
             url: '/pages/microsite/home/index',
             image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
           },
           // {
           //   title: '核酸检测',

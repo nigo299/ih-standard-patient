@@ -20,6 +20,7 @@ import useGetParams from '@/utils/useGetParams';
 import dayjs from 'dayjs';
 import { PatGender } from '@/config/dict';
 import { getPatientAge } from '@/utils';
+import qs from 'qs';
 
 export default () => {
   const { patHisNo } = useGetParams<{ patHisNo: string }>();
@@ -202,18 +203,22 @@ export default () => {
                         type="primary"
                         className={styles.lookBtn}
                         onTap={() => {
-                          const {
-                            recordId,
-                            patName,
-                            recordType,
-                            visitDate,
-                            deptName,
-                            doctorName,
-                          } = item;
-                          const sex = resultData?.patSex;
-                          const age = resultData?.patAge;
+                          const params = {
+                            visitId: item?.recordId,
+                            patientName: item?.patName,
+                            type: item?.recordType,
+                            inDate: item?.visitDate,
+                            deptName: item?.deptName,
+                            doctorName: item?.doctorName,
+                            patCardNo: item?.patCardNo,
+                            patHisNo,
+                            sex: resultData?.patSex,
+                            age: resultData?.patAge,
+                          };
                           navigateTo({
-                            url: `/pages2/diagnosis/order-detail/index?type=${recordType}&visitId=${recordId}&patHisNo=${patHisNo}&inDate=${visitDate}&deptName=${deptName}&doctorName=${doctorName}&sex=${sex}&age=${age}&patientName=${patName}`,
+                            url: `/pages2/diagnosis/order-detail/index?${qs.stringify(
+                              params,
+                            )}`,
                           });
                         }}
                       >

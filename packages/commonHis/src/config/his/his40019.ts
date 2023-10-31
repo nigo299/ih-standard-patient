@@ -7,6 +7,7 @@ export default class His40011 extends HisBase {
       defaultAddress: '重庆市-市辖区-梁平区',
       clinicPayBatchType: 'JOINT',
       isShowOutPayDetails: true,
+      isPaymentDefaultSelectAll: true,
     });
   }
 }

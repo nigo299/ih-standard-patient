@@ -125,7 +125,7 @@ export default () => {
               extFields: JSON.stringify({
                 idNo: storage.get('idNo'),
               }),
-              hisOrderNo: newHisOrdNums?.split(',')?.[0],
+              hisOrderNo: newHisOrdNums,
             }
           : params;
       const { code, data, msg } = await useApi.创建门诊缴费订单.request(
@@ -295,7 +295,7 @@ export default () => {
       });
     if (code === 0 && data?.length >= 1) {
       setWaitOpList(data);
-      if (PAYMENT_SELECTALL_PAY) {
+      if (config.isPaymentDefaultSelectAll) {
         setSelectList(data?.map((item) => item.hisOrderNo));
       } else {
         setSelectList([data[0].hisOrderNo]);

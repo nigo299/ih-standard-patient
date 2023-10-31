@@ -179,8 +179,8 @@ export default memo(() => {
           return;
         }
         const options = data?.map((x: HisCardType) => ({
-          value: x.patCardNo,
-          label: `就诊卡-${x.patCardNo}`,
+          value: x?.[config.patCardNoValue],
+          label: `就诊卡-${x?.[config.patCardNoValue]}`,
           patientMobile: decrypt(x?.encryptPatientMobile) || user?.phone || '',
           idNo: x?.idNo,
           address: x.patientAddress || '暂无',

@@ -34,22 +34,22 @@ export default () => {
     regsiterState.useContainer();
   const handleSelect = useCallback(
     ({ children: dept, name }: { children: DeptType[]; name: string }) => {
-      if (name === '附三院口腔门诊部') {
+      if (name === '附三院门诊') {
         showToast({
-          title: '即将为你跳转至“重庆医科大学附属第三医院”预约挂号系统。',
+          title: '即将为你跳转至“附三院门诊部”预约挂号系统。',
           icon: 'success',
         }).then(() => {
           window.location.href =
             'https://m.hsyuntai.com/med/hp/hospitals/100039/hos/registration/departmentDetails/2//1315922/?deptName=%E5%8F%A3%E8%85%94%E7%A7%91';
         });
         return;
-      } else if (name === '附属大学城医院口腔门诊部') {
+      } else if (name === '大学城门诊') {
         showToast({
-          title: '即将为你跳转至““重庆医科大学附属大学城医院”预约挂号系统。',
+          title: '即将为你跳转至“大学城门诊部”预约挂号系统。',
           icon: 'success',
         }).then(() => {
           window.location.href =
-            'https://appsp.zcareze.com/appsp/h5/authorize?appid=wx5da34ab726d31047&authType=0&authMode=userinfo&address=page%3DnewRegistration%2FwithCode%2F11%2F7%2F006%2F%2F%2F%2F%2F%2F%2F';
+            'https://appsp.zcareze.com/appsp/h5/authorize?appid=wx5da34ab726d31047&authType=0&authMode=userinfo&address=page%3DnewRegistration%2FwithCode%2F11%2F7%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2Fhandle';
         });
 
         return;

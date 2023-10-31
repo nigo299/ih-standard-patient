@@ -53,12 +53,12 @@ export default () => {
       url: '/pages2/register/department/index?type=current-day',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
     },
-    {
-      title: '核酸检测',
-      subTitle: '在线预约核酸检测',
-      url: '/pages2/nucleic/select-combo/index',
-      image: `${IMAGE_DOMIN}/home/tjyy.png`,
-    },
+    // {
+    //   title: '核酸检测',
+    //   subTitle: '在线预约核酸检测',
+    //   url: '/pages2/nucleic/select-combo/index',
+    //   image: `${IMAGE_DOMIN}/home/tjyy.png`,
+    // },
     {
       title: '住院服务',
       subTitle: '住院患者贴心服务',
@@ -196,7 +196,7 @@ export default () => {
             </Space>
           ))}
         </Space>
-        <Space
+        {/* <Space
           justify="space-between"
           flexWrap="wrap"
           className={styles.subNav}
@@ -225,6 +225,72 @@ export default () => {
               </Space>
             </BackgroundImg>
           ))}
+        </Space> */}
+        <Space
+          justify="space-between"
+          flexWrap="wrap"
+          className={styles.newSubNav}
+        >
+          {
+            <BackgroundImg
+              key={homeSubNavConfig[0].title}
+              // img={nav.image}
+              className={styles.newSubNavImage}
+              onTap={() => {
+                if (homeSubNavConfig[0]?.open) {
+                  showToast({
+                    title: '功能暂未开放!',
+                    icon: 'none',
+                  });
+                  return;
+                }
+                navigateTo({
+                  url: homeSubNavConfig[0].url,
+                });
+              }}
+            >
+              <Space vertical className={styles.newSubNavWrap}>
+                <View className={styles.subNavTitle}>
+                  {homeSubNavConfig[0].title}
+                </View>
+                <View className={styles.subNavSubTitle}>
+                  {homeSubNavConfig[0].subTitle}
+                </View>
+                <View className={styles.imgBox}>
+                  <Image
+                    src={`${IMAGE_DOMIN}/home/gh.png`}
+                    className={styles.newImage}
+                  ></Image>
+                </View>
+              </Space>
+            </BackgroundImg>
+          }
+          {homeSubNavConfig
+            .filter((_, i) => i !== 0)
+            .map((nav) => (
+              <BackgroundImg
+                key={nav.title}
+                img={nav.image}
+                className={styles.subNavImage}
+                onTap={() => {
+                  if (nav?.open) {
+                    showToast({
+                      title: '功能暂未开放!',
+                      icon: 'none',
+                    });
+                    return;
+                  }
+                  navigateTo({
+                    url: nav.url,
+                  });
+                }}
+              >
+                <Space vertical className={styles.subNavWrap}>
+                  <View className={styles.subNavTitle}>{nav.title}</View>
+                  <View className={styles.subNavSubTitle}>{nav.subTitle}</View>
+                </Space>
+              </BackgroundImg>
+            ))}
         </Space>
         <Image
           src={`${IMAGE_DOMIN}/home/banner2.png`}

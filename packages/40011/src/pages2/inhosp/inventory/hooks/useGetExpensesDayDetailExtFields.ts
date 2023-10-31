@@ -1,9 +1,11 @@
 import { InhospPatientType } from '@/apis/inhosp';
+import dayjs from 'dayjs';
 
 interface HooksProps {
   liveData?: InhospPatientType;
 }
-
-export default ({ liveData }: HooksProps) => {
-  return liveData?.extFields;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const useGetExpensesDayDetailExtFields = (_: HooksProps) => {
+  return undefined;
 };
+export const defaultExpensesDayCheckDate = dayjs().format('YYYY-MM-DD');
