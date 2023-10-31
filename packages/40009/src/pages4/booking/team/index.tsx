@@ -24,7 +24,7 @@ import styles from './index.less';
 import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
 
-import ListItem from './components/listItem';
+import Item from './components/listItem';
 
 interface NucleType {
   deptId: string;
@@ -88,7 +88,7 @@ export default () => {
                 list: new Array(1000).fill('').map((v, i) => i),
               });
             }, [])}
-            renderItem={(item) => <ListItem key={item}></ListItem>}
+            renderItem={(item) => <Item key={item}></Item>}
           />
         </View>
       </View>

@@ -1,10 +1,16 @@
 @import '@/styles/index.less';
 
 .box {
-  padding: 20px;
+  padding: 0 20px;
   margin-bottom: 30px;
-  border-radius: 20px;
+
 }
+
+.itemBox {
+  border-radius: 20px;
+  padding: 20px;
+}
+
 .commonColor {
   color: @theme-color;
 }
@@ -88,4 +94,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-weight: 400;
+  font-size: 36px;
 }
