@@ -9,7 +9,7 @@ import {
 import { DeptDetailType } from '@/apis/microsite';
 import useApi from '@/apis/register';
 import { getCurrentPageUrl } from '@/utils';
-import { PLATFORM } from '@/config/constant';
+import { HIS_ID, PLATFORM } from "@/config/constant";
 
 export interface IProps {
   deptId: string;
@@ -95,7 +95,7 @@ export default createContainer(() => {
     }
     if (code === 0 && data?.length > 1) {
       console.log(pages, 'pages');
-      if (PLATFORM === 'ali') {
+      if (PLATFORM === 'ali' && HIS_ID === '2219') {
         const list = data.filter((item) => {
           return aliHospitalList.find((i) => item.name.includes(i));
         });
@@ -114,8 +114,8 @@ export default createContainer(() => {
         });
         return;
       }
-      navigateTo({
-        url: `/pages2/register/select-hospital/index?type=default`,
+      redirectTo({
+        url: `/pages2/register/select-hospital/index?type=${type}`,
       });
     }
   }, []);
