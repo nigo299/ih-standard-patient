@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Image, navigateTo, redirectTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -28,20 +28,6 @@ import ShowTitle from './components/showTitle';
 
 import userSrc from './assets/images/user.png';
 
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
 export default () => {
   const { type } = useGetParams<{ type: string }>();
   const { bottomHeight } = useSafeArea();
@@ -68,14 +54,24 @@ export default () => {
       title: '团队详情',
     });
   });
+
+  const handleExpertDetail = () => {
+    navigateTo({ url: '/pages4/booking/team/expert' });
+  };
+
+  const hanldeAffirmClose = () => {
+    AffirmSheet.hide();
+  };
+
   const handleTeamDetail = () => {
-    // setShow(true);
     AffirmSheet.show({
       title: (
         <View className={styles.affirmSheet_box}>
           <Text style={{ color: '#333' }}>团队成员</Text>
           {/* <Icon name={'kq-clear'} /> */}
-          <Text style={{ color: '#333' }}>X</Text>
+          <Text style={{ color: '#333' }} onTap={hanldeAffirmClose}>
+            X
+          </Text>
         </View>
       ),
       content: (
@@ -87,10 +83,7 @@ export default () => {
             return (
               <Space size={'10px'} key={i} className={styles.affirmSheet_item}>
                 <View>
-                  <Image
-                    src={userSrc}
-                    style={{ width: '60px', height: '60px' }}
-                  ></Image>
+                  <Image src={userSrc} className={styles.user_icon}></Image>
                 </View>
                 <View className={styles.doctor_desc}>
                   <View className={styles.doctor_gap}>
@@ -112,6 +105,7 @@ export default () => {
                     size="small"
                     block={false}
                     ghost
+                    onTap={() => handleExpertDetail()}
                   >
                     专家详情
                   </Button>
@@ -129,10 +123,7 @@ export default () => {
       {loading && <Loading type={'top'} />}
       <View>
         <Space className={styles.detail_top} size={'10px'}>
-          <Image
-            src={userSrc}
-            style={{ width: '100px', height: '100px' }}
-          ></Image>
+          <Image src={userSrc} className={styles.user_icon}></Image>
           <View className={styles.detail_top_right}>
             <Text className={styles.right_name}>肥胖和糖尿病代谢疾病MDT</Text>
             <View className={styles.top_right_bottom}>
@@ -172,7 +163,7 @@ export default () => {
                         <View>
                           <Image
                             src={userSrc}
-                            style={{ width: '60px', height: '60px' }}
+                            className={styles.user_icon}
                           ></Image>
                           <Text>束带结</Text>
                         </View>

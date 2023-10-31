@@ -88,7 +88,7 @@ export default () => {
                 list: new Array(1000).fill('').map((v, i) => i),
               });
             }, [])}
-            renderItem={(item) => <ListItem></ListItem>}
+            renderItem={(item) => <ListItem key={item}></ListItem>}
           />
         </View>
       </View>

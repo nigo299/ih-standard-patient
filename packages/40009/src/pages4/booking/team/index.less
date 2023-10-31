@@ -1,7 +1,7 @@
 @import '@/styles/index.less';
-// .page {
-//   padding-bottom: 170px;
-// }
+.page {
+  padding-bottom: 170px;
+}
 // .top {
 //   height: 236px;
 //   width: 100%;
@@ -275,8 +275,14 @@
   z-index: 100;
 }
 
+.user_icon {
+  width: 124px;
+  height: 124px;
+}
+
 // 详情
 .detail_top {
+  width: 100%;
   background-color: #BE2720;
   padding: 40px 30px 60px 30px;
   display: flex;
@@ -302,6 +308,11 @@
   border-radius: 20px;
   font-size: 22px;
   margin-right: 20px;
+}
+
+.border_hos_name_unique {
+  margin-right: 0;
+  margin-left: 20px;
 }
 
 
@@ -349,6 +360,7 @@
 
 .affirmSheet_content {
   max-height: 700px;
+  overflow: auto;
 }
 
 .affirmSheet_item {
@@ -370,4 +382,16 @@
 
 .doctor_gap {
   margin-bottom: 30px;
+}
+
+.expert_icon {
+  display: flex;
+  align-self: flex-start;
+  justify-content: space-between;
+  width: 120px;
+}
+
+.share_icon {
+  width: 50px;
+  height: 50px;
 }
