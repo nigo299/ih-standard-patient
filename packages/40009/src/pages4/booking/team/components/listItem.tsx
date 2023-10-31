@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Image, Text, navigateTo } from 'remax/one';
-import { Shadow, Space, Exceed, Price, Button } from '@kqinfo/ui';
+import { Shadow, Space, Exceed, Price, Button, ListItem } from '@kqinfo/ui';
 import userSrc from '../assets/images/user.png';
 import styles from './index.less';
-const ListItem: React.FC = () => {
+const NewListItem: React.FC = () => {
   const handleTap = () => {
     navigateTo({ url: '/pages4/booking/team/detail' });
   };
@@ -50,4 +50,24 @@ const ListItem: React.FC = () => {
   );
 };
 
-export default ListItem;
+const NewListItem1: React.FC = () => {
+  return (
+    <View className={styles.box}>
+      <Shadow>
+        <ListItem
+          className={styles.itemBox}
+          img={userSrc}
+          imgFooterCls={styles.imgFooter}
+          imgFooter={
+            <View className={styles.imgFooter}>
+              <Text className={`${styles.txt} ${styles.top}`}>线下会诊</Text>
+              <Text className={`${styles.txt} ${styles.bottom}`}>线上会诊</Text>
+            </View>
+          }
+        ></ListItem>
+      </Shadow>
+    </View>
+  );
+};
+
+export default NewListItem1;
