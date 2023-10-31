@@ -79,6 +79,7 @@ export default memo(() => {
     encryptAliPayPhone: '',
   });
   const [checked, setChecked] = useState(true);
+  const [showPatType, setShowPatType] = useState(true);
   // 非身份建档his有可能返回出生日期为空、需要用户手动选择出生日期
   const [isBrithday, setIsBrithday] = useState(true);
   // 当查询出来的出生日期为空时，动态获取当前是否是儿童
@@ -146,17 +147,21 @@ export default memo(() => {
             icon: 'none',
             title: '无建档信息，请建档',
           });
-
           if (values['idType'] === '1') {
+            setShowPatType(false);
             setChecked(false);
             const { analyzeAge, analyzeBirth, analyzeSex } = analyzeIDCard(
               values['idNo'],
             );
+
             if (analyzeAge >= bindcardProdiles?.childrenMaxAge) {
               form.setFieldsValue({
                 checked: false,
+                birthday: analyzeBirth,
+                patientSex: analyzeSex,
               });
             } else {
+              console.log('values', values);
               form.setFieldsValue({
                 checked: false,
                 birthday: analyzeBirth,
@@ -165,6 +170,7 @@ export default memo(() => {
               });
             }
           } else {
+            setShowPatType(false);
             setChecked(false);
             form.setFieldsValue({
               checked: false,
@@ -499,7 +505,7 @@ export default memo(() => {
           labelWidth={'4em'}
           requiredMark={false}
         >
-          {!checked && bindcardProdiles?.patientTypes && (
+          {!checked && showPatType && bindcardProdiles?.patientTypes && (
             <FormItem
               label={'就诊人类型'}
               name="patientType"

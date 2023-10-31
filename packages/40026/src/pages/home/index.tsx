@@ -74,45 +74,80 @@ export default () => {
     },
   ];
 
-  const homeCardNavConfig = [
-    {
-      title: '在线问诊',
-      url: `/pages/webview/index?url=${encodeURIComponent(
-        'https://zx.1451cn.com/pat/#/patients/region/hos-home?openId=odVEX1Qrhe_5f2DGXU05YwVYtPLg&loginid=&accesslevel=5&accessmode=6&hospitalName=%E9%87%8D%E5%BA%86%E9%BB%94%E6%B1%9F%E6%B0%91%E6%97%8F%E5%8C%BB%E9%99%A2',
-      )}&title=在线问诊`,
+  const homeCardNavConfig =
+    PLATFORM === 'web'
+      ? [
+          {
+            title: '在线问诊',
+            url: `/pages/webview/index?url=${encodeURIComponent(
+              'https://zx.1451cn.com/pat/#/patients/region/hos-home?openId=odVEX1Qrhe_5f2DGXU05YwVYtPLg&loginid=&accesslevel=5&accessmode=6&hospitalName=%E9%87%8D%E5%BA%86%E9%BB%94%E6%B1%9F%E6%B0%91%E6%97%8F%E5%8C%BB%E9%99%A2',
+            )}&title=在线问诊`,
 
-      image: `${IMAGE_DOMIN}/home/yyzx.png`,
-      new: false,
-      open: true,
-    },
-    {
-      title: '医院官网',
-      url: '/pages/webview/index?url=http://www.qjmzyy.com/&title=医院官网',
-      image: `${IMAGE_DOMIN}/home/yygw.png`,
-      new: false,
-      open: true,
-    },
-    {
-      title: '物价查询',
-      url: '/pages/webview/index?url=http://1451zsyy.1451cn.com/#/price-inquiry&title=物价查询',
-      image: `${IMAGE_DOMIN}/home/wjcx.png`,
-      new: false,
-      open: true,
-    },
-    {
-      title: '来院导航',
-      url: '/pages2/register',
-      image: `${IMAGE_DOMIN}/home/lydh.png`,
-      new: false,
-      onClick: () => openLocation(),
-    },
-    {
-      title: '电子发票',
-      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/invoice/invoice-list/index',
-      image: `${IMAGE_DOMIN}/home/lydh.png`,
-      new: false,
-    },
-  ];
+            image: `${IMAGE_DOMIN}/home/yyzx.png`,
+            new: false,
+            open: true,
+          },
+          {
+            title: '医院官网',
+            url: '/pages/webview/index?url=http://www.qjmzyy.com/&title=医院官网',
+            image: `${IMAGE_DOMIN}/home/yygw.png`,
+            new: false,
+            open: true,
+          },
+          {
+            title: '物价查询',
+            url: '/pages/webview/index?url=http://1451zsyy.1451cn.com/#/price-inquiry&title=物价查询',
+            image: `${IMAGE_DOMIN}/home/wjcx.png`,
+            new: false,
+            open: true,
+          },
+          {
+            title: '来院导航',
+            url: '/pages2/register',
+            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            new: false,
+            onClick: () => openLocation(),
+          },
+          {
+            title: '电子发票',
+            url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/invoice/invoice-list/index',
+            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            new: false,
+          },
+        ]
+      : [
+          {
+            title: '在线问诊',
+            url: `/pages/webview/index?url=${encodeURIComponent(
+              'https://zx.1451cn.com/pat/#/patients/region/hos-home?openId=odVEX1Qrhe_5f2DGXU05YwVYtPLg&loginid=&accesslevel=5&accessmode=6&hospitalName=%E9%87%8D%E5%BA%86%E9%BB%94%E6%B1%9F%E6%B0%91%E6%97%8F%E5%8C%BB%E9%99%A2',
+            )}&title=在线问诊`,
+
+            image: `${IMAGE_DOMIN}/home/yyzx.png`,
+            new: false,
+            open: true,
+          },
+          {
+            title: '医院官网',
+            url: '/pages/webview/index?url=http://www.qjmzyy.com/&title=医院官网',
+            image: `${IMAGE_DOMIN}/home/yygw.png`,
+            new: false,
+            open: true,
+          },
+          {
+            title: '物价查询',
+            url: '/pages/webview/index?url=http://1451zsyy.1451cn.com/#/price-inquiry&title=物价查询',
+            image: `${IMAGE_DOMIN}/home/wjcx.png`,
+            new: false,
+            open: true,
+          },
+          {
+            title: '来院导航',
+            url: '/pages2/register',
+            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            new: false,
+            onClick: () => openLocation(),
+          },
+        ];
   usePageEvent('onShow', () => {
     setNavigationBar({
       title: HOSPITAL_NAME,

@@ -25,7 +25,7 @@ export default () => {
     type: 'reserve' | 'day' | 'default';
   }>();
   const { setSearchQ } = globalState.useContainer();
-  const { deptList, getDeptList } = regsiterState.useContainer();
+  const { deptList, getDeptList, setDeptList } = regsiterState.useContainer();
   const [show, setShow] = useState(false);
   const {
     data: { data: infoData },
@@ -49,6 +49,14 @@ export default () => {
   useEffect(() => {
     if (config.showChooseDeptDialog && infoData?.[0]?.noticeInfo) setShow(true);
   }, [config.showChooseDeptDialog, infoData]);
+  useEffect(() => {
+    return () => {
+      setDeptList([]);
+    };
+  }, []);
+  if (!deptList?.length) {
+    return null;
+  }
   return (
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
