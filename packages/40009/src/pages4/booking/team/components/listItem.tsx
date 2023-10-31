@@ -14,7 +14,7 @@ const ListItem: React.FC = () => {
           <View className={styles.box_left}>
             <Image
               src={`${userSrc}`}
-              style={{ width: '60px', height: '60px' }}
+              className={styles.user_icon}
               mode="aspectFill"
             />
             <Text className={`${styles.txt} ${styles.top}`}>线下会诊</Text>
