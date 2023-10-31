@@ -25,9 +25,6 @@ import useGetParams from '@/utils/useGetParams';
 import ShowTitle from './components/showTitle';
 
 import userSrc from './assets/images/user.png';
-import shareSrc from './assets/images/fx.png';
-import scPng from './assets/images/sc.png';
-import scFullPng from './assets/images/sc_full.png';
 
 interface NucleType {
   deptId: string;
@@ -78,10 +75,7 @@ export default () => {
       <View style={{ width: '100%' }}>
         <Space className={styles.detail_top} size={'10px'}>
           <Space size={'10px'} style={{ flex: 1 }}>
-            <Image
-              src={userSrc}
-              className={styles.user_icon}
-            ></Image>
+            <Image src={userSrc} className={styles.user_icon}></Image>
             <View className={styles.detail_top_right}>
               <Text className={styles.right_name}>
                 {'医生名称'}&nbsp;|&nbsp;{'副主任医生'}
@@ -98,11 +92,14 @@ export default () => {
           </Space>
           <View className={styles.expert_icon}>
             <Image
-              src={hasCollect ? scFullPng : scPng}
+              src={`${IMAGE_DOMIN}/mdt/${hasCollect ? 'sc_full' : 'sc'}.png`}
               className={styles.share_icon}
               onTap={toggleCollect}
             ></Image>
-            <Image src={shareSrc} className={styles.share_icon}></Image>
+            <Image
+              src={`${IMAGE_DOMIN}/mdt/share.png`}
+              className={styles.share_icon}
+            ></Image>
           </View>
         </Space>
         <View className={styles.detail_content}>
