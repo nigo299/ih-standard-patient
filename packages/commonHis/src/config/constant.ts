@@ -9,7 +9,7 @@ export const IMAGE_DOMIN = `${
     ? '/images'
     : PLATFORM === 'web'
     ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
+    : 'https://tihs.cqkqinfo.com/patients/p40064-his-test/images'
 }`;
 export const HOSPITAL_NAME = '重庆沙坪坝区妇幼保健院';
 export const HOSPITAL_TEL = '023-43780184';
