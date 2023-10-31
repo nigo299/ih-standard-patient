@@ -1,289 +1,124 @@
-import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
-import { usePageEvent } from 'remax/macro';
-import setNavigationBar from '@/utils/setNavigationBar';
+import React, { useCallback, useMemo, useState } from 'react';
+import { View, Image, Text } from 'remax/one';
 import {
-  Button,
-  ColorText,
-  NoData,
-  showToast,
+  DropDownMenu,
+  DropDownMenuItem,
+  List,
+  Shadow,
   Space,
-  Calendar,
-  Loading,
-  Exceed,
+  useTitle,
 } from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
 import styles from './index.less';
-import patientState from '@/stores/patient';
-import useGetParams from '@/utils/useGetParams';
-
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
+import useApi from '@/apis/register';
+import { IMAGE_DOMIN } from '@/config/constant';
+import Label from '@/components/label';
+import cls from 'classnames';
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const {
-    request,
-    loading,
-    data: { data },
-  } = useApi.透传字段({
-    params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
-    },
-    needInit: false,
-  });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
+  useTitle('预约记录');
+  const [selectUser, setSelectUser] = useState('1');
+  const StatusCls: any = {
+    1: styles.wait,
+    2: styles.success,
+    3: styles.fail,
+    4: styles.wait,
+  };
+  const options1 = useMemo(
+    () => [
+      {
+        text: '全部',
+        value: '1',
+      },
+      {
+        text: '凯小桥',
+        value: '2',
+      },
+    ],
+    [],
   );
-  usePageEvent('onShow', async () => {
-    request();
-    if (!defaultPatientInfo?.patientName) {
-      getPatientList(false).then((res) => {
-        if (res.length === 0) {
-          showToast({
-            title: '请先添加就诊人!',
-            icon: 'none',
-            mask: true,
-          }).then(() => {
-            navigateTo({
-              url: `/pages2/usercenter/add-user/index`,
-            });
-          });
-        }
+  const options2 = useMemo(
+    () => [
+      {
+        text: '检查报告',
+        value: '1',
+      },
+      {
+        text: '检验报告',
+        value: '2',
+      },
+    ],
+    [],
+  );
+  const getDoctorList = useCallback((page, limit) => {
+    return useApi.查询科室医生列表
+      .request({
+        deptId: '',
+        pageNum: page,
+        numPerPage: limit,
+      })
+      .then((data) => {
+        return {
+          list: [{ doctorId: 1 }] || data.data?.recordList,
+          pageNum: data.data?.currentPage,
+          pageSize: data?.data?.numPerPage,
+          total: data?.data?.totalCount || 0,
+        };
       });
-    }
-    setNavigationBar({
-      title: '核酸检测',
-    });
-  });
+  }, []);
   return (
     <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
-      <Mask
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-      >
-        <Space vertical className={styles.calendar}>
-          <Space justify="space-between" className={styles.calendarWrap}>
-            <ColorText fontWeight={600}>日期选择</ColorText>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/close.png`}
-              className={styles.calendarImg}
-              onTap={() => {
-                setShow(false);
-              }}
-            />
-          </Space>
-          <Calendar
-            listEndDay={dayjs().add(1, 'month')}
-            onChange={(
-              day:
-                | dayjs.Dayjs
-                | [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined],
-            ) => {
-              if (!Array.isArray(day)) {
-                setSelectDate(dayjs(day).format('YYYY-MM-DD'));
-                setShow(false);
-              }
-            }}
-          />
-        </Space>
-      </Mask>
-
-      <Space className={styles.top} alignItems="flex-start">
-        <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
-          <View>核酸检测</View>
-        </Space>
-      </Space>
-      <Space className={styles.content} vertical>
-        <Space
-          className={styles.comboUser}
-          justify="space-around"
-          alignItems="center"
-        >
-          <Space
-            vertical
-            size={20}
-            onTap={() =>
-              redirectTo({
-                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/nucleic/select-combo/index',
-              })
-            }
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {defaultPatientInfo.patientName || '暂无'}
-              <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              />
-            </Space>
-            <View className={styles.userText}>切换当前就诊人</View>
-          </Space>
-          <Space
-            vertical
-            size={20}
-            // onTap={() => {
-            //   setShow(true);
-            // }}
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {selectDate}
-              {/* <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              /> */}
-            </Space>
-            <View className={styles.userText}>预约核酸检测时间</View>
-          </Space>
-        </Space>
-        <View className={styles.box}>
-          <View className={styles.popTitle}>温馨提示：</View>
-          <View className={styles.popText}>
-            核酸采集点工作时间：周一、周四上午8:00-12:00；
-            号源每日08:00更新，如有需求，请提前预约。
-          </View>
-        </View>
-        {data?.data?.items?.length > 0 ? (
-          <>
-            {data?.data?.items.map((item: NucleType) => {
-              const { nucleicName } = item;
-              return (
-                <Space
-                  className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
-                  })}
-                  key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
-                  vertical
-                  // size={30}
-                  // ignoreNum={4}
-                  justify="center"
-                >
-                  {resourceId === item.resourceId && (
+      <DropDownMenu showModal={false}>
+        <DropDownMenuItem
+          title="就诊人"
+          value={selectUser}
+          onChange={setSelectUser}
+          options={options1}
+        />
+        <DropDownMenuItem title="会诊状态" options={options2} />
+      </DropDownMenu>
+      <View className={styles.warp}>
+        <List
+          getList={getDoctorList}
+          renderItem={(item: any) => {
+            return (
+              <Shadow key={item.doctorId}>
+                <Space className={styles.item} alignItems="center" size={20}>
+                  <Space className={styles.status}>
                     <Image
-                      src={`${IMAGE_DOMIN}/nucleic/active.png`}
-                      className={styles.activeImg}
+                      src={`${IMAGE_DOMIN}/mdt/status.png`}
+                      className={styles.icon}
                     />
-                  )}
-                  <Exceed className={styles.nucleicName}>
-                    {item.nucleicName}
-                  </Exceed>
-                  <Space alignItems="center" className={styles.regFee}>
-                    <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
+                    <Text className={styles.statusTxt}>患者端</Text>
                   </Space>
-                  <View className={styles.solid} />
-
-                  <Space alignItems="center" className={styles.itemText}>
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/wh.png`}
-                      className={styles.whImg}
-                    />
-                    <View>
-                      {nucleicName.includes('黄码') && (
-                        <ColorText>健康码状态为无码、黄码人员</ColorText>
-                      )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
-                          '核酸检测（出租网约车免费）（绿码）',
-                        )) &&
-                        '新型冠状病毒核酸检测（混采10:1）'}
-
-                      {nucleicName.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
-                    </View>
+                  <Space vertical flex={1}>
+                    <View className={styles.itemTitle}>伴随精神心理障碍</View>
+                    <View className={styles.itemdesc}>乔木沐 女 5岁3月龄</View>
+                    {[
+                      { text: '患者ID', value: '1' },
+                      { text: '申请时间', value: '1' },
+                      { text: '会诊方式', value: '1' },
+                    ].map((item, index) => (
+                      <Space className={styles.itemdesc} key={index}>
+                        <Label key={index}>{item.text}</Label>
+                        <Space flex={1} flexWrap="wrap">
+                          {item.value}
+                        </Space>
+                      </Space>
+                    ))}
                   </Space>
-                  {/*<Image*/}
-                  {/*  className={styles.nucleImg}*/}
-                  {/*  src={*/}
-                  {/*    nucleicName.includes('核酸检测（混检）（绿码')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/lm.png`*/}
-                  {/*      : nucleicName.includes('核酸检测（黄码/无码）')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/hmwm.png`*/}
-                  {/*      : nucleicName.includes(*/}
-                  {/*          '核酸检测（出租网约车免费）（绿码）',*/}
-                  {/*        )*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/czclm.png`*/}
-                  {/*      : `${IMAGE_DOMIN}/nucleic/czchm.png`*/}
-                  {/*  }*/}
-                  {/*/>*/}
+                  <Space
+                    className={cls(
+                      styles.StatusBox,
+                      StatusCls[item?.status || 1],
+                    )}
+                  >
+                    待审核
+                  </Space>
                 </Space>
-              );
-            })}
-
-            <Space className={styles.tip}>
-              <ColorText>*</ColorText>
-              <View> 我院提供绿码核酸单检服务</View>
-            </Space>
-          </>
-        ) : (
-          <NoData />
-        )}
-      </Space>
-      <Space className={styles.footer}>
-        <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>{!!resourceId ? '1' : '0'}</ColorText>个项目
-        </Space>
-        <Button
-          className={styles.button}
-          type="primary"
-          disabled={
-            data?.data?.item?.length === 0 ||
-            !resourceId ||
-            !defaultPatientInfo.patientName
-          }
-          onTap={(e) => {
-            e.stopPropagation();
-
-            const selectNucle = data?.data?.items?.filter(
-              (item: NucleType) => item.resourceId === resourceId,
+              </Shadow>
             );
-            if (selectNucle?.[0]?.nucleicName) {
-              const { nucleicName, endTime, startTime, resourceId, regFee } =
-                selectNucle[0];
-              navigateTo({
-                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-              });
-            }
           }}
-        >
-          下一步
-        </Button>
-      </Space>
+        />
+      </View>
     </View>
   );
 };
