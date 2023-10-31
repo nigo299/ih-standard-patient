@@ -1,289 +1,213 @@
-import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
-import { usePageEvent } from 'remax/macro';
-import setNavigationBar from '@/utils/setNavigationBar';
+import React from 'react';
+import { View, Image, Text } from 'remax/one';
+import styles from './index.less';
 import {
   Button,
-  ColorText,
-  NoData,
-  showToast,
+  Form,
+  FormItem,
+  PartTitle,
+  ReInput,
+  ReTextarea,
+  Shadow,
   Space,
-  Calendar,
-  Loading,
-  Exceed,
+  UploadImg,
+  showToast,
 } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
-import styles from './index.less';
-import patientState from '@/stores/patient';
-import useGetParams from '@/utils/useGetParams';
-
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
+import Label from '@/components/label';
+import SwitchInput from './components/SwitchInput';
+import TelPhone from './components/TelPhone';
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
-  const {
-    request,
-    loading,
-    data: { data },
-  } = useApi.透传字段({
-    params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
-    },
-    needInit: false,
-  });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
-  );
-  usePageEvent('onShow', async () => {
-    request();
-    if (!defaultPatientInfo?.patientName) {
-      getPatientList(false).then((res) => {
-        if (res.length === 0) {
-          showToast({
-            title: '请先添加就诊人!',
-            icon: 'none',
-            mask: true,
-          }).then(() => {
-            navigateTo({
-              url: `/pages2/usercenter/add-user/index`,
-            });
-          });
-        }
-      });
-    }
-    setNavigationBar({
-      title: '核酸检测',
-    });
-  });
+  const [form] = Form.useForm();
   return (
     <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
-      <Mask
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-      >
-        <Space vertical className={styles.calendar}>
-          <Space justify="space-between" className={styles.calendarWrap}>
-            <ColorText fontWeight={600}>日期选择</ColorText>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/close.png`}
-              className={styles.calendarImg}
-              onTap={() => {
-                setShow(false);
-              }}
-            />
-          </Space>
-          <Calendar
-            listEndDay={dayjs().add(1, 'month')}
-            onChange={(
-              day:
-                | dayjs.Dayjs
-                | [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined],
-            ) => {
-              if (!Array.isArray(day)) {
-                setSelectDate(dayjs(day).format('YYYY-MM-DD'));
-                setShow(false);
-              }
-            }}
-          />
-        </Space>
-      </Mask>
-
-      <Space className={styles.top} alignItems="flex-start">
-        <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
-          <View>核酸检测</View>
-        </Space>
-      </Space>
-      <Space className={styles.content} vertical>
-        <Space
-          className={styles.comboUser}
-          justify="space-around"
-          alignItems="center"
-        >
-          <Space
-            vertical
-            size={20}
-            onTap={() =>
-              redirectTo({
-                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/nucleic/select-combo/index',
-              })
-            }
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {defaultPatientInfo.patientName || '暂无'}
-              <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              />
-            </Space>
-            <View className={styles.userText}>切换当前就诊人</View>
-          </Space>
-          <Space
-            vertical
-            size={20}
-            // onTap={() => {
-            //   setShow(true);
-            // }}
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {selectDate}
-              {/* <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              /> */}
-            </Space>
-            <View className={styles.userText}>预约核酸检测时间</View>
-          </Space>
-        </Space>
-        <View className={styles.box}>
-          <View className={styles.popTitle}>温馨提示：</View>
-          <View className={styles.popText}>
-            核酸采集点工作时间：周一、周四上午8:00-12:00；
-            号源每日08:00更新，如有需求，请提前预约。
+      <Space className={styles.banner} size={20}>
+        <Image src={`${IMAGE_DOMIN}/mdt/tel.png`} className={styles.tel} />
+        <Space flex={1} vertical size={20} className={styles.content}>
+          <View className={styles.contentdesc}>电话咨询</View>
+          <View className={styles.contentdesc}>
+            预约前、如有疑问，可拨打以下电话咨询：
           </View>
-        </View>
-        {data?.data?.items?.length > 0 ? (
-          <>
-            {data?.data?.items.map((item: NucleType) => {
-              const { nucleicName } = item;
-              return (
-                <Space
-                  className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
-                  })}
-                  key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
-                  vertical
-                  // size={30}
-                  // ignoreNum={4}
-                  justify="center"
-                >
-                  {resourceId === item.resourceId && (
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/active.png`}
-                      className={styles.activeImg}
-                    />
-                  )}
-                  <Exceed className={styles.nucleicName}>
-                    {item.nucleicName}
-                  </Exceed>
-                  <Space alignItems="center" className={styles.regFee}>
-                    <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
-                  </Space>
-                  <View className={styles.solid} />
-
-                  <Space alignItems="center" className={styles.itemText}>
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/wh.png`}
-                      className={styles.whImg}
-                    />
-                    <View>
-                      {nucleicName.includes('黄码') && (
-                        <ColorText>健康码状态为无码、黄码人员</ColorText>
-                      )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
-                          '核酸检测（出租网约车免费）（绿码）',
-                        )) &&
-                        '新型冠状病毒核酸检测（混采10:1）'}
-
-                      {nucleicName.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
-                    </View>
-                  </Space>
-                  {/*<Image*/}
-                  {/*  className={styles.nucleImg}*/}
-                  {/*  src={*/}
-                  {/*    nucleicName.includes('核酸检测（混检）（绿码')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/lm.png`*/}
-                  {/*      : nucleicName.includes('核酸检测（黄码/无码）')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/hmwm.png`*/}
-                  {/*      : nucleicName.includes(*/}
-                  {/*          '核酸检测（出租网约车免费）（绿码）',*/}
-                  {/*        )*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/czclm.png`*/}
-                  {/*      : `${IMAGE_DOMIN}/nucleic/czchm.png`*/}
-                  {/*  }*/}
-                  {/*/>*/}
-                </Space>
-              );
-            })}
-
-            <Space className={styles.tip}>
-              <ColorText>*</ColorText>
-              <View> 我院提供绿码核酸单检服务</View>
-            </Space>
-          </>
-        ) : (
-          <NoData />
-        )}
-      </Space>
-      <Space className={styles.footer}>
-        <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>{!!resourceId ? '1' : '0'}</ColorText>个项目
+          <Space justify="space-between">
+            <Text>023-45964325</Text>
+            <Text>023-45964325</Text>
+          </Space>
         </Space>
-        <Button
-          className={styles.button}
-          type="primary"
-          disabled={
-            data?.data?.item?.length === 0 ||
-            !resourceId ||
-            !defaultPatientInfo.patientName
-          }
-          onTap={(e) => {
-            e.stopPropagation();
-
-            const selectNucle = data?.data?.items?.filter(
-              (item: NucleType) => item.resourceId === resourceId,
-            );
-            if (selectNucle?.[0]?.nucleicName) {
-              const { nucleicName, endTime, startTime, resourceId, regFee } =
-                selectNucle[0];
-              navigateTo({
-                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-              });
-            }
-          }}
-        >
-          下一步
-        </Button>
       </Space>
+      <View className={styles.warp}>
+        <Shadow>
+          <Space className={styles.pane1} vertical size={20}>
+            <View className={styles.paneHead}>
+              <Text className={styles.bold}>乔木衫</Text>女 5岁3月龄
+            </View>
+            <Space className={styles.paneItem}>
+              <Label>患者ID</Label>
+              <Text className={styles.value}>123456789</Text>
+            </Space>
+          </Space>
+        </Shadow>
+        <Shadow>
+          <View className={styles.pane}>
+            <Space className={styles.paneHead}>
+              <PartTitle full>申请信息</PartTitle>
+            </Space>
+            <View className={styles.status}>会诊方式：线下会诊</View>
+            <View className={styles.paneBody}>
+              <Form
+                form={form}
+                onFinish={console.log}
+                vertical
+                labelCls={styles.Formlabel}
+                requiredMarkCls={styles.requiredMark}
+              >
+                <FormItem
+                  label={'会诊团队'}
+                  name={'city'}
+                  rules={[{ required: true }]}
+                  readOnly
+                >
+                  <ReInput placeholder="会诊团队" className={styles.ipt} />
+                </FormItem>
+                <FormItem
+                  label={'会诊时间'}
+                  name={'city'}
+                  rules={[{ required: true }]}
+                  readOnly
+                >
+                  <ReInput placeholder="会诊时间" className={styles.ipt} />
+                </FormItem>
+                <FormItem
+                  label={'症状描述'}
+                  name={'name'}
+                  rules={[{ required: true }]}
+                >
+                  <ReTextarea
+                    placeholder={'请输入'}
+                    className={styles.textarea}
+                    maxLength={100}
+                  />
+                </FormItem>
+                <FormItem
+                  label={'过敏史'}
+                  name={'idCard'}
+                  rules={[{ type: 'idCard', required: true }]}
+                >
+                  <SwitchInput />
+                </FormItem>
+                <FormItem
+                  label={'慢病史'}
+                  name={'idCard1'}
+                  rules={[{ type: 'idCard', required: true }]}
+                >
+                  <SwitchInput />
+                </FormItem>
+                <FormItem
+                  label={'手术史'}
+                  name={'idCard2'}
+                  rules={[{ type: 'idCard', required: true }]}
+                >
+                  <SwitchInput />
+                </FormItem>
+                <FormItem
+                  label={'预约手机号'}
+                  name={'idCard3'}
+                  rules={[{ type: 'idCard', required: true }]}
+                >
+                  <TelPhone />
+                </FormItem>
+                <FormItem
+                  label={'上传检验检查资料'}
+                  name={'idCard4'}
+                  rules={[{ type: 'idCard', required: true }]}
+                >
+                  <UploadImg
+                    className={styles.upload}
+                    length={5}
+                    multiple
+                    tip={
+                      <View className={styles.tips}>
+                        图片支持JPEG、JPG、PNGBMP、GIF、TIFF格式，限制单
+                        张图片不超过5M
+                      </View>
+                    }
+                    maxSize={1 * 1024 * 1024}
+                    onMaxError={() => {
+                      showToast({ title: '文件过大', icon: 'none' });
+                    }}
+                    // 示例，这里需要换成真实上传方法
+                    uploadFn={(file) =>
+                      new Promise((resolve) => {
+                        setTimeout(() => {
+                          resolve(URL.createObjectURL(file));
+                        }, 10000);
+                      })
+                    }
+                  />
+                </FormItem>
+                <FormItem
+                  label={'上传检查影像文件'}
+                  name={'idCard5'}
+                  rules={[{ type: 'idCard', required: true }]}
+                >
+                  <UploadImg
+                    className={styles.upload}
+                    length={5}
+                    multiple
+                    tip={
+                      <View className={styles.tips}>
+                        请上传DCM格式的DICOM文件
+                      </View>
+                    }
+                    maxSize={1 * 1024 * 1024}
+                    onMaxError={() => {
+                      showToast({ title: '文件过大', icon: 'none' });
+                    }}
+                    // 示例，这里需要换成真实上传方法
+                    uploadFn={(file) =>
+                      new Promise((resolve) => {
+                        setTimeout(() => {
+                          resolve(URL.createObjectURL(file));
+                        }, 10000);
+                      })
+                    }
+                  />
+                </FormItem>
+                <FormItem
+                  label={'上传视频资料'}
+                  name={'idCard6'}
+                  rules={[{ type: 'idCard', required: true }]}
+                >
+                  <UploadImg
+                    className={styles.upload}
+                    length={5}
+                    multiple
+                    tip={
+                      <View className={styles.tips}>
+                        视频仅支持MP4格式，单个视频不超过200M
+                      </View>
+                    }
+                    maxSize={1 * 1024 * 1024}
+                    onMaxError={() => {
+                      showToast({ title: '文件过大', icon: 'none' });
+                    }}
+                    // 示例，这里需要换成真实上传方法
+                    uploadFn={(file) =>
+                      new Promise((resolve) => {
+                        setTimeout(() => {
+                          resolve(URL.createObjectURL(file));
+                        }, 10000);
+                      })
+                    }
+                  />
+                </FormItem>
+              </Form>
+            </View>
+          </View>
+        </Shadow>
+        <Button type="primary" className={styles.btn}>
+          提交
+        </Button>
+      </View>
     </View>
   );
 };
