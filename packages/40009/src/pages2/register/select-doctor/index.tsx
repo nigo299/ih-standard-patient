@@ -96,7 +96,7 @@ export default () => {
         }
       }
       return dayjs(newDate);
-    }, [config, scheduleList, type]),
+    }, [type]), // config, scheduleList
   );
 
   const {
