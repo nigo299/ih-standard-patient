@@ -177,61 +177,65 @@ export interface MDTTeamItem {
   patAgeStr: string;
 }
 export interface TeamInfo extends API.ResponseDataType {
-  id: string;
-  hisId: string;
-  teamName: string;
-  diseaseType: string;
-  mode: string;
-  enable: string;
-  avatarImage: string;
-  visitSlot: Array<{
-    week: string;
-    startTime: string;
-    endTime: string;
-  }>;
-  intro: string;
-  mdtRoomId: string;
-  createTime: string;
-  updateTime: string;
-  price: string;
-  memberAmount: string;
-  deptAmount: string;
-  teamMembers: Array<{
+  data: {
     id: string;
-    mdtTeamId: string;
-    cpHospitalId: string;
-    doctorId: string;
-    doctorName: string;
-    memberRole: string;
-    sort: string;
+    hisId: string;
+    teamName: string;
+    diseaseType: string;
+    mode: string;
+    enable: string;
+    avatarImage: string;
+    visitSlot: Array<{
+      week: string;
+      startTime: string;
+      endTime: string;
+    }>;
+    intro: string;
+    mdtRoomId: string;
     createTime: string;
     updateTime: string;
-    hospitalName: string;
-    deptId: string;
-    deptName: string;
-    deptSort: string;
-    doctorLevel: string;
-    doctorImage: string;
-    doctorSpecialty: string;
-    doctorIntroduction: string;
-  }>;
+    price: string;
+    memberAmount: string;
+    deptAmount: string;
+    teamMembers: Array<{
+      id: string;
+      mdtTeamId: string;
+      cpHospitalId: string;
+      doctorId: string;
+      doctorName: string;
+      memberRole: string;
+      sort: string;
+      createTime: string;
+      updateTime: string;
+      hospitalName: string;
+      deptId: string;
+      deptName: string;
+      deptSort: string;
+      doctorLevel: string;
+      doctorImage: string;
+      doctorSpecialty: string;
+      doctorIntroduction: string;
+    }>;
+  };
 }
 
 export interface MDTTeamSchedule extends API.ResponseDataType {
-  relationId: string;
-  relationName: string;
-  scheduleList: Array<{
-    id: string;
-    createTime: string;
-    updateTime: string;
+  data: Array<{
     relationId: string;
-    visitDate: string;
-    startTime: string;
-    endTime: string;
-    totalResourceNum: number;
-    leftResourceNum: number;
-    isPublish: number;
-    type: string;
+    relationName: string;
+    scheduleList: Array<{
+      id: string;
+      createTime: string;
+      updateTime: string;
+      relationId: string;
+      visitDate: string;
+      startTime: string;
+      endTime: string;
+      totalResourceNum: number;
+      leftResourceNum: number;
+      isPublish: number;
+      type: string;
+    }>;
   }>;
 }
 
