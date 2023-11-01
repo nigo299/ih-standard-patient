@@ -1,36 +1,49 @@
 import React from 'react';
 import { View, Text, navigateTo } from 'remax/one';
 import { Shadow, Exceed, Button, ListItem } from '@kqinfo/ui';
-import userSrc from '../assets/images/user.png';
 import styles from './index.less';
+import { Team } from '@/apis/mdt';
 
-const Item: React.FC = () => {
-  const handleTap = () => {
-    navigateTo({ url: '/pages4/booking/team/detail' });
+interface Props {
+  content: Team;
+}
+
+const MODE = {
+  线下: 1,
+  线上: 2,
+  全部: 3,
+};
+
+const Item: React.FC<Props> = (props) => {
+  const { content } = props;
+  const handleTap = (teamId: string) => {
+    navigateTo({ url: `/pages4/booking/team/detail?teamId=${teamId}` });
   };
   return (
     <View className={styles.box}>
       <Shadow>
         <ListItem
           className={styles.itemBox}
-          img={userSrc}
+          img={content.avatarImage}
           imgFooterCls={styles.imgFooter}
           imgFooter={
             <View className={styles.imgFooter}>
-              <Text className={`${styles.txt} ${styles.top}`}>线下会诊</Text>
-              <Text className={`${styles.txt} ${styles.bottom}`}>线上会诊</Text>
+              {[MODE.线下, MODE.全部].includes(content.mode) && (
+                <Text className={`${styles.txt} ${styles.top}`}>线下会诊</Text>
+              )}
+              {[MODE.线上, MODE.全部].includes(content.mode) && (
+                <Text className={`${styles.txt} ${styles.bottom}`}>
+                  线上会诊
+                </Text>
+              )}
             </View>
           }
-          title={
-            <Text className={styles.title}>
-              多学科联合肥厚性心肌病321奋达科技
-            </Text>
-          }
+          title={<Text className={styles.title}>{content.teamName}</Text>}
           text={
             <View>
-              <Text className={styles.commonTxt}>重庆松山医院</Text>
+              <Text className={styles.commonTxt}>{content.hospitalName}</Text>
               <Exceed className={styles.commonTxt} clamp={1}>
-                简介：23321321321福达合金卡回放进度款怀旧服大会老客户福达合金啊可好看发的哈健康
+                {content.intro}
               </Exceed>
             </View>
           }
@@ -38,13 +51,13 @@ const Item: React.FC = () => {
             <View className={styles.footer}>
               <Text className={`${styles.commonColor} ${styles.price}`}>
                 {' '}
-                ￥{300}/次
+                ￥{Number(content.price) / 100}/次
               </Text>
               <Button
                 type={'primary'}
                 block={false}
                 size="small"
-                onTap={() => handleTap()}
+                onTap={() => handleTap(content.id)}
               >
                 预约会诊
               </Button>
