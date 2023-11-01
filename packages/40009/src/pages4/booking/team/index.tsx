@@ -23,7 +23,7 @@ import useApi from '@/apis/common';
 import styles from './index.less';
 import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
-import useBookingApi from '../../apis/booking/team';
+import useBookingApi from '@/apis/mdt';
 
 import Item from './components/listItem';
 
@@ -33,7 +33,7 @@ export default () => {
     request,
     loading: teamLoading,
     data: { data = [] },
-  } = useBookingApi.团队列表({
+  } = useBookingApi.查询团队列表({
     params: {
       searchKey: '',
     },
