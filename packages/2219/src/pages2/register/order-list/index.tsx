@@ -152,7 +152,7 @@ export default memo(() => {
                         [styles.cancel]: order?.status === 'C',
                       })}
                     >
-                      {order?.status === 'S' &&
+                      {/* {order?.status === 'S' &&
                         order?.visitStatus === 0 &&
                         '待就诊'}
                       {order?.status === 'S' &&
@@ -160,7 +160,8 @@ export default memo(() => {
                         '已就诊'}
                       {order?.status === 'S' &&
                         order?.visitStatus === 2 &&
-                        '未就诊'}
+                        '未就诊'} */}
+                      {order?.status === 'S' && '已支付'}
                       {order?.status === 'F' && '支付失败'}
                       {order?.status === 'L' && '待支付'}
                       {order?.status === 'C' && '已取消'}
