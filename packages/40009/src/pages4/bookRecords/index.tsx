@@ -12,16 +12,12 @@ import styles from './index.less';
 import useApi from '@/apis/register';
 import { IMAGE_DOMIN } from '@/config/constant';
 import Label from '@/components/label';
-import cls from 'classnames';
+import Status from './components/Status';
+
 export default () => {
   useTitle('预约记录');
   const [selectUser, setSelectUser] = useState('1');
-  const StatusCls: any = {
-    1: styles.wait,
-    2: styles.success,
-    3: styles.fail,
-    4: styles.wait,
-  };
+
   const options1 = useMemo(
     () => [
       {
@@ -99,20 +95,17 @@ export default () => {
                     ].map((item, index) => (
                       <Space className={styles.itemdesc} key={index}>
                         <Label key={index}>{item.text}</Label>
-                        <Space flex={1} flexWrap="wrap">
+                        <Space
+                          flex={1}
+                          flexWrap="wrap"
+                          className={styles.value}
+                        >
                           {item.value}
                         </Space>
                       </Space>
                     ))}
                   </Space>
-                  <Space
-                    className={cls(
-                      styles.StatusBox,
-                      StatusCls[item?.status || 1],
-                    )}
-                  >
-                    待审核
-                  </Space>
+                  <Status status="1" />
                 </Space>
               </Shadow>
             );
