@@ -97,47 +97,184 @@ export interface PatientListType extends API.ResponseDataType {
 export interface PatientInfoType extends API.ResponseDataType {
   data: PatientType;
 }
-
-export interface HelathCardInfoType extends API.ResponseDataType {
-  data: {
-    healthCardId: string; // 电子健康卡号
-    name: string;
-    birthday: string; // 出生日期
-    address: string;
-    jhrGx: string; // 监护人关系。0表示本人,0-本人，1-父，2-母
-    gender: string;
-    phone: string;
-    marriage: string; // 婚姻状态
-    citizenship: string;
-    idNo: string;
-    idNoType: string;
-    qrCodeText: string;
-  };
+export interface ListApiResponseData<D> {
   code: number;
+  data: {
+    beginIndex?: number;
+    beginPageIndex?: number;
+    countResultMap?: any;
+    endPageIndex?: number;
+    pageCount?: number;
+    currentPage: number;
+    numPerPage: number;
+    recordList: D[];
+    totalCount: number;
+  };
+  msg: string;
+}
+export interface ListParams {
+  pageNum: number;
+  numPerPage: number;
+}
+export interface MDTTeam extends API.ResponseDataType {
+  data: {
+    id: string;
+    hisId: string;
+    hospitalName: string;
+    teamName: string;
+    diseaseType: string;
+    mode: string;
+    avatarImage: string;
+    visitSlot: Array<{
+      week: string;
+      startTime: string;
+      endTime: string;
+    }>;
+    intro: string;
+    createTime: string;
+    updateTime: string;
+    price: string;
+    memberAmount: string;
+    deptAmount: string;
+  };
+}
+export interface MDTTeamItem {
+  id: string;
+  hisId: string;
+  roomId: string;
+  roomName: string;
+  userId: string;
+  patientId: string;
+  patName: string;
+  applySource: string;
+  teamId: string;
+  teamName: string;
+  diseaseType: string;
+  payState: string;
+  mdtState: string;
+  resourceId: string;
+  createTime: string;
+  updateTime: string;
+  mdtStartTime: string;
+  mdtEndTime: string;
+  mdtFee: string;
+  orderId: string;
+  orderSerialNumber: string;
+  purpose: string;
+  rejectReviewReason: string;
+  payTime: string;
+  reviewTime: string;
+  applyCancelTime: string;
+  reviewCancelTime: string;
+  finishTime: string;
+  hospitalName: string;
+  districtId: string;
+  districtName: string;
+  roomAddress: string;
+  reportUrl: string;
+  patCardNo: string;
+  patSex: string;
+  patAgeStr: string;
+}
+export interface TeamInfo extends API.ResponseDataType {
+  id: string;
+  hisId: string;
+  teamName: string;
+  diseaseType: string;
+  mode: string;
+  enable: string;
+  avatarImage: string;
+  visitSlot: Array<{
+    week: string;
+    startTime: string;
+    endTime: string;
+  }>;
+  intro: string;
+  mdtRoomId: string;
+  createTime: string;
+  updateTime: string;
+  price: string;
+  memberAmount: string;
+  deptAmount: string;
+  teamMembers: Array<{
+    id: string;
+    mdtTeamId: string;
+    cpHospitalId: string;
+    doctorId: string;
+    doctorName: string;
+    memberRole: string;
+    sort: string;
+    createTime: string;
+    updateTime: string;
+    hospitalName: string;
+    deptId: string;
+    deptName: string;
+    deptSort: string;
+    doctorLevel: string;
+    doctorImage: string;
+    doctorSpecialty: string;
+    doctorIntroduction: string;
+  }>;
+}
+
+export interface MDTTeamSchedule extends API.ResponseDataType {
+  relationId: string;
+  relationName: string;
+  scheduleList: Array<{
+    id: string;
+    createTime: string;
+    updateTime: string;
+    relationId: string;
+    visitDate: string;
+    startTime: string;
+    endTime: string;
+    totalResourceNum: number;
+    leftResourceNum: number;
+    isPublish: number;
+    type: string;
+  }>;
 }
 
 export default {
-  查询就诊人绑定卡号: createApiHooks((params) =>
-    request.post<HisCardListType>(`/api/intelligent/personal/his-card`, params),
-  ),
-
-  设置默认就诊人: createApiHooks((params: { patientId: string }) =>
-    request.put<API.ResponseDataType>(
-      `/api/intelligent/personal/default`,
+  查询团队列表: createApiHooks((params: { searchKey?: string }) =>
+    request.get<MDTTeam>(`/api/ihis/cooperate/mdt-team`, {
       params,
-    ),
+    }),
   ),
-
-  查询就诊人详情: createApiHooks(
-    ({
-      patientId,
-      idFullTransFlag,
-    }: {
-      patientId: string;
-      idFullTransFlag?: '1' | '0';
+  分页查询团队列表: createApiHooks(
+    (params: ListParams & { patientId?: string; mdtState?: string }) =>
+      request.get<ListApiResponseData<MDTTeamItem>>(
+        `/api/ihis/cooperate/mdt-team`,
+        {
+          params,
+        },
+      ),
+  ),
+  线下MDT预支付: createApiHooks(
+    (data: {
+      id: string;
+      payMethod: string; //H%,MINI
     }) =>
-      request.get<PatientInfoType>(
-        `/api/intelligent/personal/patient/${patientId}/${idFullTransFlag}`,
+      request.post<HisCardListType>(
+        `/api/ihis/cooperate/mdt-offline/prepay`,
+        data,
+      ),
+  ),
+  根据id查询团队详情: createApiHooks((params: { id: string }) =>
+    request.get<TeamInfo>(`/api/ihis/cooperate/mdt-team/${params.id}`),
+  ),
+  排班详情: createApiHooks(
+    (params: {
+      teamId: string;
+      visitDate: string;
+      type: string;
+      relationId?: string;
+    }) =>
+      request.get<MDTTeamSchedule>(
+        `/api/ihis/cooperate/mdt-schedule/one-day/${params.teamId}`,
+        {
+          params,
+        },
       ),
   ),
 };
