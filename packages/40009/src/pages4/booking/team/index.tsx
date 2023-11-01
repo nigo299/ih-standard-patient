@@ -23,60 +23,44 @@ import useApi from '@/apis/common';
 import styles from './index.less';
 import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
+import useBookingApi from '../../apis/booking/team';
 
 import Item from './components/listItem';
 
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
 export default () => {
   const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
   const {
     request,
-    loading,
-    data: { data },
-  } = useApi.透传字段({
+    loading: teamLoading,
+    data: { data = [] },
+  } = useBookingApi.团队列表({
     params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
+      searchKey: '',
     },
-    needInit: false,
+    needInit: true,
   });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
-  );
+  console.log('teamData======>', data);
+
   usePageEvent('onShow', async () => {
     setNavigationBar({
       title: '多学科门诊',
     });
   });
+
   return (
     <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
       <View>
         <View className={styles.search_box}>
           <Search
             placeholder={'搜索团队，医生，疾病'}
             showBtn
-            onConfirm={console.log}
+            onConfirm={(val) => {
+              request({ searchKey: val });
+            }}
           />
         </View>
         <View className={styles.content}>
+          {teamLoading && <Loading type={'top'} />}
           <List
             // ref={listRef}
             defaultLimit={100}
