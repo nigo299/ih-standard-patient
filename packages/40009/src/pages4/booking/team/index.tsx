@@ -1,46 +1,15 @@
 import React, { useState, useCallback } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
+import { View } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import {
-  Button,
-  ColorText,
-  NoData,
-  showToast,
-  Space,
-  Calendar,
-  Loading,
-  Exceed,
-  Search,
-  List,
-} from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
+import { Search, List } from '@kqinfo/ui';
 import styles from './index.less';
-import patientState from '@/stores/patient';
-import useGetParams from '@/utils/useGetParams';
 import useBookingApi, { Team } from '@/apis/mdt';
 
 import Item from './components/listItem';
 
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
   const [searchKey, setSearchKey] = useState('');
-  // const {
-  //   request,
-  //   loading: teamLoading,
-  //   data: { data = [] },
-  // } = useBookingApi.查询团队列表({
-  //   params: {
-  //     searchKey: '',
-  //   },
-  //   needInit: true,
-  // });
-  // console.log('teamData======>', data);
 
   usePageEvent('onShow', async () => {
     setNavigationBar({
@@ -48,20 +17,16 @@ export default () => {
     });
   });
 
-  const getDoctorList = useCallback(
-    (page, limit) => {
-      return useBookingApi.查询团队列表.request({ searchKey }).then((data) => {
-        console.log('data.data======>', data.data);
-        return {
-          list: data.data || [],
-          // pageNum: data.data?.currentPage,
-          // pageSize: data?.data?.numPerPage,
-          // total: data?.data?.totalCount || 0,
-        };
-      });
-    },
-    [searchKey],
-  );
+  const getDoctorList = useCallback(() => {
+    return useBookingApi.查询团队列表.request({ searchKey }).then((data) => {
+      return {
+        list: data.data || [],
+        // pageNum: data.data?.currentPage,
+        // pageSize: data?.data?.numPerPage,
+        // total: data?.data?.totalCount || 0,
+      };
+    });
+  }, [searchKey]);
 
   return (
     <View className={styles.page}>
@@ -71,7 +36,6 @@ export default () => {
             placeholder={'搜索团队，医生，疾病'}
             showBtn
             onConfirm={(val: string | undefined) => {
-              // request({ searchKey: val });
               setSearchKey(val!);
             }}
           />

@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, Image } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import {
-  Space,
-  getStorageSync,
-} from '@kqinfo/ui';
+import { Space, getStorageSync } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import ShowTitle from './components/showTitle';
+import { PreviewImage } from '@/components';
 
 export default () => {
   const [hasCollect, setHasCollect] = useState(false);
@@ -29,7 +27,10 @@ export default () => {
       <View style={{ width: '100%' }}>
         <Space className={styles.detail_top} size={'10px'}>
           <Space size={'10px'} style={{ flex: 1 }}>
-            <Image src={info.doctorImage} className={styles.user_icon}></Image>
+            <PreviewImage
+              url={info.doctorImage ?? `${IMAGE_DOMIN}/mdt/ys2.png`}
+              className={styles.user_icon}
+            ></PreviewImage>
             <View className={styles.detail_top_right}>
               <Text className={styles.right_name}>
                 {info.doctorName}&nbsp;|&nbsp;{info.doctorLevel}

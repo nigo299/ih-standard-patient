@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, navigateTo } from 'remax/one';
-import { Shadow, Exceed, Button, ListItem } from '@kqinfo/ui';
+import { Shadow, Exceed, Button, ListItem, Space } from '@kqinfo/ui';
+import { PreviewImage } from '@/components';
 import styles from './index.less';
+import { IMAGE_DOMIN } from '@/config/constant';
 import { Team } from '@/apis/mdt';
 
 interface Props {
@@ -24,7 +26,7 @@ const Item: React.FC<Props> = (props) => {
       <Shadow>
         <ListItem
           className={styles.itemBox}
-          img={content.avatarImage}
+          img={<PreviewImage url={content.avatarImage}></PreviewImage>}
           imgFooterCls={styles.imgFooter}
           imgFooter={
             <View className={styles.imgFooter}>
@@ -69,4 +71,56 @@ const Item: React.FC<Props> = (props) => {
   );
 };
 
-export default Item;
+const NewItem: React.FC<Props> = (props) => {
+  const { content } = props;
+  const handleTap = (teamId: string) => {
+    navigateTo({ url: `/pages4/booking/team/detail?teamId=${teamId}` });
+  };
+  return (
+    <View className={styles.box}>
+      <Shadow>
+        <Space size={20} className={styles.itemBox}>
+          <Space vertical>
+            <PreviewImage
+              url={content.avatarImage ?? `${IMAGE_DOMIN}/mdt/user_icon.png`}
+              className={styles.user_icon}
+            ></PreviewImage>
+            <View className={styles.imgFooter}>
+              {[MODE.线下, MODE.全部].includes(content.mode) && (
+                <View className={`${styles.txt} ${styles.top}`}>线下会诊</View>
+              )}
+              {[MODE.线上, MODE.全部].includes(content.mode) && (
+                <View className={`${styles.txt} ${styles.bottom}`}>
+                  线上会诊
+                </View>
+              )}
+            </View>
+          </Space>
+          <Space vertical className={styles.box_right}>
+            <View className={styles.title}>{content.teamName}</View>
+            <View className={styles.desc}>
+              <View className={styles.hos_name}>{content.hospitalName}</View>
+              <Exceed clamp={1}>简介：{content.intro}</Exceed>
+            </View>
+            <View className={styles.footer}>
+              <Text className={`${styles.commonColor} ${styles.price}`}>
+                {' '}
+                ￥{Number(300 ?? content.price) / 100}/次
+              </Text>
+              <Button
+                type={'primary'}
+                block={false}
+                size="small"
+                onTap={() => handleTap(content.id)}
+              >
+                预约会诊
+              </Button>
+            </View>
+          </Space>
+        </Space>
+      </Shadow>
+    </View>
+  );
+};
+
+export default NewItem;

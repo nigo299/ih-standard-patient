@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -10,21 +10,21 @@ import {
   ScrollView,
   useSafeArea,
   AffirmSheet,
-  setStorageSync
+  setStorageSync,
 } from '@kqinfo/ui';
 import dayjs from 'dayjs';
 import useApi from '@/apis/mdt';
 import styles from './index.less';
-import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
 import ShowTitle from './components/showTitle';
-
+import { PreviewImage } from '@/components';
+import { IMAGE_DOMIN } from '@/config/constant';
+import classNames from 'classnames';
 
 const WEEKS = ['一', '二', '三', '四', '五', '六', '日'];
 
 export default () => {
   const { teamId } = useGetParams<{ teamId: string }>();
-  console.log('teamId======>', teamId);
   const { bottomHeight } = useSafeArea();
   const {
     loading,
@@ -68,29 +68,23 @@ export default () => {
         >
           {(detail.teamMembers ?? []).map((v) => {
             return (
-              <Space
-                size={'10px'}
-                key={v.id}
-                className={styles.affirmSheet_item}
-              >
+              <Space size={10} key={v.id} className={styles.affirmSheet_item}>
                 <View>
-                  <Image
-                    src={v.doctorImage}
+                  <PreviewImage
+                    url={v.doctorImage ?? `${IMAGE_DOMIN}/mdt/ys2.png`}
                     className={styles.user_icon}
-                  ></Image>
+                  ></PreviewImage>
                 </View>
-                <View className={styles.doctor_desc}>
-                  <View className={styles.doctor_gap}>
+                <Space vertical className={styles.doctor_desc} size={20}>
+                  <View>
                     <Text className={styles.doctor_name}>{v.doctorName}</Text>
                     <Text>{v.doctorLevel}</Text>
                   </View>
-                  <View className={styles.doctor_gap}>
+                  <View>
                     <Text>{v.hospitalName}</Text>&nbsp;|&nbsp;
                     <Text>{v.deptName}</Text>
                   </View>
-                  <View className={styles.doctor_gap}>
-                    <Text>{v.doctorSpecialty}</Text>
-                  </View>
+                  <View>{v.doctorSpecialty}</View>
                   <Button
                     type={'primary'}
                     className={styles.doctor_gap}
@@ -101,7 +95,7 @@ export default () => {
                   >
                     专家详情
                   </Button>
-                </View>
+                </Space>
               </Space>
             );
           })}
@@ -114,8 +108,11 @@ export default () => {
     <View className={styles.page}>
       {loading && <Loading type={'top'} />}
       <View>
-        <Space className={styles.detail_top} size={'10px'}>
-          <Image src={detail.avatarImage} className={styles.user_icon}></Image>
+        <Space className={styles.detail_top} size={20}>
+          <PreviewImage
+            url={detail.avatarImage ?? `${IMAGE_DOMIN}/mdt/user_icon.png`}
+            className={styles.user_icon}
+          ></PreviewImage>
           <View className={styles.detail_top_right}>
             <Text className={styles.right_name}>{detail.teamName}</Text>
             <View className={styles.top_right_bottom}>
@@ -144,7 +141,6 @@ export default () => {
                     );
                   })}
                 </View>
-                {/* <Text>周三上午（13:00）</Text> */}
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
@@ -159,21 +155,31 @@ export default () => {
                   </View>
                 }
               >
-                <ScrollView>
-                  <Space size={10}>
-                    {(detail.teamMembers ?? []).map((userItem) => (
-                      <Space key={userItem.id}>
-                        <View className={styles.user_list}>
-                          <Image
-                            src={userItem.doctorImage}
-                            className={styles.user_icon}
-                          ></Image>
-                          <View>{userItem.doctorName}</View>
-                        </View>
-                      </Space>
-                    ))}
-                  </Space>
-                </ScrollView>
+                {detail.teamMembers.length ? (
+                  <ScrollView>
+                    <Space size={40}>
+                      {(detail.teamMembers ?? []).map((userItem) => (
+                        <Space key={userItem.id} size={10}>
+                          <View className={styles.user_list}>
+                            <Image
+                              src={
+                                userItem.doctorImage ??
+                                `${IMAGE_DOMIN}/mdt/ys2.png`
+                              }
+                              className={classNames([
+                                styles.user_icon,
+                                styles.user_icon_bottom,
+                              ])}
+                            ></Image>
+                            <View>{userItem.doctorName}</View>
+                          </View>
+                        </Space>
+                      ))}
+                    </Space>
+                  </ScrollView>
+                ) : (
+                  <NoData />
+                )}
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
