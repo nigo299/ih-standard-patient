@@ -116,27 +116,29 @@ export interface ListParams {
   pageNum: number;
   numPerPage: number;
 }
+
+export interface Team {
+  id: string;
+  hisId: string;
+  hospitalName: string;
+  teamName: string;
+  diseaseType: string;
+  mode: string;
+  avatarImage: string;
+  visitSlot: Array<{
+    week: string;
+    startTime: string;
+    endTime: string;
+  }>;
+  intro: string;
+  createTime: string;
+  updateTime: string;
+  price: string;
+  memberAmount: string;
+  deptAmount: string;
+}
 export interface MDTTeam extends API.ResponseDataType {
-  data: {
-    id: string;
-    hisId: string;
-    hospitalName: string;
-    teamName: string;
-    diseaseType: string;
-    mode: string;
-    avatarImage: string;
-    visitSlot: Array<{
-      week: string;
-      startTime: string;
-      endTime: string;
-    }>;
-    intro: string;
-    createTime: string;
-    updateTime: string;
-    price: string;
-    memberAmount: string;
-    deptAmount: string;
-  };
+  data: Team;
 }
 export interface MDTTeamItem {
   id: string;
