@@ -239,6 +239,132 @@ export interface MDTTeamSchedule extends API.ResponseDataType {
   }>;
 }
 
+export interface MDTScheduleView extends API.ResponseDataType {
+  data: Array<{
+    date: string; // 日期
+    state: string; // 状态 0-约满， 1-有号
+  }>;
+}
+
+export interface MDTDetail extends API.ResponseDataType {
+  data: {
+    id: string;
+    hisId: string;
+    roomId: string;
+    roomName: string;
+    userId: string;
+    patientId: string;
+    patName: string;
+    applySource: string;
+    teamId: string;
+    teamName: string;
+    diseaseType: string;
+    payState: string;
+    mdtState: string;
+    resourceId: string;
+    createTime: string;
+    updateTime: string;
+    mdtStartTime: string;
+    mdtEndTime: string;
+    mdtFee: string;
+    orderId: string;
+    orderSerialNumber: string;
+    purpose: string;
+    rejectReviewReason: string;
+    payTime: string;
+    reviewTime: string;
+    applyCancelTime: string;
+    reviewCancelTime: string;
+    finishTime: string;
+    hospitalName: string;
+    districtId: string;
+    districtName: string;
+    roomAddress: string;
+    reportUrl: string;
+    patCardNo: string;
+    patSex: string;
+    patAgeStr: string;
+    mdtOfflineApply: {
+      id: string;
+      hisId: string;
+      mdtOfflineId: string;
+      userId: string;
+      patientId: string;
+      patName: string;
+      patPhone: string;
+      patCardNo: string;
+      patSex: string;
+      patBirthday: string;
+      createTime: string;
+      updateTime: string;
+      chiefComplaint: string;
+      symptom: string;
+      allergies: string;
+      medicalHistory: string;
+      operationHistory: string;
+      initialDiagnosis: string;
+      anamnesis: string;
+      examination: string;
+      imageData: string;
+      fileData: string;
+      videoData: string;
+      contactPhone: string;
+    };
+    members: Array<{
+      id: string;
+      hisId: string;
+      mdtOfflineId: string;
+      memberRole: string;
+      doctorId: string;
+      doctorName: string;
+      cpHospitalId: string;
+      hospitalName: string;
+      createTime: string;
+      updateTime: string;
+      deptId: string;
+      deptName: string;
+      level: string;
+    }>;
+  };
+}
+
+export interface MDTPay extends API.ResponseDataType {
+  data: {
+    id: string;
+    hisId: string;
+    roomId: string;
+    roomName: string;
+    userId: string;
+    patientId: string;
+    patName: string;
+    applySource: string;
+    teamId: string;
+    teamName: string;
+    diseaseType: string;
+    payState: string;
+    mdtState: string;
+    resourceId: string;
+    createTime: string;
+    updateTime: string;
+    mdtStartTime: string;
+    mdtEndTime: string;
+    mdtFee: string;
+    orderId: string;
+    orderSerialNumber: string;
+    purpose: string;
+    rejectReviewReason: string;
+    payTime: string;
+    reviewTime: string;
+    applyCancelTime: string;
+    reviewCancelTime: string;
+    finishTime: string;
+    districtId: string;
+    districtName: string;
+    roomAddress: string;
+    reportUrl: string;
+  };
+}
+
 export default {
   查询团队列表: createApiHooks((params: { searchKey?: string }) =>
     request.get<MDTTeam>(`/api/ihis/cooperate/mdt-team`, {
@@ -280,5 +406,55 @@ export default {
           params,
         },
       ),
+  ),
+  会诊按日历显示: createApiHooks(
+    (params: { teamId: string; type: string; relationId: string }) =>
+      request.get<MDTScheduleView>(
+        `/api/ihis/cooperate/mdt-schedule/date-state/${params.teamId}`,
+        {
+          params,
+        },
+      ),
+  ),
+  线下MDT补充资料: createApiHooks(
+    (params: {
+      id: number;
+      symptom: string;
+      allergies: string;
+      medicalHistory: string;
+      operationHistory: string;
+      imageData: string;
+      fileData: string;
+      videoData: string;
+      contactPhone: string;
+    }) => {
+      return request.put<API.ResponseDataType>(
+        '/api/ihis/cooperate/mdt-offline/improve-info',
+        {
+          ...params,
+        },
+      );
+    },
+  ),
+  查询线下MDT详情: createApiHooks((params: { id: string }) =>
+    request.get<MDTDetail>(`/api/ihis/cooperate/mdt-offline/${params.id}`),
+  ),
+  申请取消会诊: createApiHooks((params: { id: number; reason: string }) => {
+    return request.put<API.ResponseDataType>(
+      '/api/ihis/cooperate/mdt-offline/apply-cancel',
+      {
+        ...params,
+      },
+    );
+  }),
+  线下MDT下单: createApiHooks(
+    (data: {
+      roomId: string;
+      roomName: string; //H%,MINI
+      patientId: string;
+      teamId: string;
+      resourceId: string;
+      mdtFee: number;
+    }) => request.post<MDTPay>(`/api/ihis/cooperate/mdt-offline`, data),
   ),
 };
