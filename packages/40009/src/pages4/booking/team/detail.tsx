@@ -1,61 +1,49 @@
-import React, { useState, useRef } from 'react';
-import { View, Image, navigateTo, redirectTo, Text } from 'remax/one';
+import React from 'react';
+import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import {
   Button,
-  ColorText,
   NoData,
-  showToast,
   Space,
-  Calendar,
   Loading,
   ScrollView,
   useSafeArea,
   AffirmSheet,
-  Icon,
+  setStorageSync,
 } from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
-import classNames from 'classnames';
 import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
+import useApi from '@/apis/mdt';
 import styles from './index.less';
-import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
 import ShowTitle from './components/showTitle';
+import { PreviewImage } from '@/components';
+import { IMAGE_DOMIN } from '@/config/constant';
+import classNames from 'classnames';
 
-import userSrc from './assets/images/user.png';
+const WEEKS = ['一', '二', '三', '四', '五', '六', '日'];
 
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
+  const { teamId } = useGetParams<{ teamId: string }>();
   const { bottomHeight } = useSafeArea();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
   const {
-    request,
     loading,
-    data: { data },
-  } = useApi.透传字段({
+    data: { data: detail },
+  } = useApi.根据id查询团队详情({
+    initValue: { data: {} },
     params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
+      id: teamId,
     },
-    needInit: false,
+    needInit: true,
   });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
-  );
   usePageEvent('onShow', async () => {
     setNavigationBar({
       title: '团队详情',
     });
   });
 
-  const handleExpertDetail = () => {
+  const handleExpertDetail = (v: typeof detail.teamMembers) => {
+    setStorageSync('expert_info', v);
     navigateTo({ url: '/pages4/booking/team/expert' });
   };
 
@@ -68,7 +56,6 @@ export default () => {
       title: (
         <View className={styles.affirmSheet_box}>
           <Text style={{ color: '#333' }}>团队成员</Text>
-          {/* <Icon name={'kq-clear'} /> */}
           <Text style={{ color: '#333' }} onTap={hanldeAffirmClose}>
             X
           </Text>
@@ -79,37 +66,36 @@ export default () => {
           className={styles.affirmSheet_content}
           style={{ paddingBottom: bottomHeight }}
         >
-          {new Array(20).fill('').map((v, i) => {
+          {(detail.teamMembers ?? []).map((v) => {
             return (
-              <Space size={'10px'} key={i} className={styles.affirmSheet_item}>
+              <Space size={10} key={v.id} className={styles.affirmSheet_item}>
                 <View>
-                  <Image src={userSrc} className={styles.user_icon}></Image>
+                  <PreviewImage
+                    url={v.doctorImage ?? `${IMAGE_DOMIN}/mdt/ys2.png`}
+                    className={styles.user_icon}
+                  ></PreviewImage>
                 </View>
-                <View className={styles.doctor_desc}>
-                  <View className={styles.doctor_gap}>
-                    <Text className={styles.doctor_name}>医生名称</Text>
-                    <Text>主任医生</Text>
+                <Space vertical className={styles.doctor_desc} size={20}>
+                  <View>
+                    <Text className={styles.doctor_name}>{v.doctorName}</Text>
+                    <Text>{v.doctorLevel}</Text>
                   </View>
-                  <View className={styles.doctor_gap}>
-                    <Text>重庆松山医院</Text>&nbsp;|&nbsp;<Text>新增内科</Text>
+                  <View>
+                    <Text>{v.hospitalName}</Text>&nbsp;|&nbsp;
+                    <Text>{v.deptName}</Text>
                   </View>
-                  <View className={styles.doctor_gap}>
-                    <Text>
-                      擅长：临床工作30余年，擅长心力衰竭，心
-                      肌病、辩膜病、心脏影像学。
-                    </Text>
-                  </View>
+                  <View>{v.doctorSpecialty}</View>
                   <Button
                     type={'primary'}
                     className={styles.doctor_gap}
                     size="small"
                     block={false}
                     ghost
-                    onTap={() => handleExpertDetail()}
+                    onTap={() => handleExpertDetail(v as any)}
                   >
                     专家详情
                   </Button>
-                </View>
+                </Space>
               </Space>
             );
           })}
@@ -122,10 +108,13 @@ export default () => {
     <View className={styles.page}>
       {loading && <Loading type={'top'} />}
       <View>
-        <Space className={styles.detail_top} size={'10px'}>
-          <Image src={userSrc} className={styles.user_icon}></Image>
+        <Space className={styles.detail_top} size={20}>
+          <PreviewImage
+            url={detail.avatarImage ?? `${IMAGE_DOMIN}/mdt/user_icon.png`}
+            className={styles.user_icon}
+          ></PreviewImage>
           <View className={styles.detail_top_right}>
-            <Text className={styles.right_name}>肥胖和糖尿病代谢疾病MDT</Text>
+            <Text className={styles.right_name}>{detail.teamName}</Text>
             <View className={styles.top_right_bottom}>
               <Text className={styles.border_hos_name}>三甲医院</Text>
               <Text>重庆松山医院</Text>
@@ -136,12 +125,22 @@ export default () => {
           <View className={styles.inner_content}>
             <View className={styles.item_gap}>
               <ShowTitle title="病种名称">
-                <Text>肥胖和糖尿病代谢疾病</Text>
+                <Text>{detail.diseaseType}</Text>
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
               <ShowTitle title="出诊时间">
-                <Text>周三上午（13:00）</Text>
+                <View>
+                  {(detail.visitSlot ?? []).map((i) => {
+                    return (
+                      <View>
+                        星期{WEEKS[i.week + 1]} (
+                        {dayjs(`2000-10-10 ${i.startTime}`).format('hh:mm')} ~{' '}
+                        {dayjs(`2000-10-10 ${i.endTime}`).format('hh:mm')})
+                      </View>
+                    );
+                  })}
+                </View>
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
@@ -156,28 +155,36 @@ export default () => {
                   </View>
                 }
               >
-                <ScrollView>
-                  <Space size={10}>
-                    {new Array(50).fill(0).map((_, i) => (
-                      <Space key={i}>
-                        <View>
-                          <Image
-                            src={userSrc}
-                            className={styles.user_icon}
-                          ></Image>
-                          <Text>束带结</Text>
-                        </View>
-                      </Space>
-                    ))}
-                  </Space>
-                </ScrollView>
+                {detail.teamMembers.length ? (
+                  <ScrollView>
+                    <Space size={40}>
+                      {(detail.teamMembers ?? []).map((userItem) => (
+                        <Space key={userItem.id} size={10}>
+                          <View className={styles.user_list}>
+                            <Image
+                              src={
+                                userItem.doctorImage ??
+                                `${IMAGE_DOMIN}/mdt/ys2.png`
+                              }
+                              className={classNames([
+                                styles.user_icon,
+                                styles.user_icon_bottom,
+                              ])}
+                            ></Image>
+                            <View>{userItem.doctorName}</View>
+                          </View>
+                        </Space>
+                      ))}
+                    </Space>
+                  </ScrollView>
+                ) : (
+                  <NoData />
+                )}
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
               <ShowTitle title="团队介绍">
-                <Text>
-                  随着我国肥胖和超重人群的逐渐增长，肥胖既是一种独立的疾病，同时也是多种心脑血管疾病以及内分泌代谢疾病的危险因素，如2型糖尿病、
-                </Text>
+                <Text>{detail.intro}</Text>
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
