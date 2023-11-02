@@ -130,7 +130,7 @@ const subPackages = [
       'booking/confirm/index', //MDT预约确认
       'cash/index', //MDT收银台
       'dataUpload/index', //MDT资料上传
-      'apply/index', //MDT申请
+      'supplyCondition/index', //MDT补充资料
       'bookRecords/index', //MDT预约记录
       'bookRecords/detail', //MDT预约记录详情
     ],

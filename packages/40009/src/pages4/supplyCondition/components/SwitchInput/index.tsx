@@ -1,49 +1,45 @@
 import React from 'react';
 import { Space, ReTextarea, Switch } from '@kqinfo/ui';
+import { Text } from 'remax/one';
 import styles from './index.less';
 export default ({
   value,
   onChange,
   placeholder = '请输入',
+  maxLength = 500,
 }: {
   disabled?: boolean;
   placeholder?: string;
-  value?: {
-    isfalg: boolean;
-    text: string;
-  };
-  onChange?: (v?: { isfalg: boolean; text?: string }) => void;
+  value?: string;
+  onChange?: (v?: string) => void;
+  maxLength?: number;
 }) => {
-  console.log(value);
   return (
     <Space size={20} vertical className={styles.box}>
       <Switch
         className={styles.switch}
-        value={value?.isfalg}
+        value={!!value && value.length > 0}
         onChange={(v) => {
           if (!v) {
-            onChange?.({
-              isfalg: false,
-              text: '',
-            });
+            onChange?.('');
           } else {
-            onChange?.({
-              isfalg: true,
-              text: '',
-            });
+            onChange?.(' ');
           }
         }}
       />
-      {value?.isfalg && (
+      {!!value && value.length > 0 && (
+        <Text className={styles.count}>
+          {value.length}/{maxLength}
+        </Text>
+      )}
+      {!!value && value.length > 0 && (
         <ReTextarea
           placeholder={placeholder}
           className={styles.textarea}
           onChange={(v?: string) => {
-            onChange?.({
-              isfalg: true,
-              text: v,
-            });
+            onChange?.(v);
           }}
+          maxLength={maxLength}
         />
       )}
     </Space>

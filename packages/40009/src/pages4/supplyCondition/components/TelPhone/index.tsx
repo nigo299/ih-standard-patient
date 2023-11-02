@@ -5,10 +5,12 @@ export default ({
   value,
   onChange,
   placeholder = '请输入',
+  reserved = '',
 }: {
   placeholder?: string;
   value?: string;
   onChange?: (v?: string) => void;
+  reserved?: string;
 }) => {
   console.log(value);
   return (
@@ -22,6 +24,9 @@ export default ({
         type="primary"
         size="tiny"
         onTap={() => {
+          if (reserved) {
+            onChange?.(reserved);
+          }
           //通过接口获取预留手机号
         }}
       >

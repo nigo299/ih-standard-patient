@@ -371,7 +371,7 @@ export default {
       params,
     }),
   ),
-  分页查询团队列表: createApiHooks(
+  分页查询线下MDT列表: createApiHooks(
     (params: ListParams & { patientId?: string; mdtState?: string }) =>
       request.get<ListApiResponseData<MDTTeamItem>>(
         `/api/ihis/cooperate/mdt-team`,
