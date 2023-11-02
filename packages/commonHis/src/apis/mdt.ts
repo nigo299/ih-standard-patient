@@ -138,7 +138,7 @@ export interface Team {
   deptAmount: string;
 }
 export interface MDTTeam extends API.ResponseDataType {
-  data: Team;
+  data: Team[];
 }
 export interface MDTTeamItem {
   id: string;
