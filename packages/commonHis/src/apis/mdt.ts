@@ -123,10 +123,10 @@ export interface Team {
   hospitalName: string;
   teamName: string;
   diseaseType: string;
-  mode: string;
+  mode: 1 | 2 | 3;
   avatarImage: string;
   visitSlot: Array<{
-    week: string;
+    week: number;
     startTime: string;
     endTime: string;
   }>;
