@@ -138,7 +138,7 @@ export default () => {
     },
     {
       title: '住院服务',
-      subTitle: '住院患者贴心服务',
+      subTitle: '住院费预交/费用清单查询/住院评价等贴心服务',
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
       image: `${IMAGE_DOMIN}/home/zyfw.png`,
     },
