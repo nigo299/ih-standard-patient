@@ -222,6 +222,7 @@ export default () => {
             url: `/pages/microsite/hospital-article/index?type=157&title=${encodeURIComponent(
               '采购专栏',
             )}`,
+            patientId: true,
             image: `${IMAGE_DOMIN}/home/cgzl.png`,
           },
         ]
@@ -302,6 +303,7 @@ export default () => {
             url: `/pages/microsite/hospital-article/index?type=157&title=${encodeURIComponent(
               '采购专栏',
             )}`,
+            patientId: true,
             image: `${IMAGE_DOMIN}/home/cgzl.png`,
           },
           {
