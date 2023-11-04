@@ -2,6 +2,7 @@ import CryptoJS from 'crypto-js';
 import { PLATFORM } from '@/config/constant';
 import { reLaunch, redirectTo } from 'remax/one';
 import dayjs from 'dayjs';
+import * as uuid from 'uuid';
 import md5 from 'md5';
 export const reLaunchUrl = (url: string) => {
   if (PLATFORM === 'web') {
@@ -380,3 +381,27 @@ export const getPatientAge = (val: string | undefined | number): string => {
 export const useMd5 = (value: string) => {
   return md5(`${value}ASJAS98ASD8A9S8DA98SD8AS98D`);
 };
+// 生成文件名称
+export function filerName(last: string, dir = 'VOICE/'): string {
+  const myDate = new Date();
+  const ossPath = dir;
+  const year = myDate.getFullYear();
+  let month;
+  let day;
+  if (myDate.getMonth() + 1 < 10) {
+    month = '0' + myDate.getMonth() + 1;
+  } else {
+    month = myDate.getMonth() + 1;
+  }
+  if (myDate.getDate() < 10) {
+    const d = myDate.getDate() + 1;
+    day = '0' + d;
+  } else {
+    day = myDate.getDate();
+  }
+
+  const m = ossPath + year + '/' + month + '/' + day + '/';
+
+  const filename = m + uuid.v4() + '.' + last; //名称
+  return filename;
+}
