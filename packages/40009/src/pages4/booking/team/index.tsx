@@ -46,9 +46,7 @@ export default () => {
             // ref={listRef}
             defaultLimit={100}
             getList={getDoctorList}
-            renderItem={(item: Team) => (
-              <Item key={item.id} content={item}></Item>
-            )}
+            renderItem={(item: Team) => <Item key={item.id} content={item} />}
           />
         </View>
       </View>

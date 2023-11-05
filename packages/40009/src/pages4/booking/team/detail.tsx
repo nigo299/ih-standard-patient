@@ -21,7 +21,7 @@ import { PreviewImage } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
 import classNames from 'classnames';
 
-const WEEKS = ['一', '二', '三', '四', '五', '六', '日'];
+const WEEKS: any[] = ['一', '二', '三', '四', '五', '六', '日'];
 
 export default () => {
   const { teamId } = useGetParams<{ teamId: string }>();
@@ -73,7 +73,7 @@ export default () => {
                   <PreviewImage
                     url={v.doctorImage ?? `${IMAGE_DOMIN}/mdt/ys2.png`}
                     className={styles.user_icon}
-                  ></PreviewImage>
+                  />
                 </View>
                 <Space vertical className={styles.doctor_desc} size={20}>
                   <View>
@@ -112,7 +112,7 @@ export default () => {
           <PreviewImage
             url={detail.avatarImage ?? `${IMAGE_DOMIN}/mdt/user_icon.png`}
             className={styles.user_icon}
-          ></PreviewImage>
+          />
           <View className={styles.detail_top_right}>
             <Text className={styles.right_name}>{detail.teamName}</Text>
             <View className={styles.top_right_bottom}>
@@ -133,7 +133,7 @@ export default () => {
                 <View>
                   {(detail.visitSlot ?? []).map((i) => {
                     return (
-                      <View>
+                      <View key={i.week}>
                         星期{WEEKS[i.week + 1]} (
                         {dayjs(`2000-10-10 ${i.startTime}`).format('hh:mm')} ~{' '}
                         {dayjs(`2000-10-10 ${i.endTime}`).format('hh:mm')})
@@ -170,7 +170,7 @@ export default () => {
                                 styles.user_icon,
                                 styles.user_icon_bottom,
                               ])}
-                            ></Image>
+                            />
                             <View>{userItem.doctorName}</View>
                           </View>
                         </Space>

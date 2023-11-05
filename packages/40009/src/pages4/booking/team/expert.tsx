@@ -30,7 +30,7 @@ export default () => {
             <PreviewImage
               url={info.doctorImage ?? `${IMAGE_DOMIN}/mdt/ys2.png`}
               className={styles.user_icon}
-            ></PreviewImage>
+            />
             <View className={styles.detail_top_right}>
               <Text className={styles.right_name}>
                 {info.doctorName}&nbsp;|&nbsp;{info.doctorLevel}
@@ -50,11 +50,11 @@ export default () => {
               src={`${IMAGE_DOMIN}/mdt/${hasCollect ? 'sc_full' : 'sc'}.png`}
               className={styles.share_icon}
               onTap={toggleCollect}
-            ></Image>
+            />
             <Image
               src={`${IMAGE_DOMIN}/mdt/share.png`}
               className={styles.share_icon}
-            ></Image>
+            />
           </View>
         </Space>
         <View className={styles.detail_content}>

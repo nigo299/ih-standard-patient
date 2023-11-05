@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, navigateTo } from 'remax/one';
-import { Shadow, Exceed, Button, ListItem, Space } from '@kqinfo/ui';
+import { Shadow, Exceed, Button, Space } from '@kqinfo/ui';
 import { PreviewImage } from '@/components';
 import styles from './index.less';
 import { IMAGE_DOMIN } from '@/config/constant';
@@ -29,7 +29,7 @@ const Item: React.FC<Props> = (props) => {
             <PreviewImage
               url={content.avatarImage ?? `${IMAGE_DOMIN}/mdt/user_icon.png`}
               className={styles.user_icon}
-            ></PreviewImage>
+            />
             <View className={styles.imgFooter}>
               {[MODE.线下, MODE.全部].includes(content.mode) && (
                 <View className={`${styles.txt} ${styles.top}`}>线下会诊</View>

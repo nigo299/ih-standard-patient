@@ -185,11 +185,7 @@ export default () => {
                   name={'contactPhone'}
                   rules={[{ type: 'idCard', required: true }]}
                 >
-                  <TelPhone
-                    reserved={
-                      mdtDetail?.mdtOfflineApply?.patPhone || '15111995399'
-                    }
-                  />
+                  <TelPhone reserved={mdtDetail?.mdtOfflineApply?.patPhone} />
                 </FormItem>
                 <FormItem
                   label={'上传检验检查资料'}
