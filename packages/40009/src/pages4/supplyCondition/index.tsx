@@ -17,10 +17,12 @@ import { IMAGE_DOMIN } from '@/config/constant';
 import Label from '@/components/label';
 import SwitchInput from './components/SwitchInput';
 import TelPhone from './components/TelPhone';
+import UploadFile from './components/uploadFile';
 import useApi from '@/apis/mdt';
 import useGetParams from '@/utils/useGetParams';
 import { getPatientAge } from '@/utils';
 import dayjs from 'dayjs';
+import { uploadFunc } from '@/utils/useUpload';
 export default () => {
   const { id } = useGetParams<{
     id: string;
@@ -100,24 +102,29 @@ export default () => {
                 vertical
                 labelCls={styles.Formlabel}
                 requiredMarkCls={styles.requiredMark}
-                values={{
-                  ...mdtDetail,
-                  mdtRangeTime: `${dayjs(mdtDetail.mdtStartTime).format(
-                    'YYYY-MM-DD',
-                  )}  星期${week[dayjs(mdtDetail.mdtStartTime).day()]}  ${dayjs(
-                    mdtDetail.mdtStartTime,
-                  ).format('HH:mm')} - ${dayjs(mdtDetail.mdtEndTime).format(
-                    'HH:mm',
-                  )}`,
-                  symptom: mdtDetail?.mdtOfflineApply?.symptom,
-                  allergies: mdtDetail?.mdtOfflineApply?.allergies,
-                  medicalHistory: mdtDetail?.mdtOfflineApply?.medicalHistory,
-                  operationHistory:
-                    mdtDetail?.mdtOfflineApply?.operationHistory,
-                  imageData: mdtDetail?.mdtOfflineApply?.imageData,
-                  fileData: mdtDetail?.mdtOfflineApply?.fileData,
-                  videoData: mdtDetail?.mdtOfflineApply?.videoData,
-                }}
+                values={
+                  mdtDetail?.teamName
+                    ? {
+                        ...mdtDetail,
+                        mdtRangeTime: `${dayjs(mdtDetail.mdtStartTime).format(
+                          'YYYY-MM-DD',
+                        )}  星期${
+                          week[dayjs(mdtDetail.mdtStartTime).day()]
+                        }  ${dayjs(mdtDetail.mdtStartTime).format(
+                          'HH:mm',
+                        )} - ${dayjs(mdtDetail.mdtEndTime).format('HH:mm')}`,
+                        symptom: mdtDetail?.mdtOfflineApply?.symptom,
+                        allergies: mdtDetail?.mdtOfflineApply?.allergies,
+                        medicalHistory:
+                          mdtDetail?.mdtOfflineApply?.medicalHistory,
+                        operationHistory:
+                          mdtDetail?.mdtOfflineApply?.operationHistory,
+                        imageData: mdtDetail?.mdtOfflineApply?.imageData,
+                        fileData: mdtDetail?.mdtOfflineApply?.fileData,
+                        videoData: mdtDetail?.mdtOfflineApply?.videoData,
+                      }
+                    : { teamName: '' }
+                }
               >
                 <FormItem
                   label={'会诊团队'}
@@ -178,7 +185,11 @@ export default () => {
                   name={'contactPhone'}
                   rules={[{ type: 'idCard', required: true }]}
                 >
-                  <TelPhone reserved={mdtDetail?.mdtOfflineApply?.patPhone} />
+                  <TelPhone
+                    reserved={
+                      mdtDetail?.mdtOfflineApply?.patPhone || '15111995399'
+                    }
+                  />
                 </FormItem>
                 <FormItem
                   label={'上传检验检查资料'}
@@ -186,65 +197,62 @@ export default () => {
                   rules={[{ required: true }]}
                 >
                   <UploadImg
-                    className={styles.upload}
                     length={5}
                     multiple
-                    tip={
-                      <View className={styles.tips}>
-                        图片支持JPEG、JPG、PNGBMP、GIF、TIFF格式，限制单
-                        张图片不超过5M
-                      </View>
-                    }
                     maxSize={1 * 1024 * 1024}
                     onMaxError={() => {
                       showToast({ title: '文件过大', icon: 'none' });
                     }}
+                    delIconCls={styles.delAction}
+                    delIcon={<Text>删除</Text>}
+                    tip={<></>}
                     // 示例，这里需要换成真实上传方法
-                    uploadFn={(file: any) =>
-                      useApi.UploadFile.request({ file })
+                    uploadFn={async (file: any) =>
+                      await uploadFunc(file, 'image')
                     }
                   />
                 </FormItem>
+                <View className={styles.tips}>
+                  图片支持JPEG、JPG、PNGBMP、GIF、TIFF格式，限制单张图片不超过5M
+                </View>
                 <FormItem label={'上传检查影像文件'} name={'fileData'}>
-                  <UploadImg
-                    className={styles.upload}
+                  <UploadFile
                     length={5}
                     multiple
-                    tip={
-                      <View className={styles.tips}>
-                        请上传DCM格式的DICOM文件
-                      </View>
-                    }
-                    maxSize={1 * 1024 * 1024}
+                    maxSize={200 * 1024 * 1024}
+                    delIconCls={styles.delAction}
+                    delIcon={<Text>删除</Text>}
+                    tip={<></>}
                     onMaxError={() => {
                       showToast({ title: '文件过大', icon: 'none' });
                     }}
                     // 示例，这里需要换成真实上传方法
-                    uploadFn={(file: any) =>
-                      useApi.UploadFile.request({ file })
+                    uploadFn={async (file: any) =>
+                      await uploadFunc(file, 'video')
                     }
                   />
                 </FormItem>
+                <View className={styles.tips}>请上传DCM格式的DICOM文件</View>
                 <FormItem label={'上传视频资料'} name={'videoData'}>
-                  <UploadImg
-                    className={styles.upload}
+                  <UploadFile
                     length={5}
                     multiple
-                    tip={
-                      <View className={styles.tips}>
-                        视频仅支持MP4格式，单个视频不超过200M
-                      </View>
-                    }
-                    maxSize={1 * 1024 * 1024}
+                    maxSize={200 * 1024 * 1024}
                     onMaxError={() => {
                       showToast({ title: '文件过大', icon: 'none' });
                     }}
+                    delIconCls={styles.delAction}
+                    delIcon={<Text>删除</Text>}
+                    tip={<></>}
                     // 示例，这里需要换成真实上传方法
-                    uploadFn={(file: any) =>
-                      useApi.UploadFile.request({ file })
+                    uploadFn={async (file: any) =>
+                      await uploadFunc(file, 'video')
                     }
                   />
                 </FormItem>
+                <View className={styles.tips}>
+                  视频仅支持MP4格式，单个视频不超过200M
+                </View>
               </Form>
             </View>
           </View>

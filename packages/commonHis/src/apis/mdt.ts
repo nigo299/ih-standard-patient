@@ -1,8 +1,5 @@
 import request from '@/apis/utils/request';
-import { uploadFile } from '@kqinfo/ui';
-import useApi from '@/apis/feedback';
 import createApiHooks from 'create-api-hooks';
-import dayjs from 'dayjs';
 export interface PatientType {
   /**父母姓名 */
   parentName?: string;
@@ -331,9 +328,7 @@ export interface MDTDetail extends API.ResponseDataType {
     }>;
   };
 }
-type aliFileType = {
-  file: string;
-};
+
 export interface MDTPay extends API.ResponseDataType {
   data: {
     id: string;
@@ -370,7 +365,6 @@ export interface MDTPay extends API.ResponseDataType {
     reportUrl: string;
   };
 }
-
 export default {
   查询团队列表: createApiHooks((params: { searchKey?: string }) =>
     request.get<MDTTeam>(`/api/ihis/cooperate/mdt-team`, {
@@ -462,43 +456,5 @@ export default {
       resourceId: string;
       mdtFee: number;
     }) => request.post<MDTPay>(`/api/ihis/cooperate/mdt-offline`, data),
-  ),
-  // 文件上传到阿里云
-  UploadFile: createApiHooks<aliFileType, string>(
-    async ({ file }: aliFileType) => {
-      const { data: sign } = await useApi.OSS签名.request();
-      const host = sign.host;
-      const originalName = file;
-      const dateName = dayjs().format('YYYY/MM/DD');
-      const filename = `${sign.dir}/${dateName}-${sign.expire}.jpg`;
-      const formData = {
-        key: filename,
-        policy: sign.policy,
-        callback: sign.callback,
-        signature: sign.sign,
-        OSSAccessKeyId: sign.accessId,
-        success_action_status: 200,
-      };
-
-      const url = await uploadFile({
-        url: sign.host,
-        name: 'file',
-        fileType: 'image',
-        filePath: originalName,
-        formData,
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        success: () => {
-          return `${host}/${filename}`;
-        },
-        fail: (res: any) => {
-          if (res?.statusCode === 203) {
-            return `${host}/${filename}`;
-          }
-        },
-      });
-      return url;
-    },
   ),
 };

@@ -12,11 +12,11 @@ export default ({
   onChange?: (v?: string) => void;
   reserved?: string;
 }) => {
-  console.log(value);
   return (
     <Space size={20} className={styles.ipt}>
       <ReInput
         type="number"
+        value={value}
         placeholder={placeholder}
         onChange={(v) => onChange?.(v)}
       />
