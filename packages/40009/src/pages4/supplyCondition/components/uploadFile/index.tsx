@@ -1,9 +1,9 @@
-import { View, Text, Image } from '@remax/one';
+import { View, Text } from '@remax/one';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import styles from './index.module.less';
 import { useRefState, useStateRef } from 'parsec-hooks';
-import { selectFiles, Icon, getPlatform } from '@kqinfo/ui';
+import { selectFiles, Icon, getPlatform, Video } from '@kqinfo/ui';
 
 interface ReadOnly {
   /**
@@ -156,14 +156,12 @@ export default ({
             className={classNames(styles.uploadImgItem, itemCls)}
             key={index}
           >
-            <Image
+            <Video
               className={classNames(styles.uploadImgItemImage)}
               src={item}
-              mode={'aspectFill'}
-              //   onTap={() => {
-              //     previewImage({ urls: value, current: item });
-              //   }}
+              key={index}
             />
+
             {loading ? (
               <View className={styles.loading}>
                 <Icon name={'kq-loading'} color={'#fff'} />

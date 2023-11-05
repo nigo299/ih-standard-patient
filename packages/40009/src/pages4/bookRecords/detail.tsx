@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View } from 'remax/one';
 import {
   Space,
@@ -8,57 +8,94 @@ import {
   Image,
   Video,
   Button,
+  Loading,
+  Modal,
+  Form,
+  FormItem,
+  ReInput,
 } from '@kqinfo/ui';
 import styles from './index.less';
-import Status from './components/Status';
+import Status, { StatusTxt } from './components/Status';
 import Label from '@/components/label';
 import Fold from './components/Fold';
-
+import useGetParams from '@/utils/useGetParams';
+import useApi from '@/apis/mdt';
+import dayjs from 'dayjs';
+import { encryptPhone } from '@/utils';
 export default () => {
   useTitle('MDT申请单');
-  const [value, setValue] = useState<string[]>([
-    'https://z3.ax1x.com/2021/04/12/cBYfTU.png',
-    'https://z3.ax1x.com/2021/04/12/cBY4kF.png',
-    'https://z3.ax1x.com/2021/04/13/cruEHH.png',
-    'https://z3.ax1x.com/2021/04/13/cruEHH.png',
-    'https://z3.ax1x.com/2021/04/13/cruEHH.png',
-  ]);
+  const { id } = useGetParams<{
+    id: string;
+  }>();
+  const {
+    data: { data: mdtDetail },
+    loading,
+  } = useApi.查询线下MDT详情({
+    params: {
+      id,
+    },
+    initValue: {
+      data: { data: {} },
+    },
+    needInit: !!id,
+  });
+  const { request } = useApi.申请取消会诊({
+    needInit: false,
+  });
+  const [form] = Form.useForm();
   return (
     <View className={styles.warpPage}>
-      <Shadow>
-        <View className={styles.pane}>
-          <Space className={styles.paneHead}>
-            <PartTitle full>审核信息</PartTitle>
-          </Space>
-          <View className={styles.paneBody}>
-            {[
-              { label: '未通过原因', content: 'MDT' },
-              { label: '退款到账', content: 'MDT' },
-            ].map((item, index) => (
-              <Space
-                key={index}
-                alignItems="center"
-                className={styles.itemdesc}
-              >
-                <Label width={60}>{item.label}</Label>
-                <View className={styles.value}>{item.content}</View>
-              </Space>
-            ))}
+      {loading && <Loading />}
+      {mdtDetail?.mdtState === 'REJECT_REVIEW' && (
+        <Shadow>
+          <View className={styles.pane}>
+            <Space className={styles.paneHead}>
+              <PartTitle full>审核信息</PartTitle>
+            </Space>
+            <View className={styles.paneBody}>
+              {[
+                { label: '未通过原因', content: mdtDetail?.rejectReviewReason },
+                {
+                  label: '退款到账',
+                  content:
+                    mdtDetail?.payState === 'REFUND'
+                      ? '费用已原路退回，请查询支付账户！'
+                      : StatusTxt[mdtDetail?.payState],
+                },
+              ].map((item, index) => (
+                <Space
+                  key={index}
+                  alignItems="center"
+                  className={styles.itemdesc}
+                >
+                  <Label width={60}>{item.label}</Label>
+                  <View className={styles.value}>{item.content}</View>
+                </Space>
+              ))}
+            </View>
           </View>
-        </View>
-      </Shadow>
+        </Shadow>
+      )}
+      <Modal />
       <Shadow>
         <View className={styles.pane}>
           <Space className={styles.paneHead}>
             <PartTitle full>会诊信息</PartTitle>
-            <Status status="1" />
+            <Status status={mdtDetail?.mdtState} />
           </Space>
           <View className={styles.paneBody}>
             {[
-              { label: '会诊方式', content: 'MDT' },
-              { label: '会诊团队', content: 'MDT' },
-              { label: '会诊时间', content: 'MDT' },
-              { label: '会诊地点', content: 'MDT' },
+              { label: '会诊方式', content: '线下MDT门诊' },
+              { label: '会诊团队', content: mdtDetail?.teamName },
+              {
+                label: '会诊时间',
+                content: `${dayjs(mdtDetail?.mdtStartTime).format(
+                  'YYYY-MM-DD',
+                )} ${dayjs(mdtDetail?.mdtStartTime).format('HH:mm')}-${dayjs(
+                  mdtDetail?.mdtEndTime,
+                ).format('HH:mm')}`,
+              },
+              { label: '会诊地点', content: mdtDetail?.roomName },
             ].map((item, index) => (
               <Space
                 key={index}
@@ -79,17 +116,28 @@ export default () => {
           </Space>
           <View className={styles.paneBody}>
             {[
-              { label: '就诊人', content: 'MDT' },
-              { label: '就诊ID', content: 'MDT' },
-              { label: '联系方式', content: 'MDT' },
+              { label: '就诊人', content: mdtDetail?.patName },
+              { label: '就诊ID', content: mdtDetail?.patientId },
+              {
+                label: '联系方式',
+                content: encryptPhone(mdtDetail?.mdtOfflineApply?.contactPhone),
+              },
               {
                 label: '症状描述',
-                content: `言语行为与正常小孩有较大差别， 
-              自闭，不爱说话，难以交流`,
+                content: mdtDetail?.mdtOfflineApply?.symptom,
               },
-              { label: '过敏史', content: 'MDT' },
-              { label: '慢病史', content: 'MDT' },
-              { label: '手术史', content: 'MDT' },
+              {
+                label: '过敏史',
+                content: mdtDetail?.mdtOfflineApply?.allergies,
+              },
+              {
+                label: '慢病史',
+                content: mdtDetail?.mdtOfflineApply?.medicalHistory,
+              },
+              {
+                label: '手术史',
+                content: mdtDetail?.mdtOfflineApply?.operationHistory,
+              },
             ].map((item, index) => (
               <Space
                 key={index}
@@ -100,21 +148,66 @@ export default () => {
                 <View className={styles.value}>{item.content}</View>
               </Space>
             ))}
-            <Fold title="既往病史">
-              {value.map((item, index) => (
-                <Image src={item} key={index} className={styles.img} preview />
-              ))}
+            <Fold title="患者上传图片资料">
+              {(mdtDetail?.mdtOfflineApply?.imageData || []).map(
+                (item, index) => (
+                  <Image
+                    src={item}
+                    key={index}
+                    className={styles.img}
+                    preview
+                  />
+                ),
+              )}
             </Fold>
             <Fold title="患者上传视频资料">
-              {value.map((item, index) => (
-                <Video className={styles.img} src={item} key={index} />
-              ))}
+              {(mdtDetail?.mdtOfflineApply?.videoData || []).map(
+                (item, index) => (
+                  <Video className={styles.img} src={item} key={index} />
+                ),
+              )}
             </Fold>
           </View>
         </View>
       </Shadow>
       <View className={styles.bottomPane}>
-        <Button className={styles.ghostbtn}>取消MDT</Button>
+        <Button
+          className={styles.ghostbtn}
+          onTap={() =>
+            Modal.show({
+              title: '发送报告至邮箱',
+              // 异步关闭
+              onOk: () =>
+                new Promise((resolve, reject) => {
+                  form.submit();
+                  form
+                    .validateFields()
+                    .then((values) => {
+                      request({ ...values }).then(() => {
+                        resolve('');
+                      });
+                    })
+                    .catch(reject);
+                }),
+              content: (
+                <Form form={form} style={{ width: '100%' }}>
+                  <FormItem
+                    noStyle
+                    name={'email'}
+                    rules={[
+                      { type: 'email', message: '请输入正确的邮箱' },
+                      { required: true, message: '请输入邮箱' },
+                    ]}
+                  >
+                    <ReInput placeholder={'请输入邮箱号码'} />
+                  </FormItem>
+                </Form>
+              ),
+            })
+          }
+        >
+          取消MDT
+        </Button>
       </View>
     </View>
   );

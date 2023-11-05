@@ -306,9 +306,9 @@ export interface MDTDetail extends API.ResponseDataType {
       initialDiagnosis: string;
       anamnesis: string;
       examination: string;
-      imageData: string;
-      fileData: string;
-      videoData: string;
+      imageData: string[];
+      fileData: string[];
+      videoData: string[];
       contactPhone: string;
     };
     members: Array<{
@@ -365,6 +365,12 @@ export interface MDTPay extends API.ResponseDataType {
     reportUrl: string;
   };
 }
+
+export const ApplySource: any = {
+  IHIS: '患者',
+  DOCTOR: '医生',
+  MCH: '团队',
+};
 export default {
   查询团队列表: createApiHooks((params: { searchKey?: string }) =>
     request.get<MDTTeam>(`/api/ihis/cooperate/mdt-team`, {
@@ -374,7 +380,7 @@ export default {
   分页查询线下MDT列表: createApiHooks(
     (params: ListParams & { patientId?: string; mdtState?: string }) =>
       request.get<ListApiResponseData<MDTTeamItem>>(
-        `/api/ihis/cooperate/mdt-team`,
+        `/api/ihis/cooperate/mdt-offline`,
         {
           params,
         },

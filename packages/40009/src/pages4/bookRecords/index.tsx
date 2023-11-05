@@ -9,27 +9,32 @@ import {
   useTitle,
 } from '@kqinfo/ui';
 import styles from './index.less';
-import useApi from '@/apis/register';
+import useApi, { ApplySource } from '@/apis/mdt';
 import { IMAGE_DOMIN } from '@/config/constant';
 import Label from '@/components/label';
 import Status from './components/Status';
-
+import patientState from '@/stores/patient';
+import { PatGender } from '@/config/dict';
+import dayjs from 'dayjs';
 export default () => {
   useTitle('预约记录');
-  const [selectUser, setSelectUser] = useState('1');
+  const {
+    defaultPatientInfo: { patientId },
+    originalBindPatientList,
+  } = patientState.useContainer();
+
+  const [selectUser, setSelectUser] = useState(patientId);
+  const [selectState, setSelectState] = useState('1');
 
   const options1 = useMemo(
-    () => [
-      {
-        text: '全部',
-        value: '1',
-      },
-      {
-        text: '凯小桥',
-        value: '2',
-      },
-    ],
-    [],
+    () =>
+      (originalBindPatientList || []).map((item) => {
+        return {
+          text: item.patientName,
+          value: item.patientId,
+        };
+      }),
+    [originalBindPatientList],
   );
   const options2 = useMemo(
     () => [
@@ -44,22 +49,26 @@ export default () => {
     ],
     [],
   );
-  const getDoctorList = useCallback((page, limit) => {
-    return useApi.查询科室医生列表
-      .request({
-        deptId: '',
-        pageNum: page,
-        numPerPage: limit,
-      })
-      .then((data) => {
-        return {
-          list: [{ doctorId: 1 }] || data.data?.recordList,
-          pageNum: data.data?.currentPage,
-          pageSize: data?.data?.numPerPage,
-          total: data?.data?.totalCount || 0,
-        };
-      });
-  }, []);
+  const getDoctorList = useCallback(
+    (page, limit) => {
+      return useApi.分页查询线下MDT列表
+        .request({
+          patientId: selectUser,
+          mdtState: selectState,
+          pageNum: page,
+          numPerPage: limit,
+        })
+        .then((data) => {
+          return {
+            list: [{ doctorId: 1 }] || data.data?.recordList,
+            pageNum: data.data?.currentPage,
+            pageSize: data?.data?.numPerPage,
+            total: data?.data?.totalCount || 0,
+          };
+        });
+    },
+    [selectState, selectUser],
+  );
   return (
     <View className={styles.page}>
       <DropDownMenu showModal={false}>
@@ -69,7 +78,12 @@ export default () => {
           onChange={setSelectUser}
           options={options1}
         />
-        <DropDownMenuItem title="会诊状态" options={options2} />
+        <DropDownMenuItem
+          title="会诊状态"
+          options={options2}
+          value={selectState}
+          onChange={setSelectState}
+        />
       </DropDownMenu>
       <View className={styles.warp}>
         <List
@@ -83,29 +97,40 @@ export default () => {
                       src={`${IMAGE_DOMIN}/mdt/status.png`}
                       className={styles.icon}
                     />
-                    <Text className={styles.statusTxt}>患者端</Text>
+                    <Text className={styles.statusTxt}>
+                      {ApplySource[item?.applySource]}
+                    </Text>
                   </Space>
                   <Space vertical flex={1}>
-                    <View className={styles.itemTitle}>伴随精神心理障碍</View>
-                    <View className={styles.itemdesc}>乔木沐 女 5岁3月龄</View>
+                    <View className={styles.itemTitle}>
+                      {item?.diseaseType}
+                    </View>
+                    <View className={styles.itemdesc}>
+                      {item?.patName} {PatGender[item?.patSex]} {item.patAgeStr}
+                    </View>
                     {[
-                      { text: '患者ID', value: '1' },
-                      { text: '申请时间', value: '1' },
+                      { text: '患者ID', value: item.patientId },
+                      {
+                        text: '申请时间',
+                        value: item.createTime
+                          ? dayjs(item?.createTime).format('YYYY-MM-DD')
+                          : '-',
+                      },
                       { text: '会诊方式', value: '1' },
-                    ].map((item, index) => (
+                    ].map((obj, index) => (
                       <Space className={styles.itemdesc} key={index}>
-                        <Label key={index}>{item.text}</Label>
+                        <Label key={index}>{obj.text}</Label>
                         <Space
                           flex={1}
                           flexWrap="wrap"
                           className={styles.value}
                         >
-                          {item.value}
+                          {obj.value}
                         </Space>
                       </Space>
                     ))}
                   </Space>
-                  <Status status="1" />
+                  <Status status={item.mdtState} />
                 </Space>
               </Shadow>
             );
