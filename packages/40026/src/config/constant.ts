@@ -9,7 +9,7 @@ export const IMAGE_DOMIN = `${
     ? '/images'
     : PLATFORM === 'web'
     ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40074-his/images'
+    : 'https://tihs.cqkqinfo.com/patients/p40026-his-test/images'
 }`;
 export const HOSPITAL_NAME = '黔江民族医院';
 export const HOSPITAL_TEL = '023-63110120';
