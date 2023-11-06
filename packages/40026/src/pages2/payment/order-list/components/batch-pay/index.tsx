@@ -490,7 +490,7 @@ export default () => {
           </View>
         </Space>
         <Space size={20} justify={'space-between'}>
-          {medicalPay && (
+          {hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 && (
             <Button
               block={false}
               type="primary"
