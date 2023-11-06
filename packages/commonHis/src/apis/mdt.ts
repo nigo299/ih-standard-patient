@@ -414,7 +414,7 @@ export default {
       ),
   ),
   会诊按日历显示: createApiHooks(
-    (params: { teamId: string; type: string; relationId: string }) =>
+    (params: { teamId: string; type: string; relationId?: string }) =>
       request.get<MDTScheduleView>(
         `/api/ihis/cooperate/mdt-schedule/date-state/${params.teamId}`,
         {

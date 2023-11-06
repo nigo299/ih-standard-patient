@@ -2,30 +2,10 @@ import React, { useState } from 'react';
 import { Shadow, Space, Fold, Icon, Rotate } from '@kqinfo/ui';
 import styles from './index.less';
 import classNames from 'classnames';
+import dayjs from 'dayjs';
 
 export default ({
-  data = [
-    {
-      id: '1',
-      name: '8:00-9:00',
-      left: 1,
-    },
-    {
-      id: '2',
-      name: '8:00-9:00',
-      left: 1,
-    },
-    {
-      id: '3',
-      name: '8:00-9:00',
-      left: 1,
-    },
-    {
-      id: '4',
-      name: '8:00-9:00',
-      left: 0,
-    },
-  ],
+  data = [],
   value = '1',
   onChange,
 }: {
@@ -57,17 +37,19 @@ export default ({
               <Space
                 className={classNames(styles.item, {
                   [styles.active]: item.id === value,
-                  [styles.disabled]: item.left === 0,
+                  [styles.disabled]: item.leftResourceNum === 0,
                 })}
                 key={item.id}
                 onTap={() => {
-                  if (item.left === 0) {
+                  if (item.leftResourceNum === 0) {
                     return;
                   }
                   onChange?.(item.id);
                 }}
               >
-                {`${item.name} 余 ${item.left}`}
+                {`${dayjs(item.startTime).format('HH:mm')}-${dayjs(
+                  item.endTime,
+                ).format('HH:mm')} 余 ${item.leftResourceNum}`}
               </Space>
             );
           })}
