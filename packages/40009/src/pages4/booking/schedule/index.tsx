@@ -10,6 +10,7 @@ import styles from './index.less';
 import TeamInfo from './components/TeamInfo';
 import Calendar from './components/Calendar';
 import TimeSec from './components/TimeSec';
+import { navigateTo } from 'remax/wechat';
 export default () => {
   useTitle('选择时间');
   const { teamId } = useGetParams<{
@@ -39,6 +40,7 @@ export default () => {
     dayjs().add(1, 'day').format('YYYY-MM-DD'),
   );
   const [sourceNumber, setSourceNumber] = useState('1');
+  const [roomDetail, setRoomDetail] = useState({} as any);
   const { loading: dayDetailLoading, data: dayDetail } = useApi.排班详情({
     initValue: {
       data: [],
@@ -95,7 +97,66 @@ export default () => {
     }
     setVisitDate(v);
     setSourceNumber('');
+    setRoomDetail({});
   }, []);
+  const SplitArray = (arr: any[]) => {
+    const groupedArr = Object.values(
+      arr.reduce((acc, item) => {
+        if (!acc[item.timeDesc]) {
+          acc[item.timeDesc] = [];
+        }
+        acc[item.timeDesc].push(item);
+        return acc;
+      }, {}),
+    );
+    return groupedArr;
+  };
+
+  const next = useCallback(() => {
+    if (!visitDate) {
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>请选择预约日期</View>
+            <Button onTap={() => Modal.hide()} type="primary">
+              知道了
+            </Button>
+          </View>
+        ),
+        footer: null,
+      });
+      return;
+    }
+    if (!roomDetail?.relationId) {
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>请选择预约时段</View>
+            <Button onTap={() => Modal.hide()} type="primary">
+              知道了
+            </Button>
+          </View>
+        ),
+        footer: null,
+      });
+      return;
+    }
+    const params = {
+      teamId: teamId,
+      visitDate: visitDate,
+      sourceNumber: sourceNumber,
+      relationId: roomDetail?.relationId,
+    };
+    navigateTo({
+      url: `/pages4/booking/confirm/index?params=${encodeURIComponent(
+        JSON.stringify(params),
+      )}`,
+    });
+  }, [roomDetail.relationId, sourceNumber, teamId, visitDate]);
   return (
     <View>
       <View className={styles.content}>
@@ -114,14 +175,18 @@ export default () => {
         <WhiteSpace />
         {(dayDetail?.data || []).map((item) => {
           <View key={item.relationId}>
-            <View className={styles.room}>
-              {item.relationName || 'MDT会诊室207'}
-            </View>
-            <TimeSec
-              value={sourceNumber}
-              onChange={(v: any) => setSourceNumber(v)}
-              data={item?.scheduleList}
-            />
+            <View className={styles.room}>{item.relationName}</View>
+            {SplitArray(item?.scheduleList).map((chdItem: any) => (
+              <TimeSec
+                key={chdItem.timeDesc}
+                value={sourceNumber}
+                data={chdItem}
+                onChange={(v: any) => {
+                  setSourceNumber(v);
+                  setRoomDetail(item);
+                }}
+              />
+            ))}
           </View>;
         })}
 
@@ -140,7 +205,7 @@ export default () => {
             <Text>暂无排班</Text>
           </Space>
         )}
-        <Button className={styles.btn} type="primary">
+        <Button className={styles.btn} type="primary" onTap={next}>
           下一步
         </Button>
       </View>

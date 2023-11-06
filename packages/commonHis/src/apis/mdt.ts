@@ -224,12 +224,26 @@ export interface MDTTeamSchedule extends API.ResponseDataType {
   data: Array<{
     relationId: string;
     relationName: string;
+    roomDetail: {
+      //房间详情
+      id: string; //线下房间ID
+      hisId: string; //医院id
+      roomName: string; //会诊室名称
+      roomNo: string; //会诊室编号
+      districtId: string; //院区id
+      districtName: string; //院区名称
+      remark: string; //备注
+      address: string; //会诊室地点
+      createTime: string; //创建时间
+      updateTime: string; //更新时间
+    };
     scheduleList: Array<{
       id: string;
       createTime: string;
       updateTime: string;
       relationId: string;
       visitDate: string;
+      timeDesc: ' 上午' | '下午' | '晚上';
       startTime: string;
       endTime: string;
       totalResourceNum: number;

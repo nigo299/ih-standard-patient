@@ -23,7 +23,7 @@ export default ({
           onTap={() => setRun(!run)}
           className={styles.foldHead}
         >
-          选择号源
+          {data?.[0]?.timeDesc}
           <Space alignItems="center" className={styles.actiontxt} size={10}>
             {run ? '展开' : '收起'}
             <Rotate run={run} angle={180}>
