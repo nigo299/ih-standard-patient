@@ -1,41 +1,54 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { date2hour } from '@/utils';
 import { useDownCount } from 'parsec-hooks';
 import { Price } from '@/components';
-import setNavigationBar from '@/utils/setNavigationBar';
-import { Button, Loading, Shadow, Space, Tip } from '@kqinfo/ui';
+import {
+  Button,
+  Loading,
+  Shadow,
+  Space,
+  Tip,
+  showToast,
+  useTitle,
+} from '@kqinfo/ui';
 import { ListItem } from '@/components';
 import classNames from 'classnames';
 import { useLockFn } from 'ahooks';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 import useApi from '@/apis/mdt';
-import dayjs from 'dayjs';
 
 export default () => {
+  useTitle('收银台');
   const { id } = useGetParams<{
     id: string;
   }>();
-  const { data: detail, loading } = useApi.查询线下MDT详情({
-    initValue: { data: {} },
-    params: { id },
-    needInit: !!id,
-  });
-  const { loading: prePayLoading, request: prePay } = useApi.线下MDT预支付({
+  const {
+    data: detail,
+    loading: prePayLoading,
+    request: prePay,
+  } = useApi.线下MDT预支付({
     initValue: { data: {} },
     params: { id, payMethod: 'H5' },
-    needInit: !!id,
+    needInit: false,
   });
   const handlePay = useCallback(async () => {
-    prePay({ id, payMethod: 'H5' }).then((res: any) => {
-      if (res.data) {
-        window.location.href = res.data?.payUrl;
-      }
-    });
+    setPaydisabled(true);
+    try {
+      const { data } = await prePay({ id, payMethod: 'H5' });
+      window.location.href = data?.payUrl;
+    } catch (error) {
+      showToast({
+        title: '支付下单失败，请稍后重试',
+        icon: 'fail',
+      });
+      setPaydisabled(false);
+    }
   }, [id, prePay]);
   const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
+  const [payDisabled, setPaydisabled] = useState(false);
   const columns = [
     {
       key: '多学科联合门诊（MDT）',
@@ -50,11 +63,7 @@ export default () => {
       title: '会诊团队',
     },
     {
-      key: detail?.data?.mdtStartTime
-        ? `${dayjs(detail?.data?.mdtStartTime).format('YYYY-MM-DD')} ${dayjs(
-            detail?.data?.mdtStartTime,
-          ).format('HH:mm')}-${dayjs(detail?.data?.mdtEndTime).format('HH:mm')}`
-        : '暂无',
+      key: detail?.data?.mdtTime || '暂无',
       title: '会诊时间',
     },
   ];
@@ -68,18 +77,22 @@ export default () => {
       title: '就诊卡号',
     },
   ];
-
   usePageEvent('onShow', async () => {
-    setNavigationBar({
-      title: '收银台',
-    });
+    const { data } = await prePay({ id, payMethod: 'H5' });
+    if (data?.leftPayTime > 0) {
+      setCountdown(data.leftPayTime).then(() => {
+        setPaydisabled(false);
+      });
+    } else {
+      setCountdown(0);
+      setPaydisabled(true);
+    }
   });
   useEffect(() => {
-    setCountdown(15 * 60);
     return () => {
       clearCountdownTimer();
     };
-  }, [clearCountdownTimer, setCountdown]);
+  }, [clearCountdownTimer]);
 
   return (
     <View
@@ -92,7 +105,7 @@ export default () => {
           请在 {date2hour(countdown * 1000)} 内完成支付
         </View>
       )}
-      {loading && <Loading />}
+      {prePayLoading && <Loading />}
       <View className={styles.content}>
         <View className={styles.cards}>
           <Shadow
@@ -107,7 +120,7 @@ export default () => {
             >
               <View className={styles['pay-price-title']}>支付金额(元)</View>
               <Price
-                payFee={Number(detail?.data?.mdtFee)}
+                payFee={Number(detail?.data?.totalFee)}
                 // elderly={elderly}
               />
             </Space>
@@ -142,6 +155,7 @@ export default () => {
           type="primary"
           onTap={useLockFn(handlePay)}
           loading={prePayLoading}
+          disabled={payDisabled}
         >
           立即支付
         </Button>
@@ -153,10 +167,10 @@ export default () => {
             1.目前仅支持自费会诊
           </View>,
           <View key={'tip'} className={styles.tipText}>
-            1.目前仅支持自费会诊
+            2.请在预约挂号成功后60分钟内完成支付，超出时间后系统将自动取消订单；
           </View>,
           <View key={'tip'} className={styles.tipText}>
-            1.目前仅支持自费会诊
+            3.本次参与会诊人员，将根据会诊团队内部成员实际情况酌情安排。
           </View>,
         ]}
       />

@@ -380,6 +380,36 @@ export interface MDTPay extends API.ResponseDataType {
   };
 }
 
+export interface MDTRePay extends API.ResponseDataType {
+  data: {
+    Id: string; //医院id
+    roomName: string; //会诊室名称
+    userId: string; //用户id
+    patientId: string; //就诊人id
+    patName: string; //就诊人姓名
+    teamName: string; //团队名称
+    mdtTime: string; //会诊时间
+    orderId: string; //订单id
+    orderSerialNumber: string; //订单序列号
+    purpose: string; //会诊目的
+    rejectReviewReason: string; //审核失败原因
+    reviewCancelTime: string; //审核取消时间
+    finishTime: string; //完成时间
+    districtName: string; //院区名称
+    roomAddress: string; //诊室位置
+    reportUrl: string; //会诊报告
+    patCardNo: string; //就诊卡号
+    patSex: string; //就诊人性别
+    patAgeStr: string; //就诊人年龄描述
+    type: string; //业务类型
+    payFee: number; //实际支付金额
+    totalFee: number; //订单金额 ,
+    leftPayTime: number; //支付截止时间
+    payUrl: string; //支付地址
+    callbackUrl: string; //支付完成回跳地址（页面重定向地址）
+  };
+}
+
 export const ApplySource: any = {
   IHIS: '患者',
   DOCTOR: '医生',
@@ -405,10 +435,7 @@ export default {
       id: string;
       payMethod: string; //H%,MINI
     }) =>
-      request.post<HisCardListType>(
-        `/api/ihis/cooperate/mdt-offline/prepay`,
-        data,
-      ),
+      request.post<MDTRePay>(`/api/ihis/cooperate/mdt-offline/prepay`, data),
   ),
   根据id查询团队详情: createApiHooks((params: { id: string }) =>
     request.get<TeamInfo>(`/api/ihis/cooperate/mdt-team/${params.id}`),
