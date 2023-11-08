@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'remax/one';
+import { View, navigateTo } from 'remax/one';
 import {
   Space,
   Shadow,
@@ -12,7 +12,7 @@ import {
   Modal,
   Form,
   FormItem,
-  ReInput,
+  ReTextarea,
 } from '@kqinfo/ui';
 import styles from './index.less';
 import { WhiteSpace } from '@/components';
@@ -175,12 +175,30 @@ export default () => {
           </View>
         </View>
       </Shadow>
-      <View className={styles.bottomPane}>
+      <Space className={styles.bottomPane} vertical size={20}>
+        {mdtDetail.payState === 'UNPAY' && (
+          <Button
+            type="primary"
+            onTap={() =>
+              navigateTo({
+                url: `/pages4/cash/index?id=${id}`,
+              })
+            }
+          >
+            立即缴费
+          </Button>
+        )}
+        {mdtDetail.payState === 'PAID' && (
+          <Button type="primary" onTap={() => console.log('补充病历资料')}>
+            补充病历资料
+          </Button>
+        )}
         <Button
           className={styles.ghostbtn}
           onTap={() =>
             Modal.show({
-              title: '发送报告至邮箱',
+              title: '取消申请',
+              bodyCls: styles.modalContent,
               // 异步关闭
               onOk: () =>
                 new Promise((resolve, reject) => {
@@ -188,23 +206,23 @@ export default () => {
                   form
                     .validateFields()
                     .then((values) => {
-                      request({ ...values }).then(() => {
+                      request({ ...values, id }).then(() => {
                         resolve('');
                       });
                     })
                     .catch(reject);
                 }),
               content: (
-                <Form form={form} style={{ width: '100%' }}>
+                <Form form={form} style={{ width: '100%' }} vertical>
                   <FormItem
                     noStyle
-                    name={'email'}
-                    rules={[
-                      { type: 'email', message: '请输入正确的邮箱' },
-                      { required: true, message: '请输入邮箱' },
-                    ]}
+                    name={'reason'}
+                    rules={[{ required: true, message: '请输入取消原因' }]}
                   >
-                    <ReInput placeholder={'请输入邮箱号码'} />
+                    <ReTextarea
+                      placeholder={'请输入取消原因'}
+                      className={styles.txtarea}
+                    />
                   </FormItem>
                 </Form>
               ),
@@ -213,7 +231,7 @@ export default () => {
         >
           取消MDT
         </Button>
-      </View>
+      </Space>
     </View>
   );
 };

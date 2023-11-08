@@ -78,7 +78,7 @@ export default () => {
     },
   ];
   usePageEvent('onShow', async () => {
-    const { data } = await prePay({ id, payMethod: 'H5' });
+    const { data } = await prePay({ id, payMethod: 'MINI' });
     if (data?.leftPayTime > 0) {
       setCountdown(data.leftPayTime).then(() => {
         setPaydisabled(false);
@@ -149,6 +149,20 @@ export default () => {
             />
           ))}
         </View>
+
+        <Tip
+          items={[
+            <View key={'tip'} className={styles.tipText}>
+              1.目前仅支持自费会诊
+            </View>,
+            <View key={'tip'} className={styles.tipText}>
+              2.请在预约挂号成功后60分钟内完成支付，超出时间后系统将自动取消订单；
+            </View>,
+            <View key={'tip'} className={styles.tipText}>
+              3.本次参与会诊人员，将根据会诊团队内部成员实际情况酌情安排。
+            </View>,
+          ]}
+        />
       </View>
       <View className={styles.buttons}>
         <Button
@@ -160,20 +174,6 @@ export default () => {
           立即支付
         </Button>
       </View>
-      <Tip
-        style={{ marginTop: '160px', marginLeft: '20px' }}
-        items={[
-          <View key={'tip'} className={styles.tipText}>
-            1.目前仅支持自费会诊
-          </View>,
-          <View key={'tip'} className={styles.tipText}>
-            2.请在预约挂号成功后60分钟内完成支付，超出时间后系统将自动取消订单；
-          </View>,
-          <View key={'tip'} className={styles.tipText}>
-            3.本次参与会诊人员，将根据会诊团队内部成员实际情况酌情安排。
-          </View>,
-        ]}
-      />
     </View>
   );
 };

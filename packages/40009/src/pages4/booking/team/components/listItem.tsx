@@ -45,7 +45,7 @@ const Item: React.FC<Props> = (props) => {
             <View className={styles.title}>{content.teamName}</View>
             <View className={styles.desc}>
               <View className={styles.hos_name}>{content.hospitalName}</View>
-              <Exceed clamp={1}>简介：{content.intro}</Exceed>
+              <Exceed clamp={2}>简介：{content.intro}</Exceed>
             </View>
             <View className={styles.footer}>
               <Text className={`${styles.commonColor} ${styles.price}`}>
