@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, navigateTo, Text } from 'remax/one';
+import { View, redirectTo, Text, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { getPatientAge } from '@/utils';
 import { WhiteSpace, ListItem, Tip } from '@/components';
@@ -10,13 +10,13 @@ import {
   Space,
   showToast,
   useTitle,
+  Price,
 } from '@kqinfo/ui';
 import classNames from 'classnames';
 import useApi from '@/apis/mdt';
 import { PLATFORM } from '@/config/constant';
 import { useEffectState } from 'parsec-hooks';
 import useGetParams from '@/utils/useGetParams';
-import storage from '@/utils/storage';
 import patientState from '@/stores/patient';
 import styles from './index.less';
 import { PatGender } from '@/config/dict';
@@ -70,17 +70,13 @@ export default () => {
       text: decodeURIComponent(position),
     },
   ];
-
+  console.log('mdtFee', mdtFee);
   const [selectedPatient, setSelectedPatient] =
     useEffectState(defaultPatientInfo);
   const patientData = [
     {
       label: '挂号费用',
-      text: (
-        <Text style={{ color: '#D95E38' }}>
-          {`¥ ${((+decodeURIComponent(mdtFee) || 0) / 100).toFixed(2)}`}
-        </Text>
-      ),
+      text: <Price price={+mdtFee || 0} />,
     },
     {
       label: '就诊号',
@@ -107,16 +103,16 @@ export default () => {
       return;
     }
     orderRequest({
-      roomId,
-      roomName,
+      roomId: decodeURIComponent(roomId),
+      roomName: decodeURIComponent(roomName),
       patientId: selectedPatient?.patientId,
-      teamId,
-      resourceId,
-      mdtFee: +decodeURIComponent(mdtFee),
+      teamId: decodeURIComponent(teamId),
+      resourceId: decodeURIComponent(resourceId),
+      mdtFee: +mdtFee,
     }).then((res) => {
       if (res.data) {
-        navigateTo({
-          url: `/pages4/cash/index?orderId=${res.data.orderId}`,
+        redirectTo({
+          url: `/pages4/cash/index?id=${res.data.id}`,
         });
       }
     });
@@ -130,11 +126,7 @@ export default () => {
     teamId,
   ]);
   usePageEvent('onShow', () => {
-    if (!storage.get('login_access_token')) {
-      // 走到挂号确认信息没授权的话需要跳转授权
-      getPatientList();
-      return;
-    }
+    getPatientList();
   });
 
   return (

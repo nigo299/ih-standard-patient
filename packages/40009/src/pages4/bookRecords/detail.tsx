@@ -15,6 +15,7 @@ import {
   ReInput,
 } from '@kqinfo/ui';
 import styles from './index.less';
+import { WhiteSpace } from '@/components';
 import Status, { StatusTxt } from './components/Status';
 import Label from '@/components/label';
 import Fold from './components/Fold';
@@ -77,6 +78,10 @@ export default () => {
         </Shadow>
       )}
       <Modal />
+      <View className={styles.title}>
+        <View>MDT申请单</View>
+      </View>
+      <WhiteSpace />
       <Shadow>
         <View className={styles.pane}>
           <Space className={styles.paneHead}>

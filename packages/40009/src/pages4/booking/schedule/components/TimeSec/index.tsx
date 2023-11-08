@@ -14,6 +14,7 @@ export default ({
   onChange?: (v?: string) => void;
 }) => {
   const [run, setRun] = useState(false);
+  console.log('data1', data);
   return (
     <Shadow>
       <Space className={styles.fold} vertical>
@@ -23,7 +24,7 @@ export default ({
           onTap={() => setRun(!run)}
           className={styles.foldHead}
         >
-          {data?.[0]?.timeDesc}
+          {data[0]?.timeDesc}
           <Space alignItems="center" className={styles.actiontxt} size={10}>
             {run ? '展开' : '收起'}
             <Rotate run={run} angle={180}>

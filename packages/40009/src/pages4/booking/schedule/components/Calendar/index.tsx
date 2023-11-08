@@ -27,7 +27,9 @@ export default ({
             justify="space-between"
             className={styles.head}
           >
-            <Text className={styles.font1}>2023-10-25 星期三</Text>{' '}
+            <Text className={styles.font1}>
+              {dayjs(value).format('YYYY-MM-DD')} 星期三
+            </Text>{' '}
             <Text
               className={styles.font2}
               onTap={() => {
@@ -44,6 +46,16 @@ export default ({
             activeItemCls={styles.active}
             dotWrapCls={styles.dotwarp}
             limit={limit}
+            renderDisable={(day) => {
+              const isflag = (data || []).find((i) => {
+                return dayjs(i?.date).isSame(day, 'days');
+              });
+              if (!isflag) {
+                return true;
+              } else {
+                return false;
+              }
+            }}
             renderDate={(day) =>
               dayjs().isSame(day, 'date')
                 ? '今天'

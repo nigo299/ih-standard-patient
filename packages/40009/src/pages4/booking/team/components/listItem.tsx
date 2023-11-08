@@ -50,7 +50,7 @@ const Item: React.FC<Props> = (props) => {
             <View className={styles.footer}>
               <Text className={`${styles.commonColor} ${styles.price}`}>
                 {' '}
-                ￥{Number(300 ?? content.price) / 100}/次
+                ￥{Number(content.price || 0) / 100}/次
               </Text>
               <Button
                 type={'primary'}

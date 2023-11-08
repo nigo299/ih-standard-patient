@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text } from 'remax/one';
+import { Image, Text, navigateTo } from 'remax/one';
 import { Shadow, Space, Exceed } from '@kqinfo/ui';
 import cls from 'classnames';
 import styles from './index.less';
@@ -22,7 +22,14 @@ export default ({ data = {} }: { data?: any }) => {
             </Space>
           </Space>
         </Space>
-        <Space alignItems="center">
+        <Space
+          alignItems="center"
+          onTap={() => {
+            navigateTo({
+              url: `/pages4/booking/team/detail?teamId=${data?.id}&isdetail=1`,
+            });
+          }}
+        >
           <Space flex={1} className={styles.desc}>
             <Exceed clamp={2}>{data?.intro}</Exceed>
           </Space>

@@ -409,6 +409,38 @@ export interface MDTRePay extends API.ResponseDataType {
     callbackUrl: string; //支付完成回跳地址（页面重定向地址）
   };
 }
+export interface MDTState extends API.ResponseDataType {
+  data: {
+    MdtOfflinePayStateEnum: Array<{
+      name: string;
+      desc: string;
+    }>;
+    MdtOfflineApplySourceEnum: Array<{
+      name: string;
+      desc: string;
+    }>;
+    MdtEventRoleEnum: Array<{
+      name: string;
+      desc: string;
+    }>;
+    MdtMemberRoleEnum: Array<{
+      name: string;
+      desc: string;
+    }>;
+    MdtOfflineStateEnum: Array<{
+      name: string;
+      desc: string;
+    }>;
+    MdtEventTypeEnum: Array<{
+      name: string;
+      desc: string;
+    }>;
+    MdtOfflineReviewEnum: Array<{
+      name: string;
+      desc: string;
+    }>;
+  };
+}
 
 export const ApplySource: any = {
   IHIS: '患者',
@@ -429,6 +461,9 @@ export default {
           params,
         },
       ),
+  ),
+  线下MDT状态: createApiHooks(() =>
+    request.get<MDTState>(`/api/common/cooperate/mdt-offline/enum`),
   ),
   线下MDT预支付: createApiHooks(
     (data: {

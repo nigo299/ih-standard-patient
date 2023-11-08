@@ -16,16 +16,26 @@ import Status from './components/Status';
 import patientState from '@/stores/patient';
 import { PatGender } from '@/config/dict';
 import dayjs from 'dayjs';
+import { usePageEvent } from 'remax/macro';
+import storage from '@/utils/storage';
 export default () => {
   useTitle('预约记录');
   const {
     defaultPatientInfo: { patientId },
     originalBindPatientList,
+    getPatientList,
   } = patientState.useContainer();
-
+  usePageEvent('onShow', () => {
+    getPatientList();
+  });
   const [selectUser, setSelectUser] = useState(patientId);
-  const [selectState, setSelectState] = useState('1');
-
+  console.log('originalBindPatientList', originalBindPatientList);
+  const { data: mdtStauts, loading } = useApi.线下MDT状态({
+    initValue: {
+      data: { data: {} },
+    },
+    needInit: true,
+  });
   const options1 = useMemo(
     () =>
       (originalBindPatientList || []).map((item) => {
@@ -37,18 +47,16 @@ export default () => {
     [originalBindPatientList],
   );
   const options2 = useMemo(
-    () => [
-      {
-        text: '检查报告',
-        value: '1',
-      },
-      {
-        text: '检验报告',
-        value: '2',
-      },
-    ],
-    [],
+    () =>
+      (mdtStauts?.data?.MdtOfflineStateEnum || []).map((item) => {
+        return {
+          text: item.desc,
+          value: item.name,
+        };
+      }),
+    [mdtStauts.data.MdtOfflineStateEnum],
   );
+  const [selectState, setSelectState] = useState(options2?.[0]?.value);
   const getDoctorList = useCallback(
     (page, limit) => {
       return useApi.分页查询线下MDT列表
@@ -60,7 +68,7 @@ export default () => {
         })
         .then((data) => {
           return {
-            list: [{ doctorId: 1 }] || data.data?.recordList,
+            list: data.data?.recordList,
             pageNum: data.data?.currentPage,
             pageSize: data?.data?.numPerPage,
             total: data?.data?.totalCount || 0,
@@ -89,6 +97,7 @@ export default () => {
         <List
           getList={getDoctorList}
           renderItem={(item: any) => {
+            console.log('item', item);
             return (
               <Shadow key={item.doctorId}>
                 <Space className={styles.item} alignItems="center" size={20}>
@@ -98,7 +107,11 @@ export default () => {
                       className={styles.icon}
                     />
                     <Text className={styles.statusTxt}>
-                      {ApplySource[item?.applySource]}
+                      {
+                        (mdtStauts?.data?.MdtOfflineApplySourceEnum || []).find(
+                          (obj) => obj.name === item?.applySource,
+                        )?.desc
+                      }
                     </Text>
                   </Space>
                   <Space vertical flex={1}>

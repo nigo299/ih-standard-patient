@@ -31,7 +31,7 @@ export default () => {
     request: prePay,
   } = useApi.线下MDT预支付({
     initValue: { data: {} },
-    params: { id, payMethod: 'H5' },
+    params: { id, payMethod: 'MINI' },
     needInit: false,
   });
   const handlePay = useCallback(async () => {

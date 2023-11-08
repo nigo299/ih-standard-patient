@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text } from 'remax/one';
-import setNavigationBar from '@/utils/setNavigationBar';
-import { Space, CheckBox, useSafeArea } from '@kqinfo/ui';
+import { View, Text, navigateBack, navigateTo } from 'remax/one';
+import { Space, CheckBox, useSafeArea, showToast, useTitle } from '@kqinfo/ui';
 import styles from './index.less';
+import useGetParams from '@/utils/useGetParams';
 
 export default () => {
-  setNavigationBar({
-    title: '多学科门诊MDT',
-  });
+  useTitle('多学科门诊MDT');
+  const { teamId } = useGetParams<{
+    teamId: string;
+  }>();
   const { bottomHeight } = useSafeArea();
   const [checkValue, setCheckValue] = useState(false);
   return (
@@ -24,8 +25,14 @@ export default () => {
       </View>
 
       <View className={styles.bottomBar}>
-        <Space className={styles.read} alignItems="center">
-          <CheckBox />
+        <Space
+          className={styles.read}
+          alignItems="center"
+          onTap={() => {
+            setCheckValue(!checkValue);
+          }}
+        >
+          <CheckBox checked={checkValue} disabled />
           <Space>
             我已阅读<Text className={styles.link}>《申请须知》</Text>
             并知晓相关内容
@@ -35,8 +42,31 @@ export default () => {
           className={styles.action}
           style={{ paddingBottom: bottomHeight }}
         >
-          <Space className={styles.actionCancel}>取消预约</Space>
-          <Space className={styles.actionOk}>确认预约</Space>
+          <Space
+            className={styles.actionCancel}
+            onTap={() => {
+              navigateBack();
+            }}
+          >
+            取消预约
+          </Space>
+          <Space
+            className={styles.actionOk}
+            onTap={() => {
+              if (!checkValue) {
+                showToast({
+                  icon: 'none',
+                  title: '请阅读并同意《申请须知》',
+                });
+              } else {
+                navigateTo({
+                  url: `/pages4/booking/schedule/index?teamId=${teamId}`,
+                });
+              }
+            }}
+          >
+            确认预约
+          </Space>
         </Space>
       </View>
     </View>

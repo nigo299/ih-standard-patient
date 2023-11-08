@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
-import { View, Text, Image } from 'remax/one';
+import { View, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Space, getStorageSync } from '@kqinfo/ui';
+import { Space } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import ShowTitle from './components/showTitle';
 import { PreviewImage } from '@/components';
-
+import storage from '@/utils/storage';
 export default () => {
-  const [hasCollect, setHasCollect] = useState(false);
   const [info, setInfo] = useState<any>({});
 
   usePageEvent('onShow', async () => {
-    const info = getStorageSync('expert_info');
+    let info = {};
+    try {
+      info = JSON.parse(storage.get('teamInfo') || '{}');
+    } catch (error) {
+      info = {};
+    }
     setInfo(info);
     setNavigationBar({
       title: '专家介绍',
     });
   });
-  const toggleCollect = () => {
-    setHasCollect(!hasCollect);
-  };
+  // const toggleCollect = () => {
+  //   setHasCollect(!hasCollect);
+  // };
   return (
     <View className={styles.page}>
       <View style={{ width: '100%' }}>
@@ -45,7 +49,7 @@ export default () => {
               </View>
             </View>
           </Space>
-          <View className={styles.expert_icon}>
+          {/* <View className={styles.expert_icon}>
             <Image
               src={`${IMAGE_DOMIN}/mdt/${hasCollect ? 'sc_full' : 'sc'}.png`}
               className={styles.share_icon}
@@ -55,7 +59,7 @@ export default () => {
               src={`${IMAGE_DOMIN}/mdt/share.png`}
               className={styles.share_icon}
             />
-          </View>
+          </View> */}
         </Space>
         <View className={styles.detail_content}>
           <View className={styles.inner_content}>

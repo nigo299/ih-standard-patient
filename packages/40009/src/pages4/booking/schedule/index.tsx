@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, Image, Text } from 'remax/one';
+import { View, Image, Text, navigateTo } from 'remax/one';
 import { WhiteSpace } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
 import { Button, Loading, Space, useTitle, Modal } from '@kqinfo/ui';
@@ -10,7 +10,6 @@ import styles from './index.less';
 import TeamInfo from './components/TeamInfo';
 import Calendar from './components/Calendar';
 import TimeSec from './components/TimeSec';
-import { navigateTo } from 'remax/wechat';
 export default () => {
   useTitle('选择时间');
   const { teamId } = useGetParams<{
@@ -99,7 +98,7 @@ export default () => {
     setSourceNumber('');
     setRoomDetail({});
   }, []);
-  const SplitArray = (arr: any[]) => {
+  const SplitArray = useCallback((arr: any[]) => {
     const groupedArr = Object.values(
       arr.reduce((acc, item) => {
         if (!acc[item.timeDesc]) {
@@ -109,8 +108,9 @@ export default () => {
         return acc;
       }, {}),
     );
+    console.log('groupedArr', groupedArr);
     return groupedArr;
-  };
+  }, []);
 
   const next = useCallback(() => {
     if (!visitDate) {
@@ -120,12 +120,13 @@ export default () => {
         content: (
           <View>
             <View className={styles.content}>请选择预约日期</View>
-            <Button onTap={() => Modal.hide()} type="primary">
-              知道了
-            </Button>
           </View>
         ),
-        footer: null,
+        footer: (
+          <View className={styles.footBtn} onTap={() => Modal.hide()}>
+            知道了
+          </View>
+        ),
       });
       return;
     }
@@ -136,30 +137,46 @@ export default () => {
         content: (
           <View>
             <View className={styles.content}>请选择预约时段</View>
-            <Button onTap={() => Modal.hide()} type="primary">
-              知道了
-            </Button>
           </View>
         ),
-        footer: null,
+        footer: (
+          <View className={styles.footBtn} onTap={() => Modal.hide()}>
+            知道了
+          </View>
+        ),
       });
       return;
     }
-    const params = {
-      teamId: teamId,
-      visitDate: visitDate,
-      sourceNumber: sourceNumber,
-      relationId: roomDetail?.relationId,
-    };
+    const sourceInfo: any = (roomDetail?.scheduleList || []).find(
+      (x: any) => x.id === sourceNumber,
+    );
+    const time = `${dayjs(sourceInfo?.visitDate).format('YYYY-MM-DD')}  ${dayjs(
+      sourceInfo?.startTime,
+    ).format('HH:mm')}-${dayjs(sourceInfo?.endTime).format('HH:mm')}`;
     navigateTo({
-      url: `/pages4/booking/confirm/index?params=${encodeURIComponent(
-        JSON.stringify(params),
+      url: `/pages4/booking/confirm/index?teamId=${encodeURIComponent(
+        teamId,
+      )}&roomName=${encodeURIComponent(
+        roomDetail?.roomDetail.roomName,
+      )}&roomId=${encodeURIComponent(roomDetail?.roomDetail?.roomNo)}&mdtFee=${
+        doctorDetail.price || 0
+      }&resourceId=${encodeURIComponent(
+        sourceNumber,
+      )}&hospitalName=${encodeURIComponent(
+        roomDetail?.relationId,
+      )}&hospitalZone=${encodeURIComponent(
+        roomDetail?.roomDetail?.districtName || '',
+      )}&teamName=${encodeURIComponent(
+        doctorDetail?.teamName || '',
+      )}&Time=${encodeURIComponent(time)}&position=${encodeURIComponent(
+        roomDetail?.roomDetail?.address,
       )}`,
     });
-  }, [roomDetail.relationId, sourceNumber, teamId, visitDate]);
+  }, [roomDetail, doctorDetail, sourceNumber, visitDate]);
+  console.log('doctorDetail', doctorDetail);
   return (
     <View>
-      <View className={styles.content}>
+      <View className={styles.contentwarp}>
         {(loading || dayDetailLoading) && <Loading />}
         <Modal />
         <TeamInfo data={doctorDetail} />
@@ -174,20 +191,30 @@ export default () => {
 
         <WhiteSpace />
         {(dayDetail?.data || []).map((item) => {
-          <View key={item.relationId}>
-            <View className={styles.room}>{item.relationName}</View>
-            {SplitArray(item?.scheduleList).map((chdItem: any) => (
-              <TimeSec
-                key={chdItem.timeDesc}
-                value={sourceNumber}
-                data={chdItem}
-                onChange={(v: any) => {
-                  setSourceNumber(v);
-                  setRoomDetail(item);
-                }}
-              />
-            ))}
-          </View>;
+          return (
+            <View key={item.relationId} className={styles.roombox}>
+              <Space className={styles.room} alignItems="center">
+                {item.relationName}
+              </Space>
+              {(
+                SplitArray(
+                  item?.scheduleList.filter((x) => x.isPublish === 1),
+                ) || []
+              ).map((chdItem: any) => {
+                return (
+                  <TimeSec
+                    key={chdItem.timeDesc}
+                    value={sourceNumber}
+                    data={chdItem}
+                    onChange={(v: any) => {
+                      setSourceNumber(v);
+                      setRoomDetail(item);
+                    }}
+                  />
+                );
+              })}
+            </View>
+          );
         })}
 
         {dayDetail?.data?.length === 0 && (
