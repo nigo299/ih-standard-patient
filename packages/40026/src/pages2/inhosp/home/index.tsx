@@ -52,7 +52,7 @@ export default () => {
           });
         }
       });
-    if (code === 0 && data?.patientName) {
+    if (code === 0 && data?.patientName && data?.status === '1') {
       setInhospPatientInfo(data);
       setLiveData(data);
     } else {
