@@ -293,6 +293,12 @@ export default () => {
             onClick: () =>
               (window.location.href = 'https://cqkuanren.mike-x.com/GUbrv'),
           },
+          {
+            title: 'MDT门诊',
+            subTitle: '',
+            url: '/pages4/home/index',
+            image: `${IMAGE_DOMIN}/home/mdt.png`,
+          },
           // {
           //   title: '医保电子凭证',
           //   subTitle: '',
