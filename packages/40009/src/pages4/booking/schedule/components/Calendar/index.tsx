@@ -17,7 +17,7 @@ export default ({
     0: '约满',
     1: '有号',
   };
-  console.log('data', data);
+  const WEEKS: any[] = ['日', '一', '二', '三', '四', '五', '六'];
   return (
     <>
       <Shadow>
@@ -28,7 +28,8 @@ export default ({
             className={styles.head}
           >
             <Text className={styles.font1}>
-              {dayjs(value).format('YYYY-MM-DD')} 星期三
+              {dayjs(value).format('YYYY-MM-DD')} 星期
+              {WEEKS[dayjs(value).day()]}
             </Text>{' '}
             <Text
               className={styles.font2}
