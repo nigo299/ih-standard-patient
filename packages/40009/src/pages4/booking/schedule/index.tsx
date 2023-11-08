@@ -158,7 +158,7 @@ export default () => {
         teamId,
       )}&roomName=${encodeURIComponent(
         roomDetail?.roomDetail.roomName,
-      )}&roomId=${encodeURIComponent(roomDetail?.roomDetail?.roomNo)}&mdtFee=${
+      )}&roomId=${encodeURIComponent(roomDetail?.relationId)}&mdtFee=${
         doctorDetail.price || 0
       }&resourceId=${encodeURIComponent(
         sourceNumber,

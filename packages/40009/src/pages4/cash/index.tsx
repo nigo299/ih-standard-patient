@@ -35,18 +35,15 @@ export default () => {
     needInit: false,
   });
   const handlePay = useCallback(async () => {
-    setPaydisabled(true);
     try {
-      const { data } = await prePay({ id, payMethod: 'H5' });
-      window.location.href = data?.payUrl;
+      window.location.replace(detail?.data?.payUrl);
     } catch (error) {
       showToast({
         title: '支付下单失败，请稍后重试',
         icon: 'fail',
       });
-      setPaydisabled(false);
     }
-  }, [id, prePay]);
+  }, [detail.data.payUrl]);
   const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
   const [payDisabled, setPaydisabled] = useState(false);
   const columns = [

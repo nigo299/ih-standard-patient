@@ -31,6 +31,7 @@ export default () => {
   const {
     data: { data: mdtDetail },
     loading,
+    request: getdetail,
   } = useApi.查询线下MDT详情({
     params: {
       id,
@@ -176,7 +177,7 @@ export default () => {
         </View>
       </Shadow>
       <Space className={styles.bottomPane} vertical size={20}>
-        {mdtDetail.payState === 'UNPAY' && (
+        {mdtDetail?.payState === 'UNPAY' && (
           <Button
             type="primary"
             onTap={() =>
@@ -188,49 +189,59 @@ export default () => {
             立即缴费
           </Button>
         )}
-        {mdtDetail.payState === 'PAID' && (
-          <Button type="primary" onTap={() => console.log('补充病历资料')}>
+        {mdtDetail?.mdtState === 'WAIT_IMPROVE_INF' && (
+          <Button
+            type="primary"
+            onTap={() =>
+              navigateTo({
+                url: `/pages4/supplyCondition/index?id=${id}`,
+              })
+            }
+          >
             补充病历资料
           </Button>
         )}
-        <Button
-          className={styles.ghostbtn}
-          onTap={() =>
-            Modal.show({
-              title: '取消申请',
-              bodyCls: styles.modalContent,
-              // 异步关闭
-              onOk: () =>
-                new Promise((resolve, reject) => {
-                  form.submit();
-                  form
-                    .validateFields()
-                    .then((values) => {
-                      request({ ...values, id }).then(() => {
-                        resolve('');
-                      });
-                    })
-                    .catch(reject);
-                }),
-              content: (
-                <Form form={form} style={{ width: '100%' }} vertical>
-                  <FormItem
-                    noStyle
-                    name={'reason'}
-                    rules={[{ required: true, message: '请输入取消原因' }]}
-                  >
-                    <ReTextarea
-                      placeholder={'请输入取消原因'}
-                      className={styles.txtarea}
-                    />
-                  </FormItem>
-                </Form>
-              ),
-            })
-          }
-        >
-          取消MDT
-        </Button>
+        {['WAIT_REVIEW', 'WAIT_IMPROVE_INFO'].includes(mdtDetail?.mdtState) && (
+          <Button
+            className={styles.ghostbtn}
+            onTap={() =>
+              Modal.show({
+                title: '取消申请',
+                bodyCls: styles.modalContent,
+                // 异步关闭
+                onOk: () =>
+                  new Promise((resolve, reject) => {
+                    form.submit();
+                    form
+                      .validateFields()
+                      .then((values) => {
+                        request({ ...values, id }).then(() => {
+                          getdetail();
+                          resolve('');
+                        });
+                      })
+                      .catch(reject);
+                  }),
+                content: (
+                  <Form form={form} style={{ width: '100%' }} vertical>
+                    <FormItem
+                      noStyle
+                      name={'reason'}
+                      rules={[{ required: true, message: '请输入取消原因' }]}
+                    >
+                      <ReTextarea
+                        placeholder={'请输入取消原因'}
+                        className={styles.txtarea}
+                      />
+                    </FormItem>
+                  </Form>
+                ),
+              })
+            }
+          >
+            取消MDT
+          </Button>
+        )}
       </Space>
     </View>
   );
