@@ -73,7 +73,8 @@ export default () => {
         'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40026',
       )}`,
       image: `${IMAGE_DOMIN}/home/zndz.png`,
-      // open: true,
+      // 支付宝暂时不支持调整
+      open: PLATFORM === 'ali',
     },
   ];
 
