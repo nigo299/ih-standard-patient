@@ -23,7 +23,7 @@ import useApi from '@/apis/mdt';
 import dayjs from 'dayjs';
 import { encryptPhone } from '@/utils';
 export default () => {
-  useTitle('MDT申请单');
+  useTitle('MDT详情');
   const { id } = useGetParams<{
     id: string;
   }>();
