@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 export default ({
   data = [],
   value = dayjs().format('YYYY-MM-DD').toString(),
+  onChange,
 }: {
   data?: any[];
   value?: string;
@@ -42,6 +43,9 @@ export default ({
             </Text>
           </Space>
           <Calendar
+            onChange={(v) =>
+              onChange?.(dayjs(v).format('YYYY-MM-DD').toString())
+            }
             current={dayjs(value)}
             itemCls={styles.CalendarItem}
             activeItemCls={styles.active}

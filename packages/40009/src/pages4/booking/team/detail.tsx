@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -7,7 +7,6 @@ import {
   NoData,
   Space,
   ScrollView,
-  AffirmSheet,
   useSafeArea,
   RichText,
   ListItem,
@@ -43,24 +42,25 @@ export default () => {
       title: '团队详情',
     });
   });
+  const [showTeam, setShowTeam] = useState(false);
   const teamList = useMemo(() => {
     return (detail?.teamMembers || []).map((v) => {
       return (
         <ListItem
           className={styles.affirmSheetItem}
           key={v.id}
-          img={v.doctorImage ?? `${IMAGE_DOMIN}/mdt/ys2.png`}
+          img={v.doctorImage ? v.doctorImage : `${IMAGE_DOMIN}/mdt/ys2.png`}
           title={v.doctorName}
           subtitle={v.doctorLevel}
           text={
             <View>
-              <Text>{v.hospitalName}</Text>&nbsp;|&nbsp;
-              <Text>{v.deptName}</Text>
+              <Text>{v.hospitalName || ''}</Text>&nbsp;|&nbsp;
+              <Text>{v.deptName || ''}</Text>
             </View>
           }
           footer={
             <View>
-              <View>{v.doctorSpecialty}</View>
+              <View>{v.doctorSpecialty || ''}</View>
               <Button
                 type={'primary'}
                 className={styles.doctor_gap}
@@ -85,21 +85,25 @@ export default () => {
 
   return (
     <View className={styles.page} style={{ paddingBottom: 300 }}>
-      <AffirmSheet />
-
       <View>
         <Space className={styles.detail_top} size={20}>
           <PreviewImage
-            url={detail.avatarImage ?? `${IMAGE_DOMIN}/mdt/user_icon.png`}
+            url={
+              detail.avatarImage
+                ? detail.avatarImage
+                : `${IMAGE_DOMIN}/mdt/user_icon.png`
+            }
             className={styles.user_icon}
           />
           <View className={styles.detail_top_right}>
-            <Text className={styles.right_name}>{detail.teamName}</Text>
+            <Text className={styles.right_name}>{detail.teamName || ''}</Text>
             <Space className={styles.top_right_bottom} alignItems="center">
-              {detail?.hospitalLevel && (
+              {detail?.hospitalLevel ? (
                 <Text className={styles.border_hos_name}>
                   {detail?.hospitalLevel}
                 </Text>
+              ) : (
+                <></>
               )}
               <Text>{detail?.hospitalName}</Text>
             </Space>
@@ -109,13 +113,13 @@ export default () => {
           <View className={styles.inner_content}>
             <View className={styles.item_gap}>
               <ShowTitle title="病种名称">
-                <Text>{detail.diseaseType}</Text>
+                <Text>{detail.diseaseType || ''}</Text>
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
               <ShowTitle title="出诊时间">
                 <View>
-                  {(detail.visitSlot ?? []).map((i, index) => {
+                  {(detail.visitSlot || []).map((i, index) => {
                     return (
                       <View key={index} className={styles.itemvalue}>
                         星期{WEEKS[+i.week + 1]} (
@@ -134,15 +138,10 @@ export default () => {
                   <View
                     className={styles.teamer_footer}
                     onTap={() => {
-                      AffirmSheet.show({
-                        title: '团队成员',
-                        content: (
-                          <Space vertical className={styles.AffirmContent}>
-                            {teamList}
-                          </Space>
-                        ),
-                        footer: null,
-                      });
+                      setShowTeam(true);
+                      // navigateTo({
+                      //   url: `/pages4/booking/team/expert`,
+                      // });
                     }}
                   >
                     <Text>查看详情</Text>
@@ -152,7 +151,7 @@ export default () => {
                 {detail.teamMembers?.length ? (
                   <ScrollView>
                     <Space size={40}>
-                      {(detail.teamMembers ?? []).map((userItem, index) => (
+                      {(detail.teamMembers || []).map((userItem, index) => (
                         <Space
                           className={styles.user_list}
                           key={index}
