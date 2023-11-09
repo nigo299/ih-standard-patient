@@ -26,7 +26,7 @@ export default ({
           </Rotate>
         </Space>
       </Space>
-      <Fold folded={!run} className={styles.content} maxHeight={'360px'}>
+      <Fold folded={!run} className={styles.content}>
         {children}
       </Fold>
     </Space>
