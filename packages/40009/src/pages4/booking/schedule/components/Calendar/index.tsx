@@ -43,7 +43,7 @@ export default ({
             </Text>
           </Space>
           <Calendar
-            onChange={(v) =>
+            onChange={(v: any) =>
               onChange?.(dayjs(v).format('YYYY-MM-DD').toString())
             }
             current={dayjs(value)}

@@ -133,7 +133,7 @@ export default () => {
                       {item?.patName} {PatGender[item?.patSex]} {item.patAgeStr}
                     </View>
                     {[
-                      { text: '患者ID', value: item.patientId },
+                      { text: '患者ID', value: item?.patCardNo },
                       {
                         text: '申请时间',
                         value: item.createTime

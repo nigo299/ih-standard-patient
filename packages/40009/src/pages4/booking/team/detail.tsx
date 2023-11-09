@@ -20,6 +20,7 @@ import { PreviewImage } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
 import classNames from 'classnames';
 import storage from '@/utils/storage';
+import AfirmSheet from './components/AfirmSheet';
 const WEEKS: any[] = ['一', '二', '三', '四', '五', '六', '日'];
 
 export default () => {
@@ -72,6 +73,7 @@ export default () => {
                   navigateTo({
                     url: `/pages4/booking/team/expert`,
                   });
+                  setShowTeam(false);
                 }}
               >
                 专家详情
@@ -205,6 +207,15 @@ export default () => {
           </View>
         </View>
       </View>
+      {showTeam && (
+        <AfirmSheet
+          onClose={() => {
+            setShowTeam(false);
+          }}
+        >
+          {teamList}
+        </AfirmSheet>
+      )}
     </View>
   );
 };

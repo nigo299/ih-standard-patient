@@ -92,7 +92,7 @@ export default () => {
             </View>
             <Space className={styles.paneItem}>
               <Label>患者ID</Label>
-              <Text className={styles.value}>{mdtDetail?.patientId}</Text>
+              <Text className={styles.value}>{mdtDetail?.patCardNo}</Text>
             </Space>
           </Space>
         </Shadow>
