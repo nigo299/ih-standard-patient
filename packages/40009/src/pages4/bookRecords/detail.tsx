@@ -125,7 +125,7 @@ export default () => {
               { label: '就诊ID', content: mdtDetail?.patientId },
               {
                 label: '联系方式',
-                content: encryptPhone(mdtDetail?.mdtOfflineApply?.contactPhone),
+                content: encryptPhone(mdtDetail?.contactPhone),
               },
               {
                 label: '症状描述',

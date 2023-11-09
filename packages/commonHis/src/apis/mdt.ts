@@ -267,6 +267,7 @@ export interface MDTDetail extends API.ResponseDataType {
   data: {
     id: string;
     hisId: string;
+    contactPhone: string;
     roomId: string;
     roomName: string;
     userId: string;
