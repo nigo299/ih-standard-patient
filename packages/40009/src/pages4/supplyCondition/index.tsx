@@ -29,6 +29,7 @@ export default () => {
   }>();
   const {
     data: { data: mdtDetail },
+    request: getdetail,
   } = useApi.查询线下MDT详情({
     params: {
       id,
@@ -59,13 +60,14 @@ export default () => {
       subRequest({
         ...params,
       }).then(() => {
+        getdetail({ id });
         showToast({ title: '提交成功' });
         setTimeout(() => {
           history.back();
         }, 1000);
       });
     },
-    [mdtDetail.id, subRequest],
+    [getdetail, id, mdtDetail.id, subRequest],
   );
   return (
     <View className={styles.page}>
@@ -106,9 +108,6 @@ export default () => {
               <Form
                 form={form}
                 onFinish={(values) => submit(values)}
-                onFinishFailed={(err) => {
-                  console.log(err);
-                }}
                 vertical
                 labelCls={styles.Formlabel}
                 requiredMarkCls={styles.requiredMark}
