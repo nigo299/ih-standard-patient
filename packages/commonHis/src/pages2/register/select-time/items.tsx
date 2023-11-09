@@ -40,8 +40,9 @@ export default ({
           </Space>
         </View>
         <Fold folded={folded} className={styles.fold}>
-          {items.map(
-            ({ leftSource, scheduleId, visitBeginTime, visitEndTime }) => (
+          {items
+            .filter((v) => Number(v.leftSource) !== 0)
+            .map(({ leftSource, scheduleId, visitBeginTime, visitEndTime }) => (
               <Space
                 alignItems="center"
                 justify="center"
@@ -58,8 +59,7 @@ export default ({
                 {/* <View className={styles.type}>普通</View> {`余 : ${leftSource}`} */}
                 <View className={styles.type}>{`余: ${leftSource}`}</View>
               </Space>
-            ),
-          )}
+            ))}
         </Fold>
       </View>
     </Shadow>
