@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text } from 'remax/one';
-import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Space } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
@@ -10,8 +9,7 @@ import { PreviewImage } from '@/components';
 import storage from '@/utils/storage';
 export default () => {
   const [info, setInfo] = useState<any>({});
-
-  usePageEvent('onShow', async () => {
+  useEffect(() => {
     let info = {};
     try {
       info = JSON.parse(storage.get('teamInfo') || '{}');
@@ -22,7 +20,9 @@ export default () => {
     setNavigationBar({
       title: '专家介绍',
     });
-  });
+  }, []);
+
+  console.log('info', info);
   // const toggleCollect = () => {
   //   setHasCollect(!hasCollect);
   // };

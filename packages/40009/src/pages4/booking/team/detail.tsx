@@ -70,7 +70,7 @@ export default () => {
                 onTap={() => {
                   storage.set('teamInfo', JSON.stringify(v));
                   navigateTo({
-                    url: `/pages4/booking/team/expert?id=${v.doctorId}`,
+                    url: `/pages4/booking/team/expert`,
                   });
                 }}
               >
@@ -96,9 +96,11 @@ export default () => {
           <View className={styles.detail_top_right}>
             <Text className={styles.right_name}>{detail.teamName}</Text>
             <Space className={styles.top_right_bottom} alignItems="center">
-              <Text className={styles.border_hos_name}>
-                {detail?.hospitalLevel}
-              </Text>
+              {detail?.hospitalLevel && (
+                <Text className={styles.border_hos_name}>
+                  {detail?.hospitalLevel}
+                </Text>
+              )}
               <Text>{detail?.hospitalName}</Text>
             </Space>
           </View>
@@ -113,9 +115,9 @@ export default () => {
             <View className={styles.item_gap}>
               <ShowTitle title="出诊时间">
                 <View>
-                  {(detail.visitSlot ?? []).map((i) => {
+                  {(detail.visitSlot ?? []).map((i, index) => {
                     return (
-                      <View key={i.week} className={styles.itemvalue}>
+                      <View key={index} className={styles.itemvalue}>
                         星期{WEEKS[+i.week + 1]} (
                         {dayjs(`2000-10-10 ${i.startTime}`).format('hh:mm')} ~{' '}
                         {dayjs(`2000-10-10 ${i.endTime}`).format('hh:mm')})
@@ -150,10 +152,10 @@ export default () => {
                 {detail.teamMembers?.length ? (
                   <ScrollView>
                     <Space size={40}>
-                      {(detail.teamMembers ?? []).map((userItem) => (
+                      {(detail.teamMembers ?? []).map((userItem, index) => (
                         <Space
                           className={styles.user_list}
-                          key={userItem.id}
+                          key={index}
                           size={10}
                         >
                           <Image
