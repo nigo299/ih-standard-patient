@@ -198,6 +198,8 @@ export interface TeamInfo extends API.ResponseDataType {
     price: string;
     memberAmount: string;
     deptAmount: string;
+    hospitalName: string;
+    hospitalLevel: string;
     teamMembers: Array<{
       id: string;
       mdtTeamId: string;

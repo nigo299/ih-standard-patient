@@ -163,7 +163,7 @@ export default () => {
       }&resourceId=${encodeURIComponent(
         sourceNumber,
       )}&hospitalName=${encodeURIComponent(
-        roomDetail?.relationId,
+        doctorDetail?.hospitalName || '',
       )}&hospitalZone=${encodeURIComponent(
         roomDetail?.roomDetail?.districtName || '',
       )}&teamName=${encodeURIComponent(

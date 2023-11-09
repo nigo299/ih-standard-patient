@@ -96,8 +96,10 @@ export default () => {
           <View className={styles.detail_top_right}>
             <Text className={styles.right_name}>{detail.teamName}</Text>
             <Space className={styles.top_right_bottom} alignItems="center">
-              <Text className={styles.border_hos_name}>三甲医院</Text>
-              <Text>重庆松山医院</Text>
+              <Text className={styles.border_hos_name}>
+                {detail?.hospitalLevel}
+              </Text>
+              <Text>{detail?.hospitalName}</Text>
             </Space>
           </View>
         </Space>
