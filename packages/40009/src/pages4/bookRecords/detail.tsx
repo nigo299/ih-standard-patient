@@ -47,7 +47,7 @@ export default () => {
   return (
     <View className={styles.warpPage}>
       {loading && <Loading />}
-      {mdtDetail?.mdtState === 'REJECT_REVIEW' && (
+      {mdtDetail?.mdtState === 'WAIT_IMPROVE_INFO' && (
         <Shadow>
           <View className={styles.pane}>
             <Space className={styles.paneHead}>
@@ -55,7 +55,10 @@ export default () => {
             </Space>
             <View className={styles.paneBody}>
               {[
-                { label: '未通过原因', content: mdtDetail?.rejectReviewReason },
+                {
+                  label: '未通过原因',
+                  content: mdtDetail?.rejectReviewReason || '',
+                },
                 {
                   label: '退款到账',
                   content:
