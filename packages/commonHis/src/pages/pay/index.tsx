@@ -400,50 +400,52 @@ export default () => {
         </View>
       </View>
       <View className={styles.buttons}>
-        {mode === 'medical' &&
+        {/* {mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 &&
-          getBrowserUa() === 'wechat' && (
-            <Button
-              type="primary"
-              className={styles.medInsureBtn}
-              onTap={hanldeMedInsurePay}
-              disabled={payDisabled2 || payLoading}
-              loading={wechatPayLoading}
-            >
-              医保移动支付
-            </Button>
-          )}
+          getBrowserUa() === 'wechat' && ( */}
+        {getBrowserUa() === 'wechat' && (
+          <Button
+            type="primary"
+            className={styles.medInsureBtn}
+            onTap={hanldeMedInsurePay}
+            disabled={payDisabled2 || payLoading}
+            loading={wechatPayLoading}
+          >
+            医保移动支付
+          </Button>
+        )}
 
-        {mode === 'medical' &&
+        {/* {mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
-          PLATFORM === 'ali' && (
-            <Button
-              type="primary"
-              className={classNames(styles.medInsureBtn, {
-                [styles.disabled]:
-                  decrypt(userInfoData?.data?.aliPayCertNo || '') !==
-                  patientFullIdNo,
-              })}
-              onTap={() => {
-                if (
-                  decrypt(userInfoData?.data?.aliPayCertNo || '') !==
-                  patientFullIdNo
-                ) {
-                  showToast({
-                    duration: 1000,
-                    icon: 'none',
-                    title: '非本人暂不支持医保在线支付',
-                  });
-                } else {
-                  hanldeMedInsurePay();
-                }
-              }}
-              disabled={payDisabled2 || payLoading}
-              loading={aliPayLoading}
-            >
-              医保移动支付
-            </Button>
-          )}
+          PLATFORM === 'ali' && ( */}
+        {PLATFORM === 'ali' && (
+          <Button
+            type="primary"
+            className={classNames(styles.medInsureBtn, {
+              [styles.disabled]:
+                decrypt(userInfoData?.data?.aliPayCertNo || '') !==
+                patientFullIdNo,
+            })}
+            onTap={() => {
+              if (
+                decrypt(userInfoData?.data?.aliPayCertNo || '') !==
+                patientFullIdNo
+              ) {
+                showToast({
+                  duration: 1000,
+                  icon: 'none',
+                  title: '非本人暂不支持医保在线支付',
+                });
+              } else {
+                hanldeMedInsurePay();
+              }
+            }}
+            disabled={payDisabled2 || payLoading}
+            loading={aliPayLoading}
+          >
+            医保移动支付
+          </Button>
+        )}
 
         {hidden !== '1' && (
           <Button
