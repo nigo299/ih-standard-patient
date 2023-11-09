@@ -3,7 +3,7 @@ import { Space, ReTextarea, Switch } from '@kqinfo/ui';
 import { Text } from 'remax/one';
 import styles from './index.less';
 export default ({
-  value,
+  value = '无',
   onChange,
   placeholder = '请输入',
   maxLength = 500,
@@ -18,7 +18,7 @@ export default ({
   return (
     <Space size={20} vertical className={styles.box}>
       <Space className={styles.switch} alignItems="center" size={10}>
-        有
+        无
         <Switch
           value={value !== '无'}
           onChange={(v) => {
@@ -29,7 +29,7 @@ export default ({
             }
           }}
         />
-        无
+        有
       </Space>
 
       {!!value && value !== '无' && value.length > 0 && (
