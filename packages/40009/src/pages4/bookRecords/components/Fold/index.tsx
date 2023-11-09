@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'remax/one';
-import { Fold, Icon, Rotate, Space } from '@kqinfo/ui';
+import { Icon, Rotate, Space } from '@kqinfo/ui';
 import styles from './index.less';
 export default ({
   title,
@@ -26,9 +26,7 @@ export default ({
           </Rotate>
         </Space>
       </Space>
-      <Fold folded={!run} className={styles.content}>
-        {children}
-      </Fold>
+      {run && <View className={styles.content}>{children}</View>}
     </Space>
   );
 };
