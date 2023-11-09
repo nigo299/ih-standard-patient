@@ -68,9 +68,12 @@ export default () => {
     {
       title: '智能导诊',
       subTitle: 'AI“医师”全天在线',
-      url: '/pages2/register',
+      // url: '/pages2/register',
+      url: `/pages/webview/index?url=${encodeURIComponent(
+        'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40026',
+      )}`,
       image: `${IMAGE_DOMIN}/home/zndz.png`,
-      open: true,
+      // open: true,
     },
   ];
 
@@ -260,7 +263,7 @@ export default () => {
                   <Image
                     src={`${IMAGE_DOMIN}/home/gh.png`}
                     className={styles.newImage}
-                  ></Image>
+                  />
                 </View>
               </Space>
             </BackgroundImg>
