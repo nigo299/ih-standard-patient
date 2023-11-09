@@ -47,6 +47,10 @@ export default () => {
   return (
     <View className={styles.warpPage}>
       {loading && <Loading />}
+      <Modal />
+      <View className={styles.title}>
+        <View>MDT申请单</View>
+      </View>
       {mdtDetail?.mdtState === 'WAIT_IMPROVE_INFO' && (
         <Shadow>
           <View className={styles.pane}>
@@ -80,10 +84,7 @@ export default () => {
           </View>
         </Shadow>
       )}
-      <Modal />
-      <View className={styles.title}>
-        <View>MDT申请单</View>
-      </View>
+
       <WhiteSpace />
       <Shadow>
         <View className={styles.pane}>
