@@ -320,9 +320,9 @@ export interface MDTDetail extends API.ResponseDataType {
       initialDiagnosis: string;
       anamnesis: string;
       examination: string;
-      imageData: string[];
-      fileData: string[];
-      videoData: string[];
+      imageData: string;
+      fileData: string;
+      videoData: string;
       contactPhone: string;
     };
     members: Array<{
@@ -500,7 +500,7 @@ export default {
   ),
   线下MDT补充资料: createApiHooks(
     (params: {
-      id: number;
+      id: string;
       symptom: string;
       allergies: string;
       medicalHistory: string;

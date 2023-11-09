@@ -6,7 +6,6 @@ import {
   PartTitle,
   useTitle,
   Image,
-  Video,
   Button,
   Loading,
   Modal,
@@ -155,8 +154,8 @@ export default () => {
               </Space>
             ))}
             <Fold title="患者上传图片资料">
-              {(mdtDetail?.mdtOfflineApply?.imageData || []).map(
-                (item, index) => (
+              {JSON.parse(mdtDetail?.mdtOfflineApply?.imageData || '[]').map(
+                (item: string, index: string) => (
                   <Image
                     src={item}
                     key={index}
@@ -167,9 +166,9 @@ export default () => {
               )}
             </Fold>
             <Fold title="患者上传视频资料">
-              {(mdtDetail?.mdtOfflineApply?.videoData || []).map(
-                (item, index) => (
-                  <Video className={styles.img} src={item} key={index} />
+              {JSON.parse(mdtDetail?.mdtOfflineApply?.videoData || '[]').map(
+                (item: string, index: string) => (
+                  <Image className={styles.img} src={item} key={index} />
                 ),
               )}
             </Fold>
@@ -189,7 +188,7 @@ export default () => {
             立即缴费
           </Button>
         )}
-        {mdtDetail?.mdtState === 'WAIT_IMPROVE_INF' && (
+        {mdtDetail?.mdtState === 'WAIT_IMPROVE_INFO' && (
           <Button
             type="primary"
             onTap={() =>

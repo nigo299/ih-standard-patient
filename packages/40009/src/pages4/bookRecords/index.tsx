@@ -9,7 +9,7 @@ import {
   useTitle,
 } from '@kqinfo/ui';
 import styles from './index.less';
-import useApi, { ApplySource } from '@/apis/mdt';
+import useApi from '@/apis/mdt';
 import { IMAGE_DOMIN } from '@/config/constant';
 import Label from '@/components/label';
 import Status from './components/Status';

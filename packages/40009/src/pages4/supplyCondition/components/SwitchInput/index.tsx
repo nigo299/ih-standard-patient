@@ -14,25 +14,30 @@ export default ({
   onChange?: (v?: string) => void;
   maxLength?: number;
 }) => {
+  console.log('value', value);
   return (
     <Space size={20} vertical className={styles.box}>
-      <Switch
-        className={styles.switch}
-        value={!!value && value.length > 0}
-        onChange={(v) => {
-          if (!v) {
-            onChange?.('');
-          } else {
-            onChange?.(' ');
-          }
-        }}
-      />
-      {!!value && value.length > 0 && (
+      <Space className={styles.switch} alignItems="center" size={10}>
+        有
+        <Switch
+          value={value !== '无'}
+          onChange={(v) => {
+            if (!v) {
+              onChange?.('无');
+            } else {
+              onChange?.(' ');
+            }
+          }}
+        />
+        无
+      </Space>
+
+      {!!value && value !== '无' && value.length > 0 && (
         <Text className={styles.count}>
           {value.length}/{maxLength}
         </Text>
       )}
-      {!!value && value.length > 0 && (
+      {!!value && value !== '无' && value.length > 0 && (
         <ReTextarea
           placeholder={placeholder}
           className={styles.textarea}

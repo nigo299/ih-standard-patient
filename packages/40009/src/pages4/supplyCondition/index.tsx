@@ -46,8 +46,15 @@ export default () => {
   const submit = useCallback(
     (values: any) => {
       const params = {
-        id: mdtDetail.id,
-        ...values,
+        id: mdtDetail?.id,
+        symptom: values?.symptom, //症状描述
+        allergies: values?.allergies, //过敏历
+        medicalHistory: values?.medicalHistory, //现病史
+        operationHistory: values?.operationHistory, //手术史
+        imageData: JSON.stringify(values?.imageData), //图片资料
+        fileData: JSON.stringify(values?.fileData), //文档资料
+        videoData: JSON.stringify(values?.videoData), //视频资料
+        contactPhone: values?.contactPhone, //预留电话
       };
       subRequest({
         ...params,
@@ -99,6 +106,9 @@ export default () => {
               <Form
                 form={form}
                 onFinish={(values) => submit(values)}
+                onFinishFailed={(err) => {
+                  console.log(err);
+                }}
                 vertical
                 labelCls={styles.Formlabel}
                 requiredMarkCls={styles.requiredMark}
@@ -114,14 +124,21 @@ export default () => {
                           'HH:mm',
                         )} - ${dayjs(mdtDetail.mdtEndTime).format('HH:mm')}`,
                         symptom: mdtDetail?.mdtOfflineApply?.symptom,
-                        allergies: mdtDetail?.mdtOfflineApply?.allergies,
+                        allergies:
+                          mdtDetail?.mdtOfflineApply?.allergies || '无',
                         medicalHistory:
-                          mdtDetail?.mdtOfflineApply?.medicalHistory,
+                          mdtDetail?.mdtOfflineApply?.medicalHistory || '无',
                         operationHistory:
-                          mdtDetail?.mdtOfflineApply?.operationHistory,
-                        imageData: mdtDetail?.mdtOfflineApply?.imageData,
-                        fileData: mdtDetail?.mdtOfflineApply?.fileData,
-                        videoData: mdtDetail?.mdtOfflineApply?.videoData,
+                          mdtDetail?.mdtOfflineApply?.operationHistory || '无',
+                        imageData: JSON.parse(
+                          mdtDetail?.mdtOfflineApply?.imageData || '[]',
+                        ),
+                        fileData: JSON.parse(
+                          mdtDetail?.mdtOfflineApply?.fileData || '[]',
+                        ),
+                        videoData: JSON.parse(
+                          mdtDetail?.mdtOfflineApply?.videoData || '[]',
+                        ),
                       }
                     : { teamName: '' }
                 }
@@ -162,28 +179,28 @@ export default () => {
                 <FormItem
                   label={'过敏史'}
                   name={'allergies'}
-                  rules={[{ type: 'idCard', required: true }]}
+                  rules={[{ required: true }]}
                 >
                   <SwitchInput />
                 </FormItem>
                 <FormItem
                   label={'慢病史'}
                   name={'medicalHistory'}
-                  rules={[{ type: 'idCard', required: true }]}
+                  rules={[{ required: true }]}
                 >
                   <SwitchInput />
                 </FormItem>
                 <FormItem
                   label={'手术史'}
                   name={'operationHistory'}
-                  rules={[{ type: 'idCard', required: true }]}
+                  rules={[{ required: true }]}
                 >
                   <SwitchInput />
                 </FormItem>
                 <FormItem
                   label={'预约手机号'}
                   name={'contactPhone'}
-                  rules={[{ type: 'idCard', required: true }]}
+                  rules={[{ type: 'phone', required: true }]}
                 >
                   <TelPhone reserved={mdtDetail?.mdtOfflineApply?.patPhone} />
                 </FormItem>

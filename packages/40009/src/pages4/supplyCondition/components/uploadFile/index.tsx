@@ -1,9 +1,9 @@
-import { View, Text } from '@remax/one';
+import { View, Text, Image } from '@remax/one';
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import styles from './index.module.less';
 import { useRefState, useStateRef } from 'parsec-hooks';
-import { selectFiles, Icon, getPlatform, Video } from '@kqinfo/ui';
+import { selectFiles, Icon, getPlatform } from '@kqinfo/ui';
 
 interface ReadOnly {
   /**
@@ -156,9 +156,9 @@ export default ({
             className={classNames(styles.uploadImgItem, itemCls)}
             key={index}
           >
-            <Video
+            <Image
               className={classNames(styles.uploadImgItemImage)}
-              src={item}
+              src={`${item}?x-oss-process=video/snapshot,t_1000,m_fast`}
               key={index}
             />
 
@@ -219,10 +219,12 @@ export default ({
                     getPlatform === 'web' && tempFile instanceof File
                       ? URL.createObjectURL(tempFile)
                       : tempFile;
+
                   setLoadingArr([...loadingArrRef.current, fileUrl]);
 
                   await uploadFn(tempFile as any)
                     .then((url) => {
+                      console.log('url', url);
                       loadingArrRef.current.splice(
                         loadingArrRef.current.findIndex((i) => i === fileUrl),
                         1,
