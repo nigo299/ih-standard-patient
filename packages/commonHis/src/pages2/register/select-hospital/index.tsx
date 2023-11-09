@@ -4,7 +4,7 @@ import { usePageEvent } from 'remax/macro';
 import { Space, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Step, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import { DeptType } from '@/apis/register';
 import regsiterState from '@/stores/register';
 import styles from './index.less';
@@ -52,12 +52,17 @@ export default () => {
         <Image
           className={styles.banner}
           src={`${IMAGE_DOMIN}/register/banner.png`}
-          onTap={() =>
-            showToast({
-              icon: 'none',
-              title: '功能暂未开放!',
-            })
-          }
+          onTap={() => {
+            if (PLATFORM === 'ali') {
+              showToast({
+                icon: 'none',
+                title: '功能暂未开放!',
+              });
+            } else {
+              window.location.href =
+                'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40026';
+            }
+          }}
         />
       </Space>
       <WhiteSpace />
