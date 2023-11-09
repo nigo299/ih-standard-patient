@@ -284,9 +284,14 @@ export default () => {
                     });
                     return;
                   }
-                  navigateTo({
-                    url: nav.url,
-                  });
+                  if (nav.title === '智能导诊') {
+                    window.location.href =
+                      'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40026';
+                  } else {
+                    navigateTo({
+                      url: nav.url,
+                    });
+                  }
                 }}
               >
                 <Space vertical className={styles.subNavWrap}>
