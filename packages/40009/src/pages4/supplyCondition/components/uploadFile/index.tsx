@@ -158,7 +158,7 @@ export default ({
           >
             <Image
               className={classNames(styles.uploadImgItemImage)}
-              src={`${item}?x-oss-process=video/snapshot,t_1000,m_fast`}
+              src={`${item}?x-oss-process=video/snapshot,t_1000,m_fast/auto-orient,1`}
               key={index}
             />
 
