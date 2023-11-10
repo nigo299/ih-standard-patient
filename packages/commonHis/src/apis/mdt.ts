@@ -409,6 +409,7 @@ export interface MDTRePay extends API.ResponseDataType {
     totalFee: number; //订单金额 ,
     leftPayTime: number; //支付截止时间
     payUrl: string; //支付地址
+    needPay: string;
     callbackUrl: string; //支付完成回跳地址（页面重定向地址）
   };
 }

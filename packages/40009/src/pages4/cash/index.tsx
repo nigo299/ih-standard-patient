@@ -36,7 +36,11 @@ export default () => {
   });
   const handlePay = useCallback(async () => {
     try {
-      window.location.replace(detail?.data?.payUrl);
+      if (`${detail?.data?.needPay}` === '1') {
+        window.location.replace(detail?.data?.payUrl);
+      } else {
+        window.location.replace(detail?.data?.callbackUrl);
+      }
     } catch (error) {
       showToast({
         title: '支付下单失败，请稍后重试',
