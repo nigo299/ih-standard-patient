@@ -68,9 +68,13 @@ export default () => {
     {
       title: '智能导诊',
       subTitle: 'AI“医师”全天在线',
-      url: '/pages2/register',
+      // url: '/pages2/register',
+      url: `/pages/webview/index?url=${encodeURIComponent(
+        'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40026',
+      )}`,
       image: `${IMAGE_DOMIN}/home/zndz.png`,
-      open: true,
+      // 支付宝暂时不支持调整
+      open: PLATFORM === 'ali',
     },
   ];
 
@@ -260,7 +264,7 @@ export default () => {
                   <Image
                     src={`${IMAGE_DOMIN}/home/gh.png`}
                     className={styles.newImage}
-                  ></Image>
+                  />
                 </View>
               </Space>
             </BackgroundImg>
@@ -280,9 +284,14 @@ export default () => {
                     });
                     return;
                   }
-                  navigateTo({
-                    url: nav.url,
-                  });
+                  if (nav.title === '智能导诊') {
+                    window.location.href =
+                      'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40026';
+                  } else {
+                    navigateTo({
+                      url: nav.url,
+                    });
+                  }
                 }}
               >
                 <Space vertical className={styles.subNavWrap}>
