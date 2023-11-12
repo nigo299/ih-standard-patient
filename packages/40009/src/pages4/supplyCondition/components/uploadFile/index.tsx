@@ -1,9 +1,9 @@
 import { View, Text, Image } from '@remax/one';
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import styles from './index.module.less';
 import { useRefState, useStateRef } from 'parsec-hooks';
-import { selectFiles, Icon, getPlatform } from '@kqinfo/ui';
+import { selectFiles, Icon, getPlatform, Video } from '@kqinfo/ui';
 
 interface ReadOnly {
   /**
@@ -144,6 +144,7 @@ export default ({
     }
     return value.length + loadingArr.length < length;
   }, [addable, length, loadingArr.length, value.length]);
+  const [preVideo, setPreVideo] = useState(undefined as any);
 
   return (
     <View className={classNames(styles.uploadImg, className)} style={style}>
@@ -158,8 +159,11 @@ export default ({
           >
             <Image
               className={classNames(styles.uploadImgItemImage)}
-              src={`${item}?x-oss-process=video/snapshot,t_1000,m_fast/auto-orient,1`}
+              src={`${item}?x-oss-process=video/snapshot,t_1000,m_fast`}
               key={index}
+              onTap={() => {
+                setPreVideo(item);
+              }}
             />
 
             {loading ? (
@@ -256,6 +260,17 @@ export default ({
         </View>
       )}
       {!(value?.length + loadingArr.length) && tip}
+      {preVideo && (
+        <View className={styles.showVideo}>
+          <View
+            className={styles.mask}
+            onTap={() => {
+              setPreVideo(undefined);
+            }}
+          />
+          <Video src={preVideo} className={styles.video} />
+        </View>
+      )}
     </View>
   );
 };
