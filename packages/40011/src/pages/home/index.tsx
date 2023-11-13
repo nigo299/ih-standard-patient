@@ -256,6 +256,15 @@ export default () => {
         open: true,
         image: `${IMAGE_DOMIN}/home/yytj.png`,
         url: '',
+        onClick: () => {
+          window.location.href =
+            (window.location.href.includes('tihs')
+              ? 'https://healthapp.cqkqinfo.com/next-H5App-p40064/#/pages/goods/index'
+              : 'https://healthmall.cqkqinfo.com/H5App-p40064/#/pages/goods/index') +
+            `?openId=${storage.get('openid')}&openId=${storage.get(
+              'login_access_token',
+            )}`;
+        },
       },
       // {
       //   title: '满意度调查',
