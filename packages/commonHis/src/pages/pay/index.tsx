@@ -242,7 +242,18 @@ export default () => {
       setPaydisabled2(false);
       setPaydisabled(false);
     }
-  }, [chooseAliAppPay, chooseWechatAppPay, h5PayUrl, payOrderId, payRequest]);
+  }, [
+    chooseAliAppPay,
+    chooseWechatAppPay,
+    config.isOldManRegFree,
+    h5PayUrl,
+    orderId,
+    payOrderId,
+    payRequest,
+    regOrderInfo?.payOrderId,
+    regOrderInfo?.preferentialFlag,
+    regOrderInfo?.totalRealFee,
+  ]);
   const hanldeMedInsurePay = useCallback(async () => {
     setPaydisabled2(true);
     setPaydisabled(true);
