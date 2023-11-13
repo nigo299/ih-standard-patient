@@ -92,8 +92,7 @@ export default () => {
           <Space className={styles.pane1} vertical size={20}>
             <View className={styles.paneHead}>
               <Text className={styles.bold}>{mdtDetail?.patName}</Text>
-              {Sexs[mdtDetail?.patSex]}
-              {mdtDetail?.patAgeStr}
+              {Sexs[mdtDetail?.patSex]} {mdtDetail?.patAgeStr}
             </View>
             <Space className={styles.paneItem}>
               <Label>患者ID</Label>

@@ -75,7 +75,7 @@ export default () => {
     //用dayjs来判断当前时间是否在今天16:30之后
     const now = dayjs();
     const targetTime = dayjs().hour(16).minute(30).second(0);
-    console.log('明天', dayjs().add(1, 'day').isSame(day, 'date'));
+
     if (dayjs().add(1, 'day').isSame(day, 'date') && now.isAfter(targetTime)) {
       Modal.show({
         title: '温馨提示',
@@ -150,6 +150,29 @@ export default () => {
     const sourceInfo: any = (roomDetail?.scheduleList || []).find(
       (x: any) => x.id === sourceNumber,
     );
+    const now = dayjs();
+    const targetTime = dayjs().hour(16).minute(30).second(0);
+    if (
+      dayjs().add(1, 'day').isSame(sourceInfo?.visitDate, 'date') &&
+      now.isAfter(targetTime)
+    ) {
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>
+              16:30后不能预约明天的会诊，请预约后天及之后的会诊
+            </View>
+            <Button onTap={() => Modal.hide()} type="primary">
+              知道了
+            </Button>
+          </View>
+        ),
+        footer: null,
+      });
+      return;
+    }
     const time = `${dayjs(sourceInfo?.visitDate).format('YYYY-MM-DD')}  ${dayjs(
       sourceInfo?.startTime,
     ).format('HH:mm')}-${dayjs(sourceInfo?.endTime).format('HH:mm')}`;

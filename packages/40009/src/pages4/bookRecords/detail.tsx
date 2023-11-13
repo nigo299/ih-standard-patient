@@ -121,7 +121,7 @@ export default () => {
           <View className={styles.paneBody}>
             {[
               { label: '就诊人', content: mdtDetail?.patName },
-              { label: '就诊ID', content: mdtDetail?.patientId },
+              { label: '就诊ID', content: mdtDetail?.patCardNo },
               {
                 label: '联系方式',
                 content: encryptPhone(mdtDetail?.contactPhone),
