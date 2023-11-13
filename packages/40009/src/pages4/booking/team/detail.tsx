@@ -124,9 +124,7 @@ export default () => {
                   {(detail.visitSlot || []).map((i, index) => {
                     return (
                       <View key={index} className={styles.itemvalue}>
-                        星期{WEEKS[+i.week + 1]} (
-                        {dayjs(`2000-10-10 ${i.startTime}`).format('hh:mm')} ~{' '}
-                        {dayjs(`2000-10-10 ${i.endTime}`).format('hh:mm')})
+                        星期{WEEKS[+i.week]} {`${i.startTime}~${i.endTime}`}
                       </View>
                     );
                   })}

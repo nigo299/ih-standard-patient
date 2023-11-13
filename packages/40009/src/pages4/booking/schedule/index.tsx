@@ -75,7 +75,7 @@ export default () => {
     //用dayjs来判断当前时间是否在今天16:30之后
     const now = dayjs();
     const targetTime = dayjs().hour(16).minute(30).second(0);
-
+    console.log('明天', dayjs().add(1, 'day').isSame(day, 'date'));
     if (dayjs().add(1, 'day').isSame(day, 'date') && now.isAfter(targetTime)) {
       Modal.show({
         title: '温馨提示',
