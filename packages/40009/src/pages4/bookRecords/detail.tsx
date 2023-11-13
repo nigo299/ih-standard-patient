@@ -51,39 +51,34 @@ export default () => {
       <View className={styles.title}>
         <View>MDT申请单</View>
       </View>
-      {mdtDetail?.mdtState === 'WAIT_IMPROVE_INFO' && (
-        <Shadow>
-          <View className={styles.pane}>
-            <Space className={styles.paneHead}>
-              <PartTitle full>审核信息</PartTitle>
-            </Space>
-            <View className={styles.paneBody}>
-              {[
-                {
-                  label: '未通过原因',
-                  content: mdtDetail?.rejectReviewReason || '',
-                },
-                {
-                  label: '退款到账',
-                  content:
-                    mdtDetail?.payState === 'REFUND'
+      {mdtDetail?.mdtState === 'WAIT_IMPROVE_INFO' ||
+        (mdtDetail?.mdtState === 'REJECT_REVIEW' && (
+          <Shadow>
+            <View className={styles.pane}>
+              <Space className={styles.paneHead}>
+                <PartTitle full>审核信息</PartTitle>
+              </Space>
+              <View className={styles.paneBody}>
+                {mdtDetail?.mdtState === 'REJECT_REVIEW' && (
+                  <Space alignItems="center" className={styles.itemdesc}>
+                    <Label width={60}>未通过原因</Label>
+                    <View className={styles.value}>
+                      {mdtDetail?.rejectReviewReason || ''}
+                    </View>
+                  </Space>
+                )}
+                <Space alignItems="center" className={styles.itemdesc}>
+                  <Label width={60}>退款到账</Label>
+                  <View className={styles.value}>
+                    {mdtDetail?.payState === 'REFUND'
                       ? '费用已原路退回，请查询支付账户！'
-                      : StatusTxt[mdtDetail?.payState],
-                },
-              ].map((item, index) => (
-                <Space
-                  key={index}
-                  alignItems="center"
-                  className={styles.itemdesc}
-                >
-                  <Label width={60}>{item.label}</Label>
-                  <View className={styles.value}>{item.content}</View>
+                      : StatusTxt[mdtDetail?.payState]}
+                  </View>
                 </Space>
-              ))}
+              </View>
             </View>
-          </View>
-        </Shadow>
-      )}
+          </Shadow>
+        ))}
 
       <WhiteSpace />
       <Shadow>

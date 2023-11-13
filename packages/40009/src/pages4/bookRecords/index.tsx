@@ -45,16 +45,15 @@ export default () => {
       }),
     [originalBindPatientList],
   );
-  const options2 = useMemo(
-    () =>
-      (mdtStauts?.data?.MdtOfflineStateEnum || []).map((item) => {
-        return {
-          text: item.desc,
-          value: item.name,
-        };
-      }),
-    [mdtStauts.data.MdtOfflineStateEnum],
-  );
+  const options2 = useMemo(() => {
+    const status = (mdtStauts?.data?.MdtOfflineStateEnum || []).map((item) => {
+      return {
+        text: item.desc,
+        value: item.name,
+      };
+    });
+    return [{ text: '全部', value: '' }, ...status];
+  }, [mdtStauts.data.MdtOfflineStateEnum]);
   const [selectState, setSelectState] = useState(options2?.[0]?.value);
   const getDoctorList = useCallback(
     (page, limit) => {
