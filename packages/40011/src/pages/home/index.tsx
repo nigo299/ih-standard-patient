@@ -258,8 +258,8 @@ export default () => {
         onClick: () => {
           window.location.href =
             (window.location.href.includes('tihs')
-              ? 'https://healthapp.cqkqinfo.com/next-H5App-p40064/#/pages/goods/index'
-              : 'https://healthmall.cqkqinfo.com/H5App-p40064/#/pages/goods/index') +
+              ? 'https://healthapp.cqkqinfo.com/next-H5App-p40064/#/pages/home/index'
+              : 'https://healthmall.cqkqinfo.com/H5App-p40064/#/pages/home/index') +
             `?openId=${storage.get('openid')}&openId=${storage.get(
               'login_access_token',
             )}`;
