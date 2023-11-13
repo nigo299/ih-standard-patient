@@ -42,7 +42,11 @@ export default ({
           placeholder={placeholder}
           className={styles.textarea}
           onChange={(v?: string) => {
-            onChange?.(v);
+            if (v.length === 0) {
+              onChange?.('无');
+            } else {
+              onChange?.(v);
+            }
           }}
           maxLength={maxLength}
         />

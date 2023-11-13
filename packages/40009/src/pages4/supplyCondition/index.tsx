@@ -20,7 +20,6 @@ import TelPhone from './components/TelPhone';
 import UploadFile from './components/uploadFile';
 import useApi from '@/apis/mdt';
 import useGetParams from '@/utils/useGetParams';
-import { getPatientAge } from '@/utils';
 import dayjs from 'dayjs';
 import { uploadFunc } from '@/utils/useUpload';
 export default () => {
@@ -69,6 +68,10 @@ export default () => {
     },
     [getdetail, id, mdtDetail.id, subRequest],
   );
+  const Sexs: any = {
+    F: '女',
+    M: '男',
+  };
   return (
     <View className={styles.page}>
       <Space className={styles.banner} size={20}>
@@ -89,7 +92,7 @@ export default () => {
           <Space className={styles.pane1} vertical size={20}>
             <View className={styles.paneHead}>
               <Text className={styles.bold}>{mdtDetail?.patName}</Text>
-              {getPatientAge(mdtDetail?.patSex)}
+              {Sexs[mdtDetail?.patSex]}
               {mdtDetail?.patAgeStr}
             </View>
             <Space className={styles.paneItem}>
