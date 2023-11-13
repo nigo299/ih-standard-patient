@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { View, navigateBack, reLaunch } from 'remax/one';
+import { View, navigateBack, navigateTo, reLaunch } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { date2hour, decrypt, getBrowserUa, reLaunchUrl } from '@/utils';
 import { useDownCount } from 'parsec-hooks';
@@ -66,6 +66,7 @@ export default () => {
   const { data: userInfoData } = useLoginApi.获取用户信息({
     needInit: PLATFORM === 'ali',
   });
+  const [regOrderInfo, setRegOrderInfo] = useState<any>(null);
   const [payDisabled, setPaydisabled] = useState(false);
   const [payDisabled2, setPaydisabled2] = useState(false);
   const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
@@ -196,6 +197,29 @@ export default () => {
   const handlePay = useCallback(async () => {
     setPaydisabled2(true);
     setPaydisabled(true);
+    if (
+      config.isOldManRegFree &&
+      regOrderInfo?.totalRealFee == 0 &&
+      regOrderInfo?.preferentialFlag === 1
+    ) {
+      // do something
+      const data = await useRegisterApi.零元单通知his.request({
+        payOrderId: regOrderInfo?.payOrderId,
+      });
+      if (data?.code === 0) {
+        showToast({
+          title: '支付成功!',
+          icon: 'success',
+        }).then(() => {
+          navigateTo({
+            url: `/pages2/register/order-detail/index?orderId=${orderId}`,
+          });
+        });
+      }
+      console.log('data', data);
+      return;
+    }
+
     if (PLATFORM === 'web') {
       window.location.href = h5PayUrl;
       return;
@@ -329,6 +353,7 @@ export default () => {
       const { data } = await useRegisterApi.查询挂号订单详情.request({
         orderId,
       });
+      setRegOrderInfo(data);
       if (data?.leftPayTime > 0) {
         setCountdown(data.leftPayTime).then(() => {
           setPaydisabled(true);

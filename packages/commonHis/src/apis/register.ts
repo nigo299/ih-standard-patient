@@ -747,4 +747,10 @@ export default {
       );
     },
   ),
+  零元单通知his: createApiHooks((params: { payOrderId: string }) => {
+    return request.post<any>(
+      '/api/intelligent/api/register/noticePayNotify',
+      params,
+    );
+  }),
 };
