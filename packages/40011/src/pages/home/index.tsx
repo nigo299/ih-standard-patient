@@ -254,16 +254,11 @@ export default () => {
         title: '体检预约',
         subTitle: '',
         image: `${IMAGE_DOMIN}/home/yytj.png`,
-        url: '',
-        onClick: () => {
-          window.location.href =
-            (window.location.href.includes('tihs')
-              ? 'https://healthapp.cqkqinfo.com/next-H5App-p40011/#/pages/home/index'
-              : 'https://healthmall.cqkqinfo.com/H5App-p40011/#/pages/home/index') +
-            `?openId=${storage.get('openid')}&token=${storage.get(
-              'login_access_token',
-            )}`;
-        },
+        url:
+          '/pages2/usercenter/select-user/index?pageRoute=' +
+          (window.location.href.includes('tihs')
+            ? 'https://healthapp.cqkqinfo.com/next-H5App-p40011/#/pages/goods/index'
+            : 'https://healthmall.cqkqinfo.com/H5App-p40011/#/pages/goods/index'),
       },
       // {
       //   title: '满意度调查',
