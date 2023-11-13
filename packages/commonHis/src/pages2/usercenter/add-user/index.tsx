@@ -602,13 +602,14 @@ export default memo(() => {
                     rules={[
                       {
                         type:
-                          !alipayUserInfo.encryptAliPayCertNo && idType === '1'
+                          !alipayUserInfo.encryptAliPayCertNo &&
+                          (idType === '1' || idType === '11')
                             ? 'idCard'
                             : 'string',
                         required: true,
                         message:
                           checked || patientType === '0'
-                            ? '请输入正确的身份证'
+                            ? '请输入正确的证件号'
                             : '请输入正确的儿童身份证',
                       },
                     ]}
