@@ -255,7 +255,7 @@ export default () => {
         subTitle: '',
         image: `${IMAGE_DOMIN}/home/yytj.png`,
         url:
-          '/pages2/usercenter/select-user/index?pageRoute=' +
+          '/pages2/usercenter/select-user/index?isHealthMall=true&pageRoute=' +
           (window.location.href.includes('tihs')
             ? 'https://healthapp.cqkqinfo.com/next-H5App-p40011/#/pages/goods/index'
             : 'https://healthmall.cqkqinfo.com/H5App-p40011/#/pages/goods/index'),
