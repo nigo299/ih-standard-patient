@@ -9,7 +9,7 @@ import {
   showToast,
   Icon,
   RichText,
-  navigateToMiniProgram,
+  // navigateToMiniProgram,
   PartTitle,
 } from '@kqinfo/ui';
 import {
@@ -253,7 +253,6 @@ export default () => {
       {
         title: '体检预约',
         subTitle: '',
-        open: true,
         image: `${IMAGE_DOMIN}/home/yytj.png`,
         url: '',
         onClick: () => {
