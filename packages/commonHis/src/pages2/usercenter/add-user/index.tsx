@@ -147,7 +147,7 @@ export default memo(() => {
             icon: 'none',
             title: '无建档信息，请建档',
           });
-          if (values['idType'] === '1') {
+          if (values['idType'] === '1' || values['idType'] === '11') {
             setShowPatType(false);
             setChecked(false);
             const { analyzeAge, analyzeBirth, analyzeSex } = analyzeIDCard(
@@ -265,9 +265,10 @@ export default memo(() => {
               ? values['parentName']
               : values['patientName'];
           const birthday =
-            values['idType'] === '1'
+            values['patientType'] === '1' || values['patientType'] === '0'
               ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
               : `${values['birthday']} 00:00:00`;
+
           if (
             config.enableFaceVerify &&
             PLATFORM === 'web' &&
@@ -297,6 +298,7 @@ export default memo(() => {
             btnSubType === 'add' || !isBrithday
               ? birthday
               : selectCard.birthday;
+
           if (!patientAge && submitBirthDay) {
             patientAge = getAgeByBirthDay(submitBirthDay) || 0;
           }
@@ -310,7 +312,9 @@ export default memo(() => {
             ...values,
             yibaoNo: '',
             patCardType: 21,
-            birthday: submitBirthDay,
+            birthday:
+              submitBirthDay ||
+              `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`,
             patientSex: submitPatientSex,
             isNewCard: btnSubType === 'add' ? 1 : 0,
             patientType: values['patientType']
@@ -652,7 +656,8 @@ export default memo(() => {
                   const idType = getFieldValue('idType');
                   return (
                     <>
-                      {(patientType === '1' || idType !== '1') && (
+                      {(patientType === '1' ||
+                        (idType !== '1' && idType !== '11')) && (
                         <>
                           <FormItem
                             label={'出生日期'}
