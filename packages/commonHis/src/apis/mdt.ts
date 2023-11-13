@@ -130,6 +130,7 @@ export interface Team {
     endTime: string;
   }>;
   intro: string;
+  summary: string;
   createTime: string;
   updateTime: string;
   price: string;
