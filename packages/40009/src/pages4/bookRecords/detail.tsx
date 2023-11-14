@@ -83,13 +83,13 @@ export default () => {
             </Space>
             <View className={styles.paneBody}>
               <Space alignItems="center" className={styles.itemdesc}>
-                <Label width={60}>未通过原因</Label>
+                <Label>未通过原因</Label>
                 <View className={styles.value}>
                   {mdtDetail?.rejectReviewReason || ''}
                 </View>
               </Space>
               <Space alignItems="center" className={styles.itemdesc}>
-                <Label width={60}>退款到账</Label>
+                <Label>退款到账</Label>
                 <View className={styles.value}>
                   费用已原路退回，请查询支付账户！
                 </View>
@@ -109,13 +109,13 @@ export default () => {
             </Space>
             <View className={styles.paneBody}>
               <Space alignItems="center" className={styles.itemdesc}>
-                <Label width={60}>{ResonJSON[mdtDetail?.mdtState].title}</Label>
+                <Label>{ResonJSON[mdtDetail?.mdtState].title}</Label>
                 <View className={styles.value}>
                   {mdtDetail?.applyCancelReason}
                 </View>
               </Space>
               <Space alignItems="center" className={styles.itemdesc}>
-                <Label width={60}>退款到账</Label>
+                <Label>退款到账</Label>
                 <View className={styles.value}>
                   费用将在1-3个工作日内，人工审核后原路退回！
                 </View>
