@@ -28,6 +28,7 @@ const pages = [
   'pages/maintain/index', // 系统维护
   'pages/covid19/adult/index', // 核酸检测列表
   'pages/covid19/confirm/index', // 核酸检测确认
+  'pages/otherLogin/index', // 第三方登录
 ];
 
 const subPackages = [

@@ -290,6 +290,7 @@ export interface MDTDetail extends API.ResponseDataType {
     orderSerialNumber: string;
     purpose: string;
     rejectReviewReason: string;
+    applyCancelReason: string;
     payTime: string;
     reviewTime: string;
     applyCancelTime: string;

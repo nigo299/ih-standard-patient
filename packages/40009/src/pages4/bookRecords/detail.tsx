@@ -44,6 +44,30 @@ export default () => {
     needInit: false,
   });
   const [form] = Form.useForm();
+  const StatusTxt: any = {
+    UNPAY: '无需退款！',
+    REFUND: '退款已完成！',
+    REFUND_FAIL: '退款失败！',
+    PAID: '待退款！',
+  };
+  const ResonJSON: any = {
+    CANCELED: {
+      title: '取消原因',
+      content: mdtDetail?.applyCancelReason,
+      refund: StatusTxt[mdtDetail.payState],
+    },
+    FAIL_NOTIFY_HIS: {
+      title: '失败原因',
+      content: '因HIS系统接口调用失败，本次会诊申请取消！',
+      refund: '费用将在1-3个工作日内，人工审核后原路退回！',
+    },
+    EXCEPTION_NOTIFY_HIS: {
+      title: '异常原因',
+      content: '因HIS系统接口调用失败，本次会诊申请取消！',
+      refund: '费用将在1-3个工作日内，人工审核后原路退回！',
+    },
+  };
+
   return (
     <View className={styles.warpPage}>
       {loading && <Loading />}
@@ -51,35 +75,55 @@ export default () => {
       <View className={styles.title}>
         <View>MDT申请单</View>
       </View>
-      {mdtDetail?.mdtState === 'WAIT_IMPROVE_INFO' ||
-        (mdtDetail?.mdtState === 'REJECT_REVIEW' && (
-          <Shadow>
-            <View className={styles.pane}>
-              <Space className={styles.paneHead}>
-                <PartTitle full>审核信息</PartTitle>
+      {mdtDetail?.mdtState === 'REJECT_REVIEW' && (
+        <Shadow>
+          <View className={styles.pane}>
+            <Space className={styles.paneHead}>
+              <PartTitle full>审核信息</PartTitle>
+            </Space>
+            <View className={styles.paneBody}>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label width={60}>未通过原因</Label>
+                <View className={styles.value}>
+                  {mdtDetail?.rejectReviewReason || ''}
+                </View>
               </Space>
-              <View className={styles.paneBody}>
-                {mdtDetail?.mdtState === 'REJECT_REVIEW' && (
-                  <Space alignItems="center" className={styles.itemdesc}>
-                    <Label width={60}>未通过原因</Label>
-                    <View className={styles.value}>
-                      {mdtDetail?.rejectReviewReason || ''}
-                    </View>
-                  </Space>
-                )}
-                <Space alignItems="center" className={styles.itemdesc}>
-                  <Label width={60}>退款到账</Label>
-                  <View className={styles.value}>
-                    {mdtDetail?.payState === 'REFUND'
-                      ? '费用已原路退回，请查询支付账户！'
-                      : StatusTxt[mdtDetail?.payState]}
-                  </View>
-                </Space>
-              </View>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label width={60}>退款到账</Label>
+                <View className={styles.value}>
+                  费用已原路退回，请查询支付账户！
+                </View>
+              </Space>
             </View>
-          </Shadow>
-        ))}
+          </View>
+        </Shadow>
+      )}
 
+      {['CANCELED', 'FAIL_NOTIFY_HIS', 'EXCEPTION_NOTIFY_HIS'].includes(
+        mdtDetail?.mdtState,
+      ) && (
+        <Shadow>
+          <View className={styles.pane}>
+            <Space className={styles.paneHead}>
+              <PartTitle full>温馨提示</PartTitle>
+            </Space>
+            <View className={styles.paneBody}>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label width={60}>{ResonJSON[mdtDetail?.mdtState].title}</Label>
+                <View className={styles.value}>
+                  {mdtDetail?.applyCancelReason}
+                </View>
+              </Space>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label width={60}>退款到账</Label>
+                <View className={styles.value}>
+                  费用将在1-3个工作日内，人工审核后原路退回！
+                </View>
+              </Space>
+            </View>
+          </View>
+        </Shadow>
+      )}
       <WhiteSpace />
       <Shadow>
         <View className={styles.pane}>
