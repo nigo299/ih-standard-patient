@@ -41,6 +41,7 @@ export default ({
         <ReTextarea
           placeholder={placeholder}
           className={styles.textarea}
+          value={value}
           onChange={(v?: string) => {
             if (v.length === 0) {
               onChange?.('无');

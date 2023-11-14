@@ -22,6 +22,7 @@ import useGetParams from '@/utils/useGetParams';
 import useApi from '@/apis/mdt';
 import dayjs from 'dayjs';
 import { encryptPhone } from '@/utils';
+import { usePageEvent } from 'remax/macro';
 export default () => {
   useTitle('MDT详情');
   const { id } = useGetParams<{
@@ -39,6 +40,9 @@ export default () => {
       data: { data: {} },
     },
     needInit: !!id,
+  });
+  usePageEvent('onShow', () => {
+    getdetail({ id });
   });
   const { request } = useApi.申请取消会诊({
     needInit: false,
