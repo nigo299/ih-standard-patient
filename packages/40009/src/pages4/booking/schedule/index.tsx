@@ -40,6 +40,7 @@ export default () => {
   );
   const [sourceNumber, setSourceNumber] = useState('1');
   const [roomDetail, setRoomDetail] = useState({} as any);
+  const [reflash, setReflash] = useState(true);
   const { loading: dayDetailLoading, data: dayDetail } = useApi.排班详情({
     initValue: {
       data: [],
@@ -54,6 +55,8 @@ export default () => {
   const changeCanlendar = useCallback((v?: any) => {
     const day = dayjs(v);
     if (dayjs().isSame(day, 'date')) {
+      setReflash(false);
+      //setReflash(true);
       Modal.show({
         title: '温馨提示',
         maskClosable: false,
@@ -63,7 +66,13 @@ export default () => {
               预约当日MDT门诊请联系客服或添加微信：13310226351（工作日8:00-
               17:30，周末及节假日8:00-12:30
             </View>
-            <Button onTap={() => Modal.hide()} type="primary">
+            <Button
+              onTap={() => {
+                setReflash(true);
+                Modal.hide();
+              }}
+              type="primary"
+            >
               知道了
             </Button>
           </View>
@@ -77,6 +86,8 @@ export default () => {
     const targetTime = dayjs().hour(16).minute(30).second(0);
 
     if (dayjs().add(1, 'day').isSame(day, 'date') && now.isAfter(targetTime)) {
+      setReflash(false);
+
       Modal.show({
         title: '温馨提示',
         maskClosable: false,
@@ -85,7 +96,13 @@ export default () => {
             <View className={styles.content}>
               MDT门诊需提前24小时预约，请预约24小时后的门诊！如有疑问，请联系客服或添加微信：13310226351（工作日8:00-17:30，周末及节假日8:00-12:30）
             </View>
-            <Button onTap={() => Modal.hide()} type="primary">
+            <Button
+              onTap={() => {
+                setReflash(true);
+                Modal.hide();
+              }}
+              type="primary"
+            >
               知道了
             </Button>
           </View>
@@ -204,14 +221,16 @@ export default () => {
         <Modal />
         <TeamInfo data={doctorDetail} />
         <WhiteSpace />
-        <Calendar
-          data={originalData?.data}
-          value={visitDate}
-          onChange={(v: any) => {
-            console.log('v', v);
-            changeCanlendar(v);
-          }}
-        />
+        {reflash && (
+          <Calendar
+            data={originalData?.data}
+            value={visitDate}
+            onChange={(v: any) => {
+              console.log('v', v);
+              changeCanlendar(v);
+            }}
+          />
+        )}
 
         <WhiteSpace />
         {(dayDetail?.data || []).map((item) => {

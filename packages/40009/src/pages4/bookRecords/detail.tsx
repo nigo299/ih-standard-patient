@@ -15,7 +15,7 @@ import {
 } from '@kqinfo/ui';
 import styles from './index.less';
 import { WhiteSpace } from '@/components';
-import Status, { StatusTxt } from './components/Status';
+import Status from './components/Status';
 import Label from '@/components/label';
 import Fold from './components/Fold';
 import useGetParams from '@/utils/useGetParams';
@@ -53,7 +53,7 @@ export default () => {
   const ResonJSON: any = {
     CANCELED: {
       title: '取消原因',
-      content: mdtDetail?.applyCancelReason,
+      content: mdtDetail?.applyCancelReason || '-',
       refund: StatusTxt[mdtDetail.payState],
     },
     FAIL_NOTIFY_HIS: {
