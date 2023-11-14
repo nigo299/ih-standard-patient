@@ -436,9 +436,11 @@ export default () => {
         </View>
       </View>
       <View className={styles.buttons}>
+        {/* 先隐藏移动医保支付 */}
         {mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 &&
-          getBrowserUa() === 'wechat' && (
+          getBrowserUa() === 'wechat' &&
+          false && (
             <Button
               type="primary"
               className={styles.medInsureBtn}
@@ -452,7 +454,8 @@ export default () => {
 
         {mode === 'medical' &&
           hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
-          PLATFORM === 'ali' && (
+          PLATFORM === 'ali' &&
+          false && (
             <Button
               type="primary"
               className={classNames(styles.medInsureBtn, {

@@ -12,11 +12,13 @@ import classNames from 'classnames';
 import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
 import { getPatientAge } from '@/utils';
+import storage from '@/utils/storage';
 
 export default memo(() => {
   const { config } = useHisConfig();
-  const { pageRoute } = useGetParams<{
+  const { pageRoute, isHealthMall } = useGetParams<{
     pageRoute: string;
+    isHealthMall: string;
   }>();
   const {
     bindPatientList,
@@ -29,6 +31,14 @@ export default memo(() => {
   });
   const onCardClick = useCallback(
     async (patient: PatientType) => {
+      if (isHealthMall && pageRoute) {
+        window.location.href =
+          pageRoute +
+          `?openId=${storage.get('openid')}&token=${storage.get(
+            'login_access_token',
+          )}&patientId=${patient?.patientId}`;
+        return;
+      }
       const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}&idNo=${patient.encryptIdNo}&patName=${patient.encryptPatientName}`;
       // 首页点进来直接切换默认就诊人
       if (pageRoute) {
