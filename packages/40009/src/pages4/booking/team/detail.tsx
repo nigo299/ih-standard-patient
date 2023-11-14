@@ -11,7 +11,6 @@ import {
   RichText,
   ListItem,
 } from '@kqinfo/ui';
-import dayjs from 'dayjs';
 import useApi from '@/apis/mdt';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
@@ -124,7 +123,7 @@ export default () => {
                   {(detail.visitSlot || []).map((i, index) => {
                     return (
                       <View key={index} className={styles.itemvalue}>
-                        星期{WEEKS[+i.week]} {`${i.startTime}~${i.endTime}`}
+                        星期{WEEKS[+i.week - 1]} {`${i.startTime}~${i.endTime}`}
                       </View>
                     );
                   })}

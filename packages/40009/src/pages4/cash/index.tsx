@@ -47,7 +47,7 @@ export default () => {
         icon: 'fail',
       });
     }
-  }, [detail.data.payUrl]);
+  }, [detail.data.callbackUrl, detail.data.needPay, detail.data.payUrl]);
   const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
   const [payDisabled, setPaydisabled] = useState(false);
   const columns = [
@@ -74,7 +74,7 @@ export default () => {
       title: '就诊人',
     },
     {
-      key: detail?.data?.patientId,
+      key: detail?.data?.patCardNo,
       title: '就诊卡号',
     },
   ];

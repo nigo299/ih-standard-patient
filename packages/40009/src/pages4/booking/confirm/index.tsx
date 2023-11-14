@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { View, redirectTo, Text, navigateTo } from 'remax/one';
+import { View, redirectTo, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { getPatientAge } from '@/utils';
 import { WhiteSpace, ListItem, Tip } from '@/components';
@@ -75,12 +75,12 @@ export default () => {
     useEffectState(defaultPatientInfo);
   const patientData = [
     {
-      label: '挂号费用',
+      label: '会诊费用',
       text: <Price price={+mdtFee || 0} />,
     },
     {
       label: '就诊号',
-      text: selectedPatient?.patHisNo || '-',
+      text: selectedPatient?.patCardNo || '-',
     },
     {
       label: '患者姓名',
@@ -185,10 +185,7 @@ export default () => {
         className={styles.tip}
         items={[
           <View className={styles.tipText} key="confirm-text">
-            <View>
-              1.目前仅支持自费会诊；
-              <Text style={{ color: '#D95E38' }}>自费</Text>用户
-            </View>
+            <View>1.目前仅支持自费会诊；</View>
             <View>
               2.请在预约挂号成功后60分钟内完成支付，超出时间后系统将自动取消订单；
             </View>
