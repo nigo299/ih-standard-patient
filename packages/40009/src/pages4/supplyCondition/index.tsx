@@ -167,7 +167,7 @@ export default () => {
                   />
                 </FormItem>
                 <FormItem
-                  label={'症状描述'}
+                  label={'症状描述(限1000字)'}
                   name={'symptom'}
                   rules={[{ required: true }]}
                 >
