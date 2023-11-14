@@ -174,7 +174,7 @@ export default () => {
                   <ReTextarea
                     placeholder={'请输入'}
                     className={styles.textarea}
-                    maxLength={100}
+                    maxLength={1000}
                   />
                 </FormItem>
                 <FormItem
