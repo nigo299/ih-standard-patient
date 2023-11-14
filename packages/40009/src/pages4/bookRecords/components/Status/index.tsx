@@ -11,6 +11,8 @@ export const StatusTxt: any = {
   CANCELED: '会诊取消',
   REJECT_REVIEW: '审核不通过',
   FINISH: '完成',
+  FAIL_NOTIFY_HIS: '申请失败',
+  EXCEPTION_NOTIFY_HIS: '申请异常',
 };
 export default ({ status = 'WAIT_IMPROVE_INFO' }: { status: string }) => {
   const StatusCls: any = {
@@ -22,6 +24,8 @@ export default ({ status = 'WAIT_IMPROVE_INFO' }: { status: string }) => {
     CANCELED: styles.cancel,
     REJECT_REVIEW: styles.fail,
     FINISH: styles.success,
+    FAIL_NOTIFY_HIS: styles.fail,
+    EXCEPTION_NOTIFY_HIS: styles.fail,
   };
 
   return (
