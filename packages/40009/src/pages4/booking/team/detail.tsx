@@ -65,7 +65,9 @@ export default () => {
           }
           footer={
             <View>
-              <View>{v.doctorSpecialty || ''}</View>
+              <View className={styles.memo}>
+                擅长：{v.doctorSpecialty || ''}
+              </View>
               <Button
                 type={'primary'}
                 className={styles.doctor_gap}
