@@ -182,12 +182,13 @@ export default () => {
               </ShowTitle>
             </View>
             <View className={styles.item_gap}>
+              <ShowTitle title="团队简介">
+                <View className={styles.contentBody}>{detail?.summary}</View>
+              </ShowTitle>
+            </View>
+            <View className={styles.item_gap}>
               <ShowTitle title="团队介绍">
-                <View>
-                  <View className={styles.contentHead}>团队简介:</View>
-                  <View className={styles.contentBody}>{detail?.summary}</View>
-                  <RichText nodes={detail?.intro || ''} />
-                </View>
+                <RichText nodes={detail?.intro || ''} />
               </ShowTitle>
             </View>
             {!isdetail && (
