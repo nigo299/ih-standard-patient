@@ -423,6 +423,9 @@ export default () => {
               {
                 title: '数量/单位',
                 dataIndex: 'itemUnit',
+                render: (v, r) => {
+                  return r?.itemNum + v;
+                },
               },
               {
                 title: '金额/元',
