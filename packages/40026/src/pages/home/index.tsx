@@ -1,18 +1,42 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import openLocation from '@/utils/openLocation';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { Space, BackgroundImg, showToast } from '@kqinfo/ui';
-import { IMAGE_DOMIN, HOSPITAL_NAME, PLATFORM } from '@/config/constant';
+import {
+  IMAGE_DOMIN,
+  HOSPITAL_NAME,
+  PLATFORM,
+  IS_FEEDBACL,
+} from '@/config/constant';
 import { CopyRight, TabBar } from '@/components';
 import patientState from '@/stores/patient';
+import useApi from 'commonHis/src/apis/common';
 import styles from './index.less';
-
+import globalState from '@/stores/global';
 export default () => {
   const {
     defaultPatientInfo: { patientId },
   } = patientState.useContainer();
+  const { initWxSDK } = globalState.useContainer();
+  useEffect(() => {
+    initWxSDK();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const {
+    data: { data: configList },
+  } = useApi.查询配置列表({
+    params: {
+      status: 1,
+      whereShowCode: 'SY_DB',
+      whereUse: 'GZH',
+    },
+    initValue: {
+      data: { data: [] },
+    },
+    needInit: IS_FEEDBACL,
+  });
   const homeMainNavConfig = [
     {
       title: '预约挂号',
@@ -301,10 +325,37 @@ export default () => {
               </BackgroundImg>
             ))}
         </Space>
-        <Image
-          src={`${IMAGE_DOMIN}/home/banner2.png`}
-          className={styles.banner2}
-        />
+        <View style={{ position: 'relative' }}>
+          <Image
+            src={`${IMAGE_DOMIN}/home/banner2.png`}
+            className={styles.banner2}
+          />
+          <wx-open-launch-weapp
+            username="gh_a8c5ff51e201"
+            path={`pages/chat/index?subhospitalId=${configList?.[0]?.subHospitalId}&hospitalId=${configList?.[0]?.hospitalId}`}
+            // path={`pages/chat/index?subhospitalId=36&hospitalId=25`}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+            }}
+          >
+            <script type="text/wxtag-template">
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+              />
+            </script>
+          </wx-open-launch-weapp>
+        </View>
+
         <View className={styles.patTitle}>特色服务</View>
         <Space justify="space-between" className={styles.cardNav}>
           {homeCardNavConfig.map((item) => (
@@ -341,7 +392,11 @@ export default () => {
             </Space>
           ))}
         </Space>
-        <CopyRight clear />
+        <CopyRight
+          clear
+          hospitalId={configList?.[0]?.hospitalId}
+          subHospitalId={configList?.[0]?.subHospitalId}
+        />
       </Space>
       {PLATFORM === 'web' && <TabBar active="首页" />}
     </View>
