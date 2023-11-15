@@ -31,7 +31,7 @@ export default ({ data = {} }: { data?: any }) => {
           }}
         >
           <Space flex={1} className={styles.desc}>
-            <Exceed clamp={2}>{data?.intro}</Exceed>
+            <Exceed clamp={2}>{data?.summary}</Exceed>
           </Space>
           <Text className={styles.link}>{`详情 >`}</Text>
         </Space>

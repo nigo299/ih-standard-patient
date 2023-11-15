@@ -21,6 +21,11 @@ import classNames from 'classnames';
 import storage from '@/utils/storage';
 import AfirmSheet from './components/AfirmSheet';
 const WEEKS: any[] = ['一', '二', '三', '四', '五', '六', '日'];
+const MODE = {
+  线下: 1,
+  线上: 2,
+  全部: 3,
+};
 
 export default () => {
   const { teamId, isdetail } = useGetParams<{
@@ -179,26 +184,32 @@ export default () => {
             <View className={styles.item_gap}>
               <ShowTitle title="团队介绍">
                 <View>
+                  <View className={styles.contentHead}>团队简介:</View>
+                  <View className={styles.contentBody}>{detail?.summary}</View>
                   <RichText nodes={detail?.intro || ''} />
                 </View>
               </ShowTitle>
             </View>
             {!isdetail && (
               <Space vertical style={{ paddingBottom: bottomHeight + 50 }}>
-                <Button
-                  type="primary"
-                  className={styles.btn_box}
-                  onTap={() => {
-                    navigateTo({
-                      url: `/pages4/booking/agreement/index?teamId=${detail?.id}`,
-                    });
-                  }}
-                >
-                  预约线下会诊
-                </Button>
-                <Button type="primary" className={styles.btn_box}>
-                  预约线上会诊
-                </Button>
+                {[MODE.线下, MODE.全部].includes(detail.mode) && (
+                  <Button
+                    type="primary"
+                    className={styles.btn_box}
+                    onTap={() => {
+                      navigateTo({
+                        url: `/pages4/booking/agreement/index?teamId=${detail?.id}`,
+                      });
+                    }}
+                  >
+                    预约线下会诊
+                  </Button>
+                )}
+                {[MODE.线上, MODE.全部].includes(detail.mode) && (
+                  <Button type="primary" className={styles.btn_box}>
+                    预约线上会诊
+                  </Button>
+                )}
               </Space>
             )}
           </View>

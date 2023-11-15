@@ -82,8 +82,8 @@ export default () => {
             预约前、如有疑问，可拨打以下电话咨询：
           </View>
           <Space justify="space-between">
-            <Text>023-45964325</Text>
-            <Text>023-45964325</Text>
+            {/* <Text>023-45964325</Text>
+            <Text>023-45964325</Text> */}
           </Space>
         </Space>
       </Space>

@@ -184,9 +184,10 @@ export interface TeamInfo extends API.ResponseDataType {
     hisId: string;
     teamName: string;
     diseaseType: string;
-    mode: string;
+    mode: number;
     enable: string;
     avatarImage: string;
+    summary: string;
     visitSlot: Array<{
       week: string;
       startTime: string;
