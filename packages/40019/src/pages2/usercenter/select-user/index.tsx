@@ -31,7 +31,7 @@ export default memo(() => {
       const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
       // 首页点进来直接切换默认就诊人
       if (type === 'tyyy') {
-        window.location.href = `http://183.65.22.8:8085/#/?patientId=${patient?.patientId}`;
+        window.location.href = `http://183.65.22.8:8085/#/?patientId=40019`;
       }
       if (type === 'tjzx') {
         window.location.href = `http://183.65.22.8:8190/MedicalHomePage?peId=${patient?.patCardNo}`;
