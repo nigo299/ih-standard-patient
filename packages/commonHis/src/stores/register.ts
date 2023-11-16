@@ -9,7 +9,7 @@ import {
 import { DeptDetailType } from '@/apis/microsite';
 import useApi from '@/apis/register';
 import { getCurrentPageUrl } from '@/utils';
-import { HIS_ID, PLATFORM } from "@/config/constant";
+import { HIS_ID, PLATFORM } from '@/config/constant';
 
 export interface IProps {
   deptId: string;
@@ -76,14 +76,40 @@ export default createContainer(() => {
   });
 
   const getDeptList = useCallback(async (type: string, hisType?: string) => {
+    const healthDept = [
+      '陈家桥儿科',
+      '陈家桥产科',
+      '陈家桥妇科',
+      '陈家桥儿保科',
+      '儿科',
+      '产科',
+      '妇科',
+      '儿保科',
+      '陈家桥体检科',
+      '陈家桥入托体检科',
+      '教师体检科',
+      '入园体检科',
+    ];
     const { data, code } = await useApi.查询科室列表.request();
     const pages = getCurrentPageUrl();
     if (code === 0 && data?.length === 1) {
-      const deptList =
-        type && type === 'reserve'
-          ? data[0].children.filter((item) => !item.name.includes('核酸'))
-          : data[0].children;
-      setDeptList(deptList);
+      if (type === 'health') {
+        const arr: DeptType[] = [];
+        data.forEach((item) => {
+          if (item.children) {
+            item.children.forEach((innerItem) => {
+              if (healthDept.includes(innerItem.name)) arr.push(innerItem);
+            });
+          }
+        });
+        setDeptList(arr);
+      } else {
+        const deptList =
+          type && type === 'reserve'
+            ? data[0].children.filter((item) => !item.name.includes('核酸'))
+            : data[0].children;
+        setDeptList(deptList);
+      }
 
       if (pages?.indexOf('register/department') === -1) {
         navigateTo({
