@@ -2,263 +2,151 @@
 .page {
   padding-bottom: 170px;
 }
-.top {
-  height: 236px;
-  width: 100%;
-  padding: 32px 0 0 22px;
-  font-weight: bold;
-  color: #fff;
-  font-size: 42px;
-  background: @theme-color;
+.pageList {
+  padding-top: 100px;
+  padding-bottom: 170px;
 }
-
-.logo {
-  width: 124px;
-  height: 124px;
-  margin-right: 23px;
-  border-radius: 50%;
+.warp {
+  padding: 20px;
 }
-
-.content {
-  padding: 0 20px;
-}
-
-.comboUser {
-  height: 135px;
-  margin-top: -60px;
-  margin-bottom: 24px;
-  background: linear-gradient(0deg, lighten(@theme-color, 50%), #ffffff);
-  border-radius: 20px;
-}
-
-.comboUserWrap {
-  &:active {
-    opacity: 0.7;
-  }
-}
-
-.userName {
-  font-size: 36px;
-  font-weight: bold;
-}
-
-.userText {
-  font-size: 26px;
-  color: #ff900d;
-}
-
-.downImg {
-  width: 25px;
-  height: 16px;
-  margin-left: 20px;
-}
-.card {
-  position: relative;
-  // height: 239px;
-  margin-bottom: 24px;
-  padding: 40px 20px;
-  border-radius: 20px;
-  line-height: 80px !important;
-  background: #ffffff;
-  border: 6px solid #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 11px;
-}
-
-.nucleImg {
-  position: absolute;
-  top: 28px;
-  right: 68px;
-  width: 105px;
-  height: 115px;
-  object-fit: contain;
-}
-
-.nucleicName {
-  display: block;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 76%;
-  // line-height: 32px;
-  font-size: 34px;
-  font-weight: bold;
-  color: #333333;
-}
-
-.regFee {
-  font-size: 26px;
-  color: #333;
-}
-
-.solid {
-  height: 1px;
-  background: #e2e2e2;
-}
-
-.whImg {
-  width: 24px;
-  height: 24px;
-  margin-right: 20px;
-}
-
-.itemText {
-  margin-top: 30px;
-  line-height: 0;
-  font-size: 26px;
-  color: #666;
-}
-
-.tip {
-  margin-top: 32px;
-  font-size: 26px;
-  color: #666;
-}
-
-.tip2 {
-  margin-top: 94px;
-  font-size: 30px;
-  font-weight: bold;
-  color: #333;
-}
-
-.active {
-  border: 6px solid @theme-color;
-}
-
-.activeImg {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  width: 80px;
-  height: 44px;
-  object-fit: contain;
-}
-
-.footer {
+.topWarp {
   position: fixed;
+  top: 0;
   left: 0;
-  bottom: env(safe-area-inset-bottom);
-  height: 98px;
-  width: 100%;
-  background: #ffffff;
-  box-shadow: 0 0 5px 0 #e2e2e2;
+  right: 0;
+  z-index: 9;
 }
-
-.footerWrap {
-  padding-left: 42px;
+.title {
+  width: 750px;
+  height: 98px;
+  background: #ffffff;
+  box-shadow: 0px 3px 6px 0px rgba(230, 230, 230, 0.5);
+  margin-bottom: 20px;
+  text-align: center;
+  color: #be2720;
+  > div {
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 28px 0px;
+    width: 200px;
+    border-bottom: 6px solid #be2720;
+  }
+}
+.item {
+  width: 710px;
+  height: 292px;
+  background: #ffffff;
+  border-radius: 20px;
+  position: relative;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.status {
+  width: 175px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-sizing: border-box;
+  padding-left: 40px;
+  margin-right: 0 !important;
+}
+.icon {
+  width: 175px;
+  height: 60px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+.statusTxt {
+  font-size: 28px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #52abc8;
+  position: relative;
+  z-index: 3;
+}
+.itemTitle {
   font-size: 34px;
-  font-weight: bold;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: #333333;
+  padding: 12px 0;
+}
+.itemdesc {
+  font-size: 28px;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #666666;
+  padding: 12px 0;
+  align-items: flex-start !important;
+}
+.value {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
   color: #333333;
 }
-
-.button {
-  width: 250px;
-  min-width: 250px;
-  font-size: 36px;
-  font-weight: bold;
-  border-radius: 0 !important;
+.warpPage {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 20px;
+  padding-bottom: 250px;
 }
-
-.calendar {
-  height: 60vh;
-  background: white;
-  overflow: auto;
+.paneHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px 15px 0;
+  min-height: 88px;
 }
-
-.calendarWrap {
-  padding: 34px 40px 0 40px;
-  font-size: 40px;
-}
-
-.calendarImg {
-  width: 31px;
-  height: 31px;
-  margin-right: 40px;
-  &:active {
-    opacity: 0.7;
-  }
-}
-
-.popup {
-  width: 608px;
-  height: 790px;
-  background: #fff;
-  border-radius: 20px;
-}
-
-.popupTop {
-  height: 212px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background: @theme-color;
-}
-
-.popupImg {
-  height: 100%;
-  width: 100%;
-}
-
-.popupBtns {
-  height: 105px;
-  border-top: 1px solid #e2e2e2;
-}
-
-.popupBtn {
-  font-size: 36px;
-  min-height: 105px;
-  height: 105px;
-  &:active {
-    opacity: 0.7;
-  }
-}
-
-.cacelBtn {
-  .popupBtn();
-  position: relative;
-  color: #999;
-  &::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    height: 50%;
-    width: 1px;
-    background: rgba(#e2e2e2, 0.7);
-  }
-}
-
-.popupWrap {
-  flex: none;
-  padding: 35px 44px;
-  height: 470px;
-  line-height: 54px !important;
-  font-size: 30px;
-  color: #333;
-  overflow: auto;
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.popupText {
-  font-size: 28px;
-  text-indent: 36px;
-}
-
-.box {
-  position: relative;
-  margin-bottom: 12px;
-  padding: 20px 12px 15px 12px;
-  border: 3px solid #ffffff;
+.pane {
   background: #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 11px;
-  border-radius: 11px;
+  border-radius: 20px;
+  margin: 20px 0;
 }
-.popTitle {
-  font-weight: bold;
-  margin-bottom: 20px;
+.paneBody {
+  padding: 20px;
 }
-.popText {
-  text-indent: 20px !important;
-  margin-bottom: 20px;
-  line-height: 45px;
+.img {
+  width: 200px;
+  height: 130px;
+  border-radius: 20px;
+  margin: 10px;
+  display: inline-block;
+}
+.bottomPane {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  width: 100%;
+  padding: 20px;
+  box-shadow: 0px -3px 10px 0px #e6e6e6;
+}
+.ghostbtn {
+  width: 710px;
+  height: 100px;
+  background: #ffffff;
+  border: 2px solid @theme-color !important;
+  border-radius: 20px;
+  font-size: 36px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: @theme-color !important;
+}
+.txtarea {
+  height: 100px;
+  border: 1px solid #eee;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.modalContent {
+  padding: 20px;
 }

@@ -1,289 +1,284 @@
-import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
-import { usePageEvent } from 'remax/macro';
-import setNavigationBar from '@/utils/setNavigationBar';
-import {
-  Button,
-  ColorText,
-  NoData,
-  showToast,
-  Space,
-  Calendar,
-  Loading,
-  Exceed,
-} from '@kqinfo/ui';
+import React, { useCallback, useState } from 'react';
+import { View, Image, Text, navigateTo } from 'remax/one';
+import { WhiteSpace } from '@/components';
 import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
-import styles from './index.less';
-import patientState from '@/stores/patient';
+import { Button, Loading, Space, useTitle, Modal } from '@kqinfo/ui';
 import useGetParams from '@/utils/useGetParams';
-
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
+import dayjs from 'dayjs';
+import useApi from '@/apis/mdt';
+import styles from './index.less';
+import TeamInfo from './components/TeamInfo';
+import Calendar from './components/Calendar';
+import TimeSec from './components/TimeSec';
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+  useTitle('选择时间');
+  const { teamId } = useGetParams<{
+    teamId: string;
+  }>();
+
   const {
-    request,
-    loading,
-    data: { data },
-  } = useApi.透传字段({
+    data: { data: doctorDetail },
+  } = useApi.根据id查询团队详情({
     params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
+      id: teamId,
     },
-    needInit: false,
+    needInit: !!teamId,
   });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
+
+  const { loading, data: originalData } = useApi.会诊按日历显示({
+    initValue: {
+      data: [],
+    },
+    params: {
+      teamId: teamId,
+      type: '1',
+    },
+    needInit: !!teamId,
+  });
+  const [visitDate, setVisitDate] = useState(
+    dayjs().add(1, 'day').format('YYYY-MM-DD'),
   );
-  usePageEvent('onShow', async () => {
-    request();
-    if (!defaultPatientInfo?.patientName) {
-      getPatientList(false).then((res) => {
-        if (res.length === 0) {
-          showToast({
-            title: '请先添加就诊人!',
-            icon: 'none',
-            mask: true,
-          }).then(() => {
-            navigateTo({
-              url: `/pages2/usercenter/add-user/index`,
-            });
-          });
-        }
-      });
-    }
-    setNavigationBar({
-      title: '核酸检测',
-    });
+  const [sourceNumber, setSourceNumber] = useState('1');
+  const [roomDetail, setRoomDetail] = useState({} as any);
+  const [reflash, setReflash] = useState(true);
+  const { loading: dayDetailLoading, data: dayDetail } = useApi.排班详情({
+    initValue: {
+      data: [],
+    },
+    params: {
+      teamId: teamId,
+      type: '1',
+      visitDate: visitDate,
+    },
+    needInit: !!teamId && !!visitDate,
   });
-  return (
-    <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
-      <Mask
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-      >
-        <Space vertical className={styles.calendar}>
-          <Space justify="space-between" className={styles.calendarWrap}>
-            <ColorText fontWeight={600}>日期选择</ColorText>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/close.png`}
-              className={styles.calendarImg}
+  const changeCanlendar = useCallback((v?: any) => {
+    const day = dayjs(v);
+    if (dayjs().isSame(day, 'date')) {
+      setReflash(false);
+      //setReflash(true);
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>
+              预约当日MDT门诊请联系客服或添加微信：13310226351（工作日8:00-
+              17:30，周末及节假日8:00-12:30
+            </View>
+            <Button
               onTap={() => {
-                setShow(false);
+                setReflash(true);
+                Modal.hide();
               }}
-            />
-          </Space>
+              type="primary"
+            >
+              知道了
+            </Button>
+          </View>
+        ),
+        footer: null,
+      });
+      return;
+    }
+    //用dayjs来判断当前时间是否在今天16:30之后
+    const now = dayjs();
+    const targetTime = dayjs().hour(16).minute(30).second(0);
+
+    if (dayjs().add(1, 'day').isSame(day, 'date') && now.isAfter(targetTime)) {
+      setReflash(false);
+
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>
+              MDT门诊需提前24小时预约，请预约24小时后的门诊！如有疑问，请联系客服或添加微信：13310226351（工作日8:00-17:30，周末及节假日8:00-12:30）
+            </View>
+            <Button
+              onTap={() => {
+                setReflash(true);
+                Modal.hide();
+              }}
+              type="primary"
+            >
+              知道了
+            </Button>
+          </View>
+        ),
+        footer: null,
+      });
+      return;
+    }
+    setVisitDate(v);
+    setSourceNumber('');
+    setRoomDetail({});
+  }, []);
+  const SplitArray = useCallback((arr: any[]) => {
+    const groupedArr = Object.values(
+      arr.reduce((acc, item) => {
+        if (!acc[item.timeDesc]) {
+          acc[item.timeDesc] = [];
+        }
+        acc[item.timeDesc].push(item);
+        return acc;
+      }, {}),
+    );
+    console.log('groupedArr', groupedArr);
+    return groupedArr;
+  }, []);
+
+  const next = useCallback(() => {
+    if (!visitDate) {
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>请选择预约日期</View>
+          </View>
+        ),
+        footer: (
+          <View className={styles.footBtn} onTap={() => Modal.hide()}>
+            知道了
+          </View>
+        ),
+      });
+      return;
+    }
+    if (!roomDetail?.relationId) {
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>请选择预约时段</View>
+          </View>
+        ),
+        footer: (
+          <View className={styles.footBtn} onTap={() => Modal.hide()}>
+            知道了
+          </View>
+        ),
+      });
+      return;
+    }
+    const sourceInfo: any = (roomDetail?.scheduleList || []).find(
+      (x: any) => x.id === sourceNumber,
+    );
+    const now = dayjs();
+    const targetTime = dayjs().hour(16).minute(30).second(0);
+    if (
+      dayjs().add(1, 'day').isSame(sourceInfo?.visitDate, 'date') &&
+      now.isAfter(targetTime)
+    ) {
+      Modal.show({
+        title: '温馨提示',
+        maskClosable: false,
+        content: (
+          <View>
+            <View className={styles.content}>
+              16:30后不能预约明天的会诊，请预约后天及之后的会诊
+            </View>
+            <Button onTap={() => Modal.hide()} type="primary">
+              知道了
+            </Button>
+          </View>
+        ),
+        footer: null,
+      });
+      return;
+    }
+    const time = `${dayjs(sourceInfo?.visitDate).format('YYYY-MM-DD')}  ${dayjs(
+      sourceInfo?.startTime,
+    ).format('HH:mm')}-${dayjs(sourceInfo?.endTime).format('HH:mm')}`;
+    navigateTo({
+      url: `/pages4/booking/confirm/index?teamId=${encodeURIComponent(
+        teamId,
+      )}&roomName=${encodeURIComponent(
+        roomDetail?.roomDetail.roomName,
+      )}&roomId=${encodeURIComponent(roomDetail?.relationId)}&mdtFee=${
+        doctorDetail.price || 0
+      }&resourceId=${encodeURIComponent(
+        sourceNumber,
+      )}&hospitalName=${encodeURIComponent(
+        doctorDetail?.hospitalName || '',
+      )}&hospitalZone=${encodeURIComponent(
+        roomDetail?.roomDetail?.districtName || '',
+      )}&teamName=${encodeURIComponent(
+        doctorDetail?.teamName || '',
+      )}&Time=${encodeURIComponent(time)}&position=${encodeURIComponent(
+        roomDetail?.roomDetail?.address,
+      )}`,
+    });
+  }, [roomDetail, doctorDetail, sourceNumber, visitDate]);
+  console.log('doctorDetail', doctorDetail);
+  return (
+    <View>
+      <View className={styles.contentwarp}>
+        {(loading || dayDetailLoading) && <Loading />}
+        <Modal />
+        <TeamInfo data={doctorDetail} />
+        <WhiteSpace />
+        {reflash && (
           <Calendar
-            listEndDay={dayjs().add(1, 'month')}
-            onChange={(
-              day:
-                | dayjs.Dayjs
-                | [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined],
-            ) => {
-              if (!Array.isArray(day)) {
-                setSelectDate(dayjs(day).format('YYYY-MM-DD'));
-                setShow(false);
-              }
+            data={originalData?.data}
+            value={visitDate}
+            onChange={(v: any) => {
+              console.log('v', v);
+              changeCanlendar(v);
             }}
           />
-        </Space>
-      </Mask>
-
-      <Space className={styles.top} alignItems="flex-start">
-        <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
-          <View>核酸检测</View>
-        </Space>
-      </Space>
-      <Space className={styles.content} vertical>
-        <Space
-          className={styles.comboUser}
-          justify="space-around"
-          alignItems="center"
-        >
-          <Space
-            vertical
-            size={20}
-            onTap={() =>
-              redirectTo({
-                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/nucleic/select-combo/index',
-              })
-            }
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {defaultPatientInfo.patientName || '暂无'}
-              <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              />
-            </Space>
-            <View className={styles.userText}>切换当前就诊人</View>
-          </Space>
-          <Space
-            vertical
-            size={20}
-            // onTap={() => {
-            //   setShow(true);
-            // }}
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {selectDate}
-              {/* <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              /> */}
-            </Space>
-            <View className={styles.userText}>预约核酸检测时间</View>
-          </Space>
-        </Space>
-        <View className={styles.box}>
-          <View className={styles.popTitle}>温馨提示：</View>
-          <View className={styles.popText}>
-            核酸采集点工作时间：周一、周四上午8:00-12:00；
-            号源每日08:00更新，如有需求，请提前预约。
-          </View>
-        </View>
-        {data?.data?.items?.length > 0 ? (
-          <>
-            {data?.data?.items.map((item: NucleType) => {
-              const { nucleicName } = item;
-              return (
-                <Space
-                  className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
-                  })}
-                  key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
-                  vertical
-                  // size={30}
-                  // ignoreNum={4}
-                  justify="center"
-                >
-                  {resourceId === item.resourceId && (
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/active.png`}
-                      className={styles.activeImg}
-                    />
-                  )}
-                  <Exceed className={styles.nucleicName}>
-                    {item.nucleicName}
-                  </Exceed>
-                  <Space alignItems="center" className={styles.regFee}>
-                    <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
-                  </Space>
-                  <View className={styles.solid} />
-
-                  <Space alignItems="center" className={styles.itemText}>
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/wh.png`}
-                      className={styles.whImg}
-                    />
-                    <View>
-                      {nucleicName.includes('黄码') && (
-                        <ColorText>健康码状态为无码、黄码人员</ColorText>
-                      )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
-                          '核酸检测（出租网约车免费）（绿码）',
-                        )) &&
-                        '新型冠状病毒核酸检测（混采10:1）'}
-
-                      {nucleicName.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
-                    </View>
-                  </Space>
-                  {/*<Image*/}
-                  {/*  className={styles.nucleImg}*/}
-                  {/*  src={*/}
-                  {/*    nucleicName.includes('核酸检测（混检）（绿码')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/lm.png`*/}
-                  {/*      : nucleicName.includes('核酸检测（黄码/无码）')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/hmwm.png`*/}
-                  {/*      : nucleicName.includes(*/}
-                  {/*          '核酸检测（出租网约车免费）（绿码）',*/}
-                  {/*        )*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/czclm.png`*/}
-                  {/*      : `${IMAGE_DOMIN}/nucleic/czchm.png`*/}
-                  {/*  }*/}
-                  {/*/>*/}
-                </Space>
-              );
-            })}
-
-            <Space className={styles.tip}>
-              <ColorText>*</ColorText>
-              <View> 我院提供绿码核酸单检服务</View>
-            </Space>
-          </>
-        ) : (
-          <NoData />
         )}
-      </Space>
-      <Space className={styles.footer}>
-        <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>{!!resourceId ? '1' : '0'}</ColorText>个项目
-        </Space>
-        <Button
-          className={styles.button}
-          type="primary"
-          disabled={
-            data?.data?.item?.length === 0 ||
-            !resourceId ||
-            !defaultPatientInfo.patientName
-          }
-          onTap={(e) => {
-            e.stopPropagation();
 
-            const selectNucle = data?.data?.items?.filter(
-              (item: NucleType) => item.resourceId === resourceId,
-            );
-            if (selectNucle?.[0]?.nucleicName) {
-              const { nucleicName, endTime, startTime, resourceId, regFee } =
-                selectNucle[0];
-              navigateTo({
-                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-              });
-            }
-          }}
-        >
+        <WhiteSpace />
+        {(dayDetail?.data || []).map((item) => {
+          return (
+            <View key={item.relationId} className={styles.roombox}>
+              <Space className={styles.room} alignItems="center">
+                {item.relationName}
+              </Space>
+              {(
+                SplitArray(
+                  item?.scheduleList.filter((x) => x.isPublish === 1),
+                ) || []
+              ).map((chdItem: any) => {
+                return (
+                  <TimeSec
+                    key={chdItem.timeDesc}
+                    value={sourceNumber}
+                    data={chdItem}
+                    onChange={(v: any) => {
+                      setSourceNumber(v);
+                      setRoomDetail(item);
+                    }}
+                  />
+                );
+              })}
+            </View>
+          );
+        })}
+
+        {dayDetail?.data?.length === 0 && (
+          <Space
+            justify="center"
+            alignItems="center"
+            vertical
+            className={styles.noData}
+          >
+            <Image
+              src={`${IMAGE_DOMIN}/register/zwpb.png`}
+              className={styles.noDataImg}
+              mode="aspectFit"
+            />
+            <Text>暂无排班</Text>
+          </Space>
+        )}
+        <Button className={styles.btn} type="primary" onTap={next}>
           下一步
         </Button>
-      </Space>
+      </View>
     </View>
   );
 };

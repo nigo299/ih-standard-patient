@@ -136,15 +136,18 @@ export const compressImg = (
   });
 };
 
-const uploadFunc: (file: any) => Promise<string> = async (file) => {
+export const uploadFunc: (
+  file: any,
+  type: 'audio' | 'video' | 'image',
+) => Promise<string> = async (file, type = 'image') => {
   const { data: sign } = await useApi.OSS签名.request();
   const host = sign.host;
-  const originalName = PLATFORM === 'web' ? file?.name : file;
+  const originalName = file;
   const dateName = dayjs().format('YYYY/MM/DD');
   const filename =
     PLATFORM === 'web'
-      ? `PIC/${dateName}/${uuid.v4()}-${originalName}`
-      : `PIC/${dateName}/${originalName}`;
+      ? `${sign.dir}/${dateName}/${uuid.v4()}-${originalName.name}`
+      : `${sign.dir}/${dateName}/${originalName.name}`;
   const formData = {
     key: filename,
     policy: sign.policy,
@@ -154,10 +157,10 @@ const uploadFunc: (file: any) => Promise<string> = async (file) => {
   };
   await uploadFile({
     url: sign.host,
-    name: PLATFORM === 'web' ? '' : 'file',
-    fileType: 'image',
+    name: 'file',
+    fileType: type,
     filePath: originalName,
-    formData: PLATFORM === 'web' ? { ...formData, file } : formData,
+    formData: formData,
     header: { Accept: '*/*' },
   });
   return `${host}/${filename}`;
@@ -198,7 +201,7 @@ export default () =>
               console.log('file', file);
               const result = await compressImg(file, 0.28);
               console.log('result', result);
-              const src = await uploadFunc(result.file);
+              const src = await uploadFunc(result.file, 'image');
               values.push(src);
             } catch (error) {
               console.log(error);

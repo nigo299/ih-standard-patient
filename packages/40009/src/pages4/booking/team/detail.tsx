@@ -1,289 +1,232 @@
-import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
+import React, { useMemo, useState } from 'react';
+import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import {
   Button,
-  ColorText,
   NoData,
-  showToast,
   Space,
-  Calendar,
-  Loading,
-  Exceed,
+  ScrollView,
+  useSafeArea,
+  RichText,
+  ListItem,
 } from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
+import useApi from '@/apis/mdt';
 import styles from './index.less';
-import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
+import ShowTitle from './components/showTitle';
+import { PreviewImage } from '@/components';
+import { IMAGE_DOMIN } from '@/config/constant';
+import classNames from 'classnames';
+import storage from '@/utils/storage';
+import AfirmSheet from './components/AfirmSheet';
+const WEEKS: any[] = ['一', '二', '三', '四', '五', '六', '日'];
+const MODE = {
+  线下: 1,
+  线上: 2,
+  全部: 3,
+};
 
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+  const { teamId, isdetail } = useGetParams<{
+    teamId: string;
+    isdetail: string;
+  }>();
   const {
-    request,
-    loading,
-    data: { data },
-  } = useApi.透传字段({
+    data: { data: detail },
+  } = useApi.根据id查询团队详情({
+    initValue: { data: {} },
     params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
+      id: teamId,
     },
-    needInit: false,
+    needInit: !!teamId,
   });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
-  );
+  const { bottomHeight } = useSafeArea();
   usePageEvent('onShow', async () => {
-    request();
-    if (!defaultPatientInfo?.patientName) {
-      getPatientList(false).then((res) => {
-        if (res.length === 0) {
-          showToast({
-            title: '请先添加就诊人!',
-            icon: 'none',
-            mask: true,
-          }).then(() => {
-            navigateTo({
-              url: `/pages2/usercenter/add-user/index`,
-            });
-          });
-        }
-      });
-    }
     setNavigationBar({
-      title: '核酸检测',
+      title: '团队详情',
     });
   });
-  return (
-    <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
-      <Mask
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-      >
-        <Space vertical className={styles.calendar}>
-          <Space justify="space-between" className={styles.calendarWrap}>
-            <ColorText fontWeight={600}>日期选择</ColorText>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/close.png`}
-              className={styles.calendarImg}
-              onTap={() => {
-                setShow(false);
-              }}
-            />
-          </Space>
-          <Calendar
-            listEndDay={dayjs().add(1, 'month')}
-            onChange={(
-              day:
-                | dayjs.Dayjs
-                | [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined],
-            ) => {
-              if (!Array.isArray(day)) {
-                setSelectDate(dayjs(day).format('YYYY-MM-DD'));
-                setShow(false);
-              }
-            }}
-          />
-        </Space>
-      </Mask>
+  const [showTeam, setShowTeam] = useState(false);
+  const teamList = useMemo(() => {
+    return (detail?.teamMembers || []).map((v) => {
+      return (
+        <ListItem
+          className={styles.affirmSheetItem}
+          key={v.id}
+          img={v.doctorImage ? v.doctorImage : `${IMAGE_DOMIN}/mdt/ys2.png`}
+          title={v.doctorName}
+          subtitle={v.doctorLevel}
+          text={
+            <View>
+              <Text>{v.hospitalName || ''}</Text>&nbsp;|&nbsp;
+              <Text>{v.deptName || ''}</Text>
+            </View>
+          }
+          footer={
+            <View>
+              <View className={styles.memo}>
+                擅长：{v.doctorSpecialty || ''}
+              </View>
+              <Button
+                type={'primary'}
+                className={styles.doctor_gap}
+                size="small"
+                block={false}
+                ghost
+                onTap={() => {
+                  storage.set('teamInfo', JSON.stringify(v));
+                  navigateTo({
+                    url: `/pages4/booking/team/expert`,
+                  });
+                  setShowTeam(false);
+                }}
+              >
+                专家详情
+              </Button>
+            </View>
+          }
+        />
+      );
+    });
+  }, [detail.teamMembers]);
 
-      <Space className={styles.top} alignItems="flex-start">
-        <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
-          <View>核酸检测</View>
-        </Space>
-      </Space>
-      <Space className={styles.content} vertical>
-        <Space
-          className={styles.comboUser}
-          justify="space-around"
-          alignItems="center"
-        >
-          <Space
-            vertical
-            size={20}
-            onTap={() =>
-              redirectTo({
-                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/nucleic/select-combo/index',
-              })
+  return (
+    <View className={styles.page} style={{ paddingBottom: 300 }}>
+      <View>
+        <Space className={styles.detail_top} size={20}>
+          <PreviewImage
+            url={
+              detail.avatarImage
+                ? detail.avatarImage
+                : `${IMAGE_DOMIN}/mdt/user_icon.png`
             }
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {defaultPatientInfo.patientName || '暂无'}
-              <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              />
+            className={styles.user_icon}
+          />
+          <View className={styles.detail_top_right}>
+            <Text className={styles.right_name}>{detail.teamName || ''}</Text>
+            <Space className={styles.top_right_bottom} alignItems="center">
+              {detail?.hospitalLevel ? (
+                <Text className={styles.border_hos_name}>
+                  {detail?.hospitalLevel}
+                </Text>
+              ) : (
+                <></>
+              )}
+              <Text>{detail?.hospitalName}</Text>
             </Space>
-            <View className={styles.userText}>切换当前就诊人</View>
-          </Space>
-          <Space
-            vertical
-            size={20}
-            // onTap={() => {
-            //   setShow(true);
-            // }}
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {selectDate}
-              {/* <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              /> */}
-            </Space>
-            <View className={styles.userText}>预约核酸检测时间</View>
-          </Space>
+          </View>
         </Space>
-        <View className={styles.box}>
-          <View className={styles.popTitle}>温馨提示：</View>
-          <View className={styles.popText}>
-            核酸采集点工作时间：周一、周四上午8:00-12:00；
-            号源每日08:00更新，如有需求，请提前预约。
+        <View className={styles.detail_content}>
+          <View className={styles.inner_content}>
+            <View className={styles.item_gap}>
+              <ShowTitle title="病种名称">
+                <Text>{detail.diseaseType || ''}</Text>
+              </ShowTitle>
+            </View>
+            <View className={styles.item_gap}>
+              <ShowTitle title="出诊时间">
+                <View>
+                  {(detail.visitSlot || []).map((i, index) => {
+                    return (
+                      <View key={index} className={styles.itemvalue}>
+                        星期{WEEKS[+i.week - 1]} {`${i.startTime}~${i.endTime}`}
+                      </View>
+                    );
+                  })}
+                </View>
+              </ShowTitle>
+            </View>
+            <View className={styles.item_gap}>
+              <ShowTitle
+                title="团队成员"
+                footer={
+                  <View
+                    className={styles.teamer_footer}
+                    onTap={() => {
+                      setShowTeam(true);
+                      // navigateTo({
+                      //   url: `/pages4/booking/team/expert`,
+                      // });
+                    }}
+                  >
+                    <Text>查看详情</Text>
+                  </View>
+                }
+              >
+                {detail.teamMembers?.length ? (
+                  <ScrollView>
+                    <Space size={40}>
+                      {(detail.teamMembers || []).map((userItem, index) => (
+                        <Space
+                          className={styles.user_list}
+                          key={index}
+                          size={10}
+                        >
+                          <Image
+                            src={
+                              userItem.doctorImage ??
+                              `${IMAGE_DOMIN}/mdt/ys2.png`
+                            }
+                            className={classNames([
+                              styles.user_icon,
+                              styles.user_icon_bottom,
+                            ])}
+                          />
+                          <View>{userItem.doctorName}</View>
+                        </Space>
+                      ))}
+                    </Space>
+                  </ScrollView>
+                ) : (
+                  <NoData />
+                )}
+              </ShowTitle>
+            </View>
+            <View className={styles.item_gap}>
+              <ShowTitle title="团队简介">
+                <View className={styles.contentBody}>{detail?.summary}</View>
+              </ShowTitle>
+            </View>
+            <View className={styles.item_gap}>
+              <ShowTitle title="团队介绍">
+                <RichText nodes={detail?.intro || ''} />
+              </ShowTitle>
+            </View>
+            {!isdetail && (
+              <Space vertical style={{ paddingBottom: bottomHeight + 50 }}>
+                {[MODE.线下, MODE.全部].includes(detail.mode) && (
+                  <Button
+                    type="primary"
+                    className={styles.btn_box}
+                    onTap={() => {
+                      navigateTo({
+                        url: `/pages4/booking/agreement/index?teamId=${detail?.id}`,
+                      });
+                    }}
+                  >
+                    预约线下会诊
+                  </Button>
+                )}
+                {[MODE.线上, MODE.全部].includes(detail.mode) && (
+                  <Button type="primary" className={styles.btn_box}>
+                    预约线上会诊
+                  </Button>
+                )}
+              </Space>
+            )}
           </View>
         </View>
-        {data?.data?.items?.length > 0 ? (
-          <>
-            {data?.data?.items.map((item: NucleType) => {
-              const { nucleicName } = item;
-              return (
-                <Space
-                  className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
-                  })}
-                  key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
-                  vertical
-                  // size={30}
-                  // ignoreNum={4}
-                  justify="center"
-                >
-                  {resourceId === item.resourceId && (
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/active.png`}
-                      className={styles.activeImg}
-                    />
-                  )}
-                  <Exceed className={styles.nucleicName}>
-                    {item.nucleicName}
-                  </Exceed>
-                  <Space alignItems="center" className={styles.regFee}>
-                    <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
-                  </Space>
-                  <View className={styles.solid} />
-
-                  <Space alignItems="center" className={styles.itemText}>
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/wh.png`}
-                      className={styles.whImg}
-                    />
-                    <View>
-                      {nucleicName.includes('黄码') && (
-                        <ColorText>健康码状态为无码、黄码人员</ColorText>
-                      )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
-                          '核酸检测（出租网约车免费）（绿码）',
-                        )) &&
-                        '新型冠状病毒核酸检测（混采10:1）'}
-
-                      {nucleicName.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
-                    </View>
-                  </Space>
-                  {/*<Image*/}
-                  {/*  className={styles.nucleImg}*/}
-                  {/*  src={*/}
-                  {/*    nucleicName.includes('核酸检测（混检）（绿码')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/lm.png`*/}
-                  {/*      : nucleicName.includes('核酸检测（黄码/无码）')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/hmwm.png`*/}
-                  {/*      : nucleicName.includes(*/}
-                  {/*          '核酸检测（出租网约车免费）（绿码）',*/}
-                  {/*        )*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/czclm.png`*/}
-                  {/*      : `${IMAGE_DOMIN}/nucleic/czchm.png`*/}
-                  {/*  }*/}
-                  {/*/>*/}
-                </Space>
-              );
-            })}
-
-            <Space className={styles.tip}>
-              <ColorText>*</ColorText>
-              <View> 我院提供绿码核酸单检服务</View>
-            </Space>
-          </>
-        ) : (
-          <NoData />
-        )}
-      </Space>
-      <Space className={styles.footer}>
-        <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>{!!resourceId ? '1' : '0'}</ColorText>个项目
-        </Space>
-        <Button
-          className={styles.button}
-          type="primary"
-          disabled={
-            data?.data?.item?.length === 0 ||
-            !resourceId ||
-            !defaultPatientInfo.patientName
-          }
-          onTap={(e) => {
-            e.stopPropagation();
-
-            const selectNucle = data?.data?.items?.filter(
-              (item: NucleType) => item.resourceId === resourceId,
-            );
-            if (selectNucle?.[0]?.nucleicName) {
-              const { nucleicName, endTime, startTime, resourceId, regFee } =
-                selectNucle[0];
-              navigateTo({
-                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-              });
-            }
+      </View>
+      {showTeam && (
+        <AfirmSheet
+          onClose={() => {
+            setShowTeam(false);
           }}
         >
-          下一步
-        </Button>
-      </Space>
+          {teamList}
+        </AfirmSheet>
+      )}
     </View>
   );
 };

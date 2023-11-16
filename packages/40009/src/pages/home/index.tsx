@@ -196,6 +196,12 @@ export default () => {
           },
         ]
       : [
+          // {
+          //   title: 'MDT门诊',
+          //   subTitle: '',
+          //   url: '/pages4/home/index',
+          //   image: `${IMAGE_DOMIN}/home/mdt.png`,
+          // },
           {
             title: '电子发票',
             subTitle: '',
@@ -293,6 +299,7 @@ export default () => {
             onClick: () =>
               (window.location.href = 'https://cqkuanren.mike-x.com/GUbrv'),
           },
+
           // {
           //   title: '医保电子凭证',
           //   subTitle: '',

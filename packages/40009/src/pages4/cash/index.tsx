@@ -1,289 +1,180 @@
-import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import setNavigationBar from '@/utils/setNavigationBar';
+import { date2hour } from '@/utils';
+import { useDownCount } from 'parsec-hooks';
+import { Price } from '@/components';
 import {
   Button,
-  ColorText,
-  NoData,
-  showToast,
-  Space,
-  Calendar,
   Loading,
-  Exceed,
+  Shadow,
+  Space,
+  Tip,
+  showToast,
+  useTitle,
 } from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
+import { ListItem } from '@/components';
 import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
+import { useLockFn } from 'ahooks';
 import styles from './index.less';
-import patientState from '@/stores/patient';
 import useGetParams from '@/utils/useGetParams';
+import useApi from '@/apis/mdt';
 
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+  useTitle('收银台');
+  const { id } = useGetParams<{
+    id: string;
+  }>();
   const {
-    request,
-    loading,
-    data: { data },
-  } = useApi.透传字段({
-    params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
-    },
+    data: detail,
+    loading: prePayLoading,
+    request: prePay,
+  } = useApi.线下MDT预支付({
+    initValue: { data: {} },
+    params: { id, payMethod: 'MINI' },
     needInit: false,
   });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
-  );
-  usePageEvent('onShow', async () => {
-    request();
-    if (!defaultPatientInfo?.patientName) {
-      getPatientList(false).then((res) => {
-        if (res.length === 0) {
-          showToast({
-            title: '请先添加就诊人!',
-            icon: 'none',
-            mask: true,
-          }).then(() => {
-            navigateTo({
-              url: `/pages2/usercenter/add-user/index`,
-            });
-          });
-        }
+  const handlePay = useCallback(async () => {
+    try {
+      if (`${detail?.data?.needPay}` === '1') {
+        window.location.replace(detail?.data?.payUrl);
+      } else {
+        window.location.replace(detail?.data?.callbackUrl);
+      }
+    } catch (error) {
+      showToast({
+        title: '支付下单失败，请稍后重试',
+        icon: 'fail',
       });
     }
-    setNavigationBar({
-      title: '核酸检测',
-    });
+  }, [detail.data.callbackUrl, detail.data.needPay, detail.data.payUrl]);
+  const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
+  const [payDisabled, setPaydisabled] = useState(false);
+  const columns = [
+    {
+      key: '多学科联合门诊（MDT）',
+      title: '业务类型',
+    },
+    {
+      key: detail?.data?.districtName || '暂无',
+      title: '就诊院区',
+    },
+    {
+      key: detail?.data?.teamName || '暂无',
+      title: '会诊团队',
+    },
+    {
+      key: detail?.data?.mdtTime || '暂无',
+      title: '会诊时间',
+    },
+  ];
+  const columns2 = [
+    {
+      key: detail?.data?.patName,
+      title: '就诊人',
+    },
+    {
+      key: detail?.data?.patCardNo,
+      title: '就诊卡号',
+    },
+  ];
+  usePageEvent('onShow', async () => {
+    const { data } = await prePay({ id, payMethod: 'MINI' });
+    if (data?.leftPayTime > 0) {
+      setCountdown(data.leftPayTime).then(() => {
+        setPaydisabled(false);
+      });
+    } else {
+      setCountdown(0);
+      setPaydisabled(true);
+    }
   });
-  return (
-    <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
-      <Mask
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-      >
-        <Space vertical className={styles.calendar}>
-          <Space justify="space-between" className={styles.calendarWrap}>
-            <ColorText fontWeight={600}>日期选择</ColorText>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/close.png`}
-              className={styles.calendarImg}
-              onTap={() => {
-                setShow(false);
-              }}
-            />
-          </Space>
-          <Calendar
-            listEndDay={dayjs().add(1, 'month')}
-            onChange={(
-              day:
-                | dayjs.Dayjs
-                | [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined],
-            ) => {
-              if (!Array.isArray(day)) {
-                setSelectDate(dayjs(day).format('YYYY-MM-DD'));
-                setShow(false);
-              }
-            }}
-          />
-        </Space>
-      </Mask>
+  useEffect(() => {
+    return () => {
+      clearCountdownTimer();
+    };
+  }, [clearCountdownTimer]);
 
-      <Space className={styles.top} alignItems="flex-start">
-        <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
-          <View>核酸检测</View>
-        </Space>
-      </Space>
-      <Space className={styles.content} vertical>
-        <Space
-          className={styles.comboUser}
-          justify="space-around"
-          alignItems="center"
-        >
-          <Space
-            vertical
-            size={20}
-            onTap={() =>
-              redirectTo({
-                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/nucleic/select-combo/index',
-              })
-            }
-            className={styles.comboUserWrap}
+  return (
+    <View
+      className={classNames(styles.page, {
+        // [styles.elderly]: elderly,
+      })}
+    >
+      {countdown > 0 && (
+        <View className={styles.tips}>
+          请在 {date2hour(countdown * 1000)} 内完成支付
+        </View>
+      )}
+      {prePayLoading && <Loading />}
+      <View className={styles.content}>
+        <View className={styles.cards}>
+          <Shadow
+            card
+            // card={!elderly}
           >
             <Space
-              className={styles.userName}
+              vertical
               justify="center"
               alignItems="center"
+              className={styles['pay-price']}
             >
-              {defaultPatientInfo.patientName || '暂无'}
-              <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
+              <View className={styles['pay-price-title']}>支付金额(元)</View>
+              <Price
+                payFee={Number(detail?.data?.totalFee)}
+                // elderly={elderly}
               />
             </Space>
-            <View className={styles.userText}>切换当前就诊人</View>
-          </Space>
-          <Space
-            vertical
-            size={20}
-            // onTap={() => {
-            //   setShow(true);
-            // }}
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {selectDate}
-              {/* <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              /> */}
-            </Space>
-            <View className={styles.userText}>预约核酸检测时间</View>
-          </Space>
-        </Space>
-        <View className={styles.box}>
-          <View className={styles.popTitle}>温馨提示：</View>
-          <View className={styles.popText}>
-            核酸采集点工作时间：周一、周四上午8:00-12:00；
-            号源每日08:00更新，如有需求，请提前预约。
-          </View>
+          </Shadow>
         </View>
-        {data?.data?.items?.length > 0 ? (
-          <>
-            {data?.data?.items.map((item: NucleType) => {
-              const { nucleicName } = item;
-              return (
-                <Space
-                  className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
-                  })}
-                  key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
-                  vertical
-                  // size={30}
-                  // ignoreNum={4}
-                  justify="center"
-                >
-                  {resourceId === item.resourceId && (
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/active.png`}
-                      className={styles.activeImg}
-                    />
-                  )}
-                  <Exceed className={styles.nucleicName}>
-                    {item.nucleicName}
-                  </Exceed>
-                  <Space alignItems="center" className={styles.regFee}>
-                    <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
-                  </Space>
-                  <View className={styles.solid} />
+        <View className={styles.items}>
+          {columns.map(
+            (item, i) =>
+              item.key && (
+                <ListItem
+                  key={i}
+                  label={item.title}
+                  text={item.key}
+                  // elderly={elderly}
+                />
+              ),
+          )}
 
-                  <Space alignItems="center" className={styles.itemText}>
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/wh.png`}
-                      className={styles.whImg}
-                    />
-                    <View>
-                      {nucleicName.includes('黄码') && (
-                        <ColorText>健康码状态为无码、黄码人员</ColorText>
-                      )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
-                          '核酸检测（出租网约车免费）（绿码）',
-                        )) &&
-                        '新型冠状病毒核酸检测（混采10:1）'}
+          <View className={styles.dotted} />
+          {columns2.map((item, i) => (
+            <ListItem
+              key={i}
+              label={item.title}
+              text={item.key}
+              // elderly={elderly}
+            />
+          ))}
+        </View>
 
-                      {nucleicName.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
-                    </View>
-                  </Space>
-                  {/*<Image*/}
-                  {/*  className={styles.nucleImg}*/}
-                  {/*  src={*/}
-                  {/*    nucleicName.includes('核酸检测（混检）（绿码')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/lm.png`*/}
-                  {/*      : nucleicName.includes('核酸检测（黄码/无码）')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/hmwm.png`*/}
-                  {/*      : nucleicName.includes(*/}
-                  {/*          '核酸检测（出租网约车免费）（绿码）',*/}
-                  {/*        )*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/czclm.png`*/}
-                  {/*      : `${IMAGE_DOMIN}/nucleic/czchm.png`*/}
-                  {/*  }*/}
-                  {/*/>*/}
-                </Space>
-              );
-            })}
-
-            <Space className={styles.tip}>
-              <ColorText>*</ColorText>
-              <View> 我院提供绿码核酸单检服务</View>
-            </Space>
-          </>
-        ) : (
-          <NoData />
-        )}
-      </Space>
-      <Space className={styles.footer}>
-        <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>{!!resourceId ? '1' : '0'}</ColorText>个项目
-        </Space>
+        <Tip
+          items={[
+            <View key={'tip'} className={styles.tipText}>
+              1.目前仅支持自费会诊
+            </View>,
+            <View key={'tip'} className={styles.tipText}>
+              2.请在预约挂号成功后60分钟内完成支付，超出时间后系统将自动取消订单；
+            </View>,
+            <View key={'tip'} className={styles.tipText}>
+              3.本次参与会诊人员，将根据会诊团队内部成员实际情况酌情安排。
+            </View>,
+          ]}
+        />
+      </View>
+      <View className={styles.buttons}>
         <Button
-          className={styles.button}
           type="primary"
-          disabled={
-            data?.data?.item?.length === 0 ||
-            !resourceId ||
-            !defaultPatientInfo.patientName
-          }
-          onTap={(e) => {
-            e.stopPropagation();
-
-            const selectNucle = data?.data?.items?.filter(
-              (item: NucleType) => item.resourceId === resourceId,
-            );
-            if (selectNucle?.[0]?.nucleicName) {
-              const { nucleicName, endTime, startTime, resourceId, regFee } =
-                selectNucle[0];
-              navigateTo({
-                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-              });
-            }
-          }}
+          onTap={useLockFn(handlePay)}
+          loading={prePayLoading}
+          disabled={payDisabled}
         >
-          下一步
+          立即支付
         </Button>
-      </Space>
+      </View>
     </View>
   );
 };

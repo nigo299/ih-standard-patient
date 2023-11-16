@@ -33,7 +33,8 @@ export type keys =
   | 'createOpOrderParams'
   | 'patientId'
   | 'debugger'
-  | 'canApplyRefund';
+  | 'canApplyRefund'
+  | 'teamInfo';
 
 const prefixKey = (key: string) => {
   return `fe-his-${REQUEST_QUERY.hisId}-` + key;

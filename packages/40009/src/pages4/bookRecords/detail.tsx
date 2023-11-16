@@ -1,288 +1,293 @@
-import React, { useState } from 'react';
-import { View, Image, navigateTo, redirectTo } from 'remax/one';
-import { usePageEvent } from 'remax/macro';
-import setNavigationBar from '@/utils/setNavigationBar';
+import React from 'react';
+import { View, navigateTo } from 'remax/one';
 import {
-  Button,
-  ColorText,
-  NoData,
-  showToast,
   Space,
-  Calendar,
+  Shadow,
+  PartTitle,
+  useTitle,
+  Image,
+  Button,
   Loading,
-  Exceed,
+  Modal,
+  Form,
+  FormItem,
+  ReTextarea,
 } from '@kqinfo/ui';
-import { IMAGE_DOMIN } from '@/config/constant';
-import { Mask } from '@/components';
-import classNames from 'classnames';
-import dayjs from 'dayjs';
-import { useEffectState } from 'parsec-hooks';
-import useApi from '@/apis/common';
 import styles from './index.less';
-import patientState from '@/stores/patient';
+import { WhiteSpace } from '@/components';
+import Status from './components/Status';
+import Label from '@/components/label';
+import Fold from './components/Fold';
 import useGetParams from '@/utils/useGetParams';
-
-interface NucleType {
-  deptId: string;
-  doctorId: string;
-  endTime: string;
-  leftNum: string;
-  nucleicDate: string;
-  nucleicName: string;
-  regFee: string;
-  resourceId: string;
-  sortNo: string;
-  startTime: string;
-  timeFlag: string;
-  totalNum: string;
-}
+import useApi from '@/apis/mdt';
+import dayjs from 'dayjs';
+import { encryptPhone } from '@/utils';
+import { usePageEvent } from 'remax/macro';
 export default () => {
-  const { type } = useGetParams<{ type: string }>();
-  const { getPatientList, defaultPatientInfo } = patientState.useContainer();
-  const [show, setShow] = useState(false);
-  const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
+  useTitle('MDT详情');
+  const { id } = useGetParams<{
+    id: string;
+  }>();
   const {
-    request,
+    data: { data: mdtDetail },
     loading,
-    data: { data },
-  } = useApi.透传字段({
+    request: getdetail,
+  } = useApi.查询线下MDT详情({
     params: {
-      transformCode: 'KQ00021',
-      time: selectDate,
-      type,
+      id,
     },
+    initValue: {
+      data: { data: {} },
+    },
+    needInit: !!id,
+  });
+  usePageEvent('onShow', () => {
+    getdetail({ id });
+  });
+  const { request } = useApi.申请取消会诊({
     needInit: false,
   });
-  const [resourceId, setResourceId] = useEffectState(
-    data?.data?.items?.[0]?.resourceId || '',
-  );
-  usePageEvent('onShow', async () => {
-    request();
-    if (!defaultPatientInfo?.patientName) {
-      getPatientList(false).then((res) => {
-        if (res.length === 0) {
-          showToast({
-            title: '请先添加就诊人!',
-            icon: 'none',
-            mask: true,
-          }).then(() => {
-            navigateTo({
-              url: `/pages2/usercenter/add-user/index`,
-            });
-          });
-        }
-      });
-    }
-    setNavigationBar({
-      title: '核酸检测',
-    });
-  });
-  return (
-    <View className={styles.page}>
-      {loading && <Loading type={'top'} />}
-      <Mask
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-      >
-        <Space vertical className={styles.calendar}>
-          <Space justify="space-between" className={styles.calendarWrap}>
-            <ColorText fontWeight={600}>日期选择</ColorText>
-            <Image
-              src={`${IMAGE_DOMIN}/nucleic/close.png`}
-              className={styles.calendarImg}
-              onTap={() => {
-                setShow(false);
-              }}
-            />
-          </Space>
-          <Calendar
-            listEndDay={dayjs().add(1, 'month')}
-            onChange={(
-              day:
-                | dayjs.Dayjs
-                | [dayjs.Dayjs | undefined, dayjs.Dayjs | undefined],
-            ) => {
-              if (!Array.isArray(day)) {
-                setSelectDate(dayjs(day).format('YYYY-MM-DD'));
-                setShow(false);
-              }
-            }}
-          />
-        </Space>
-      </Mask>
+  const [form] = Form.useForm();
+  const StatusTxt: any = {
+    UNPAY: '无需退款！',
+    REFUND: '退款已完成！',
+    REFUND_FAIL: '退款失败！',
+    PAID: '待退款！',
+  };
+  const ResonJSON: any = {
+    CANCELED: {
+      title: '取消原因',
+      content: mdtDetail?.applyCancelReason || '-',
+      refund: StatusTxt[mdtDetail.payState],
+    },
+    FAIL_NOTIFY_HIS: {
+      title: '失败原因',
+      content: '因HIS系统接口调用失败，本次会诊申请取消！',
+      refund: '费用将在1-3个工作日内，人工审核后原路退回！',
+    },
+    EXCEPTION_NOTIFY_HIS: {
+      title: '异常原因',
+      content: '因HIS系统接口调用失败，本次会诊申请取消！',
+      refund: '费用将在1-3个工作日内，人工审核后原路退回！',
+    },
+  };
 
-      <Space className={styles.top} alignItems="flex-start">
-        <Space alignItems="center">
-          <Image src={`${IMAGE_DOMIN}/auth/logo.png`} className={styles.logo} />
-          <View>核酸检测</View>
-        </Space>
-      </Space>
-      <Space className={styles.content} vertical>
-        <Space
-          className={styles.comboUser}
-          justify="space-around"
-          alignItems="center"
-        >
-          <Space
-            vertical
-            size={20}
-            onTap={() =>
-              redirectTo({
-                url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/nucleic/select-combo/index',
-              })
-            }
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {defaultPatientInfo.patientName || '暂无'}
-              <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              />
+  return (
+    <View className={styles.warpPage}>
+      {loading && <Loading />}
+      <Modal />
+      <View className={styles.title}>
+        <View>MDT申请单</View>
+      </View>
+      {mdtDetail?.mdtState === 'REJECT_REVIEW' && (
+        <Shadow>
+          <View className={styles.pane}>
+            <Space className={styles.paneHead}>
+              <PartTitle full>审核信息</PartTitle>
             </Space>
-            <View className={styles.userText}>切换当前就诊人</View>
-          </Space>
-          <Space
-            vertical
-            size={20}
-            // onTap={() => {
-            //   setShow(true);
-            // }}
-            className={styles.comboUserWrap}
-          >
-            <Space
-              className={styles.userName}
-              justify="center"
-              alignItems="center"
-            >
-              {selectDate}
-              {/* <Image
-                src={`${IMAGE_DOMIN}/nucleic/down.png`}
-                className={styles.downImg}
-              /> */}
+            <View className={styles.paneBody}>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label>未通过原因</Label>
+                <View className={styles.value}>
+                  {mdtDetail?.rejectReviewReason || ''}
+                </View>
+              </Space>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label>退款到账</Label>
+                <View className={styles.value}>
+                  费用已原路退回，请查询支付账户！
+                </View>
+              </Space>
+            </View>
+          </View>
+        </Shadow>
+      )}
+
+      {['CANCELED', 'FAIL_NOTIFY_HIS', 'EXCEPTION_NOTIFY_HIS'].includes(
+        mdtDetail?.mdtState,
+      ) && (
+        <Shadow>
+          <View className={styles.pane}>
+            <Space className={styles.paneHead}>
+              <PartTitle full>温馨提示</PartTitle>
             </Space>
-            <View className={styles.userText}>预约核酸检测时间</View>
+            <View className={styles.paneBody}>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label>{ResonJSON[mdtDetail?.mdtState].title}</Label>
+                <View className={styles.value}>
+                  {mdtDetail?.applyCancelReason}
+                </View>
+              </Space>
+              <Space alignItems="center" className={styles.itemdesc}>
+                <Label>退款到账</Label>
+                <View className={styles.value}>
+                  费用将在1-3个工作日内，人工审核后原路退回！
+                </View>
+              </Space>
+            </View>
+          </View>
+        </Shadow>
+      )}
+      <WhiteSpace />
+      <Shadow>
+        <View className={styles.pane}>
+          <Space className={styles.paneHead}>
+            <PartTitle full>会诊信息</PartTitle>
+            <Status status={mdtDetail?.mdtState} />
           </Space>
-        </Space>
-        <View className={styles.box}>
-          <View className={styles.popTitle}>温馨提示：</View>
-          <View className={styles.popText}>
-            核酸采集点工作时间：周一、周四上午8:00-12:00；
-            号源每日08:00更新，如有需求，请提前预约。
+          <View className={styles.paneBody}>
+            {[
+              { label: '会诊方式', content: '线下MDT门诊' },
+              { label: '会诊团队', content: mdtDetail?.teamName },
+              {
+                label: '会诊时间',
+                content: `${dayjs(mdtDetail?.mdtStartTime).format(
+                  'YYYY-MM-DD',
+                )} ${dayjs(mdtDetail?.mdtStartTime).format('HH:mm')}-${dayjs(
+                  mdtDetail?.mdtEndTime,
+                ).format('HH:mm')}`,
+              },
+              { label: '会诊地点', content: mdtDetail?.roomName },
+            ].map((item, index) => (
+              <Space
+                key={index}
+                alignItems="center"
+                className={styles.itemdesc}
+              >
+                <Label>{item.label}</Label>
+                <View className={styles.value}>{item.content}</View>
+              </Space>
+            ))}
           </View>
         </View>
-        {data?.data?.items?.length > 0 ? (
-          <>
-            {data?.data?.items.map((item: NucleType) => {
-              const { nucleicName } = item;
-              return (
-                <Space
-                  className={classNames(styles.card, {
-                    [styles.active]: resourceId === item.resourceId,
-                  })}
-                  key={item.resourceId}
-                  onTap={() => setResourceId(item.resourceId)}
-                  vertical
-                  // size={30}
-                  // ignoreNum={4}
-                  justify="center"
-                >
-                  {resourceId === item.resourceId && (
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/active.png`}
-                      className={styles.activeImg}
-                    />
-                  )}
-                  <Exceed className={styles.nucleicName}>
-                    {item.nucleicName}
-                  </Exceed>
-                  <Space alignItems="center" className={styles.regFee}>
-                    <View>单价：</View>
-                    <ColorText fontWeight={600}>{item?.regFee}元</ColorText>
-                  </Space>
-                  <View className={styles.solid} />
-
-                  <Space alignItems="center" className={styles.itemText}>
-                    <Image
-                      src={`${IMAGE_DOMIN}/nucleic/wh.png`}
-                      className={styles.whImg}
-                    />
-                    <View>
-                      {nucleicName.includes('黄码') && (
-                        <ColorText>健康码状态为无码、黄码人员</ColorText>
-                      )}
-                      {(nucleicName.includes('核酸检测（混检）') ||
-                        nucleicName.includes(
-                          '核酸检测（出租网约车免费）（绿码）',
-                        )) &&
-                        '新型冠状病毒核酸检测（混采10:1）'}
-
-                      {nucleicName.includes('核酸检测（单检') &&
-                        '自愿核酸检测人员，单人单管'}
-                    </View>
-                  </Space>
-                  {/*<Image*/}
-                  {/*  className={styles.nucleImg}*/}
-                  {/*  src={*/}
-                  {/*    nucleicName.includes('核酸检测（混检）（绿码')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/lm.png`*/}
-                  {/*      : nucleicName.includes('核酸检测（黄码/无码）')*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/hmwm.png`*/}
-                  {/*      : nucleicName.includes(*/}
-                  {/*          '核酸检测（出租网约车免费）（绿码）',*/}
-                  {/*        )*/}
-                  {/*      ? `${IMAGE_DOMIN}/nucleic/czclm.png`*/}
-                  {/*      : `${IMAGE_DOMIN}/nucleic/czchm.png`*/}
-                  {/*  }*/}
-                  {/*/>*/}
-                </Space>
-              );
-            })}
-
-            <Space className={styles.tip}>
-              <ColorText>*</ColorText>
-              <View> 我院提供绿码核酸单检服务</View>
-            </Space>
-          </>
-        ) : (
-          <NoData />
-        )}
-      </Space>
-      <Space className={styles.footer}>
-        <Space alignItems="center" flex="auto" className={styles.footerWrap}>
-          已选择<ColorText>{!!resourceId ? '1' : '0'}</ColorText>个项目
-        </Space>
-        <Button
-          className={styles.button}
-          type="primary"
-          disabled={
-            data?.data?.item?.length === 0 ||
-            !resourceId ||
-            !defaultPatientInfo.patientName
-          }
-          onTap={(e) => {
-            e.stopPropagation();
-
-            const selectNucle = data?.data?.items?.filter(
-              (item: NucleType) => item.resourceId === resourceId,
-            );
-            if (selectNucle?.[0]?.nucleicName) {
-              const { nucleicName, endTime, startTime, resourceId, regFee } =
-                selectNucle[0];
+      </Shadow>
+      <Shadow>
+        <View className={styles.pane}>
+          <Space className={styles.paneHead}>
+            <PartTitle full>就诊人信息</PartTitle>
+          </Space>
+          <View className={styles.paneBody}>
+            {[
+              { label: '就诊人', content: mdtDetail?.patName },
+              { label: '就诊ID', content: mdtDetail?.patCardNo },
+              {
+                label: '联系方式',
+                content: encryptPhone(mdtDetail?.contactPhone),
+              },
+              {
+                label: '症状描述',
+                content: mdtDetail?.mdtOfflineApply?.symptom,
+              },
+              {
+                label: '过敏史',
+                content: mdtDetail?.mdtOfflineApply?.allergies,
+              },
+              {
+                label: '慢病史',
+                content: mdtDetail?.mdtOfflineApply?.medicalHistory,
+              },
+              {
+                label: '手术史',
+                content: mdtDetail?.mdtOfflineApply?.operationHistory,
+              },
+            ].map((item, index) => (
+              <Space
+                key={index}
+                alignItems="center"
+                className={styles.itemdesc}
+              >
+                <Label>{item.label}</Label>
+                <View className={styles.value}>{item.content}</View>
+              </Space>
+            ))}
+            <Fold title="患者上传图片资料">
+              {JSON.parse(mdtDetail?.mdtOfflineApply?.imageData || '[]').map(
+                (item: string, index: string) => (
+                  <Image
+                    src={item}
+                    key={index}
+                    className={styles.img}
+                    preview
+                  />
+                ),
+              )}
+            </Fold>
+            <Fold title="患者上传视频资料">
+              {JSON.parse(mdtDetail?.mdtOfflineApply?.videoData || '[]').map(
+                (item: string, index: string) => (
+                  <Image className={styles.img} src={item} key={index} />
+                ),
+              )}
+            </Fold>
+          </View>
+        </View>
+      </Shadow>
+      <Space className={styles.bottomPane} vertical size={20}>
+        {mdtDetail?.payState === 'UNPAY' && (
+          <Button
+            type="primary"
+            onTap={() =>
               navigateTo({
-                url: `/pages2/nucleic/confirm/index?patientId=${defaultPatientInfo?.patientId}&nucleicName=${nucleicName}&resourceId=${resourceId}&endTime=${endTime}&startTime=${startTime}&regFee=${regFee}`,
-              });
+                url: `/pages4/cash/index?id=${id}`,
+              })
             }
-          }}
-        >
-          下一步
-        </Button>
+          >
+            立即缴费
+          </Button>
+        )}
+        {mdtDetail?.mdtState === 'WAIT_IMPROVE_INFO' && (
+          <Button
+            type="primary"
+            onTap={() =>
+              navigateTo({
+                url: `/pages4/supplyCondition/index?id=${id}`,
+              })
+            }
+          >
+            补充病历资料
+          </Button>
+        )}
+        {['WAIT_REVIEW', 'WAIT_IMPROVE_INFO'].includes(mdtDetail?.mdtState) && (
+          <Button
+            className={styles.ghostbtn}
+            onTap={() =>
+              Modal.show({
+                title: '取消申请',
+                bodyCls: styles.modalContent,
+                // 异步关闭
+                onOk: () =>
+                  new Promise((resolve, reject) => {
+                    form.submit();
+                    form
+                      .validateFields()
+                      .then((values) => {
+                        request({ ...values, id }).then(() => {
+                          getdetail();
+                          resolve('');
+                        });
+                      })
+                      .catch(reject);
+                  }),
+                content: (
+                  <Form form={form} style={{ width: '100%' }} vertical>
+                    <FormItem
+                      noStyle
+                      name={'reason'}
+                      rules={[{ required: true, message: '请输入取消原因' }]}
+                    >
+                      <ReTextarea
+                        placeholder={'请输入取消原因'}
+                        className={styles.txtarea}
+                      />
+                    </FormItem>
+                  </Form>
+                ),
+              })
+            }
+          >
+            取消MDT
+          </Button>
+        )}
       </Space>
     </View>
   );

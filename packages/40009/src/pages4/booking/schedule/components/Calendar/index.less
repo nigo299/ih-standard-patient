@@ -1,0 +1,40 @@
+@import '@/styles/index.less';
+.box {
+  width: 710px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-sizing: border-box;
+}
+.head {
+  padding: 40px 20px 20px 20px;
+}
+.font1 {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #333333;
+}
+.font2 {
+  font-size: 24px;
+  font-family: PingFang SC;
+  font-weight: 500;
+  color: @theme-color;
+}
+.CalendarItem {
+  width: 64px;
+  height: 86px;
+  box-sizing: border-box;
+  border-radius: 32px;
+  font-size: 24px;
+  padding-bottom: 30px;
+}
+.dotwarp {
+  padding-bottom: 10px;
+}
+.active {
+  background: rgba(190, 39, 32, 0.1) !important;
+  color: @theme-color !important;
+  > .dotwarp {
+    color: @theme-color !important;
+  }
+}
