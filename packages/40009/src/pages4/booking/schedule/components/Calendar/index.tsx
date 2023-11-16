@@ -58,6 +58,9 @@ export default ({
               if (!isflag) {
                 return true;
               } else {
+                if (dayjs().isSame(day, 'days')) {
+                  return true;
+                }
                 return false;
               }
             }}
@@ -70,6 +73,9 @@ export default ({
               const isflag = (data || []).find((i) => {
                 return dayjs(i?.date).isSame(day, 'days');
               });
+              if (dayjs().isSame(day, 'days')) {
+                return <Text>{States[0]}</Text>;
+              }
               if (isflag) {
                 return <Text>{States[isflag?.state]}</Text>;
               }
