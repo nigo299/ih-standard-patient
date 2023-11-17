@@ -243,7 +243,6 @@ export default () => {
               <Text style={{ color: '#E27854' }}>
                 缴费后不支持线上退费，请谨慎操作；
               </Text>
-              目前暂不支持医保线上缴费
             </View>,
           ]}
         />

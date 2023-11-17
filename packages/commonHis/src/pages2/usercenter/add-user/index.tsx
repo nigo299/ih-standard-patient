@@ -41,7 +41,7 @@ import useGetParams from '@/utils/useGetParams';
 import { useHisConfig } from '@/hooks';
 import { PatGender } from '@/config/dict';
 import TipContent from '@/pages2/usercenter/add-user/components/tipContent';
-
+import showModal from '@/utils/showModal';
 interface CardType {
   birthday: string;
   patientSex: string;
@@ -147,7 +147,7 @@ export default memo(() => {
             icon: 'none',
             title: '无建档信息，请建档',
           });
-          if (values['idType'] === '1') {
+          if (values['idType'] === '1' || values['idType'] === '8') {
             setShowPatType(false);
             setChecked(false);
             const { analyzeAge, analyzeBirth, analyzeSex } = analyzeIDCard(
@@ -329,6 +329,10 @@ export default memo(() => {
                   extFields: {
                     profession: values['profession'],
                   },
+                  idNo:
+                    form.getFieldValue('idType') === '100'
+                      ? ' '
+                      : values['idNo'],
                 },
           );
           if (code === 0) {
@@ -462,7 +466,14 @@ export default memo(() => {
       clearCountdownTimer();
     };
   }, [clearCountdownTimer]);
-
+  const isWithin45Days = (date: string): boolean => {
+    const now = dayjs();
+    const target = dayjs(date);
+    console.log('target', target);
+    const diff = now.diff(target, 'day');
+    console.log('diff', diff);
+    return diff <= 45;
+  };
   return (
     <View className={styles.page}>
       <Form form={form} onFinish={(values: any) => handleFormSubmit(values)}>
@@ -673,6 +684,21 @@ export default memo(() => {
                               mode={'date'}
                               start={dayjs().format('1900-01-01')}
                               end={dayjs().format('YYYY-MM-DD')}
+                              onChange={(v) => {
+                                if (isWithin45Days(v as string)) {
+                                  console.log('日期符合要求');
+                                } else {
+                                  if (getFieldValue('idType') === '100') {
+                                    showModal({
+                                      title: '温馨提示',
+                                      content:
+                                        '仅出生日期小于45天的新生儿才可选择无证件建档,请重新选择',
+                                      showCancel: false,
+                                    });
+                                    form.setFieldValue('birthday', '');
+                                  }
+                                }
+                              }}
                             >
                               请选择
                             </Picker>
@@ -1067,9 +1093,11 @@ export default memo(() => {
                     })
                   }
                   disabled={
-                    checked &&
-                    cardList.length !== 0 &&
-                    !form.getFieldsValue(['patientMobile'])
+                    config.isRegChangePhone
+                      ? checked &&
+                        cardList.length !== 0 &&
+                        !form.getFieldsValue(['patientMobile'])
+                      : checked && cardList.length !== 0
                   }
                   /** 查询绑定就诊人手机号不可更改 */
                   // disabled={checked && cardList.length !== 0}

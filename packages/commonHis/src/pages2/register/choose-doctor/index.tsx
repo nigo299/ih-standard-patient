@@ -13,10 +13,11 @@ import styles from './index.less';
 
 export default () => {
   const { deptDetail } = registerState.useContainer();
-  const { deptId, scheduleDate, type } = useGetParams<{
+  const { deptId, scheduleDate, type, isHealth } = useGetParams<{
     deptId: string;
     scheduleDate: string;
     type: 'reserve' | 'day';
+    isHealth: string;
   }>();
   const { data, request } = useApi.查询科室医生列表({
     initValue: {
@@ -61,7 +62,7 @@ export default () => {
                 className={styles.item}
                 onTap={() =>
                   navigateTo({
-                    url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${item?.doctorId}&scheduleDate=${scheduleDate}&type=${type}`,
+                    url: `/pages2/register/select-time/index?deptId=${deptId}&doctorId=${item?.doctorId}&scheduleDate=${scheduleDate}&type=${type}&isHealth=${isHealth}`,
                   })
                 }
               >

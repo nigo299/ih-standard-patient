@@ -1,4 +1,4 @@
-import request from '@/apis/utils/request';
+import request from './utils/request';
 import createApiHooks from 'create-api-hooks';
 export interface InhospPatientType {
   admissionNum: string;
@@ -38,6 +38,7 @@ export interface DayListType {
   itemTotalFee: string;
   itemType: string;
   itemUnit: string;
+  extFields: string; //医保类别
 }
 
 export interface ExpensesdaylistType extends API.ResponseDataType {
@@ -77,7 +78,6 @@ interface OrderListType {
   createTime: string;
   orderId: string;
   patCardNo: string;
-  patHisNo?: string;
   patCardType: 21;
   patientName: string;
   payStatus: number;
@@ -92,41 +92,55 @@ interface InhospOrderListType extends API.ResponseDataType {
   data: OrderListType[];
 }
 
-interface OrderDetailType {
-  admissionNum: string;
-  agtOrdNum: string;
-  createTime: string;
-  deptName: string;
-  hisOrderNo: string;
-  extFields: string;
-  hisId: string;
-  hisName: string;
-  orderId: string;
-  patCardNo: string;
-  patHisNo?: string;
-  patientName: string;
-  payFee: number;
-  payStatus: number;
-  payType: string;
-  payedTime: string;
-  platformSource: number;
-  refundDesc: string;
-  refundStatus: number;
-  status: string;
-  statusName: string;
-  systemType: number;
-  tips: string;
-  totalFee: number;
-  totalRealFee: number;
-  type: number;
-  payOrderId: string;
-  hisRecepitNo?: string;
-  patientId?: string;
+// interface OrderDetailType {
+//   admissionNum: string;
+//   agtOrdNum: string;
+//   createTime: string;
+//   deptName: string;
+//   hisOrderNo: string;
+//   extFields: string;
+//   hisId: string;
+//   hisName: string;
+//   orderId: string;
+//   patCardNo: string;
+//   patientName: string;
+//   payFee: number;
+//   payStatus: number;
+//   payType: string;
+//   payedTime: string;
+//   platformSource: number;
+//   refundDesc: string;
+//   refundStatus: number;
+//   status: string;
+//   statusName: string;
+//   systemType: number;
+//   tips: string;
+//   totalFee: number;
+//   totalRealFee: number;
+//   type: number;
+//   payOrderId: string;
+// }
+interface InhospOrderDetialType {
+  data: any;
+  diseaseLevel: string;
+  deptId: string;
+  regDate: string;
+  residenceAddress: string;
+  symptom: string;
+  examResult: string;
+  expectedDate: string;
+  examInOurHos: string;
+  highRisk: string;
+  cancelDate: string;
+  cancelReason: string;
+  emergencyContact: string;
+  relation: string;
+  documentType: string;
+  certificateNo: string;
+  phone: string;
+  patName: string;
+  // data: OrderDetailType;
 }
-interface InhospOrderDetialType extends API.ResponseDataType {
-  data: OrderDetailType;
-}
-
 export default {
   查询住院信息: createApiHooks((params: { patientId: string }) =>
     request.post<InhospInfoType>(
@@ -140,7 +154,6 @@ export default {
       beginDate: string;
       endDate: string;
       admissionNum: string;
-      extFields?: any;
     }) =>
       request.post<ExpensesdaylistType>(
         '/api/intelligent/api/in-hospital/expenses-day-detail',
@@ -165,10 +178,20 @@ export default {
       `/api/intelligent/api/in-hospital/order-list`,
     );
   }),
-  查询住院订单详情: createApiHooks((params: { orderId: string }) => {
-    return request.post<InhospOrderDetialType>(
-      `/api/intelligent/api/in-hospital/order-detail`,
-      params,
+  查询住院订单详情: createApiHooks(({ id }: { id: string }) => {
+    return request.get<InhospOrderDetialType>(
+      `/api/intelligent/ihis/inpatient/reg/${id}`,
     );
+  }),
+  查询住院预约记录列表: createApiHooks(() => {
+    return request.get(`/api/intelligent/ihis/inpatient/reg/list`, {
+      params: { numPerPage: 999, pageNum: 1 },
+    });
+  }),
+  住院预约记录新增: createApiHooks((params) => {
+    return request.post(`/api/intelligent/ihis/inpatient/reg/create`, params);
+  }),
+  住院预约记录取消: createApiHooks((params) => {
+    return request.put(`/api/intelligent/ihis/inpatient/reg/cancel`, params);
   }),
 };

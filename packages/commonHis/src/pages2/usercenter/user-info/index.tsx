@@ -209,7 +209,9 @@ export default memo(() => {
                 }
                 labelWidth={'4em'}
               />
-              <View className={styles.listText}>{userInfo?.idNo}</View>
+              <View className={styles.listText}>
+                {userInfo?.idNo === ' ' ? '无证件建档' : userInfo?.idNo}
+              </View>
             </Space>
             <Space className={styles.list}>
               <FormItem label="手机号" labelWidth={'4em'} />

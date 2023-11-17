@@ -64,7 +64,7 @@ export const IDTYPES = [
   { dictValue: '港澳证件', sortNo: 2, dictKey: '2' },
   { dictValue: '台湾证件', sortNo: 3, dictKey: '3' },
   { dictValue: '护照', sortNo: 4, dictKey: '4' },
-  { dictValue: '证件', sortNo: 5, dictKey: '100' },
+  { dictValue: '无证件', sortNo: 5, dictKey: '100' },
   { dictValue: '出生医学证明', sortNo: 6, dictKey: '8' },
 ];
 

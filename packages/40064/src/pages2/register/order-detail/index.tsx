@@ -5,8 +5,8 @@ import {
   decrypt,
   formDate,
   getBrowserUa,
-  getPatientAge,
   getUrlParams,
+  goHealthUrl,
   returnUrl,
 } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -41,7 +41,7 @@ import usePayApi from '@/apis/pay';
 import usePatientApi from '@/apis/usercenter';
 import useCommApi from '@/apis/common';
 import dayjs from 'dayjs';
-import styles from './index.less';
+import styles from 'commonHis/src/pages2/register/order-detail/index.less';
 import socialPayAuth from '@/utils/socialPayAuth';
 import storage from '@/utils/storage';
 import { useDownCount } from 'parsec-hooks';
@@ -50,20 +50,6 @@ import RegisterCard from '@/components/registerCard';
 import AntFoestToast from '@/components/antFoestToast';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import CustomerReported from '@/components/customerReported';
-import useGetCancelOrderExtFields from '@/pages2/register/order-detail/hooks/useGetCancelOrderExtFields';
-import { PatGender } from '@/config/dict';
-import { useHisConfig } from '@/hooks';
-import {
-  visitTime,
-  registerSuccessTips,
-  RegisterCardPatientNo,
-} from '@/pages2/register/order-detail/utils';
-
-const cancelItems = [
-  { value: '不想去', checked: false },
-  { value: '临时有其他安排', checked: false },
-  { value: '挂错科室/医生/时间', checked: false },
-];
 export const getVaildJSON = (JsonString: any) => {
   let result: any = {};
   try {
@@ -73,8 +59,14 @@ export const getVaildJSON = (JsonString: any) => {
   }
   return result;
 };
+
+const cancelItems = [
+  { value: '不想去', checked: false },
+  { value: '临时有其他安排', checked: false },
+  { value: '挂错科室/医生/时间', checked: false },
+];
+
 export default () => {
-  const { config } = useHisConfig();
   const { orderId, mysl = '0' } = useGetParams<{
     orderId: string;
     /**支付宝小程序蚂蚁森林获取 */
@@ -110,11 +102,9 @@ export default () => {
   });
   const [payFlag, setPayFlag] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
-  const [showTip, setShowTip] = useState(false);
   const [cancelVal, setCancelVal] = useState('');
   const [form] = Form.useForm();
   const [toggle, setToggle] = useState([true, false]);
-  const cancelExtFields = useGetCancelOrderExtFields({ orderDetail });
   const clinicList = [
     {
       label: '就诊医院',
@@ -137,7 +127,7 @@ export default () => {
       text: orderDetail?.doctorTitle,
     },
     {
-      label: visitTime,
+      label: '就诊时间',
       text:
         `${formDate(orderDetail?.visitDate).slice(0, 10) || ''} ${
           orderDetail?.visitBeginTime || ''
@@ -149,7 +139,7 @@ export default () => {
     },
     {
       label: '就诊卡号',
-      text: orderDetail?.[config?.patCardNoValue],
+      text: orderDetail?.patCardNo,
     },
   ];
 
@@ -174,7 +164,7 @@ export default () => {
         text: orderDetail?.orderId,
       },
       {
-        label: '业务订单号',
+        label: '交易单号',
         text: orderDetail?.payOrderId || '暂无',
       },
       {
@@ -241,8 +231,8 @@ export default () => {
           deptName: deptName,
           doctorName: doctorName,
           patientName: `${patientName} | ${
-            PatGender[patientSex] || ''
-          } | ${getPatientAge(patientAge)}`,
+            patientSex === 'M' ? '男' : '女'
+          } | ${patientAge}岁`,
           patCardNo,
           patientFullIdNo: decrypt(encryptPatientIdNo),
           registerTime: `${formDate(visitDate).slice(
@@ -313,11 +303,11 @@ export default () => {
       }
       setPayFlag(false);
     },
-    [hospitialConfigData, request, setOrderInfo],
+    [hospitialConfigData?.data?.medicalPay, request, setOrderInfo],
   );
   const cancelRegisterPay = useCallback(
     async (payAuthNo?: string, cancelValStorage?: string) => {
-      if ((!cancelVal || cancelVal === 'undefined') && !cancelValStorage) {
+      if (!cancelVal && !cancelValStorage) {
         showToast({
           title: '请选择取消原因!',
         });
@@ -330,7 +320,6 @@ export default () => {
         orderId,
         cancelReason: cancelVal || cancelValStorage || '',
         payAuthNo: payAuthNo || '',
-        extFields: cancelExtFields,
       });
       if (code === 0) {
         setLoading(false);
@@ -346,7 +335,7 @@ export default () => {
         showToast({ title: msg || '取消挂号失败，请重试!', icon: 'fail' });
       }
     },
-    [cancelExtFields, cancelVal, orderId, request],
+    [cancelVal, orderId, request],
   );
   const medicalAuth = useCallback(async () => {
     if (PLATFORM === 'ali') {
@@ -389,7 +378,12 @@ export default () => {
         window.location.href = data.authUrl;
       }
     }
-  }, [cancelRegisterPay, orderDetail, orderId]);
+  }, [
+    cancelRegisterPay,
+    orderDetail?.payOrderId,
+    orderDetail?.totalFee,
+    orderId,
+  ]);
   const cancelMedicalPay = useCallback(
     async (cancelVal: string) => {
       if (PLATFORM === 'ali') {
@@ -416,8 +410,9 @@ export default () => {
         }
       }
     },
-    [cancelRegisterPay, orderDetail],
+    [cancelRegisterPay, orderDetail?.payOrderId, orderDetail?.totalFee],
   );
+
   usePageEvent('onShow', () => {
     if (mysl === '1' && PLATFORM === 'ali') {
       useCommApi.蚂蚁森林能量获取
@@ -491,14 +486,6 @@ export default () => {
   usePageEvent('onHide', () => {
     clearCountdownTimer();
   });
-
-  const orderStatusName = useMemo(() => {
-    if (orderDetail?.status === 'S') {
-      if (orderDetail?.bizName === '预约挂号') return '预约成功';
-      return '挂号成功';
-    }
-    return orderDetail?.statusName;
-  }, [orderDetail]);
   return (
     <View className={styles.wrap}>
       {loading && (
@@ -541,7 +528,7 @@ export default () => {
               alignItems={'center'}
               justify={'space-between'}
             >
-              {orderStatusName}
+              {orderDetail?.statusName}
               {(orderDetail?.status === 'F' || orderDetail?.status === 'C') && (
                 <CustomerReported
                   whereShowCode={
@@ -553,8 +540,8 @@ export default () => {
           </View>
           <View className={styles.statusInfo}>
             {orderDetail?.status === 'S' &&
-              `${registerSuccessTips}
-              就诊卡号：${orderDetail?.[config?.patCardNoValue]}`}
+              `挂号成功，请根据签到时间至少提前30分钟携带绑定的卡（身份证、医保卡、院内诊疗卡）到科室分诊处签到候诊。
+                就诊卡号：${orderDetail?.patCardNo}`}
             {orderDetail?.status === 'L' &&
               '请在锁号的时候内完成支付，否则将取消号源'}
             {orderDetail?.status === 'C' && '挂号已取消，如需就诊请重新挂号'}
@@ -576,7 +563,7 @@ export default () => {
         payName="register"
         hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
         healthCardNo={jkkInfo?.healthCardId}
-        patCardNo={orderDetail?.[RegisterCardPatientNo]}
+        patCardNo={orderDetail?.patCardNo}
       />
       <Form className={styles.content} form={form}>
         <ListTitle
@@ -589,7 +576,7 @@ export default () => {
           {clinicList
             .slice(0, toggle[0] ? clinicList?.length : 4)
             .map((item) => (
-              <ListItem key={item.label} {...item} orderDetail={orderDetail} />
+              <ListItem key={item.label} {...item} />
             ))}
         </View>
         <ListTitle
@@ -628,7 +615,6 @@ export default () => {
                     payOrderId: orderDetail?.payOrderId,
                     endDate: formDate(orderDetail?.orderTime).slice(0, 10),
                     beginDate: formDate(orderDetail?.orderTime).slice(0, 10),
-                    extFields: { hisRecepitNo: orderDetail?.hisRecepitNo },
                   });
                   if (ebillDataList.length >= 1) {
                     if (ebillDataList[0].pictureUrl) {
@@ -667,15 +653,21 @@ export default () => {
             type={'primary'}
             ghost
             className={styles.button}
-            onTap={() => {
-              if (config.showCancelRegTips) {
-                setShowTip(true);
-              } else {
-                setShowInfo(true);
-              }
-            }}
+            onTap={() => setShowInfo(true)}
           >
             取消挂号
+          </Button>
+        )}
+        {getVaildJSON(orderDetail?.extFields || '{}')?.TjFlag === '1' && (
+          <Button
+            type={'primary'}
+            ghost
+            className={styles.button}
+            onTap={() => {
+              window.location.href = goHealthUrl(orderDetail);
+            }}
+          >
+            选购套餐
           </Button>
         )}
       </View>
@@ -720,23 +712,6 @@ export default () => {
             </Radio>
           ))}
         </Radio.Group>
-      </Dialog>
-      <Dialog
-        show={showTip}
-        successText="继续退号"
-        failText="取消"
-        title="温馨提示"
-        onFail={() => setShowTip(false)}
-        onSuccess={() => {
-          setShowTip(false);
-          setShowInfo(true);
-        }}
-      >
-        <Space style={{ lineHeight: 1.2, padding: 20 }}>
-          <View>
-            因我院号源紧张，若90内出现预约成功后就诊当天退号或未按时签到累计达到3次，将视为违约，180天内您将不再享有网上预约挂号服务。
-          </View>
-        </Space>
       </Dialog>
     </View>
   );

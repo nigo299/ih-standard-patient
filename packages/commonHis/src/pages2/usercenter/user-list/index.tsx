@@ -54,7 +54,7 @@ export default memo(() => {
           <Space
             className={styles.card}
             key={patient.patientId}
-            onTap={() => onCardClick(patient)}
+            onTap={() => onCardClick(patient as PatientType)}
             vertical
           >
             <Space justify="space-between" alignItems="center">
@@ -83,13 +83,14 @@ export default memo(() => {
                     }
                     labelWidth={'4em'}
                   />
-                  {patient?.idNo}
+                  {patient?.idNo === ' ' ? '无证件建档' : patient?.idNo}
                 </Space>
               </Space>
               <Space
                 className={styles.qrcode}
                 onTap={(e) => {
                   e.stopPropagation();
+                  // @ts-ignore
                   setSelectPatient(patient);
                   setShow(true);
                 }}

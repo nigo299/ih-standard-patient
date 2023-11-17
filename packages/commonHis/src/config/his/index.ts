@@ -5,6 +5,7 @@ import His40074 from './his40074';
 import His40009 from './his40009';
 import His2219 from './his2219';
 import His40011 from './his40011';
+import His40064 from './his40064';
 import { HIS_ID } from '@/config/constant';
 
 let cacheHis: InstanceType<typeof HisBase> | null = null;
@@ -30,6 +31,9 @@ export const getHisConfig = () => {
     case '40074':
       cacheHis = new His40074();
       return new His40074();
+    case '40064':
+      cacheHis = new His40064();
+      return new His40064();
     default: {
       cacheHis = new HisBase(hisId);
       return new HisBase(hisId);

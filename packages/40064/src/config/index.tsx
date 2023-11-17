@@ -1,6 +1,7 @@
-import { IMAGE_DOMIN } from './constant';
+import { IMAGE_DOMIN, PLATFORM } from './constant';
 import openLocation from '@/utils/openLocation';
-
+import storage from '@/utils/storage';
+import { showToast } from '@kqinfo/ui';
 export const tabBarConfig = [
   {
     title: '首页',
@@ -32,9 +33,32 @@ export const mineMainNavConfig = [
     url: '/pages2/inhosp/order-list/index',
     image: `${IMAGE_DOMIN}/mine/zyyjdd.png`,
   },
+  {
+    title: '体检预约订单',
+    image: `${IMAGE_DOMIN}/mine/tjyydd.png`,
+    onTap: () => {
+      if (PLATFORM === 'web') {
+        window.location.href = `${
+          window.location.href.includes('tihs')
+            ? 'https://healthapp.cqkqinfo.com/next-H5App-p40064/#/pages/order/index'
+            : 'https://healthmall.cqkqinfo.com/H5App-p40064/#/pages/order/index'
+        }?openId=${storage.get('openid')}`;
+      } else {
+        showToast({
+          title: '功能开发中，敬请期待',
+          icon: 'none',
+        });
+      }
+    },
+  },
 ];
 
 export const mineNavListConfig = [
+  {
+    title: '就诊记录',
+    url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/diagnosis/order-list/index',
+    image: `${IMAGE_DOMIN}/mine/jzyj.png`,
+  },
   {
     title: '关注/收藏',
     url: '/pages/collect/index',

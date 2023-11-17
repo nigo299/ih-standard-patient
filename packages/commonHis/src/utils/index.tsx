@@ -4,6 +4,8 @@ import { reLaunch, redirectTo } from 'remax/one';
 import dayjs from 'dayjs';
 import * as uuid from 'uuid';
 import md5 from 'md5';
+import { OrderDetailType } from '@/apis/register';
+import storage from './storage';
 export const reLaunchUrl = (url: string) => {
   if (PLATFORM === 'web') {
     redirectTo({
@@ -415,4 +417,23 @@ export const isYuKangJianH5 = () => {
   } else {
     return false;
   }
+};
+export const goHealthUrl = (orderDetail: OrderDetailType) => {
+  return `${
+    window.location.href.includes('tihs')
+      ? 'https://healthapp.cqkqinfo.com/next-H5App-p40064/#/pages/goods/index?id=0'
+      : 'https://healthmall.cqkqinfo.com/H5App-p40064/#/pages/goods/index?id=0'
+  }&openId=${storage.get('openid')}&clinicNo=${
+    orderDetail?.hisRecepitNo
+  }&clinicDate=${formDate(orderDetail?.visitDate).slice(0, 10)}&timeDesc=${
+    orderDetail?.visitBeginTime
+  }-${orderDetail?.visitEndTime}&patientId=${orderDetail?.patientId}&deptNo=${
+    orderDetail?.deptNo
+  }&deptName=${orderDetail?.deptName}&doctorName=${
+    orderDetail?.doctorName
+  }&visitWeekName=${orderDetail?.visitWeekName}&doctorTitle=${
+    orderDetail?.doctorTitle
+  }&patCardNo=${orderDetail?.patCardNo}&hisToken=${storage.get(
+    'login_access_token',
+  )}`;
 };
