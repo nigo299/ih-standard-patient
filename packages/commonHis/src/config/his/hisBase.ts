@@ -30,6 +30,7 @@ export default class BaseHis {
       patCardNoValue: 'patCardNo',
       isShowOutPayDetails: false,
       isPaymentDefaultSelectAll: false,
+      isOldManRegFree: false,
     };
   }
 }
@@ -85,4 +86,6 @@ type StaticConfig = {
   patCardNoValue: 'patCardNo' | 'patHisNo';
   /** 门诊缴费是否默认全选 */
   isPaymentDefaultSelectAll: boolean;
+  /** 是否开启60岁以上老人挂号减免 */
+  isOldManRegFree: boolean;
 };

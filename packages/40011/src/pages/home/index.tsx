@@ -9,7 +9,7 @@ import {
   showToast,
   Icon,
   RichText,
-  navigateToMiniProgram,
+  // navigateToMiniProgram,
   PartTitle,
 } from '@kqinfo/ui';
 import {
@@ -253,9 +253,12 @@ export default () => {
       {
         title: '体检预约',
         subTitle: '',
-        open: true,
         image: `${IMAGE_DOMIN}/home/yytj.png`,
-        url: '',
+        url:
+          '/pages2/usercenter/select-user/index?isHealthMall=true&pageRoute=' +
+          (window.location.href.includes('tihs')
+            ? 'https://healthapp.cqkqinfo.com/next-H5App-p40011/#/pages/goods/index'
+            : 'https://healthmall.cqkqinfo.com/H5App-p40011/#/pages/goods/index'),
       },
       // {
       //   title: '满意度调查',
