@@ -94,7 +94,7 @@ export default () => {
         content: (
           <View>
             <View className={styles.content}>
-              16:30后不能预约明天的会诊，请预约后天及之后的会诊
+              MDT门诊需提前24小时预约，请预约24小时后的门诊！如有疑问，请联系客服或添加微信：13310226351（工作日8:00-17:30，周末及节假日8:00-12:30）
             </View>
             <Button
               onTap={() => {
@@ -178,7 +178,7 @@ export default () => {
         content: (
           <View>
             <View className={styles.content}>
-              16:30后不能预约明天的会诊，请预约后天及之后的会诊
+              MDT门诊需提前24小时预约，请预约24小时后的门诊！如有疑问，请联系客服或添加微信：13310226351（工作日8:00-17:30，周末及节假日8:00-12:30）
             </View>
             <Button onTap={() => Modal.hide()} type="primary">
               知道了
