@@ -125,7 +125,6 @@ export default () => {
         return acc;
       }, {}),
     );
-    console.log('groupedArr', groupedArr);
     return groupedArr;
   }, []);
 
@@ -213,7 +212,6 @@ export default () => {
       )}`,
     });
   }, [roomDetail, doctorDetail, sourceNumber, visitDate]);
-  console.log('doctorDetail', doctorDetail);
   return (
     <View>
       <View className={styles.contentwarp}>
@@ -226,7 +224,6 @@ export default () => {
             data={originalData?.data}
             value={visitDate}
             onChange={(v: any) => {
-              console.log('v', v);
               changeCanlendar(v);
             }}
           />
