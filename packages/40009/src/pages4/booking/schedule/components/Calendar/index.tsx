@@ -58,9 +58,6 @@ export default ({
               if (!isflag) {
                 return true;
               } else {
-                if (dayjs().isSame(day, 'days')) {
-                  return true;
-                }
                 return false;
               }
             }}
