@@ -236,9 +236,9 @@ export default () => {
         {(dayDetail?.data || []).map((item) => {
           return (
             <View key={item.relationId} className={styles.roombox}>
-              <Space className={styles.room} alignItems="center">
+              {/* <Space className={styles.room} alignItems="center">
                 {item.relationName}
-              </Space>
+              </Space> */}
               {(
                 SplitArray(
                   item?.scheduleList.filter((x) => x.isPublish === 1),
