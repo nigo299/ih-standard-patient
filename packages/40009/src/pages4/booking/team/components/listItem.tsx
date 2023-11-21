@@ -24,7 +24,11 @@ const Item: React.FC<Props> = (props) => {
   return (
     <View className={styles.box}>
       <Shadow>
-        <Space size={20} className={styles.itemBox}>
+        <Space
+          size={20}
+          className={styles.itemBox}
+          onTap={() => handleTap(content.id)}
+        >
           <Space vertical>
             <PreviewImage
               url={content.avatarImage ?? `${IMAGE_DOMIN}/mdt/user_icon.png`}
@@ -45,19 +49,16 @@ const Item: React.FC<Props> = (props) => {
             <View className={styles.title}>{content.teamName}</View>
             <View className={styles.desc}>
               <View className={styles.hos_name}>{content.hospitalName}</View>
-              <Exceed clamp={2}>简介：{content.summary}</Exceed>
+              <Exceed clamp={2} className={styles.exceed}>
+                简介：{content.summary}
+              </Exceed>
             </View>
             <View className={styles.footer}>
               <Text className={`${styles.commonColor} ${styles.price}`}>
                 {' '}
                 ￥{Number(content.price || 0) / 100}/次
               </Text>
-              <Button
-                type={'primary'}
-                block={false}
-                size="small"
-                onTap={() => handleTap(content.id)}
-              >
+              <Button type={'primary'} block={false} size="small">
                 预约会诊
               </Button>
             </View>

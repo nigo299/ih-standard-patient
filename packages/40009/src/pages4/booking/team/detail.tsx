@@ -162,6 +162,12 @@ export default () => {
                           className={styles.user_list}
                           key={index}
                           size={10}
+                          onTap={() => {
+                            storage.set('teamInfo', JSON.stringify(userItem));
+                            navigateTo({
+                              url: `/pages4/booking/team/expert`,
+                            });
+                          }}
                         >
                           <Image
                             src={
