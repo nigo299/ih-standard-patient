@@ -307,10 +307,13 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/cgzl.png`,
           },
           {
-            title: '',
-            subTitle: '',
+            title: '智能导诊',
+            subTitle: '导航来院不迷路',
             url: '',
-            image: ``,
+            image: `${IMAGE_DOMIN}/home/zndz.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://ask.cqkqinfo.com/online/user/#/pages/index/index?hisId=40019'),
           },
           {
             title: '',
