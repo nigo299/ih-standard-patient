@@ -3,6 +3,7 @@ import { View, Text, navigateBack, navigateTo } from 'remax/one';
 import { Space, CheckBox, useSafeArea, showToast, useTitle } from '@kqinfo/ui';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
+import lc from './lc.png';
 
 export default () => {
   useTitle('多学科门诊MDT');
@@ -46,7 +47,7 @@ export default () => {
         </View>
         <View className={styles.p}>3.预约咨询电话：13310226351</View>
         <View className={styles.h1}>五、就诊流程</View>
-        <View className={styles.h1}>第一步：MDT门诊申请</View>
+        {/* <View className={styles.h1}>第一步：MDT门诊申请</View>
         <View className={styles.p}>
           选择需要预约的MDT门诊，填写患者基本信息，提交预约申请，患者缴费，上传病历资料及检查检验结果。
         </View>
@@ -57,7 +58,8 @@ export default () => {
         <View className={styles.h1}>第四步：MDT团队会诊</View>
         <View className={styles.p}>MDT团队集体讨论最佳诊疗方案</View>
         <View className={styles.h1}>第五步：MDT会诊意见</View>
-        <View className={styles.p}>MDT团队协调员出具会诊意见</View>
+        <View className={styles.p}>MDT团队协调员出具会诊意见</View> */}
+        <img src={lc} className={styles.img} alt="" />
       </View>
 
       <View className={styles.bottomBar}>
