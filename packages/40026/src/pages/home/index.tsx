@@ -149,6 +149,10 @@ export default () => {
             )}&title=健康宣教`,
             image: `${IMAGE_DOMIN}/home/jkxj.png`,
             new: false,
+            onClick: () => {
+              window.location.href =
+                'https://ihs.cqkqinfo.com/patients/health-learn-mobile-40026/#/pages/announce/index';
+            },
           },
         ]
       : [
