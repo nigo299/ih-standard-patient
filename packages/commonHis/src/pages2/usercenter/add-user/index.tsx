@@ -147,7 +147,11 @@ export default memo(() => {
             icon: 'none',
             title: '无建档信息，请建档',
           });
-          if (values['idType'] === '1' || values['idType'] === '8' || values['idType'] === '11') {
+          if (
+            values['idType'] === '1' ||
+            values['idType'] === '8' ||
+            values['idType'] === '11'
+          ) {
             setShowPatType(false);
             setChecked(false);
             const { analyzeAge, analyzeBirth, analyzeSex } = analyzeIDCard(
@@ -238,7 +242,6 @@ export default memo(() => {
       }
       if (btnSubType === 'add' || btnSubType === 'bind') {
         /** 这几个字段均为查询就诊人展示作用 */
-        delete values['brithdayed'];
         delete values['patientSexed'];
         delete values['addressed'];
         delete values['profession'];
@@ -311,7 +314,10 @@ export default memo(() => {
             ...values,
             yibaoNo: '',
             patCardType: 21,
-            birthday: submitBirthDay || '',
+            birthday:
+              values['idType'] !== '4'
+                ? submitBirthDay
+                : `${values['brithdayed']} 00:00:00`,
             patientSex: submitPatientSex,
             isNewCard: btnSubType === 'add' ? 1 : 0,
             patientType: values['patientType']
