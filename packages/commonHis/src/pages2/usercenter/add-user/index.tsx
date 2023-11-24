@@ -242,11 +242,9 @@ export default memo(() => {
       }
       if (btnSubType === 'add' || btnSubType === 'bind') {
         /** 这几个字段均为查询就诊人展示作用 */
-        console.log('valuesbeforedelete', values);
-        // delete values['brithdayed'];
-        // delete values['patientSexed'];
-        // delete values['addressed'];
-        // delete values['profession'];
+        delete values['patientSexed'];
+        delete values['addressed'];
+        delete values['profession'];
         let checkPhoneFlag = true;
         // 如果注册用户和建档用户手机号码相同不校验验证码
         if (values['patientMobile'] !== user.phone) {
