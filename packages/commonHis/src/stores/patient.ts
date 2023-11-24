@@ -62,7 +62,12 @@ export default createContainer(() => {
     PatientType[]
   >([]);
   const [ocrInfo, setOcrInfo] = useState(defualtOcrInfo);
-  const [faceInfo, setFaceInfo] = useState({
+  const [faceInfo, setFaceInfo] = useState<{
+    name: string;
+    idNo: string;
+    success: boolean;
+    checkMedical?: boolean;
+  }>({
     name: '',
     idNo: '',
     success: false,

@@ -86,6 +86,12 @@ export const mineNavListConfig =
           onClick: () =>
             (window.location.href = 'https://wj.qq.com/s2/8938221/c4b1/'),
         },
+        {
+          title: '医保信息查询',
+          url: '/pages2/usercenter/select-user/index?checkMedical=1',
+          image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+          open: false,
+        },
       ]
     : [
         {
