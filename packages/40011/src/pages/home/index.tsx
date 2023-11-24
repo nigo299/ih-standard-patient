@@ -260,6 +260,12 @@ export default () => {
             ? 'https://healthapp.cqkqinfo.com/next-H5App-p40011/#/pages/goods/index'
             : 'https://healthmall.cqkqinfo.com/H5App-p40011/#/pages/goods/index'),
       },
+      {
+        title: '影像云',
+        subTitle: '',
+        url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
+        image: `${IMAGE_DOMIN}/home/szyx.png`,
+      },
       // {
       //   title: '满意度调查',
       //   subTitle: '',
