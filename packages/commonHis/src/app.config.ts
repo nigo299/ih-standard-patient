@@ -86,6 +86,7 @@ const subPackages = [
       'diagnosis/order-detail/beInHisDocAd', //住院医嘱
       'debugger/index', //debug页面
       'clearstorage/index', //清除缓存页面
+      'imageCloud/index', // 影像云
     ],
   },
   // 适老版页面

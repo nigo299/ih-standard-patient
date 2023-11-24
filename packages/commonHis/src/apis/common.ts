@@ -455,4 +455,17 @@ export default {
         },
       ),
   ),
+  获取应用管理系统授权页: createApiHooks((params: { patientId: string }) =>
+    request.post<{
+      code: number;
+      msg: string;
+      data: {
+        indexUrl: string;
+      };
+    }>('/api/intelligent/cloud/image/index-url', params, {
+      headers: {
+        'x-showToast': 'false',
+      },
+    }),
+  ),
 };

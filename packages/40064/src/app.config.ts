@@ -87,6 +87,7 @@ const subPackages = [
       'diagnosis/order-detail/prescription', //门诊处方详情
       'diagnosis/order-detail/beInHisDocAd', //住院医嘱
       'birthCredit/index', //出生医学证明界面
+      'imageCloud/index', // 影像云
     ],
   },
   // 适老版页面
