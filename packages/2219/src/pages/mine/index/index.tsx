@@ -3,7 +3,7 @@ import { View, Text, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { mineMainNavConfig, mineNavListConfig } from '@/config';
-import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
+import { HOSPITAL_NAME, IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import {
   Space,
   PartTitle,
@@ -13,6 +13,7 @@ import {
   Swiper,
   QrCode,
   FormItem,
+  showModal,
 } from '@kqinfo/ui';
 import { PreviewImage, QrCodeModal } from '@/components';
 import patientState from '@/stores/patient';
@@ -25,8 +26,13 @@ import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
 import { handleMineNavTap } from '@/pages/mine/index/utils';
+import useGetParams from '@/utils/useGetParams';
 export default () => {
-  const { getPatientList, bindPatientList } = patientState.useContainer();
+  const { faceVerify } = useGetParams<{
+    faceVerify?: string;
+  }>();
+  const { getPatientList, bindPatientList, selectPatientInfo } =
+    patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
   );
@@ -44,9 +50,23 @@ export default () => {
   const { user, getUserInfo } = globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  usePageEvent('onShow', () => {
+  usePageEvent('onShow', async () => {
     getUserInfo(true);
     getPatientList(true);
+    console.log('xxxx');
+    console.log('faceVerify', faceVerify);
+    console.log('selectPatientInfo', selectPatientInfo);
+    if (faceVerify && selectPatientInfo) {
+      const data = await useApi.医保个人信息查询.request({
+        patientId: selectPatient.patientId,
+        platformSource: PLATFORM === 'web' ? 1 : 2,
+        hisId: 2219,
+      });
+      showModal({
+        title: '提示',
+        content: (<View>医保余额:{data}</View>) as any,
+      });
+    }
     setNavigationBar({
       title: '个人中心',
     });

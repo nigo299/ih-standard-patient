@@ -6,7 +6,7 @@ import useGetParams from '@/utils/useGetParams';
 import { Space, Shadow, FormItem, PartTitle, Button } from '@kqinfo/ui';
 import { PatientType } from '@/apis/usercenter';
 import patientState from '@/stores/patient';
-import { IMAGE_DOMIN } from '@/config/constant';
+import { IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import styles from 'commonHis/src/pages2/usercenter/select-user/index.less';
 import classNames from 'classnames';
 import { PatGender } from '@/config/dict';
@@ -23,6 +23,7 @@ export default memo(() => {
     getPatientList,
     setDefaultPatientInfo,
     defaultPatientInfo,
+    setSelectPatientInfo,
   } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useState({
     ...defaultPatientInfo,
@@ -44,6 +45,14 @@ export default memo(() => {
         });
       }
       if (checkMedical) {
+        if (PLATFORM !== 'ali') {
+          setSelectPatientInfo(patient);
+          navigateTo({
+            url: '/pages/mine/index/index?faceVerify=1',
+          });
+          return;
+        }
+        setSelectPatientInfo(patient);
         setFaceInfo({
           idNo: decrypt(patient?.encryptIdNo) as string,
           name: decrypt(patient?.encryptPatientName) as string,
@@ -62,6 +71,7 @@ export default memo(() => {
       pageRoute,
       setDefaultPatientInfo,
       setFaceInfo,
+      setSelectPatientInfo,
     ],
   );
 
