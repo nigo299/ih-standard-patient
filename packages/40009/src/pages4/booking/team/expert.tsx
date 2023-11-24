@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { Space } from '@kqinfo/ui';
+import { Space, RichText } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
 import styles from './index.less';
 import ShowTitle from './components/showTitle';
@@ -75,7 +75,7 @@ export default () => {
             </View>
             <View className={styles.item_gap}>
               <ShowTitle title="医生简介">
-                <Text>{info.doctorIntroduction || ''}</Text>
+                <RichText nodes={info.doctorIntroduction || ''} />
               </ShowTitle>
             </View>
           </View>

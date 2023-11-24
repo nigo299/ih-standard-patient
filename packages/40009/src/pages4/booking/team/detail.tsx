@@ -162,6 +162,12 @@ export default () => {
                           className={styles.user_list}
                           key={index}
                           size={10}
+                          onTap={() => {
+                            storage.set('teamInfo', JSON.stringify(userItem));
+                            navigateTo({
+                              url: `/pages4/booking/team/expert`,
+                            });
+                          }}
                         >
                           <Image
                             src={
@@ -183,11 +189,11 @@ export default () => {
                 )}
               </ShowTitle>
             </View>
-            <View className={styles.item_gap}>
+            {/* <View className={styles.item_gap}>
               <ShowTitle title="团队简介">
                 <View className={styles.contentBody}>{detail?.summary}</View>
               </ShowTitle>
-            </View>
+            </View> */}
             <View className={styles.item_gap}>
               <ShowTitle title="团队介绍">
                 <RichText nodes={detail?.intro || ''} />

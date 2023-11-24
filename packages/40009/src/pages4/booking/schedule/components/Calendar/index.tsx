@@ -51,19 +51,17 @@ export default ({
             activeItemCls={styles.active}
             dotWrapCls={styles.dotwarp}
             limit={limit}
-            renderDisable={(day) => {
-              const isflag = (data || []).find((i) => {
-                return dayjs(i?.date).isSame(day, 'days');
-              });
-              if (!isflag) {
-                return true;
-              } else {
-                if (dayjs().isSame(day, 'days')) {
-                  return true;
-                }
-                return false;
-              }
-            }}
+            // renderDisable={(day) => {
+            //   const isflag = (data || []).find((i) => {
+            //     return dayjs(i?.date).isSame(day, 'days');
+            //   });
+            //   console.log('isflag', isflag);
+            //   if (!isflag?.date) {
+            //     return true;
+            //   } else {
+            //     return false;
+            //   }
+            // }}
             renderDate={(day) =>
               dayjs().isSame(day, 'date')
                 ? '今天'
