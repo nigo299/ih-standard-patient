@@ -36,6 +36,7 @@ export default () => {
     bindPatientList,
     selectPatientInfo,
     setSelectPatientInfo,
+    setFaceInfo,
   } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
@@ -68,8 +69,13 @@ export default () => {
     if (medicalPsnInfo?.data !== null && medicalPsnInfo?.data !== undefined) {
       setVisible(true);
       setMedicalData(medicalPsnInfo?.data);
+      setFaceInfo({
+        idNo: '',
+        name: '',
+        success: false,
+      });
     }
-  }, [medicalPsnInfo.data, setSelectPatientInfo]);
+  }, [medicalPsnInfo.data, setFaceInfo, setSelectPatientInfo]);
   usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
