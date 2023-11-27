@@ -72,5 +72,5 @@ export default ({ request_verify_pre_info }: Options) => {
       }),
     [request_verify_pre_info],
   );
-  return { handleFaceVerify, faceVerifyStatus };
+  return { handleFaceVerify, faceVerifyStatus, setFaceVerifyStatus };
 };

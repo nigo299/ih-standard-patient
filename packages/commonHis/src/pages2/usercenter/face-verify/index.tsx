@@ -47,7 +47,7 @@ export default () => {
   });
   const handleSuccess = useCallback(() => {
     if (faceInfo?.checkMedical) {
-      setFaceVerifyStatus(FaceVerifyStatus.失败);
+      setFaceVerifyStatus(FaceVerifyStatus.未开始);
       navigateTo({
         url: '/pages/mine/index/index?faceVerify=1',
       });
