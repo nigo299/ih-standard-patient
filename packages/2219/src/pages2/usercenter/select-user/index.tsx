@@ -45,7 +45,7 @@ export default memo(() => {
         });
       }
       if (checkMedical) {
-        if (PLATFORM !== 'ali') {
+        if (PLATFORM === 'ali') {
           setSelectPatientInfo(patient);
           navigateTo({
             url: '/pages/mine/index/index?faceVerify=1',

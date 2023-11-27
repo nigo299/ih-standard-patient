@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -15,12 +15,12 @@ import {
   FormItem,
   showModal,
 } from '@kqinfo/ui';
-import { PreviewImage, QrCodeModal } from '@/components';
+import { Dialog, PreviewImage, QrCodeModal } from '@/components';
 import patientState from '@/stores/patient';
 import globalState from '@/stores/global';
 import styles from 'commonHis/src/pages/mine/index/index.less';
 import classNames from 'classnames';
-import { encryptPhone } from '@/utils';
+import { decrypt, encryptPhone } from '@/utils';
 import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
@@ -36,6 +36,7 @@ export default () => {
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
   );
+  const [visible, setVisible] = useState(false);
   const {
     data: { data: jkkInfo, msg: errorMsg },
   } = useApi.查询电子健康卡详情({
@@ -47,26 +48,26 @@ export default () => {
     },
     needInit: !!selectPatient?.patientId,
   });
+  const { data: medicalPsnInfo } = useApi.医保个人信息查询({
+    needInit: !!(faceVerify && selectPatientInfo),
+    params: {
+      patientId: selectPatient?.patientId,
+      platformSource: PLATFORM === 'web' ? 1 : 2,
+      hisId: 2219,
+    },
+  });
   const { user, getUserInfo } = globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+  useEffect(() => {
+    if (medicalPsnInfo?.data) {
+      setVisible(true);
+    }
+  }, [medicalPsnInfo.data]);
   usePageEvent('onShow', async () => {
     getUserInfo(true);
     getPatientList(true);
-    console.log('xxxx');
-    console.log('faceVerify', faceVerify);
-    console.log('selectPatientInfo', selectPatientInfo);
-    if (faceVerify && selectPatientInfo) {
-      const data = await useApi.医保个人信息查询.request({
-        patientId: selectPatient.patientId,
-        platformSource: PLATFORM === 'web' ? 1 : 2,
-        hisId: 2219,
-      });
-      showModal({
-        title: '提示',
-        content: (<View>医保余额:{data}</View>) as any,
-      });
-    }
+
     setNavigationBar({
       title: '个人中心',
     });
@@ -467,6 +468,21 @@ export default () => {
           showTabBar();
         }}
       />
+      <Dialog
+        hideFail
+        show={visible}
+        title={'医保信息'}
+        successText={'关闭'}
+        onSuccess={() => setVisible(false)}
+      >
+        <Space style={{ lineHeight: 1.2, padding: 20 }} vertical>
+          <View>
+            姓名：{decrypt(selectPatientInfo?.encryptPatientName || '')}
+          </View>
+          <View>身份证号：{decrypt(selectPatientInfo?.encryptIdNo || '')}</View>
+          <View> 医保余额：{medicalPsnInfo?.data}元</View>
+        </Space>
+      </Dialog>
       {/* {PLATFORM === 'web' && <TabBar active="我的" />} */}
     </View>
   );
