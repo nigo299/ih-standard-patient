@@ -31,12 +31,17 @@ export default () => {
   const { faceVerify } = useGetParams<{
     faceVerify?: string;
   }>();
-  const { getPatientList, bindPatientList, selectPatientInfo } =
-    patientState.useContainer();
+  const {
+    getPatientList,
+    bindPatientList,
+    selectPatientInfo,
+    setSelectPatientInfo,
+  } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
   );
   const [visible, setVisible] = useState(false);
+  const [medicalData, setMedicalData] = useState<any>({}); // 医保信息
   const {
     data: { data: jkkInfo, msg: errorMsg },
   } = useApi.查询电子健康卡详情({
@@ -51,7 +56,7 @@ export default () => {
   const { data: medicalPsnInfo } = useApi.医保个人信息查询({
     needInit: !!(faceVerify && selectPatientInfo),
     params: {
-      patientId: selectPatient?.patientId,
+      patientId: selectPatientInfo?.patientId as string,
       platformSource: PLATFORM === 'web' ? 1 : 2,
       hisId: 2219,
     },
@@ -60,11 +65,12 @@ export default () => {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   useEffect(() => {
-    if (medicalPsnInfo?.data) {
+    if (medicalPsnInfo?.data !== null && medicalPsnInfo?.data !== undefined) {
       setVisible(true);
+      setMedicalData(medicalPsnInfo?.data);
     }
-  }, [medicalPsnInfo.data]);
-  usePageEvent('onShow', async () => {
+  }, [medicalPsnInfo.data, setSelectPatientInfo]);
+  usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
 
@@ -480,7 +486,7 @@ export default () => {
             姓名：{decrypt(selectPatientInfo?.encryptPatientName || '')}
           </View>
           <View>身份证号：{decrypt(selectPatientInfo?.encryptIdNo || '')}</View>
-          <View> 医保余额：{medicalPsnInfo?.data}元</View>
+          <View> 医保余额：{medicalData}元</View>
         </Space>
       </Dialog>
       {/* {PLATFORM === 'web' && <TabBar active="我的" />} */}

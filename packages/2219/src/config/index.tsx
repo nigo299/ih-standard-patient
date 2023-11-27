@@ -104,6 +104,12 @@ export const mineNavListConfig =
           url: '/pages/collect/index',
           image: `${IMAGE_DOMIN}/mine/gzsc.png`,
         },
+        {
+          title: '医保信息查询',
+          url: '/pages2/usercenter/select-user/index?checkMedical=1',
+          image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+          open: false,
+        },
         // {
         //   title: '意见反馈',
         //   url: '/pages2/feedback/feedback-list/index',
