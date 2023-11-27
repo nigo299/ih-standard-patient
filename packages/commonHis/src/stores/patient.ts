@@ -54,6 +54,7 @@ export default createContainer(() => {
     relationType: 5,
     parentIdType: '',
   });
+  const [selectPatientInfo, setSelectPatientInfo] = useState<PatientType>();
   const [decryptPatName, setDecryptPatName] = useState<string | boolean>(
     typedStorage.get('decryptPatName') || false,
   ); // 是否解密患者姓名
@@ -62,7 +63,12 @@ export default createContainer(() => {
     PatientType[]
   >([]);
   const [ocrInfo, setOcrInfo] = useState(defualtOcrInfo);
-  const [faceInfo, setFaceInfo] = useState({
+  const [faceInfo, setFaceInfo] = useState<{
+    name: string;
+    idNo: string;
+    success: boolean;
+    checkMedical?: boolean;
+  }>({
     name: '',
     idNo: '',
     success: false,
@@ -154,5 +160,7 @@ export default createContainer(() => {
     }, []),
     needGuardian,
     setNeedGuardian,
+    selectPatientInfo,
+    setSelectPatientInfo,
   };
 });

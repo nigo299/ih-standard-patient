@@ -66,7 +66,9 @@ export interface CardProfileType extends API.ResponseDataType {
     isOcr: 1 | 0;
   };
 }
-
+interface medicalInfo extends API.ResponseDataType {
+  data: string; //医保余额
+}
 export interface HisCardType {
   patientSex: string;
   birthday: string;
@@ -199,5 +201,11 @@ export default {
         `/api/intelligent/personal/update-base-info`,
         params,
       ),
+  ),
+  医保个人信息查询: createApiHooks(
+    (params: { patientId: string; platformSource?: number; hisId?: number }) =>
+      request.get<medicalInfo>(`/api/intelligent/personal/medical/psn-info`, {
+        params,
+      }),
   ),
 };

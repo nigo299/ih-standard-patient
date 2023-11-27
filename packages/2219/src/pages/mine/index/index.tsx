@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { mineMainNavConfig, mineNavListConfig } from '@/config';
-import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
+import { HOSPITAL_NAME, IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import {
   Space,
   PartTitle,
@@ -13,23 +13,35 @@ import {
   Swiper,
   QrCode,
   FormItem,
+  showModal,
 } from '@kqinfo/ui';
-import { PreviewImage, QrCodeModal } from '@/components';
+import { Dialog, PreviewImage, QrCodeModal } from '@/components';
 import patientState from '@/stores/patient';
 import globalState from '@/stores/global';
 import styles from 'commonHis/src/pages/mine/index/index.less';
 import classNames from 'classnames';
-import { encryptPhone } from '@/utils';
+import { decrypt, encryptPhone } from '@/utils';
 import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
 import { handleMineNavTap } from '@/pages/mine/index/utils';
+import useGetParams from '@/utils/useGetParams';
 export default () => {
-  const { getPatientList, bindPatientList } = patientState.useContainer();
+  const { faceVerify } = useGetParams<{
+    faceVerify?: string;
+  }>();
+  const {
+    getPatientList,
+    bindPatientList,
+    selectPatientInfo,
+    setSelectPatientInfo,
+  } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
   );
+  const [visible, setVisible] = useState(false);
+  const [medicalData, setMedicalData] = useState<any>({}); // 医保信息
   const {
     data: { data: jkkInfo, msg: errorMsg },
   } = useApi.查询电子健康卡详情({
@@ -41,12 +53,27 @@ export default () => {
     },
     needInit: !!selectPatient?.patientId,
   });
+  const { data: medicalPsnInfo } = useApi.医保个人信息查询({
+    needInit: !!(faceVerify && selectPatientInfo),
+    params: {
+      patientId: selectPatientInfo?.patientId as string,
+      platformSource: PLATFORM === 'web' ? 1 : 2,
+      hisId: 2219,
+    },
+  });
   const { user, getUserInfo } = globalState.useContainer();
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+  useEffect(() => {
+    if (medicalPsnInfo?.data !== null && medicalPsnInfo?.data !== undefined) {
+      setVisible(true);
+      setMedicalData(medicalPsnInfo?.data);
+    }
+  }, [medicalPsnInfo.data, setSelectPatientInfo]);
   usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
+
     setNavigationBar({
       title: '个人中心',
     });
@@ -447,6 +474,21 @@ export default () => {
           showTabBar();
         }}
       />
+      <Dialog
+        hideFail
+        show={visible}
+        title={'医保信息'}
+        successText={'关闭'}
+        onSuccess={() => setVisible(false)}
+      >
+        <Space style={{ lineHeight: 1.2, padding: 20 }} vertical>
+          <View>
+            姓名：{decrypt(selectPatientInfo?.encryptPatientName || '')}
+          </View>
+          <View>身份证号：{decrypt(selectPatientInfo?.encryptIdNo || '')}</View>
+          <View> 医保余额：{medicalData}元</View>
+        </Space>
+      </Dialog>
       {/* {PLATFORM === 'web' && <TabBar active="我的" />} */}
     </View>
   );

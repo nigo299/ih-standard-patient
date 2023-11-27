@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { usePageEvent } from 'remax/macro';
-import { Image, Text, navigateBack } from 'remax/one';
+import { Image, Text, navigateBack, navigateTo } from 'remax/one';
 import { Space, Button, showToast } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -46,6 +46,12 @@ export default () => {
   });
   const handleSuccess = useCallback(() => {
     setFaceInfo({ ...faceInfo, success: true });
+    if (faceInfo?.checkMedical) {
+      navigateTo({
+        url: '/pages/mine/index/index?faceVerify=1',
+      });
+      return;
+    }
     navigateBack();
   }, [faceInfo, setFaceInfo]);
   usePageEvent('onShow', () => {
