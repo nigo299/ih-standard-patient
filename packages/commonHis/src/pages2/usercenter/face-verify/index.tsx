@@ -19,14 +19,15 @@ export default () => {
   const { faceInfo, setFaceInfo, setNeedGuardian } =
     patientState.useContainer();
   const [visible, setVisible] = useState(false);
-  const { handleFaceVerify, faceVerifyStatus } = useFaceVerify({
-    name: faceInfo.name,
-    no: faceInfo.idNo,
-    request_verify_pre_info: JSON.stringify({
+  const { handleFaceVerify, faceVerifyStatus, setFaceVerifyStatus } =
+    useFaceVerify({
       name: faceInfo.name,
-      id_card_number: faceInfo.idNo,
-    }),
-  });
+      no: faceInfo.idNo,
+      request_verify_pre_info: JSON.stringify({
+        name: faceInfo.name,
+        id_card_number: faceInfo.idNo,
+      }),
+    });
   const { analyzeAge } = analyzeIDCard(faceInfo.idNo);
 
   useEffect(() => {
@@ -45,15 +46,16 @@ export default () => {
     }
   });
   const handleSuccess = useCallback(() => {
-    setFaceInfo({ ...faceInfo, success: true });
     if (faceInfo?.checkMedical) {
+      setFaceVerifyStatus(FaceVerifyStatus.未开始);
       navigateTo({
         url: '/pages/mine/index/index?faceVerify=1',
       });
       return;
     }
+    setFaceInfo({ ...faceInfo, success: true });
     navigateBack();
-  }, [faceInfo, setFaceInfo]);
+  }, [faceInfo, setFaceInfo, setFaceVerifyStatus]);
   usePageEvent('onShow', () => {
     if (!faceInfo.idNo && faceInfo.success) {
       showToast({

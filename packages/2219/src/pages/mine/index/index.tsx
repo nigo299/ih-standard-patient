@@ -36,6 +36,7 @@ export default () => {
     bindPatientList,
     selectPatientInfo,
     setSelectPatientInfo,
+    setFaceInfo,
   } = patientState.useContainer();
   const [selectPatient, setSelectPatient] = useEffectState(
     bindPatientList.filter((item) => item.isDefault === 1)[0],
@@ -69,7 +70,7 @@ export default () => {
       setVisible(true);
       setMedicalData(medicalPsnInfo?.data);
     }
-  }, [medicalPsnInfo.data, setSelectPatientInfo]);
+  }, [medicalPsnInfo.data, setFaceInfo, setSelectPatientInfo]);
   usePageEvent('onShow', () => {
     getUserInfo(true);
     getPatientList(true);
