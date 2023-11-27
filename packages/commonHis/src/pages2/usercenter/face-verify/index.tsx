@@ -45,13 +45,13 @@ export default () => {
     }
   });
   const handleSuccess = useCallback(() => {
-    setFaceInfo({ ...faceInfo, success: true });
     if (faceInfo?.checkMedical) {
       navigateTo({
         url: '/pages/mine/index/index?faceVerify=1',
       });
       return;
     }
+    setFaceInfo({ ...faceInfo, success: true });
     navigateBack();
   }, [faceInfo, setFaceInfo]);
   usePageEvent('onShow', () => {

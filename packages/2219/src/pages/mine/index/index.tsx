@@ -69,11 +69,6 @@ export default () => {
     if (medicalPsnInfo?.data !== null && medicalPsnInfo?.data !== undefined) {
       setVisible(true);
       setMedicalData(medicalPsnInfo?.data);
-      setFaceInfo({
-        idNo: '',
-        name: '',
-        success: false,
-      });
     }
   }, [medicalPsnInfo.data, setFaceInfo, setSelectPatientInfo]);
   usePageEvent('onShow', () => {
