@@ -55,7 +55,7 @@ export default () => {
     }
     setFaceInfo({ ...faceInfo, success: true });
     navigateBack();
-  }, [faceInfo, setFaceInfo]);
+  }, [faceInfo, setFaceInfo, setFaceVerifyStatus]);
   usePageEvent('onShow', () => {
     if (!faceInfo.idNo && faceInfo.success) {
       showToast({
