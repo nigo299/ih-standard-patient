@@ -207,6 +207,12 @@ export default () => {
               image: `${IMAGE_DOMIN}/home/lydh.png`,
               onClick: () => openLocation(),
             },
+            {
+              title: '影像云',
+              subTitle: '',
+              url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
+              image: `${IMAGE_DOMIN}/home/szyx.png`,
+            },
           ]
         : [
             {
