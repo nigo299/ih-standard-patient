@@ -331,6 +331,12 @@ export default () => {
         onClick: () =>
           (window.location.href = 'https://www.cqyyt.com/yunbao/web?hpId=93'),
       },
+      {
+        title: '影像云',
+        subTitle: '',
+        url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
+        image: `${IMAGE_DOMIN}/home/szyx.png`,
+      },
     ];
     const addArr = (
       configData?.find((item) => item.configType === 'EXPAND')?.expandInfo || []
