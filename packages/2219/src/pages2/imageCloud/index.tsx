@@ -19,7 +19,7 @@ export default () => {
     },
     needInit: false,
   });
-  usePageEvent('onShow', () => {
+  usePageEvent('onLoad', () => {
     setFaceInfo({
       idNo: decrypt(defaultPatientInfo?.encryptIdNo) as string,
       name: decrypt(defaultPatientInfo?.encryptPatientName) as string,
@@ -39,6 +39,7 @@ export default () => {
     }
   }, [faceInfo.success, patientId, request]);
   useEffect(() => {
+    console.log(data);
     if (data?.data?.indexUrl) {
       window.location.href = data.data?.indexUrl;
     }
