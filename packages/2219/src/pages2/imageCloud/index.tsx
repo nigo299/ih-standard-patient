@@ -32,10 +32,7 @@ export default () => {
   });
   useEffect(() => {
     if (faceInfo.success) {
-      // request({ patientId });
-      navigateTo({
-        url: '/pages/home/index',
-      });
+      request({ patientId });
     }
   }, [faceInfo.success, patientId, request]);
   useEffect(() => {
