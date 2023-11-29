@@ -315,7 +315,7 @@ export default memo(() => {
             yibaoNo: '',
             patCardType: 21,
             birthday:
-              values['idType'] !== '4'
+              values['idType'] === '1'
                 ? submitBirthDay
                 : `${values['brithdayed']} 00:00:00`,
             patientSex: submitPatientSex,
