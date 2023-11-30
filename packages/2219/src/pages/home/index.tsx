@@ -208,7 +208,7 @@ export default () => {
               onClick: () => openLocation(),
             },
             {
-              title: '影像云',
+              title: '数字影像',
               subTitle: '',
               url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
               image: `${IMAGE_DOMIN}/home/szyx.png`,
