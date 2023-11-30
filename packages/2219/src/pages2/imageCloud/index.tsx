@@ -24,7 +24,7 @@ export default () => {
       idNo: decrypt(defaultPatientInfo?.encryptIdNo) as string,
       name: decrypt(defaultPatientInfo?.encryptPatientName) as string,
       success: false,
-      checkMedical: true,
+      checkMedical: false,
     });
     navigateTo({
       url: '/pages2/usercenter/face-verify/index',
@@ -40,6 +40,6 @@ export default () => {
     if (data?.data?.indexUrl) {
       window.location.href = data.data?.indexUrl;
     }
-  }, [data.data?.indexUrl]);
+  }, [data]);
   return <View>{loading ? <Loading /> : null}</View>;
 };
