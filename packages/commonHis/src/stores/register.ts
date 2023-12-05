@@ -92,7 +92,7 @@ export default createContainer(() => {
     ];
     const { data, code } = await useApi.查询科室列表.request();
     const pages = getCurrentPageUrl();
-    if (code === 0 && data?.length === 1) {
+    if (type === 'health' || (code === 0 && data?.length === 1)) {
       if (type === 'health') {
         const arr: DeptType[] = [];
         data.forEach((item) => {
@@ -110,12 +110,13 @@ export default createContainer(() => {
             : data[0].children;
         setDeptList(deptList);
       }
-
+      // console.log('xxx');
+      // return;
       if (pages?.indexOf('register/department') === -1) {
         navigateTo({
-          url: `/pages2/register/department/index?type=${type}&hisType=${
-            hisType || ''
-          }`,
+          url: `/pages2/register/department/index?type=${
+            type === 'health' ? 'default' : type
+          }&hisType=${hisType || ''}&isHealth=${type === 'health' ? 1 : 0}`,
         });
       }
     }

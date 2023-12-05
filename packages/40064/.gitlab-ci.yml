@@ -8,3 +8,4 @@ variables:
   ENABLE_H5: 'true'
   WORK_DIR: 'packages/40064'
   DIST_PATH: 'packages/40064/dist'
+  ENABLE_PROD_PREVIEW: 'true'
