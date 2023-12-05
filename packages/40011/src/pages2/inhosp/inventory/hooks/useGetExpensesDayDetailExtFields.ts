@@ -5,7 +5,7 @@ interface HooksProps {
   liveData?: InhospPatientType;
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const useGetExpensesDayDetailExtFields = (_: HooksProps) => {
-  return undefined;
+export const useGetExpensesDayDetailExtFields = (params: HooksProps) => {
+  return params.liveData?.extFields;
 };
 export const defaultExpensesDayCheckDate = dayjs().format('YYYY-MM-DD');

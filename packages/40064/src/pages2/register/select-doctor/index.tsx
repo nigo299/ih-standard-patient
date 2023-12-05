@@ -284,7 +284,7 @@ export default () => {
                           item.doctorId
                         }&scheduleDate=${date.format(
                           'YYYY-MM-DD',
-                        )}&doctorName=${name}&sourceType=${sourceType}&type=${type}&level=${level}&title=${title}`,
+                        )}&doctorName=${name}&sourceType=${sourceType}&type=${type}&level=${level}&title=${title}&isHealth=${isHealth}`,
                       });
                     } else {
                       showToast({
