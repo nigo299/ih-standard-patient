@@ -6,7 +6,7 @@ export interface InhospPatientType {
   bedNo: string;
   consumeFee: number;
   deptName: string;
-  extFields: string;
+  extFields?: any;
   hisId: string;
   hisName: string;
   idNo: string;
@@ -154,6 +154,7 @@ export default {
       beginDate: string;
       endDate: string;
       admissionNum: string;
+      extFields?: any;
     }) =>
       request.post<ExpensesdaylistType>(
         '/api/intelligent/api/in-hospital/expenses-day-detail',
