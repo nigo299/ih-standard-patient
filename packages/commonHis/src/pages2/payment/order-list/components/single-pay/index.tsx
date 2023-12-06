@@ -146,7 +146,7 @@ export default () => {
         //   waitOpList[0].gender === 'M' ? '男' : '女'
         // }`,
         patCardNo: waitOpList[0]?.patCardNo,
-        patientFullIdNo: decrypt(patientInfo?.encryptIdNo),
+        patientFullIdNo: decrypt(waitOpList[0]?.patientInfo?.encryptIdNo),
         totalFee: data.totalFee,
         orderId: data.orderId,
         payOrderId: data.payOrderId,
