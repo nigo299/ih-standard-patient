@@ -13,6 +13,13 @@ import patientState from '@/stores/patient';
 import classNames from 'classnames';
 import styles from './index.less';
 
+interface List {
+  title: string;
+  open?: boolean;
+  onClick?: () => void;
+  url: string;
+  image: string;
+}
 export default () => {
   const { bindPatientList, defaultPatientInfo, getPatientList } =
     patientState.useContainer();
@@ -93,7 +100,7 @@ export default () => {
           ))}
         </Space>
         <Space vertical>
-          {mineNavListConfig.map((list) => (
+          {mineNavListConfig.map((list: List) => (
             <Space
               key={list.title}
               className={styles.list}
@@ -104,6 +111,10 @@ export default () => {
                     title: '功能暂未开放!',
                     icon: 'none',
                   });
+                  return;
+                }
+                if (list?.onClick) {
+                  list.onClick();
                   return;
                 }
                 navigateTo({ url: list.url });
