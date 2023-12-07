@@ -51,6 +51,14 @@ export const mineNavListConfig = [
     image: `${IMAGE_DOMIN}/mine/yjfk.png`,
     open: true,
   },
+  {
+    title: '健康宣教收藏',
+    url: '',
+    image: `${IMAGE_DOMIN}/mine/jkxjsc.png`,
+    onClick: () =>
+      (window.location.href =
+        'https://ihs.cqkqinfo.com/patients/health-learn-mobile-40026/#/pages/collection/index'),
+  },
 ];
 
 export const inhospMoneys = [
