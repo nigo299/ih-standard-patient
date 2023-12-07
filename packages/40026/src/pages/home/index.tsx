@@ -142,6 +142,18 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/lydh.png`,
             new: false,
           },
+          {
+            title: '健康宣教',
+            url: `/pages/webview/index?url=${encodeURIComponent(
+              'https://ihs.cqkqinfo.com/patients/health-learn-mobile-40026/#/pages/announce/index',
+            )}&title=健康宣教`,
+            image: `${IMAGE_DOMIN}/home/jkxj.png`,
+            new: false,
+            onClick: () => {
+              window.location.href =
+                'https://ihs.cqkqinfo.com/patients/health-learn-mobile-40026/#/pages/announce/index';
+            },
+          },
         ]
       : [
           {
@@ -357,7 +369,11 @@ export default () => {
         </View>
 
         <View className={styles.patTitle}>特色服务</View>
-        <Space justify="space-between" className={styles.cardNav}>
+        <Space
+          justify="space-between"
+          flexWrap="wrap"
+          className={styles.cardNav}
+        >
           {homeCardNavConfig.map((item) => (
             <Space
               vertical
@@ -391,6 +407,8 @@ export default () => {
               <View className={styles.cardTitle}>{item.title}</View>
             </Space>
           ))}
+          <Text className={styles.card_empty} />
+          <Text className={styles.card_empty} />
         </Space>
         <CopyRight
           clear
