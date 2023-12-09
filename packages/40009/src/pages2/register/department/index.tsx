@@ -95,13 +95,13 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={deptList.map(({ name, children, no }) => ({
+          data={(deptList || []).map(({ name, children, no }) => ({
             name,
             id: no,
-            children: children.map(({ name, children, no }) => ({
+            children: (children || []).map(({ name, children, no }) => ({
               name,
               id: no,
-              children: children.map(({ name, no }) => ({
+              children: (children || []).map(({ name, no }) => ({
                 name,
                 id: no,
               })),
@@ -127,7 +127,7 @@ export default () => {
         />
       ) : (
         deptList?.length >= 1 &&
-        deptList?.map((dept) => (
+        (deptList || []).map((dept) => (
           <Space
             justify="space-between"
             alignItems="center"

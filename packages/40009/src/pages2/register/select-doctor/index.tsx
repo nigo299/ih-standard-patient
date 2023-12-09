@@ -354,7 +354,7 @@ export default () => {
           (item) => item?.scheduleDate === date?.format('YYYY-MM-DD'),
         ) ? (
           newDoctorList?.length >= 1 &&
-          newDoctorList?.map((item) => {
+          (newDoctorList || []).map((item) => {
             if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
               return (
                 <ShowPrice
