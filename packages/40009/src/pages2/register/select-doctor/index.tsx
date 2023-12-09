@@ -108,7 +108,7 @@ export default () => {
       data: [],
     },
     params: {
-      scheduleDate: date.format('YYYY-MM-DD'),
+      scheduleDate: date?.format('YYYY-MM-DD'),
       deptId,
     },
     needInit: !!deptId && !!date,
@@ -252,11 +252,12 @@ export default () => {
       'https://shop96487807.youzan.com/v3/message/live-qrcode/member?kdtId=96295639&activitiesId=125617';
   };
 
-  usePageEvent('onShow', () => {
+  usePageEvent('onShow', async () => {
     /** 优化小程序跳转授权返回后不自动请求接口 */
+    // 怀疑是这里导致的页面崩溃，requestDoctorList入参date为异步获取
     if (deptId) {
-      requestScheduleList();
-      requestDoctorList();
+      await requestScheduleList();
+      await requestDoctorList();
     }
     setNavigationBar({
       title: '选择医生',
