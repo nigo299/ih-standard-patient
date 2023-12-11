@@ -8,13 +8,20 @@ import {
 } from '@kqinfo/ui';
 import { REQUEST_QUERY, PLATFORM } from '@/config/constant';
 import storage from '@/utils/storage';
-import { getCurrentPageUrl, jsonToQueryString, reLaunchUrl } from '@/utils';
+import {
+  getCurrentPageUrl,
+  isYuKangJianH5,
+  jsonToQueryString,
+  reLaunchUrl,
+} from '@/utils';
 import qs from 'qs';
 
 /** 如果为true则无需跳转 */
 let navFlag = false;
 const NODE_ENV = process.env.NODE_ENV;
-const DOMIN = process.env.REMAX_APP_REQUESET_DOMIN;
+const DOMIN = isYuKangJianH5()
+  ? 'http://219.152.51.51:9096/test-api'
+  : process.env.REMAX_APP_REQUESET_DOMIN;
 const instance = axios.create({
   baseURL: NODE_ENV === 'development' && PLATFORM === 'web' ? '' : DOMIN,
   headers:
