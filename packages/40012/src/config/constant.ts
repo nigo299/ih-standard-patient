@@ -11,7 +11,7 @@ export const IMAGE_DOMIN = `${
     : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
 }`;
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
-export const HOSPITAL_NAME = '重庆沙坪坝区妇幼保健院';
+export const HOSPITAL_NAME = '大足双桥';
 export const HIS_ID = '40012';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
