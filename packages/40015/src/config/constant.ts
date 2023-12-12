@@ -15,8 +15,8 @@ export const HOSPITAL_NAME = '大渡口妇幼';
 export const HIS_ID = '40015';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
-  hisId: 40015,
-  platformId: PLATFORM === 'ali' ? 4001502 : 4001501,
+  hisId: HIS_ID,
+  platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}01`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10
