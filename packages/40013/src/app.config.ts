@@ -34,7 +34,6 @@ const pages = [
 const subPackages = [
   {
     root: 'pages2',
-    root: 'pages2',
     pages: [
       'payment/order-list/index', // 门诊待缴费列表
       'payment/order-item/index', // 门诊待缴费详情
