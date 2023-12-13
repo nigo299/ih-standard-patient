@@ -105,8 +105,8 @@ export default () => {
           到院患者<Text style={{ color: '#03933E' }}>当日挂号</Text>
         </Space>
       ),
-      // url: '/pages2/register/department/index?type=day',
-      url: '/pages2/register/select-hospital/index?type=default',
+      url: '/pages2/register/department/index?type=day',
+      // url: '/pages2/register/select-hospital/index?type=default',
       image: `${IMAGE_DOMIN}/home/drgh.png`,
       new: true,
     },
@@ -171,7 +171,8 @@ export default () => {
           线上快速<Text style={{ color: '#03933E' }}>预约挂号</Text>
         </View>
       ),
-      url: '/pages2/register/select-hospital/index?type=reserve',
+      url: '/pages2/register/department/index?type=reserve',
+      // url: '/pages2/register/select-hospital/index?type=reserve',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
     },
 
