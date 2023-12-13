@@ -34,7 +34,6 @@ const pages = [
 const subPackages = [
   {
     root: 'pages2',
-    root: 'pages2',
     pages: [
       'payment/order-list/index', // 门诊待缴费列表
       'payment/order-item/index', // 门诊待缴费详情
@@ -76,6 +75,7 @@ const subPackages = [
       'nucleic/select-combo/index', // 自助核酸检测选择套餐
       'nucleic/upload/index', // 网约出租车核酸上传图片
       'nucleic/confirm/index', // 自助核酸检测确认订单
+      'imageCloud/index',
     ],
   },
   // 适老版页面
