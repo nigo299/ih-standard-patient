@@ -391,7 +391,7 @@ export default () => {
   return (
     <View>
       <BackgroundImg
-        img={`${IMAGE_DOMIN}/home/banner1.png`}
+        img={`${IMAGE_DOMIN}/home/newBanner.jpg`}
         className={styles.bannerImg}
         isPreviewImage
       >
