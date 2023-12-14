@@ -356,9 +356,6 @@ export default () => {
           className={styles.bannerImg}
           isPreviewImage
         >
-          <Space className={styles.banner_title}>
-            <Text>重庆市大足区妇幼保健院</Text>
-          </Space>
           <Space
             className={styles.microsite}
             justify="center"
