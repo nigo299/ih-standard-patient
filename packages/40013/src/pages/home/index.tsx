@@ -1,17 +1,9 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import openLocation from '@/utils/openLocation';
 import setNavigationBar from '@/utils/setNavigationBar';
-import {
-  Space,
-  BackgroundImg,
-  showToast,
-  Icon,
-  RichText,
-  // navigateToMiniProgram,
-  PartTitle,
-} from '@kqinfo/ui';
+import { Space, BackgroundImg, showToast, Icon, RichText } from '@kqinfo/ui';
 import {
   IMAGE_DOMIN,
   HOSPITAL_NAME,
@@ -26,7 +18,7 @@ import {
 } from '@/components';
 import patientState from '@/stores/patient';
 import regsiterState from '@/stores/register';
-import globalState from '@/stores/global';
+import styles from './index.less';
 import classNames from 'classnames';
 import { useDownCount, useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
@@ -34,12 +26,10 @@ import setPageStyle from '@/utils/setPageStyle';
 import { useLockFn } from 'ahooks';
 import Banner from '@/pages/home/banner';
 import showTabBar from '@/utils/showTabBar';
-import styles from './index.less';
-// import useApi from '@/apis/microsite';
-import useApi from '@/apis/common';
+import globalState from '@/stores/global';
+import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import Dialog from '@/components/dialog';
-import storage from '@/utils/storage';
-import dayjs from 'dayjs';
+import useApi from 'commonHis/src/apis/common';
 export interface NavType {
   title: string;
   subTitle?: React.ReactNode | string;
@@ -51,18 +41,17 @@ export interface NavType {
   patientId?: boolean;
   onClick?: () => void;
 }
+
 export default () => {
   const {
     defaultPatientInfo: { patientId },
     getPatientList,
   } = patientState.useContainer();
-  const {
-    setElderly,
-    // getCardProdiles
-  } = globalState.useContainer();
+  const { setSearchQ } = globalState.useContainer();
   const { getDeptList } = regsiterState.useContainer();
   const [show, setShow] = useState(false);
   const [registerMode, setRegisterMode] = useState('');
+  const [noticeInfo, setNoticeInfo] = useState<string>('');
   const { clearCountdownTimer } = useDownCount();
   const {
     data: { data: configList },
@@ -94,27 +83,34 @@ export default () => {
     },
   });
   const {
+    data: { data: infoData3 },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'DRGHXZ',
+      noticeMethod: 'WBK',
+    },
+  });
+  const {
     data: { data: configData },
   } = useApi.获取首页配置信息({});
   const [visible, setVisible] = useEffectState(!!infoData?.[0]?.noticeInfo);
   const homeMainNavConfig = [
     {
-      title: '当日挂号',
+      title: '预约挂号',
       subTitle: () => (
-        <Space>
-          到院患者<Text style={{ color: '#03933E' }}>当日挂号</Text>
-        </Space>
+        <View style={{ color: '#666' }}>
+          患者提前<Text style={{ color: '#FF9743' }}>预约号源</Text>
+        </View>
       ),
-      url: '/pages2/register/department/index?type=day',
-      // url: '/pages2/register/select-hospital/index?type=default',
-      image: `${IMAGE_DOMIN}/home/drgh.png`,
+      url: '/pages2/register/department/index?type=default',
+      image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
     },
     {
       title: '门诊缴费',
       subTitle: () => (
         <View style={{ color: '#666' }}>
-          手机<Text style={{ color: '#03933E' }}>缴费</Text>不用等
+          手机缴费<Text style={{ color: '#FF9743' }}>不用等</Text>
         </View>
       ),
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
@@ -124,165 +120,120 @@ export default () => {
       title: '报告查询',
       subTitle: () => (
         <View style={{ color: '#666' }}>
-          报告结果<Text style={{ color: '#03933E' }}>实时查询</Text>
+          报告结果<Text style={{ color: '#FF9743' }}>实时查询</Text>
         </View>
       ),
-      url: `/pages/report/report-list/index?patientId=${patientId}`,
+      url: `/pages/report/report-list/index`,
       image: `${IMAGE_DOMIN}/home/bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
   ];
-  const showDoctorRecords = useMemo(() => {
-    // configType
-    //   configType: "DOCTOR"
-    // doctorRecordInfo: {showCount: 5}
-    // doctorRecordInfoList: []
-    if (configData) {
-      const findData = configData.find((d) => d.configType === 'DOCTOR');
-      const doctors = findData?.doctorRecordInfoList || [];
-      // return new Array(10).fill(doctors[0]);
-      return doctors;
-    } else {
-      return [];
-    }
-  }, [configData]);
-  // const {
-  //   data: { data: article },
-  // } = useApi.获取文章列表({
-  //   initValue: {
-  //     data: {},
-  //   },
-  //   params: {
-  //     pageNum: 1,
-  //     numPerPage: 3,
-  //     state: 'ONLINE',
-  //   },
-  //   needInit: true,
-  // });
-  // const healthList = useMemo(() => {
-  //   return article.recordList?.filter((item) => item.typeName === '健康宣教');
-  // }, [article.recordList]);
-  const homeSubNavConfig = [
-    {
-      title: '预约挂号',
-      // subTitle: '到院患者当日挂号',
-      subTitle: (
-        <View style={{ color: '#666' }}>
-          线上快速<Text style={{ color: '#03933E' }}>预约挂号</Text>
-        </View>
-      ),
-      url: '/pages2/register/department/index?type=reserve',
-      // url: '/pages2/register/select-hospital/index?type=reserve',
-      image: `${IMAGE_DOMIN}/home/yygh.png`,
-    },
 
+  const homeSubNavConfig = [
+    // {
+    //   title: '当日挂号',
+    //   subTitle: '到院患者当日挂号',
+    //   url: '/pages2/register/department/index?type=day',
+    //   image: `${IMAGE_DOMIN}/home/drgh.png`,
+    // },
+    {
+      title: '来院导航',
+      subTitle: '导航前往医院',
+      url: '/pages2/register',
+      image: `${IMAGE_DOMIN}/home/new_lydh.png`,
+      onClick: () => openLocation(),
+    },
     {
       title: '住院服务',
-      // subTitle: '住院患者贴心服务',
-      subTitle: (
-        <Space>
-          <Text style={{ color: '#03933E' }}>住院患者</Text>贴心服务
-        </Space>
-      ),
+      subTitle: '住院患者贴心服务',
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
       image: `${IMAGE_DOMIN}/home/zyfw.png`,
-      // open: true,
     },
   ];
+
   const homeCardNavConfig =
-    // PLATFORM === 'ali'
-    //   ? [
-    //       {
-    //         title: '核酸检测',
-    //         subTitle: '',
-    //         url: '/pages2/nucleic/upload/index',
-    //         image: `${IMAGE_DOMIN}/home/hsjc.png`,
-    //       },
-    //       {
-    //         title: '微官网',
-    //         subTitle: '医院信息门户',
-    //         url: '/pages/microsite/home/index',
-    //         image: `${IMAGE_DOMIN}/home/wgw.png`,
-    //         patientId: true,
-    //       },
-    //       {
-    //         title: '来院导航',
-    //         subTitle: '导航来院不迷路',
-    //         url: '/pages2/register',
-    //         image: `${IMAGE_DOMIN}/home/lydh.png`,
-    //         onClick: () => openLocation(),
-    //       },
-    //       {
-    //         title: '就医指南',
-    //         subTitle: '',
-    //         open: true,
-    //         url: '/pages/microsite/article-detail/index?id=643',
-    //         image: `${IMAGE_DOMIN}/home/wgw.png`,
-    //         patientId: true,
-    //       },
-    //     ]
-    //   :
-    [
-      // {
-      //   title: '排队进度',
-      //   subTitle: '前面还有多少人',
-      //   url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-      //   image: `${IMAGE_DOMIN}/home/pdjd.png`,
-      //   open: true,
-      // },
-      {
-        title: '微官网',
-        subTitle: '医院信息门户',
-        url: '/pages/microsite/home/index',
-        image: `${IMAGE_DOMIN}/home/wgw.png`,
-        patientId: true,
-      },
-      // {
-      //   title: '核酸检测',
-      //   subTitle: '快速核酸检测开单',
-      //   url: '/pages2/nucleic/select-combo/index?type=1',
-      //   image: `${IMAGE_DOMIN}/home/hsjc.png`,
-      //   titleColor: '#2EBDC7',
-      // },
-      {
-        title: '来院导航',
-        subTitle: '导航来院不迷路',
-        url: '/pages2/register',
-        image: `${IMAGE_DOMIN}/home/lydh.png`,
-        onClick: () => openLocation(),
-      },
-      {
-        title: '体检预约',
-        subTitle: '',
-        image: `${IMAGE_DOMIN}/home/yytj.png`,
-        url:
-          '/pages2/usercenter/select-user/index?isHealthMall=true&pageRoute=' +
-          (window.location.href.includes('tihs')
-            ? 'https://healthapp.cqkqinfo.com/next-H5App-p40011/#/pages/goods/index'
-            : 'https://healthmall.cqkqinfo.com/H5App-p40011/#/pages/goods/index'),
-      },
-      {
-        title: '数字影像',
-        subTitle: '',
-        url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
-        image: `${IMAGE_DOMIN}/home/szyx.png`,
-      },
-      // {
-      //   title: '满意度调查',
-      //   subTitle: '',
-      //   url: '',
-      //   image: `${IMAGE_DOMIN}/home/myddc.png`,
-      //   onClick: () =>
-      //     (window.location.href = 'https://wj.qq.com/s2/5190318/2a67/'),
-      // },
-      {
-        title: '',
-        subTitle: '',
-        open: true,
-        image: ``,
-        url: '',
-      },
-    ];
+    PLATFORM === 'ali'
+      ? [
+          {
+            title: '核酸检测',
+            subTitle: '',
+            url: '/pages2/nucleic/select-combo/index?type=1',
+            image: `${IMAGE_DOMIN}/home/hsjc.png`,
+          },
+          {
+            title: '微官网',
+            subTitle: '医院信息门户',
+            url: '/pages/microsite/home/index',
+            image: `${IMAGE_DOMIN}/home/wgw.png`,
+            patientId: true,
+          },
+          {
+            title: '来院导航',
+            subTitle: '导航来院不迷路',
+            url: '/pages2/register',
+            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            onClick: () => openLocation(),
+          },
+          {
+            title: '就医指南',
+            subTitle: '',
+            url: '/pages/microsite/article-detail/index?id=643',
+            image: `${IMAGE_DOMIN}/home/wgw.png`,
+            patientId: true,
+          },
+          {
+            title: '医保电子凭证',
+            subTitle: '',
+            onClick: () => {
+              my.navigateToMiniProgram({
+                appId: '2021001123625885',
+              });
+            },
+            image: `${IMAGE_DOMIN}/home/ybdzpz2.png`,
+          },
+          {
+            title: '停车缴费',
+            subTitle: '',
+            onClick: () => {
+              my.ap.navigateToAlipayPage({
+                path: 'https://cloud.keytop.cn/stcfront/Payment/Query?lotId=8528&chInfo=ch_share__chsub_CopyLink&fxzjshareChinfo=ch_share__chsub_CopyLink&apshareid=B2B29C72-92A7-4CDE-9713-B92110DF4A87&shareBizType=mrfxzw',
+              });
+            },
+            image: `${IMAGE_DOMIN}/home/tcjf.png`,
+          },
+        ]
+      : [
+          {
+            title: '满意度调查',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/myddc.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://health.10086.cn/questionnaire/front.html?code=071sSmG91hUc2N1XZCG91WGzG91sSmGY&state=1'),
+          },
+          {
+            title: '停车缴费',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/tcjf.png`,
+            open: true,
+          },
+          {
+            title: '预防接种',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/yfjz.png`,
+            open: true,
+          },
+          {
+            title: '数字影像',
+            subTitle: '',
+            url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
+            image: `${IMAGE_DOMIN}/home/szyx.png`,
+          },
+        ];
+
   const onNavClick = useCallback(
     async (nav: NavType) => {
       if (nav?.open) {
@@ -306,8 +257,13 @@ export default () => {
         setPageStyle({
           overflow: 'hidden',
         });
-        if (infoData2?.[0]?.noticeInfo) setShow(true);
-        else {
+        if (infoData2?.[0]?.noticeInfo && nav.title === '预约挂号') {
+          setNoticeInfo(infoData2?.[0]?.noticeInfo);
+          setShow(true);
+        } else if (infoData3?.[0]?.noticeInfo && nav.title === '当日挂号') {
+          setNoticeInfo(infoData3?.[0]?.noticeInfo);
+          setShow(true);
+        } else {
           setPageStyle({
             overflow: 'inherit',
           });
@@ -327,7 +283,7 @@ export default () => {
             });
           }
         }
-        setRegisterMode(nav?.url);
+        setRegisterMode(nav.url);
         return;
       }
       if (!patientId && !nav.patientId) {
@@ -342,18 +298,16 @@ export default () => {
               });
             });
           } else {
-            if (nav.title === '报告查询') {
-              navigateTo({
-                url: `${nav.url}${
-                  patient.filter((item) => item.isDefault === 1)[0].patientId
-                }`,
-              });
-            } else {
-              navigateTo({
-                url: nav.url,
-              });
-            }
+            navigateTo({
+              url: nav.url,
+            });
           }
+        });
+        return;
+      }
+      if (nav.url.includes('alipays://')) {
+        navigateToAlipayPage({
+          path: encodeURI(nav.url),
         });
         return;
       }
@@ -361,28 +315,34 @@ export default () => {
         url: nav.url,
       });
     },
-    [getDeptList, getPatientList, infoData2, patientId],
+    [getDeptList, getPatientList, infoData2, infoData3, patientId],
   );
   const handleNavClick = useLockFn(onNavClick);
   usePageEvent('onShow', async () => {
-    if (
-      storage.get('openid') === 'oDnT4wBB4yQ3dDw3AZth0217ZUfU' &&
-      process.env.REMAX_APP_PLATFORM === 'production'
-    ) {
-      window.location.href =
-        'https://tihs.cqkqinfo.com/patients/p40064-his/#/pages/home/index';
-    }
-    // getCardProdiles();
     showTabBar();
-    setPageStyle({
-      overflow: 'inherit',
-    });
-    setElderly(false);
+    setSearchQ('');
     setNavigationBar({
       title: HOSPITAL_NAME,
     });
   });
-
+  // useEffect(() => {
+  //   hideTabBar();
+  //   showModal({
+  //     title: '提示',
+  //     content: '是否进入适老模式',
+  //   }).then(({ confirm }) => {
+  //     if (confirm) {
+  //       setElderly(true);
+  //       if (PLATFORM === 'web') {
+  //         redirectTo({ url: '/pages3/home/index' });
+  //       } else {
+  //         reLaunch({ url: '/pages3/home/index' });
+  //       }
+  //     }
+  //     showTabBar();
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   useEffect(() => {
     return () => {
       clearCountdownTimer();
@@ -390,35 +350,30 @@ export default () => {
   }, [clearCountdownTimer]);
   return (
     <View>
-      <BackgroundImg
-        img={`${IMAGE_DOMIN}/home/newBanner.jpg`}
-        className={styles.bannerImg}
-        isPreviewImage
-      >
-        {/* <Image
-          src={`${IMAGE_DOMIN}/auth/logo.png`}
-          mode="aspectFill"
-          className={styles.logo}
-        /> */}
-        <Space
-          className={styles.microsite}
-          justify="center"
-          alignItems="center"
-          onTap={(e) => {
-            e.stopPropagation();
-            // showToast({
-            //   title: '功能暂未开放!',
-            //   icon: 'none',
-            // });
-            // return;
-            navigateTo({
-              url: '/pages/microsite/hospital-summary/index',
-            });
-          }}
+      <View>
+        <BackgroundImg
+          img={`${IMAGE_DOMIN}/home/banner.png`}
+          className={styles.bannerImg}
+          isPreviewImage
         >
-          医院信息
-        </Space>
-      </BackgroundImg>
+          <Space className={styles.banner_title}>
+            <Text>重庆市大足区妇幼保健院</Text>
+          </Space>
+          <Space
+            className={styles.microsite}
+            justify="center"
+            alignItems="center"
+            onTap={(e) => {
+              e.stopPropagation();
+              window.location.href =
+                'https://mp.weixin.qq.com/s/CG4ABUl0K0ySc2IY4JtCfQ';
+            }}
+          >
+            医院信息
+          </Space>
+        </BackgroundImg>
+      </View>
+
       <Space vertical className={styles.content}>
         <View
           className={styles.toSearch}
@@ -433,17 +388,24 @@ export default () => {
             className={styles.searchIcon}
             color={'#CCCCCC'}
           />
-          <Text>搜索科室</Text>
+          <Text>输入医生姓名、科室名称进行搜索</Text>
         </View>
         <Space justify="space-between" className={styles.nav}>
-          {homeMainNavConfig?.[0]?.title && (
-            <BackgroundImg
-              key={homeMainNavConfig[0].title}
-              img={homeMainNavConfig[0].image}
-              className={styles.subNavImage2}
-              onTap={() => handleNavClick(homeMainNavConfig[0])}
+          {homeMainNavConfig.map((nav) => (
+            <Space
+              vertical
+              justify="center"
+              alignItems="center"
+              key={nav.title}
+              className={styles.navWrap}
+              onTap={() => handleNavClick(nav)}
             >
-              {homeMainNavConfig?.[0]?.new && (
+              <Image
+                src={nav.image}
+                mode="aspectFill"
+                className={styles.navImg}
+              />
+              {nav.new && (
                 <Image
                   src={
                     PLATFORM === 'ali'
@@ -457,83 +419,10 @@ export default () => {
                   })}
                 />
               )}
-              <Space vertical className={styles.subNavWrap}>
-                <View className={classNames(styles.subNavTitle)}>
-                  {homeMainNavConfig[0].title}
-                </View>
-                <View className={styles.subNavSubTitle}>
-                  {homeMainNavConfig[0].subTitle()}
-                </View>
-              </Space>
-            </BackgroundImg>
-          )}
-          <Space vertical size={20} style={{ width: '48%' }}>
-            {homeMainNavConfig.map((nav, index) => {
-              if (index === 0) return null;
-              else
-                return (
-                  <BackgroundImg
-                    key={nav.title}
-                    img={nav.image}
-                    className={styles.subNavImage3}
-                    onTap={() => handleNavClick(nav)}
-                  >
-                    {nav.new && (
-                      <Image
-                        src={
-                          PLATFORM === 'ali'
-                            ? `${IMAGE_DOMIN}/home/lsnl.png`
-                            : `${IMAGE_DOMIN}/home/hot.png`
-                        }
-                        mode="aspectFill"
-                        className={classNames({
-                          [styles.navNewImg]: PLATFORM === 'web',
-                          [styles.navLsnlImg]: PLATFORM === 'ali',
-                        })}
-                      />
-                    )}
-                    <Space vertical className={styles.subNavWrap}>
-                      <View className={classNames(styles.subNavTitle)}>
-                        {nav.title}
-                      </View>
-                      <View className={styles.subNavSubTitle}>
-                        {nav.subTitle()}
-                      </View>
-                    </Space>
-                  </BackgroundImg>
-                  // <Space
-                  //   vertical
-                  //   justify="center"
-                  //   alignItems="center"
-                  //   key={nav.title}
-                  //   className={styles.navWrap}
-                  //   onTap={() => handleNavClick(nav)}
-                  // >
-                  //   <Image
-                  //     src={nav.image}
-                  //     mode="aspectFill"
-                  //     className={styles.navImg}
-                  //   />
-                  //   {nav.new && (
-                  //     <Image
-                  //       src={
-                  //         PLATFORM === 'ali'
-                  //           ? `${IMAGE_DOMIN}/home/lsnl.png`
-                  //           : `${IMAGE_DOMIN}/home/hot.png`
-                  //       }
-                  //       mode="aspectFill"
-                  //       className={classNames({
-                  //         [styles.navNewImg]: PLATFORM === 'web',
-                  //         [styles.navLsnlImg]: PLATFORM === 'ali',
-                  //       })}
-                  //     />
-                  //   )}
-                  //   <View className={styles.navTitle}>{nav.title}</View>
-                  //   {nav.subTitle()}
-                  // </Space>
-                );
-            })}
-          </Space>
+              <View className={styles.navTitle}>{nav.title}</View>
+              {nav.subTitle()}
+            </Space>
+          ))}
         </Space>
         <Space
           justify="space-between"
@@ -560,42 +449,10 @@ export default () => {
             </BackgroundImg>
           ))}
         </Space>
-        {showDoctorRecords.length ? (
-          <PartTitle className={styles.doctorRecordTitle}>
-            就诊过的医生
-          </PartTitle>
-        ) : (
-          ''
-        )}
+
         <Space
-          className={styles.doctorRecordWrap}
-          style={showDoctorRecords.length ? {} : { display: 'none' }}
-        >
-          {showDoctorRecords.map((item, index) => (
-            <Space
-              key={index}
-              className={styles.doctorRecordItem}
-              onTap={() => {
-                navigateTo({
-                  url: `/pages2/register/select-time/index?deptId=${
-                    item.deptId
-                  }&doctorId=${item.doctorId}&scheduleDate=${dayjs().format(
-                    'YYYY-MM-DD',
-                  )}&type=default`,
-                });
-              }}
-            >
-              <Image src={item.image} className={styles.doctorRecordImg} />
-              <Space vertical>
-                <View className={styles.doctorRecordName}>{item.name}</View>
-                <View className={styles.doctorRecordJob}>{item.visitType}</View>
-                <View className={styles.doctorRecordDept}>{item.deptName}</View>
-              </Space>
-            </Space>
-          ))}
-        </Space>
-        <Space
-          justify="space-between"
+          // justify="space-between"
+          size={10}
           className={styles.cardNav}
           flexWrap="wrap"
         >
@@ -609,12 +466,18 @@ export default () => {
             >
               <Image src={item.image} className={styles.cardImg} />
               <View className={styles.cardTitle}>{item.title}</View>
-              {item.title === '电子票据' && (
+              {item.title === '电子发票' && (
                 <WxOpenLaunchWeapp
                   username="gh_310a33219dae"
                   path="pages/index/index.html?agencyCode=b4d1d3101b6f4bd8b9e6ca9e58beeb47"
                 />
               )}
+              {/*{item.title === '核酸检测' && (*/}
+              {/*  <Image*/}
+              {/*    src={`${IMAGE_DOMIN}/home/wyc.png`}*/}
+              {/*    className={styles.cardTag}*/}
+              {/*  />*/}
+              {/*)}*/}
             </Space>
           ))}
         </Space>
@@ -665,7 +528,7 @@ export default () => {
           <RichText nodes={infoData?.[0]?.noticeInfo || ''} />
         </Space>
       </Dialog>
-      {PLATFORM === 'web' && <TabBar active="首页" className={styles.tabBar} />}
+      {PLATFORM === 'web' && <TabBar active="首页" />}
     </View>
   );
 };
