@@ -353,8 +353,9 @@ export default () => {
             alignItems="center"
             onTap={(e) => {
               e.stopPropagation();
-              window.location.href =
-                'https://mp.weixin.qq.com/s/CG4ABUl0K0ySc2IY4JtCfQ';
+              navigateTo({
+                url: '/pages/microsite/hospital-summary/index',
+              });
             }}
           >
             医院信息
