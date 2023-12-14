@@ -1,63 +1,51 @@
 @import '@/styles/index.less';
+
 .bannerImg {
   position: relative;
   display: block;
   margin: 0;
   width: 100%;
   height: 256px !important;
-  > div {
+
+  >div {
     display: block;
     margin: 0;
     width: 100%;
     height: 256px !important;
   }
+
   image {
     width: 100%;
-    height: 256px;
+    height: 256px !important;
   }
+
   overflow: hidden;
 }
-.hisContainer {
-  position: absolute;
-  top: 24px;
-  left: 30px;
-}
 
-.hisTitle {
-  font-size: 26px;
-  font-family: Microsoft YaHei;
-  color: #fafafa;
-  margin-left: 19px;
-  text-shadow: 0px 5px 7px #51583b;
-}
-.hisLogo {
-  width: 57px !important;
-  height: 57px !important;
-}
 .microsite {
   position: absolute;
-  top: 111px;
-  right: 30px;
-  width: 153px;
-  height: 50px;
-  background: @theme-color;
-  border-radius: 25px;
-  font-weight: bold;
-  color: #fff;
-  font-size: 26px;
-  &:active {
-    opacity: 0.7;
-  }
+  bottom: 60px;
+  right: 24px;
+  background-color: #fff;
+  padding: 12px 24px;
+  border-radius: 40px;
+  color: @theme-color;
+}
+
+.mircroSites {
+  width: 100%;
+  height: 100%;
 }
 
 .content {
-  position: absolute;
-  top: 235px;
+  position: relative;
+  //top: 235px;
   width: 100%;
   padding: 62px 30px 0 30px;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   background: #fafafa;
+
   .toSearch {
     position: absolute;
     top: -32px;
@@ -69,6 +57,7 @@
     align-items: center;
     font-size: 26px;
     color: #999999;
+
     .searchIcon {
       font-size: 32px;
       margin: 18px;
@@ -78,7 +67,6 @@
 
 .nav {
   font-size: 24px;
-  margin-top: 4px;
   // font-weight: 300;
 }
 
@@ -89,6 +77,7 @@
 
 .navWrap {
   position: relative;
+
   &:active {
     opacity: 0.7;
   }
@@ -97,18 +86,17 @@
 .navNewImg {
   position: absolute;
   top: 5px;
-  right: 0;
-  width: 53px !important;
-  height: 26px !important;
+  right: 18px;
+  width: 53px;
+  height: 26px;
 }
 
 .navLsnlImg {
   position: absolute;
   top: -10px;
-  //left: 80px;
-  right: 0;
-  width: 113px !important;
-  height: 33px !important;
+  left: 80px;
+  width: 113px;
+  height: 33px;
 }
 
 .navTitle {
@@ -119,67 +107,29 @@
 }
 
 .subNav {
-  margin-top: 20px;
+  margin-top: 52px;
 }
-.subNavImage2 {
-  position: relative;
-  display: block;
-  width: 48%;
-  height: 218px;
-  image {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 218px;
-  }
-  > div {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 218px;
-  }
-  &:active {
-    opacity: 0.7;
-  }
-}
-.subNavImage3 {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 98px;
-  image {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 98px;
-  }
-  > div {
-    display: block;
-    margin: 0;
-    width: 100%;
-    height: 98px;
-  }
-  &:active {
-    opacity: 0.7;
-  }
-}
+
 .subNavImage {
   position: relative;
   display: block;
   width: 48%;
-  height: 99px;
+  height: 174px;
+
   image {
     display: block;
     margin: 0;
     width: 100%;
-    height: 99px;
+    height: 174px;
   }
-  > div {
+
+  >div {
     display: block;
     margin: 0;
     width: 100%;
-    height: 99px;
+    height: 174px;
   }
+
   &:active {
     opacity: 0.7;
   }
@@ -187,19 +137,28 @@
 
 .subNavWrap {
   position: absolute;
-  top: 22px;
+  top: 24px;
   left: 32px;
 }
 
 .subNavTitle {
   font-size: 32px;
   font-weight: bold;
-  color: @black-800;
+  color: #333;
 }
 
-//.subNavTitle1 {
-//  color: #333;
-//}
+.subNavTitle1 {
+  color: #333;
+}
+
+.banner_title {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  padding: 12px 24px;
+  border-radius: 40px;
+  color: #fff;
+}
 
 .subNavSubTitle {
   margin-top: 11px;
@@ -227,17 +186,16 @@
 }
 
 .cardNav {
-  margin: 28px 0 20px 0;
+  margin: 20px 0;
   padding: 34px 0 22px 0;
-  //background: #ffffff;
-  background: linear-gradient(180deg, rgba(#ADEFC8, 0.75), #fff 50%);
-  border-radius: 20px;
+  background: #ffffff;
 }
 
 .card {
   position: relative;
   width: 158px;
   border-radius: 20px;
+
   &:active {
     opacity: 0.7;
   }

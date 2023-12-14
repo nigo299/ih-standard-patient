@@ -10,7 +10,7 @@ module.exports = {
   plugins: [
     less({
       lessOptions: {
-        modifyVars: { '@brand-primary': '#CF000E' },
+        modifyVars: { '@brand-primary': '#008dd9' },
         javascriptEnabled: true,
       },
     }),

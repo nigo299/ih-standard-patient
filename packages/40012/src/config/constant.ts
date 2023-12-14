@@ -1,7 +1,7 @@
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
-export const THEME_COLOR = '#2780D9';
-export const THEME_COLOR2 = '#FF9743';
+export const THEME_COLOR = '#008dd9';
+export const THEME_COLOR2 = '#008dd9';
 export const STEP_COLOR = '#ffffff';
 export const IMAGE_DOMIN = `${
   isDev
@@ -11,7 +11,7 @@ export const IMAGE_DOMIN = `${
     : 'https://tihs.cqkqinfo.com/patients/p40012-his/images'
 }`;
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
-export const HOSPITAL_NAME = '大足双桥';
+export const HOSPITAL_NAME = '双桥经开区人民医院';
 export const HIS_ID = '40012';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
