@@ -43,9 +43,9 @@ export interface NavType {
   onClick?: () => void;
 }
 
-const oldUrl =
-  'https://mp.cqkqinfo.com/views/p40012/index.html?returnRandomParam=1702634696974#/home/index?_k=88vyav';
-const openIds: string[] = [];
+// const oldUrl =
+//   'https://mp.cqkqinfo.com/views/p40012/index.html?returnRandomParam=1702634696974#/home/index?_k=88vyav';
+// const openIds: string[] = [];
 export default () => {
   const {
     defaultPatientInfo: { patientId },
@@ -57,10 +57,10 @@ export default () => {
   const [registerMode, setRegisterMode] = useState('');
   const [noticeInfo, setNoticeInfo] = useState<string>('');
   const { clearCountdownTimer } = useDownCount();
-  const openId = useMemo(() => {
-    return storage.get('openid') || '';
-  }, []);
-  console.log('openId======>', openId);
+  // const openId = useMemo(() => {
+  //   return storage.get('openid') || '';
+  // }, []);
+  // console.log('openId======>', openId);
   // useEffect(() => {
   //   if (!openIds.includes(openId)) {
   //     window.location.href = oldUrl;
@@ -159,7 +159,7 @@ export default () => {
     {
       title: '住院预缴',
       subTitle: '住院费用预缴',
-      url: `/pages3/inhosp/home/index?patientId=${patientId}`,
+      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
       image: `${IMAGE_DOMIN}/home/zyfw.png`,
     },
   ];
