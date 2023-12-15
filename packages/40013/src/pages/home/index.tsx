@@ -209,8 +209,7 @@ export default () => {
             url: '',
             image: `${IMAGE_DOMIN}/home/myddc.png`,
             onClick: () =>
-              (window.location.href =
-                'https://health.10086.cn/questionnaire/front.html?code=071sSmG91hUc2N1XZCG91WGzG91sSmGY&state=1'),
+              (window.location.href = 'https://www.wjx.cn/vj/epP2q0D.aspx'),
           },
           {
             title: '停车缴费',
