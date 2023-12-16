@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from './index.less';
 import useGetParams from '@/utils/useGetParams';
 import useCommApi from '@/apis/common';
 import { navigateTo, View, Image } from '@remax/one';
-import { showLoading, Loading, NoData } from '@kqinfo/ui';
+import { Loading, NoData } from '@kqinfo/ui';
 import { HOSPITAL_NAME, IMAGE_DOMIN } from '@/config/constant';
 import { decrypt } from '@/utils';
 const dicts = {
@@ -28,12 +28,10 @@ export default () => {
     },
     needInit: !!idNo && !!patCardNo,
   });
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
+
   const dataList = useMemo(() => {
     if (!data?.data?.ebillDataList) return [];
-    return data?.data?.ebillDataList?.map((item) => {
+    return (data?.data?.ebillDataList || []).map((item) => {
       return {
         Bill_no: item?.billNo,
         Bill_settle_date: item?.createTime,
@@ -43,7 +41,7 @@ export default () => {
         invoiceUrl: item?.pictureNetUrl,
       };
     });
-  }, [data.data.ebillDataList, patName]);
+  }, [data?.data?.ebillDataList, patName]);
   return (
     <View className={styles['page-invoiceList']}>
       {loading && <Loading type={'full'} />}
