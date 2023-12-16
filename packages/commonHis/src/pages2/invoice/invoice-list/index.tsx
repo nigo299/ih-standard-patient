@@ -43,7 +43,7 @@ export default () => {
         invoiceUrl: item?.pictureNetUrl,
       };
     });
-  }, [data?.data?.ebillDataList, patName]);
+  }, [data.data.ebillDataList, patName]);
   return (
     <View className={styles['page-invoiceList']}>
       {loading && <Loading type={'full'} />}
@@ -120,6 +120,12 @@ export default () => {
               </View>
             );
           })}
+        {(dataList?.length === 0 || !dataList) && (
+          <View className={styles.noData}>
+            暂未查询到发票信息,请稍后再试
+            <NoData />
+          </View>
+        )}
       </View>
     </View>
   );
