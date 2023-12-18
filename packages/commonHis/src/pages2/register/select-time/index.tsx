@@ -240,7 +240,9 @@ export default () => {
   }, [doctorScheduleDateDetail?.itemList, scheduleId]);
 
   const handleNext = useCallback(async () => {
-    const { visitBeginTime, visitEndTime, visitPeriod } = selectScheduleItem;
+    const visitBeginTime = selectScheduleItem?.visitBeginTime || '';
+    const visitEndTime = selectScheduleItem?.visitEndTime || '';
+    const visitPeriod = selectScheduleItem?.visitPeriod || '';
     navigateTo({
       url: `/pages2/register/confirm/index?deptId=${deptId}&doctorId=${doctorId}&scheduleDate=${date.format(
         'YYYY-MM-DD',
