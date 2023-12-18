@@ -140,14 +140,14 @@ export default () => {
       title: '来院导航',
       subTitle: '导航前往医院',
       url: '/pages2/register',
-      image: `${IMAGE_DOMIN}/home/new_lydh.png`,
+      image: `${IMAGE_DOMIN}/home/lydh.png`,
       onClick: () => openLocation(),
     },
     {
       title: '住院服务',
       subTitle: '住院患者贴心服务',
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
-      image: `${IMAGE_DOMIN}/home/zyfw.png`,
+      image: `${IMAGE_DOMIN}/home/zyyj.png`,
     },
   ];
 
@@ -204,25 +204,16 @@ export default () => {
         ]
       : [
           {
-            title: '满意度调查',
+            title: '微官网',
             subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/myddc.png`,
-            onClick: () =>
-              (window.location.href = 'https://www.wjx.cn/vj/epP2q0D.aspx'),
+            url: '/pages/microsite/home/index',
+            image: `${IMAGE_DOMIN}/home/wgw.png`,
           },
           {
-            title: '停车缴费',
+            title: '智能导诊',
             subTitle: '',
             url: '',
-            image: `${IMAGE_DOMIN}/home/tcjf.png`,
-            open: true,
-          },
-          {
-            title: '预防接种',
-            subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/yfjz.png`,
+            image: `${IMAGE_DOMIN}/home/zndz.png`,
             open: true,
           },
           {
