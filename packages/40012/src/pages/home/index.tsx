@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { View, Image, navigateTo, Text } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import openLocation from '@/utils/openLocation';
@@ -30,7 +30,6 @@ import globalState from '@/stores/global';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import Dialog from '@/components/dialog';
 import useApi from 'commonHis/src/apis/common';
-import storage from '@/utils/storage';
 export interface NavType {
   title: string;
   subTitle?: React.ReactNode | string;
@@ -43,9 +42,6 @@ export interface NavType {
   onClick?: () => void;
 }
 
-// const oldUrl =
-//   'https://mp.cqkqinfo.com/views/p40012/index.html?returnRandomParam=1702634696974#/home/index?_k=88vyav';
-// const openIds: string[] = [];
 export default () => {
   const {
     defaultPatientInfo: { patientId },
@@ -57,15 +53,6 @@ export default () => {
   const [registerMode, setRegisterMode] = useState('');
   const [noticeInfo, setNoticeInfo] = useState<string>('');
   const { clearCountdownTimer } = useDownCount();
-  // const openId = useMemo(() => {
-  //   return storage.get('openid') || '';
-  // }, []);
-  // console.log('openId======>', openId);
-  // useEffect(() => {
-  //   if (!openIds.includes(openId)) {
-  //     window.location.href = oldUrl;
-  //   }
-  // }, [openId]);
   const {
     data: { data: configList },
   } = useApi.查询配置列表({
