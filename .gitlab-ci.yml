@@ -28,6 +28,9 @@ include:
   - local: 'packages/40064/.gitlab-ci.yml'
     rules:
       - if: $CI_COMMIT_BRANCH =~ /^40064.*/ || $CI_COMMIT_TAG =~ /^release-40064.*/
+  - local: 'packages/40013/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^40013.*/ || $CI_COMMIT_TAG =~ /^release-40013.*/
   - local: 'packages/40012/.gitlab-ci.yml'
     rules:
       - if: $CI_COMMIT_BRANCH =~ /^40012.*/ || $CI_COMMIT_TAG =~ /^release-40012.*/
