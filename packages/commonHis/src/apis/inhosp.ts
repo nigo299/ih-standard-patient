@@ -195,4 +195,10 @@ export default {
   住院预约记录取消: createApiHooks((params) => {
     return request.put(`/api/intelligent/ihis/inpatient/reg/cancel`, params);
   }),
+  新的查询住院订单详情: createApiHooks((params: { orderId: string }) => {
+    return request.post<InhospOrderDetialType>(
+      `/api/intelligent/api/in-hospital/order-detail`,
+      params,
+    );
+  }),
 };
