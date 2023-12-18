@@ -42,24 +42,29 @@ export default ({
         <Fold folded={folded} className={styles.fold}>
           {items
             .filter((v) => Number(v.leftSource) !== 0)
-            .map(({ leftSource, scheduleId, visitBeginTime, visitEndTime }) => (
-              <Space
-                alignItems="center"
-                justify="center"
-                key={scheduleId}
-                onTap={() => {
-                  onChange?.(scheduleId);
-                }}
-                className={classNames(styles.item, {
-                  [styles.scheduleOn]: scheduleId === selectId,
-                  [styles.disbaled]: Number(leftSource) === 0,
-                })}
-              >
-                {visitBeginTime?.slice(0, 5)}-{visitEndTime?.slice(0, 5)}
-                {/* <View className={styles.type}>普通</View> {`余 : ${leftSource}`} */}
-                <View className={styles.type}>{`余: ${leftSource}`}</View>
-              </Space>
-            ))}
+            .map((res) => {
+              return (
+                <Space
+                  alignItems="center"
+                  justify="center"
+                  key={res?.scheduleId}
+                  onTap={() => {
+                    onChange?.(res?.scheduleId);
+                  }}
+                  className={classNames(styles.item, {
+                    [styles.scheduleOn]: res?.scheduleId === selectId,
+                    [styles.disbaled]: Number(res?.leftSource) === 0,
+                  })}
+                >
+                  {res?.visitBeginTime?.slice(0, 5)}-
+                  {res?.visitEndTime?.slice(0, 5)}
+                  {/* <View className={styles.type}>普通</View> {`余 : ${leftSource}`} */}
+                  <View
+                    className={styles.type}
+                  >{`余: ${res?.leftSource}`}</View>
+                </Space>
+              );
+            })}
         </Fold>
       </View>
     </Shadow>
