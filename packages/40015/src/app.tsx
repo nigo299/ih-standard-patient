@@ -13,7 +13,7 @@ const App: React.FC = (props) => {
   }, []);
   return (
     <StateProviders>
-      <ConfigProvider brandPrimary={'#ff4087'}>
+      <ConfigProvider brandPrimary={'#ff3e7e'}>
         {props.children as React.ReactElement}
       </ConfigProvider>
     </StateProviders>
