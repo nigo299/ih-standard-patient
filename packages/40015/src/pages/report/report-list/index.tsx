@@ -30,7 +30,7 @@ export default () => {
     },
     needInit: !!patientId,
   });
-  const [tabIndex, setTabIndex] = useState<number | string>(1);
+  const [tabIndex] = useState<number | string>(1);
   const getStatus = (item: any) => {
     const { reportStatus } = item;
     return {
@@ -92,11 +92,11 @@ export default () => {
           切换就诊人
         </View>
       </View>
-      <ReportTab
+      {/* <ReportTab
         tabIndex={tabIndex}
         setTabIndex={setTabIndex}
         patCardNo={patCardNo}
-      />
+      /> */}
 
       <View className={styles.body}>
         <View className={styles.card}>

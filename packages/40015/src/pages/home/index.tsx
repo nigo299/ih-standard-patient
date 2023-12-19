@@ -144,10 +144,10 @@ export default () => {
       onClick: () => openLocation(),
     },
     {
-      title: '住院服务',
-      subTitle: '住院患者贴心服务',
-      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
-      image: `${IMAGE_DOMIN}/home/zyyj.png`,
+      title: '排队进度',
+      subTitle: '实时查看排队进度',
+      url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+      image: `${IMAGE_DOMIN}/home/pdjd.png`,
     },
   ];
 
