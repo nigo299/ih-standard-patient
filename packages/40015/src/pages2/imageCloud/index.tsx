@@ -17,9 +17,11 @@ export default () => {
     params: {
       patientId,
     },
-    needInit: false,
+    needInit: true,
   });
   usePageEvent('onLoad', () => {
+    const flag = false;
+    if (!flag) return;
     setFaceInfo({
       idNo: decrypt(defaultPatientInfo?.encryptIdNo as string) as string,
       name: decrypt(defaultPatientInfo?.encryptPatientName as string) as string,
