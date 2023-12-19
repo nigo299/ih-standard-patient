@@ -38,7 +38,7 @@ export const ORDER_INVOICE = false;
 export const CHILDREN_DEPTLIST = false;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
-  process.env.REMAX_APP_PLATFORM === 'app' ? false : false;
+  process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
 // 门诊缴费必须全部支付
 export const PAYMENT_SELECTALL_PAY = false;
 // 是否启用H5支付(flase为立即缴费小程序支付)
@@ -52,10 +52,10 @@ export const IS_FEEDBACL = PLATFORM === 'web';
 export const IS_DEPT = false; // PLATFORM !== 'ali'
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {
-  longitude: 106.46,
-  latitude: 29.56,
+  longitude: 106.489348,
+  latitude: 29.475804,
   name: HOSPITAL_NAME,
-  address: '天陈路2号附3号世源大厦C栋',
+  address: '重庆市大渡口区锦霞街91号',
 };
 export const WEB_ADDRESS = `https://mapapi.qq.com/web/mapComponents/locationMarker/v/index.html?marker=coord:${ADDRESS.latitude},${ADDRESS.longitude};title:${HOSPITAL_NAME};addr:${ADDRESS.address}&key=TKUBZ-D24AF-GJ4JY-JDVM2-IBYKK-KEBCU&referer=myapp&ch=uri-api&ADTAG=uri-api.myapp`;
 
