@@ -11,7 +11,7 @@ export const IMAGE_DOMIN = `${
     : 'https://tihs.cqkqinfo.com/patients/p40015-his/images'
 }`;
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
-export const HOSPITAL_NAME = '大渡口区妇幼保健院';
+export const HOSPITAL_NAME = '重庆市大渡口区妇幼保健院';
 export const HIS_ID = '40015';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
