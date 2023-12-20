@@ -103,7 +103,7 @@ export default () => {
         </View>
       ),
       url: '/pages2/register/department/index?type=default',
-      image: `${IMAGE_DOMIN}/home/yygh.png`,
+      image: `${IMAGE_DOMIN}/home/new_yygh.png`,
       new: true,
     },
     {
@@ -114,7 +114,7 @@ export default () => {
         </View>
       ),
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
-      image: `${IMAGE_DOMIN}/home/mzjf.png`,
+      image: `${IMAGE_DOMIN}/home/new_mzjf.png`,
     },
     {
       title: '报告查询',
@@ -124,7 +124,7 @@ export default () => {
         </View>
       ),
       url: `/pages/report/report-list/index`,
-      image: `${IMAGE_DOMIN}/home/bgcx.png`,
+      image: `${IMAGE_DOMIN}/home/new_bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
   ];
@@ -140,14 +140,14 @@ export default () => {
       title: '来院导航',
       subTitle: '导航前往医院',
       url: '/pages2/register',
-      image: `${IMAGE_DOMIN}/home/lydh.png`,
+      image: `${IMAGE_DOMIN}/home/new_lydh.png`,
       onClick: () => openLocation(),
     },
     {
       title: '排队进度',
       subTitle: '实时查看排队进度',
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-      image: `${IMAGE_DOMIN}/home/pdjd.png`,
+      image: `${IMAGE_DOMIN}/home/new_pdjd.png`,
     },
   ];
 
@@ -207,20 +207,20 @@ export default () => {
             title: '微官网',
             subTitle: '',
             url: '/pages/microsite/home/index',
-            image: `${IMAGE_DOMIN}/home/wgw.png`,
+            image: `${IMAGE_DOMIN}/home/new_wgw.png`,
           },
           {
             title: '智能导诊',
             subTitle: '',
             url: '',
-            image: `${IMAGE_DOMIN}/home/zndz.png`,
+            image: `${IMAGE_DOMIN}/home/new_zndz.png`,
             open: true,
           },
           {
             title: '数字影像',
             subTitle: '',
             url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
-            image: `${IMAGE_DOMIN}/home/szyx.png`,
+            image: `${IMAGE_DOMIN}/home/new_szyx.png`,
           },
         ];
 
