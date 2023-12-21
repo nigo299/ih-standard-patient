@@ -1,7 +1,7 @@
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
 export const THEME_COLOR = '#ff3e7e';
-export const THEME_COLOR2 = '#fff2fa';
+export const THEME_COLOR2 = '#ff3e7e';
 export const STEP_COLOR = '#ffffff';
 export const IMAGE_DOMIN = `${
   isDev
