@@ -4,7 +4,7 @@ export default class His2219 extends HisBase {
   constructor() {
     super('2219');
     this.config = Object.assign(this.config, {
-      defaultAddress: '重庆市-市辖区-渝中区',
+      defaultAddress: ['500000000000', '500100000000', '500103000000'],
       microSitesEntries: 'SHOW_MORE_VIEWS',
       clinicPayBatchType: 'SINGLE',
       showBillTime: false,
