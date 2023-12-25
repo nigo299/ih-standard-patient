@@ -31,6 +31,7 @@ export default memo(() => {
   });
   const onCardClick = useCallback(
     async (patient: PatientType) => {
+      storage.set('patientId', patient?.patientId);
       if (isHealthMall && pageRoute) {
         window.location.href =
           pageRoute +

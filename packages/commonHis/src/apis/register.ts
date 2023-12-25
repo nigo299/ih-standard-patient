@@ -136,6 +136,7 @@ export interface RegisterSchedulelistType extends API.ResponseDataType {
     scheduleDate: string;
     deptId: string;
     itemList: ScheduleType[];
+    extFields?: any;
   };
 }
 
@@ -556,7 +557,11 @@ export default {
     },
   ),
   查询医生排班日期: createApiHooks(
-    (params: { deptId: string | number; doctorId: number | string }) => {
+    (params: {
+      deptId: string | number;
+      doctorId: number | string;
+      extFields?: any;
+    }) => {
       return request.post<RegisterDateschedulelistType>(
         '/api/intelligent/api/register/date-schedule-list',
         params,

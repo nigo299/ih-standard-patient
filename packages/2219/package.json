@@ -20,7 +20,7 @@
     "build:wechat:development": "cross-env NODE_ENV=production env-cmd -f .env.development remax build -t wechat -m",
     "build:wechat:test": "cross-env NODE_ENV=production env-cmd -f .env.test remax build -t wechat -m",
     "build:wechat": "cross-env NODE_ENV=production remax build -t wechat -m",
-    "build:ali:development": "cross-env NODE_ENV=production env-cmd -f .env.development remax build -t ali -m",
+    "build:ali:development": "cross-env NODE_ENV=production env-cmd -f .env.development.ali remax build -t ali -m",
     "build:ali:test": "cross-env NODE_ENV=production env-cmd -f .env.test remax build -t ali -m",
     "build:ali": "cross-env NODE_ENV=production env-cmd -f .env.production.ali remax build -t ali -m",
     "postinstall": "npx patch-package",

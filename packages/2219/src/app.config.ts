@@ -20,6 +20,7 @@ const pages = [
   'pages/webview/index', // 第三方业务链接
   'pages/maintain/index', // 系统维护
   'pages/redirect/index', // 重定向中转页
+  'pages/otherLogin/index', // 第三方登录
 ];
 
 const subAliPages = [

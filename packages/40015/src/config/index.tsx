@@ -27,11 +27,11 @@ export const mineMainNavConfig = [
     url: '/pages2/payment/paymented-list/index',
     image: `${IMAGE_DOMIN}/mine/mzjfdd.png`,
   },
-  {
-    title: '住院预缴订单',
-    url: '/pages2/inhosp/order-list/index',
-    image: `${IMAGE_DOMIN}/mine/zyyjdd.png`,
-  },
+  // {
+  //   title: '住院预缴订单',
+  //   url: '/pages2/inhosp/order-list/index',
+  //   image: `${IMAGE_DOMIN}/mine/zyyjdd.png`,
+  // },
 ];
 
 export const mineNavListConfig = [

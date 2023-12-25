@@ -56,7 +56,9 @@ export default () => {
         return;
       }
       navigateTo({
-        url: `/pages2/register/department/index?type=${type}`,
+        url: `/pages2/register/department/index?type=${type}&isHealth=${
+          type === 'health' ? 1 : 0
+        }`,
       });
       return;
     },

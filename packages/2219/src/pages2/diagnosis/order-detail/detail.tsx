@@ -118,7 +118,7 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
             })}
           </Form>
         </Space>
-        <Space vertical>
+        {/* <Space vertical>
           {type === 'OPD' && (
             <PartTitle
               full
@@ -140,7 +140,7 @@ export default ({ visitId, type }: { visitId: string; type: string }) => {
               门诊病历
             </PartTitle>
           )}
-        </Space>
+        </Space> */}
       </Space>
     </Form>
   );

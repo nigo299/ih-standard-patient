@@ -2,7 +2,7 @@ import React from 'react';
 import { useAppEvent } from 'remax/macro';
 import StateProviders from '@/stores';
 import { ConfigProvider, debug } from '@kqinfo/ui';
-import { getBrowserUa, reLaunchUrl } from '@/utils';
+import { reLaunchUrl } from '@/utils';
 import socialPayAuth from '@/utils/socialPayAuth';
 import { PLATFORM, THEME_COLOR } from './config/constant';
 import storage from '@/utils/storage';
@@ -14,11 +14,6 @@ const href = window?.location?.href;
 if (!href?.includes('isDebug=true')) {
   debug();
 }
-// Sentry.init({
-//   dsn: 'https://dfc4e9a5011746c8826aed069d6a8894@sentry.parsec.com.cn/19',
-// });
-
-// Sentry.setTag('医院名称', HOSPITAL_NAME);
 
 const App: React.FC = (props) => {
   useAppEvent('onLaunch', (options) => {

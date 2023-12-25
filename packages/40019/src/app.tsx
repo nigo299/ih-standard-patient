@@ -1,8 +1,20 @@
 import React from 'react';
 import StateProviders from '@/stores';
-import { ConfigProvider } from '@kqinfo/ui';
+import { ConfigProvider, Sentry } from '@kqinfo/ui';
 import './app.less';
-
+import storage from '@/utils/storage';
+Sentry.init({
+  dsn: 'https://76cc5ef5cd4b4473bf3103976a06fa00@sentry.cqkqinfo.com/11',
+  beforeSend(event) {
+    const patientId = storage.get('patientId');
+    if (patientId) {
+      event.user = {
+        id: patientId,
+      };
+    }
+    return event;
+  },
+});
 const App: React.FC = (props) => {
   return (
     <StateProviders>

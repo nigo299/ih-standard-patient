@@ -412,7 +412,7 @@ export const isYuKangJianH5 = () => {
   if (process.env.REMAX_PLATFORM === 'web') {
     return (
       window.location.href.includes('localhost') ||
-      window.location.href.includes('mdmis.cq12320.cn')
+      window.location.href.includes('http://219.152.51.51')
     );
   } else {
     return false;
