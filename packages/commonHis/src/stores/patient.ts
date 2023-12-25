@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { navigateTo } from 'remax/one';
 import { createContainer } from 'unstated-next';
 import useApi, { PatientType } from '@/apis/usercenter';
-import { analyzeIDCard, decrypt } from '@/utils';
+import { analyzeIDCard, decrypt, isYuKangJianH5 } from '@/utils';
 import storage from '@/utils/storage';
 import { PLATFORM } from '@/config/constant';
 import { typedStorage } from '@/utils/typedStorage';
@@ -99,15 +99,23 @@ export default createContainer(() => {
               )}`
             : '/pages/auth/getuserinfo/index';
         if (!storage.get('login_access_token') && !jump) {
-          navigateTo({
-            url: authUrl,
-          });
+          if (!isYuKangJianH5()) {
+            navigateTo({
+              url: authUrl,
+            });
+          } else {
+            navigateTo({
+              url: '/pages/otherLogin/index',
+            });
+          }
+
           return Promise.reject();
         }
-        if (!storage.get('openid') && PLATFORM === 'web') {
+        if (!storage.get('openid') && PLATFORM === 'web' && !isYuKangJianH5()) {
           navigateTo({
             url: '/pages/auth/login/index',
           });
+
           return Promise.resolve([]);
         }
       }

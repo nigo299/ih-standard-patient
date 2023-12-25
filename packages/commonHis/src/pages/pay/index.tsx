@@ -1,7 +1,13 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { View, navigateBack, navigateTo, reLaunch } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { date2hour, decrypt, getBrowserUa, reLaunchUrl } from '@/utils';
+import {
+  date2hour,
+  decrypt,
+  getBrowserUa,
+  isYuKangJianH5,
+  reLaunchUrl,
+} from '@/utils';
 import { useDownCount } from 'parsec-hooks';
 import { Price } from '@/components';
 import useApi, { ChoosepayType } from '@/apis/pay';
@@ -438,6 +444,7 @@ export default () => {
       <View className={styles.buttons}>
         {/* 先隐藏移动医保支付 */}
         {mode === 'medical' &&
+          !isYuKangJianH5() &&
           hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 &&
           getBrowserUa() === 'wechat' && (
             <Button
@@ -452,6 +459,7 @@ export default () => {
           )}
 
         {mode === 'medical' &&
+          !isYuKangJianH5() &&
           hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
           PLATFORM === 'ali' && (
             <Button
@@ -490,7 +498,7 @@ export default () => {
             disabled={payDisabled}
             loading={payLoading}
           >
-            {mode === 'medical' ? '自费支付' : '立即支付'}
+            {mode === 'medical' && !isYuKangJianH5() ? '自费支付' : '立即支付'}
           </Button>
         )}
       </View>

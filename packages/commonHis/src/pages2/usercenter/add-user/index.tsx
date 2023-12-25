@@ -6,6 +6,7 @@ import {
   checkPhoneForm,
   decrypt,
   getAgeByBirthDay,
+  isYuKangJianH5,
   parseAge,
 } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -434,7 +435,11 @@ export default memo(() => {
 
   usePageEvent('onShow', (query) => {
     reportCmPV({ title: '在线建档', query });
-    if (!storage.get('openid') && process.env.REMAX_APP_PLATFORM !== 'app') {
+    if (
+      !storage.get('openid') &&
+      process.env.REMAX_APP_PLATFORM !== 'app' &&
+      !isYuKangJianH5()
+    ) {
       storage.set('jumpUrl', window.location.href?.split('#')?.[1]);
       navigateTo({
         url: '/pages/auth/login/index', //?callback=1

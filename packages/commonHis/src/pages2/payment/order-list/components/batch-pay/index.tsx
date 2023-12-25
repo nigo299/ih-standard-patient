@@ -31,7 +31,7 @@ import showModal from '@/utils/showModal';
 import payState, { OrderInfoType } from '@/stores/pay';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { IMAGE_DOMIN, PLATFORM, PAY_TYPE } from '@/config/constant';
-import { decrypt, formDate, returnUrl } from '@/utils';
+import { decrypt, formDate, isYuKangJianH5, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Tip } from '@/components';
 import styles from '@/pages2/payment/order-list/components/batch-pay/index.less';
@@ -470,7 +470,7 @@ export default () => {
           </View>
         </Space>
         <Space size={20} justify={'space-between'}>
-          {medicalPay && (
+          {medicalPay && !isYuKangJianH5() && (
             <Button
               block={false}
               type="primary"
