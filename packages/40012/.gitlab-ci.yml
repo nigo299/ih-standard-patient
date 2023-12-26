@@ -5,7 +5,7 @@ include:
 
 variables:
   HIS_ID: 40012
-  ENABLE_H5: 'true',
-  ENABLE_ALI: 'true',
+  ENABLE_H5: 'true'
+  ENABLE_ALI: 'true'
   WORK_DIR: 'packages/40012'
   DIST_PATH: 'packages/40012/dist'
