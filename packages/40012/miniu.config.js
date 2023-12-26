@@ -1,7 +1,7 @@
 const miniu = require('miniu');
 (async () => {
   miniu.setConfig({
-    toolId: '0a4014a9aace472badfd2867f59002b2',
+    toolId: '8e1c726613ce4680a1db9f56e0c4696e',
     // 小程序私钥
     privateKey:
       'MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVQkT4cTlCXDfBNEpjTLRKIg0fcceSSTjDZHIYIhEWAeGY5N2LngcdDAZuvIdflZ1I4pXqOWgMkjb1m',
@@ -12,7 +12,7 @@ const miniu = require('miniu');
         // 项目地址
         project: 'dist/ali',
         // 小程序Id
-        appId: '2019032163620163',
+        appId: '2021002128672298',
         // 返回二维码文件的格式 "image" 或 "base64"， 默认值 "terminal" 供调试用
         qrcodeFormat: 'terminal',
         // 上传的终端
@@ -30,7 +30,7 @@ const miniu = require('miniu');
         // 项目地址
         project: 'dist/ali',
         // 小程序Id
-        appId: '2019032163620163',
+        appId: '2021002128672298',
         clientType: 'alipay',
         experience: true,
       });
