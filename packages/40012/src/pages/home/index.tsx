@@ -155,7 +155,7 @@ export default () => {
         ];
 
   const homeCardNavConfig =
-    PLATFORM === 'ali'
+    PLATFORM !== 'ali'
       ? [
           {
             title: '微官网',
@@ -168,7 +168,7 @@ export default () => {
             title: '来院导航',
             subTitle: '导航来院不迷路',
             url: '/pages2/register',
-            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            image: `${IMAGE_DOMIN}/home/lydh_ali.png`,
             onClick: () => openLocation(),
           },
         ]
