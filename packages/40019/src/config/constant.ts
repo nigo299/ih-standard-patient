@@ -35,7 +35,7 @@ export const NUCLEIC_HID = 9;
 // 是否需要订单详情中电子发票
 export const ORDER_INVOICE = false;
 // 是否开启二级科室
-export const CHILDREN_DEPTLIST = false;
+export const CHILDREN_DEPTLIST = true;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
   process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
