@@ -241,15 +241,15 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/wgw.png`,
             patientId: true,
           },
-          {
-            title: '医保政策',
-            subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/ybzc.png`,
-            onClick: () =>
-              (window.location.href =
-                'https://mp.weixin.qq.com/s/MpE57S9X_owVuTDNP_3SaA'),
-          },
+          // {
+          //   title: '医保政策',
+          //   subTitle: '',
+          //   url: '',
+          //   image: `${IMAGE_DOMIN}/home/ybzc.png`,
+          //   onClick: () =>
+          //     (window.location.href =
+          //       'https://mp.weixin.qq.com/s/MpE57S9X_owVuTDNP_3SaA'),
+          // },
           {
             title: '健康体检',
             subTitle: '',
@@ -266,15 +266,15 @@ export default () => {
             onClick: () =>
               (window.location.href = 'https://cqkuanren.mike-x.com/NvvlEwJ'),
           },
-          {
-            title: '健康活动',
-            subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/jkhd.png`,
-            onClick: () =>
-              (window.location.href =
-                'https://cqkuanren.mike-x.com/mbrm/AXCQ3xCr'),
-          },
+          // {
+          //   title: '健康活动',
+          //   subTitle: '',
+          //   url: '',
+          //   image: `${IMAGE_DOMIN}/home/jkhd.png`,
+          //   onClick: () =>
+          //     (window.location.href =
+          //       'https://cqkuanren.mike-x.com/mbrm/AXCQ3xCr'),
+          // },
           {
             title: '办理会员',
             subTitle: '',
@@ -289,15 +289,15 @@ export default () => {
             url: '',
             image: `${IMAGE_DOMIN}/home/sswc.png`,
             onClick: () =>
-              (window.location.href = 'https://cqkuanren.mike-x.com/dUa7I'),
+              (window.location.href =
+                '#小程序://重庆松山医院商城/Xa3Tj2yOwFEWHwf'),
           },
           {
             title: '手汗症',
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/shz.png`,
-            onClick: () =>
-              (window.location.href = 'https://cqkuanren.mike-x.com/GUbrv'),
+            onClick: () => (window.location.href = 'https://wsurl.cc/ig15c7'),
           },
 
           // {
