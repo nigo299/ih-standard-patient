@@ -155,7 +155,7 @@ export default () => {
         ];
 
   const homeCardNavConfig =
-    PLATFORM !== 'ali'
+    PLATFORM === 'ali'
       ? [
           {
             title: '微官网',
