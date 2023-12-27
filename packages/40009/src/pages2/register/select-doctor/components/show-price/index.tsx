@@ -9,9 +9,11 @@ import { PreviewImage } from '@/components';
 const TIME_FLAG_ENUM = {
   1: '上午',
   2: '下午',
-  3: '白天',
-  4: '晚上',
-  5: '全天',
+  3: '晚上',
+  4: '全天',
+  5: '白天',
+  6: '中午',
+  7: '凌晨',
 };
 
 const ShowPrice = (data: any) => {
@@ -85,17 +87,15 @@ const ShowPrice = (data: any) => {
             }`}
           </Exceed>
         </View>
-        {detailsVoList.map((v) => {
+        {(detailsVoList ?? []).map((v: any) => {
           return (
             <Space className={styles.timeSort}>
               <View className={styles.source}>
                 {TIME_FLAG_ENUM[v.timeFlag as keyof typeof TIME_FLAG_ENUM]} 总号
-                {extFields.timeFlag1?.split('|')[0]} |
-                <Text className={styles.rightSource}>
-                  余号{extFields.timeFlag1?.split('|')[1]}
-                </Text>
+                {v?.totalSource} |
+                <Text className={styles.rightSource}>余号{v?.leftSource}</Text>
               </View>
-              {extFields?.timeFlag1?.split('|')[1] !== '0' ? (
+              {v?.leftSource !== 0 ? (
                 <View
                   className={classNames(styles.rests, {
                     [styles.disable]: item?.status === 2,
@@ -107,9 +107,9 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     <View className={styles.restPriceAfter} />
-                    {extFields.doctorInitialRegFee === '0'
+                    {v?.doctorInitialRegFee === '0'
                       ? ''
-                      : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
+                      : `¥${(v?.doctorInitialRegFee / 100).toFixed(2)}`}
                   </Space>
                   <Space
                     className={styles.restNum}
@@ -117,8 +117,7 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     ¥
-                    {(extFields.timeFlag1?.split('|')[2] &&
-                      (extFields.timeFlag1?.split('|')[2] - 0)?.toFixed(2)) ||
+                    {(v.registerFee && (v.registerFee - 0)?.toFixed(2)) ||
                       (registerFee / 100).toFixed(2)}
                   </Space>
                 </View>
