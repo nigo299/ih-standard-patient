@@ -30,9 +30,8 @@ const ShowPrice = (data: any) => {
     level = '',
     sourceType = '',
     detailsVoList = [{ doctorInitialRegFee: '0' }],
-    extFields = { doctorInitialRegFee: '0' },
+    // extFields = { doctorInitialRegFee: '0' },
   } = item;
-  console.log('item======>', item);
 
   return (
     <Shadow>
