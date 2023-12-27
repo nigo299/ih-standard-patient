@@ -289,8 +289,7 @@ export default () => {
             url: '',
             image: `${IMAGE_DOMIN}/home/sswc.png`,
             onClick: () =>
-              (window.location.href =
-                '#小程序://重庆松山医院商城/Xa3Tj2yOwFEWHwf'),
+              (window.location.href = 'https://cqkuanren.mike-x.com/dUa7I'),
           },
           {
             title: '手汗症',
