@@ -26,7 +26,7 @@ import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import { useHisConfig } from '@/hooks';
-import ShowPrice from 'commonHis/src/pages2/register/select-doctor/components/show-price';
+import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
 import ShowSource from 'commonHis/src/pages2/register/select-doctor/components/show-source';
 import ShowDocTags from 'commonHis/src/pages2/register/select-doctor/components/show-doc-tags';
 enum DoctorType {
