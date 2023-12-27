@@ -116,7 +116,7 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     ¥
-                    {(v.registerFee && (v.registerFee - 0)?.toFixed(2)) ||
+                    {(v.registerFee && (v.registerFee / 100)?.toFixed(2)) ||
                       (registerFee / 100).toFixed(2)}
                   </Space>
                 </View>
