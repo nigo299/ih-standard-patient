@@ -8,7 +8,7 @@ export const IMAGE_DOMIN = `${
     ? '/images'
     : PLATFORM === 'web'
     ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
+    : 'https://tihs.cqkqinfo.com/patients/p40006-his/images'
 }`;
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
 export const HOSPITAL_NAME = '合川妇幼';
