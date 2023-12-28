@@ -10,6 +10,7 @@ import { REQUEST_QUERY, PLATFORM } from '@/config/constant';
 import storage from '@/utils/storage';
 import {
   getBaseUrl,
+  getBrowserUa,
   getCurrentPageUrl,
   isYuKangJianH5,
   jsonToQueryString,
@@ -18,7 +19,10 @@ import {
 import qs from 'qs';
 /** 如果为true则无需跳转 */
 let navFlag = false;
-const platformSource = isYuKangJianH5() ? '15' : REQUEST_QUERY.platformSource;
+const sourceId = getBrowserUa() === 'alipay' ? '15' : '14';
+const platformSource = isYuKangJianH5()
+  ? sourceId
+  : REQUEST_QUERY.platformSource;
 const instance = axios.create({
   baseURL: getBaseUrl(),
   headers:
