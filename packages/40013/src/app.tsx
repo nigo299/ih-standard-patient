@@ -8,7 +8,7 @@ import './app.less';
 const App: React.FC = (props) => {
   useEffect(() => {
     if (storage.get('debugger') === 'true') {
-      eruda.init();
+      // eruda.init();
     }
   }, []);
   return (
