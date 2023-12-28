@@ -21,6 +21,7 @@ const pages = [
   'pages/maintain/index', // 系统维护
   'pages/redirect/index', // 重定向中转页
   'pages/otherLogin/index', // 第三方登录
+  'pages/ykhome/index', // 就医一件事首页
 ];
 
 const subAliPages = [

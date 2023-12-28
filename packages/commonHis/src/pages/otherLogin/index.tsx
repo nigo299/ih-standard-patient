@@ -32,7 +32,7 @@ export default () => {
         if (res.data.token) {
           // 登录成功，存储token
           storage.set('login_access_token', res?.data?.token);
-          window.localStorage.set('ih-patient-token', res?.data?.token);
+          window.localStorage.setItem('ih-patient-token', res?.data?.token);
           getPatientList();
           const url = jumpUrl
             ? decodeURIComponent(jumpUrl)

@@ -29,6 +29,8 @@ const pages = [
   'pages/sign/userList/index', // 取药签到选择就诊人
   'pages/sign/sign/index', // 取药签到
   'pages/sign/list/index', // 取药签到列表
+  'pages/otherLogin/index', // 第三方登录
+  'pages/ykhome/index', // 就医一件事首页
 ];
 
 const subPackages = [
