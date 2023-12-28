@@ -104,5 +104,5 @@ const pages = [
 
 - 未来根据业务发展及功能通用性考虑，再移入commonHis下
 
-[口腔渝康健的测试环境链接](https://mdmis.cq12320.cn/zykqykjsyzsb1/patients/p2219-his-test/#/pages/otherLogin/index)
+[口腔渝康健的测试环境链接](https://mdmis.cq12320.cn/zykqykjsyyyd1//patients/p2219-his-test/#/pages/otherLogin/index)
 
