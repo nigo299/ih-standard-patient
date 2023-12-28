@@ -1,4 +1,4 @@
-import { IMAGE_DOMIN } from './constant';
+import { IMAGE_DOMIN, PLATFORM } from './constant';
 import openLocation from '@/utils/openLocation';
 
 export const tabBarConfig = [
@@ -16,23 +16,37 @@ export const tabBarConfig = [
   },
 ];
 
-export const mineMainNavConfig = [
-  {
-    title: '挂号订单',
-    url: '/pages2/register/order-list/index',
-    image: `${IMAGE_DOMIN}/mine/ghdd.png`,
-  },
-  {
-    title: '门诊缴费订单',
-    url: '/pages2/payment/paymented-list/index',
-    image: `${IMAGE_DOMIN}/mine/mzjfdd.png`,
-  },
-  {
-    title: '住院预缴订单',
-    url: '/pages2/inhosp/order-list/index',
-    image: `${IMAGE_DOMIN}/mine/zyyjdd.png`,
-  },
-];
+export const mineMainNavConfig =
+  PLATFORM !== 'ali'
+    ? [
+        {
+          title: '挂号订单',
+          url: '/pages2/register/order-list/index',
+          image: `${IMAGE_DOMIN}/mine/ghdd.png`,
+        },
+        {
+          title: '门诊缴费订单',
+          url: '/pages2/payment/paymented-list/index',
+          image: `${IMAGE_DOMIN}/mine/mzjfdd.png`,
+        },
+        {
+          title: '住院预缴订单',
+          url: '/pages2/inhosp/order-list/index',
+          image: `${IMAGE_DOMIN}/mine/zyyjdd.png`,
+        },
+      ]
+    : [
+        {
+          title: '挂号订单',
+          url: '/pages2/register/order-list/index',
+          image: `${IMAGE_DOMIN}/mine/ghdd.png`,
+        },
+        {
+          title: '门诊缴费订单',
+          url: '/pages2/payment/paymented-list/index',
+          image: `${IMAGE_DOMIN}/mine/mzjfdd.png`,
+        },
+      ];
 
 export const mineNavListConfig = [
   {
