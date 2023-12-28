@@ -10,7 +10,7 @@ import {
 } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { WhiteSpace } from '@/components';
-import useApi, { HisCardType } from '@/apis/usercenter';
+import useApi, { AddressItem, HisCardType } from '@/apis/usercenter';
 import {
   getAddressOptions,
   ColorText,
@@ -54,6 +54,19 @@ interface CardType {
   parentIdNo: string;
   patientAge: string;
 }
+const deepTree = (data: AddressItem[]) => {
+  return (data || []).map((item: any) => {
+    const obj: any = {
+      label: item?.name || '',
+      value: item?.code || '',
+      children: item?.children,
+    };
+    if (obj.children && obj.children.length !== 0) {
+      obj.children = deepTree(obj.children);
+    }
+    return obj;
+  });
+};
 export default memo(() => {
   const { pageRoute, patientName, idType, idNo } = useGetParams<{
     pageRoute: string;
@@ -72,9 +85,6 @@ export default memo(() => {
   } = patientState.useContainer();
   const { user, getUserInfo } = globalState.useContainer();
   const { config } = useHisConfig();
-  const [addressOptions, setAddressOptions] = useState<CascadePickerOption[]>(
-    [],
-  );
   const { countdown, setCountdown, clearCountdownTimer } = useDownCount();
   const [alipayUserInfo, setAlipayUserInfo] = useState<AlipayUserInfoType>({
     aliPayRealName: '',
@@ -107,7 +117,38 @@ export default memo(() => {
     patientAge: '',
   });
   const [form] = Form.useForm();
-
+  //地址相关代码
+  const [addressTownList, setAddressTownList] = useState<CascadePickerOption[]>(
+    [],
+  );
+  const { data: addressListData } = useApi.查询地区省市区县地区数据({
+    needInit: true,
+  });
+  const { request: getAddressData } = useApi.根据父级查询子级地区数据({
+    needInit: false,
+  });
+  const addressList = useMemo(() => {
+    if (addressListData?.data?.length) {
+      return deepTree(addressListData.data);
+    }
+    return [];
+  }, [addressListData]);
+  useEffect(() => {
+    getAddressData({
+      pCode: 500103000000,
+    }).then((res) => {
+      if (res?.data?.length) {
+        setAddressTownList(
+          res.data.map((item: { name: any; code: any }) => {
+            return {
+              label: item.name,
+              value: item.code,
+            };
+          }),
+        );
+      }
+    });
+  }, []);
   const {
     data: { data: bindcardProdiles },
   } = useApi.获取医院挷卡配置信息({
@@ -333,6 +374,28 @@ export default memo(() => {
               ? values['patientSex']
               : selectCard.patientSex || values['patientSex'];
 
+          const addressValueList = values['birthPlace'];
+          if (addressValueList?.length && addressValueList?.[2]) {
+            values['provinceCode'] = addressValueList[0];
+            values['cityCode'] = addressValueList[1];
+            values['countryCode'] = addressValueList[2];
+            const addressProvince = addressList.find(
+              (item) => item.value === addressValueList[0],
+            );
+            const addressCity = (addressProvince?.children || [])?.find(
+              (item: CascadePickerOption) => item.value === addressValueList[1],
+            );
+            const addressCounty = (addressCity?.children || [])?.find(
+              (item: CascadePickerOption) => item.value === addressValueList[2],
+            );
+            const addressTown = addressTownList?.find(
+              (item: CascadePickerOption) =>
+                item.value === values['streetCode'],
+            );
+            values['birthPlace'] = `${addressProvince?.label || ''}${
+              addressCity?.label || ''
+            }${addressCounty?.label || ''}${addressTown?.label || ''}`;
+          }
           const params = {
             ...values,
             yibaoNo: '',
@@ -465,7 +528,6 @@ export default memo(() => {
     }
     storage.del('jumpUrl');
     getUserInfo();
-    getAddressOptions().then((options) => setAddressOptions(options));
     const { type, num } = ocrInfo;
     if (num) {
       if (type === 'adult' || type === 'children') {
@@ -800,15 +862,62 @@ export default memo(() => {
                           />
                         }
                       >
-                        <TransferChange mode={'city'}>
-                          <Picker
-                            cols={3}
-                            className={styles.picker}
-                            data={addressOptions}
-                          >
-                            请选择省市区
-                          </Picker>
-                        </TransferChange>
+                        <Picker
+                          cols={3}
+                          className={styles.picker}
+                          data={addressList}
+                          onChange={(value) => {
+                            if (Array.isArray(value)) {
+                              const keyList =
+                                (value || [])?.filter(Boolean) || [];
+                              if (keyList?.length === 3) {
+                                getAddressData({
+                                  pCode: keyList[2],
+                                }).then((res) => {
+                                  if (res?.data?.length) {
+                                    form.setFieldValue(
+                                      'addressTown',
+                                      undefined,
+                                    );
+                                    setAddressTownList(
+                                      res.data.map(
+                                        (item: {
+                                          name: string;
+                                          code: string;
+                                        }) => {
+                                          return {
+                                            label: item.name,
+                                            value: item.code,
+                                          };
+                                        },
+                                      ),
+                                    );
+                                  }
+                                });
+                              }
+                            }
+                          }}
+                        >
+                          请选择省市区
+                        </Picker>
+                      </FormItem>
+                      <FormItem
+                        label={'乡镇'}
+                        name={'streetCode'}
+                        rules={[{ required: true }]}
+                        after={
+                          <Image
+                            src={`${IMAGE_DOMIN}/usercenter/down.png`}
+                            className={styles.icon}
+                          />
+                        }
+                      >
+                        <Picker
+                          className={styles.picker}
+                          data={addressTownList}
+                        >
+                          请选择街道
+                        </Picker>
                       </FormItem>
                       <FormItem
                         // label={'详细地址'}
