@@ -226,10 +226,11 @@ export default () => {
       return;
     }
 
-    if (PLATFORM === 'web') {
+    if (PLATFORM === 'web' && !isYuKangJianH5()) {
       window.location.href = h5PayUrl;
       return;
     }
+
     const { data, code, msg } = await payRequest({
       orderId: payOrderId,
     });

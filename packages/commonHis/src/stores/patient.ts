@@ -53,6 +53,12 @@ export default createContainer(() => {
     relationName: '',
     relationType: 5,
     parentIdType: '',
+    healthCardId: '',
+    patientNameSimple: '',
+    encryptIdNo: '',
+    encryptPatientIdNo: '',
+    encryptPatientMobile: '',
+    encryptPatientName: '',
   });
   const [selectPatientInfo, setSelectPatientInfo] = useState<PatientType>();
   const [decryptPatName, setDecryptPatName] = useState<string | boolean>(
