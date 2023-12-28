@@ -94,7 +94,6 @@ export default createContainer(() => {
   const getPatientList = useCallback(
     async (
       jump?: boolean /** jump属性避免在小程序请求接口多次跳转授权页面 */,
-      setDefaultUser = true,
     ): Promise<PatientType[]> => {
       if (process.env.REMAX_APP_PLATFORM !== 'app') {
         // 因为接口不注册也可以获取就诊人，这里前端做了限制必须注册才能获取就诊人列表
@@ -127,32 +126,34 @@ export default createContainer(() => {
       }
       const { data } = await useApi.获取就诊人列表.request();
       if (data?.cardList && data?.cardList.length >= 1) {
-        if (setDefaultUser) {
-          data.cardList.map((patient: PatientType) => {
-            patient.patientAge =
-              patient?.patientAge ||
-              analyzeIDCard(patient?.patientFullIdNo)?.analyzeAge;
-            if (patient?.isDefault === 1) {
-              setDefaultPatientInfo({
-                ...patient,
-              });
-            }
-          });
-        }
-        setOriginalBindPatientList(data?.cardList);
+        data.cardList.forEach((patient: PatientType) => {
+          patient.patientAge =
+            patient?.patientAge ||
+            analyzeIDCard(patient?.patientFullIdNo)?.analyzeAge;
+          if (patient?.isDefault === 1) {
+            setDefaultPatientInfo((prev) =>
+              prev?.patientName
+                ? prev
+                : {
+                    ...patient,
+                  },
+            );
+          }
+        });
+        setOriginalBindPatientList(data.cardList);
       } else {
-        setDefaultPatientInfo({
-          ...defaultPatientInfo,
+        setDefaultPatientInfo((prev) => ({
+          ...prev,
           patientName: '',
           patientId: '',
           patCardNo: '',
           patientFullIdNo: '',
-        });
+        }));
         setOriginalBindPatientList([]);
       }
       return Promise.resolve(data.cardList || []);
     },
-    [defaultPatientInfo, setOriginalBindPatientList, setDefaultPatientInfo],
+    [setOriginalBindPatientList, setDefaultPatientInfo],
   );
   const clearOcrInfo = useCallback(() => setOcrInfo(defualtOcrInfo), []);
   return {

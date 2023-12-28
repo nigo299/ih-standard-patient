@@ -473,6 +473,10 @@ export default {
       request.post<{
         data: {
           token: string;
+          user: {
+            username: string;
+            openid: string;
+          };
         };
       }>('/api/oauth/login', data, {
         headers: {
