@@ -32,6 +32,9 @@ export default memo(() => {
     async (patient: PatientType) => {
       const url = `${pageRoute}?patientId=${patient?.patientId}&patCardNo=${patient.patCardNo}&patHisNo=${patient.patHisNo}`;
       // 首页点进来直接切换默认就诊人
+      if (pageRoute === 'sffw') {
+        window.location.href = `http://pacs.cqdent.com:10081/sfh5/sfpatient?id=${patient.patHisNo}`;
+      }
       if (pageRoute) {
         if (defaultPatientInfo.patientId === patient.patientId) {
           redirectTo({

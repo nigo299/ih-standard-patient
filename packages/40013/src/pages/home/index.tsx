@@ -204,6 +204,12 @@ export default () => {
         ]
       : [
           {
+            title: '排队进度',
+            subTitle: '',
+            url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+            image: `${IMAGE_DOMIN}/home/pdjd.png`,
+          },
+          {
             title: '满意度调查',
             subTitle: '',
             url: '',
@@ -216,7 +222,9 @@ export default () => {
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/tcjf.png`,
-            open: true,
+            onClick: () =>
+              (window.location.href =
+                'http://car.wxjilian.com/charge?appkey=24e8fe55b5b442f6bf84&mode=menu&deviceno=000&channel=000&openid=onTDF1I61Rnq4czbA-p0gX7v34hc'),
           },
           {
             title: '预防接种',

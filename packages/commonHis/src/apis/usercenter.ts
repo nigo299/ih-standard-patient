@@ -88,6 +88,17 @@ export interface HisCardType {
 export interface HisCardListType extends API.ResponseDataType {
   data: HisCardType[];
 }
+export interface AddressItem {
+  id: string;
+  createTime: string;
+  updateTime: string;
+  code: string;
+  name: string;
+  grade: string; //级别（1：省 2：市  3：区县  4:街道）
+  isDisable: number; //是否禁用（1：禁用）
+  pcode: string;
+  children: AddressItem[];
+}
 
 export interface PatientListType extends API.ResponseDataType {
   data: {
@@ -207,5 +218,13 @@ export default {
       request.get<medicalInfo>(`/api/intelligent/personal/medical/psn-info`, {
         params,
       }),
+  ),
+  查询地区省市区县地区数据: createApiHooks(() =>
+    request.get<AddressItem[]>(`/api/ihis/his/region/queryThree`),
+  ),
+  根据父级查询子级地区数据: createApiHooks((params: { pCode: string }) =>
+    request.get<AddressItem[]>(`/api/ihis/his/region/query`, {
+      params,
+    }),
   ),
 };

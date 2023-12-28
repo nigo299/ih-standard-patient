@@ -40,7 +40,7 @@ export const CHILDREN_DEPTLIST = false;
 export const PAYMENT_SELECTALL =
   process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
 // 门诊缴费必须全部支付
-export const PAYMENT_SELECTALL_PAY = false;
+export const PAYMENT_SELECTALL_PAY = true;
 // 是否启用H5支付(flase为立即缴费小程序支付)
 export const H5_PAY = false;
 // 是否有支付宝小程序
@@ -49,7 +49,7 @@ export const IS_ALIPAY = false;
 export const APPID = PLATFORM === 'ali' ? '' : '';
 // 是否开启意见反馈（小桥医助小程序）
 export const IS_FEEDBACL = PLATFORM === 'web';
-export const IS_DEPT = PLATFORM !== 'ali';
+export const IS_DEPT = false; // PLATFORM !== 'ali'
 // https://lbs.amap.com/console/show/picker
 export const ADDRESS = {
   longitude: 105.730469,
