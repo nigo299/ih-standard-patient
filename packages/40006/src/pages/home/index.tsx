@@ -343,7 +343,7 @@ export default () => {
     <View>
       <View>
         <BackgroundImg
-          img={`${IMAGE_DOMIN}/home/banner.png`}
+          img={`${IMAGE_DOMIN}/home/new_banner.png`}
           className={styles.bannerImg}
           isPreviewImage
         >
