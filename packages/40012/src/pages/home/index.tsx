@@ -157,13 +157,13 @@ export default () => {
   const homeCardNavConfig =
     PLATFORM === 'ali'
       ? [
-          {
-            title: '微官网',
-            subTitle: '医院信息门户',
-            url: '/pages/microsite/home/index',
-            image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
-          },
+          // {
+          //   title: '微官网',
+          //   subTitle: '医院信息门户',
+          //   url: '/pages/microsite/home/index',
+          //   image: `${IMAGE_DOMIN}/home/wgw.png`,
+          //   patientId: true,
+          // },
           {
             title: '来院导航',
             subTitle: '导航来院不迷路',
