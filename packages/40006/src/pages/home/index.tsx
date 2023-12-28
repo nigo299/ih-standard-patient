@@ -30,6 +30,7 @@ import globalState from '@/stores/global';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import Dialog from '@/components/dialog';
 import useApi from 'commonHis/src/apis/common';
+import banner from './newBanner1.png'
 export interface NavType {
   title: string;
   subTitle?: React.ReactNode | string;
@@ -342,11 +343,7 @@ export default () => {
   return (
     <View>
       <View>
-        <BackgroundImg
-          img={`${IMAGE_DOMIN}/home/banner.jpeg`}
-          className={styles.bannerImg}
-          isPreviewImage
-        >
+        <BackgroundImg img={banner} className={styles.bannerImg} isPreviewImage>
           <Space
             className={styles.microsite}
             justify="center"
