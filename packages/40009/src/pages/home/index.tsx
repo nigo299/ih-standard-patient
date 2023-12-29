@@ -241,15 +241,15 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/wgw.png`,
             patientId: true,
           },
-          // {
-          //   title: '医保政策',
-          //   subTitle: '',
-          //   url: '',
-          //   image: `${IMAGE_DOMIN}/home/ybzc.png`,
-          //   onClick: () =>
-          //     (window.location.href =
-          //       'https://mp.weixin.qq.com/s/MpE57S9X_owVuTDNP_3SaA'),
-          // },
+          {
+            title: '医保政策',
+            subTitle: '',
+            url: '',
+            image: `${IMAGE_DOMIN}/home/ybzc.png`,
+            onClick: () =>
+              (window.location.href =
+                'https://mp.weixin.qq.com/s/MpE57S9X_owVuTDNP_3SaA'),
+          },
           {
             title: '健康体检',
             subTitle: '',
