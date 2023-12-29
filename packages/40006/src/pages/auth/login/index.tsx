@@ -84,7 +84,7 @@ export default memo(() => {
     };
   }, [clearCountdownTimer]);
   return (
-    <BackgroundImg img={`${IMAGE_DOMIN}/auth/bg.png`} className={styles.page}>
+    <BackgroundImg className={styles.page}>
       <Modal />
       <Space vertical className={styles.content}>
         <Image
