@@ -30,7 +30,7 @@ import globalState from '@/stores/global';
 import navigateToAlipayPage from '@/utils/navigateToAlipayPage';
 import Dialog from '@/components/dialog';
 import useApi from 'commonHis/src/apis/common';
-import banner from './newBanner1.png'
+import banner from './newBanner1.png';
 export interface NavType {
   title: string;
   subTitle?: React.ReactNode | string;
@@ -52,7 +52,7 @@ export default () => {
   const { getDeptList } = regsiterState.useContainer();
   const [show, setShow] = useState(false);
   const [registerMode, setRegisterMode] = useState('');
-  const [noticeInfo, setNoticeInfo] = useState<string>('');
+  const [, setNoticeInfo] = useState<string>('');
   const { clearCountdownTimer } = useDownCount();
   const {
     data: { data: configList },
@@ -103,7 +103,7 @@ export default () => {
           患者提前<Text style={{ color: '#FF9743' }}>预约号源</Text>
         </View>
       ),
-      url: '/pages2/register/department/index?type=default',
+      url: '',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
     },
@@ -114,7 +114,7 @@ export default () => {
           手机缴费<Text style={{ color: '#FF9743' }}>不用等</Text>
         </View>
       ),
-      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
+      url: '',
       image: `${IMAGE_DOMIN}/home/mzjf.png`,
     },
     {
@@ -124,7 +124,7 @@ export default () => {
           报告结果<Text style={{ color: '#FF9743' }}>实时查询</Text>
         </View>
       ),
-      url: `/pages/report/report-list/index`,
+      url: ``,
       image: `${IMAGE_DOMIN}/home/bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
@@ -147,7 +147,7 @@ export default () => {
     {
       title: '住院预缴',
       subTitle: '住院费用预缴',
-      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
+      url: '',
       image: `${IMAGE_DOMIN}/home/zyfw.png`,
     },
   ];
@@ -158,33 +158,38 @@ export default () => {
           {
             title: '核酸检测',
             subTitle: '',
-            url: '/pages2/nucleic/select-combo/index?type=1',
+            url: '',
             image: `${IMAGE_DOMIN}/home/hsjc.png`,
+            open: true,
           },
           {
             title: '微官网',
             subTitle: '医院信息门户',
-            url: '/pages/microsite/home/index',
+            url: '',
             image: `${IMAGE_DOMIN}/home/wgw.png`,
             patientId: true,
+            open: true,
           },
           {
             title: '来院导航',
             subTitle: '导航来院不迷路',
-            url: '/pages2/register',
+            url: '',
             image: `${IMAGE_DOMIN}/home/lydh.png`,
             onClick: () => openLocation(),
+            open: true,
           },
           {
             title: '就医指南',
             subTitle: '',
-            url: '/pages/microsite/article-detail/index?id=643',
+            url: '',
             image: `${IMAGE_DOMIN}/home/wgw.png`,
             patientId: true,
+            open: true,
           },
           {
             title: '医保电子凭证',
             subTitle: '',
+            open: true,
             onClick: () => {
               my.navigateToMiniProgram({
                 appId: '2021001123625885',
@@ -195,6 +200,7 @@ export default () => {
           {
             title: '停车缴费',
             subTitle: '',
+            open: true,
             onClick: () => {
               my.ap.navigateToAlipayPage({
                 path: 'https://cloud.keytop.cn/stcfront/Payment/Query?lotId=8528&chInfo=ch_share__chsub_CopyLink&fxzjshareChinfo=ch_share__chsub_CopyLink&apshareid=B2B29C72-92A7-4CDE-9713-B92110DF4A87&shareBizType=mrfxzw',
@@ -207,9 +213,10 @@ export default () => {
           {
             title: '微官网',
             subTitle: '',
-            url: '/pages/microsite/home/index',
+            url: '',
             image: `${IMAGE_DOMIN}/home/wgw.png`,
             patientId: true,
+            open: true,
           },
           {
             title: '智能导诊',
@@ -442,30 +449,26 @@ export default () => {
           className={styles.cardNav}
           flexWrap="wrap"
         >
-          {homeCardNavConfig.map((item: NavType) => (
-            <Space
-              vertical
-              key={item.title}
-              alignItems="center"
-              className={styles.card}
-              onTap={() => item.title && handleNavClick(item)}
-            >
-              <Image src={item.image} className={styles.cardImg} />
-              <View className={styles.cardTitle}>{item.title}</View>
-              {item.title === '电子发票' && (
-                <WxOpenLaunchWeapp
-                  username="gh_310a33219dae"
-                  path="pages/index/index.html?agencyCode=b4d1d3101b6f4bd8b9e6ca9e58beeb47"
-                />
-              )}
-              {/*{item.title === '核酸检测' && (*/}
-              {/*  <Image*/}
-              {/*    src={`${IMAGE_DOMIN}/home/wyc.png`}*/}
-              {/*    className={styles.cardTag}*/}
-              {/*  />*/}
-              {/*)}*/}
-            </Space>
-          ))}
+          {homeCardNavConfig.map((item: any) => {
+            return (
+              <Space
+                vertical
+                key={item.title}
+                alignItems="center"
+                className={styles.card}
+                onTap={() => item.title && handleNavClick(item)}
+              >
+                <Image src={item.image} className={styles.cardImg} />
+                <View className={styles.cardTitle}>{item.title}</View>
+                {item.title === '电子发票' && (
+                  <WxOpenLaunchWeapp
+                    username="gh_310a33219dae"
+                    path="pages/index/index.html?agencyCode=b4d1d3101b6f4bd8b9e6ca9e58beeb47"
+                  />
+                )}
+              </Space>
+            );
+          })}
         </Space>
         <Banner
           CommonImg={
