@@ -445,7 +445,7 @@ export default () => {
               //   url: '/pages/microsite/hospital-summary/index',
               // });
               window.location.href =
-                'https://mp.weixin.qq.com/s/CG4ABUl0K0ySc2IY4JtCfQ';
+                'https://mp.weixin.qq.com/s/5F1JhYHeekZAFuzAuQAveQ';
             }}
           />
         </BackgroundImg>
