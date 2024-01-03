@@ -237,6 +237,7 @@ export default () => {
             nav.url.includes('day') &&
             nav.url.includes('register/department')
           ) {
+            console.log('======>');
             getDeptList('day');
           } else {
             navigateTo({
