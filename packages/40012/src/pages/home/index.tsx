@@ -469,6 +469,11 @@ export default () => {
             registerMode.includes('register/department')
           ) {
             getDeptList('day');
+          } else if (
+            registerMode.includes('default') &&
+            registerMode.includes('register/department')
+          ) {
+            getDeptList('default');
           } else {
             navigateTo({
               url: registerMode,
