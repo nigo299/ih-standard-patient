@@ -6,6 +6,7 @@ import patientState from '@/stores/patient';
 import useApi from '@/apis/common';
 import { Loading } from '@kqinfo/ui';
 import useGetParams from '@/utils/useGetParams';
+import { getBrowserUa } from '@/utils';
 
 export default () => {
   console.log('href', window.location.href);
@@ -27,7 +28,7 @@ export default () => {
     if (code) {
       loginReg({
         code: code,
-        platformSource: '14', //渝康健 14
+        platformSource: getBrowserUa() === 'alipay' ? '15' : '14', //渝康健 14
       }).then((res) => {
         if (res.data.token) {
           // 登录成功，存储token
