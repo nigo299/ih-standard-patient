@@ -218,7 +218,8 @@ export default () => {
     if (
       config.isOldManRegFree &&
       regOrderInfo?.totalRealFee == 0 &&
-      regOrderInfo?.preferentialFlag === 1
+      regOrderInfo?.preferentialFlag === 1 &&
+      !isYuKangJianH5()
     ) {
       // do something
       const data = await useRegisterApi.零元单通知his.request({
