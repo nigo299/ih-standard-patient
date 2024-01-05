@@ -12,7 +12,7 @@ import '@/utils/setWeixinFontSize';
 
 const href = window?.location?.href;
 if (
-  href?.includes('isDebug=true') &&
+  href?.includes('isDebug=true') ||
   window.location.href.includes('mdmis.cq12320.cn')
 ) {
   debug(true);
