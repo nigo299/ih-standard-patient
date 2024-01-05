@@ -419,20 +419,21 @@ export const isYuKangJianH5 = () => {
   }
 };
 const NODE_ENV = process.env.NODE_ENV;
-const ykjPreKey: any = {
-  '2219': '/zykqykjsyyyd1',
-};
+// const ykjPreKey: any = {
+//   '2219': '/zykqykjsyyyd1',
+// };
 export const getBaseUrl = () => {
   if (NODE_ENV === 'development' && PLATFORM === 'web') {
     return '';
   } else {
-    if (isYuKangJianH5()) {
-      return `${ykjPreKey[REQUEST_QUERY.hisId]}${
-        process.env.REMAX_APP_REQUESET_DOMIN
-      }`;
-    } else {
-      return process.env.REMAX_APP_REQUESET_DOMIN;
-    }
+    // if (isYuKangJianH5()) {
+    //   return `${ykjPreKey[REQUEST_QUERY.hisId]}${
+    //     process.env.REMAX_APP_REQUESET_DOMIN
+    //   }`;
+    // } else {
+    //   return process.env.REMAX_APP_REQUESET_DOMIN;
+    // }
+    return process.env.REMAX_APP_REQUESET_DOMIN;
   }
 };
 
