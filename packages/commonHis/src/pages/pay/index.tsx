@@ -275,9 +275,9 @@ export default () => {
     orderId,
     payOrderId,
     payRequest,
-    regOrderInfo?.payOrderId,
-    regOrderInfo?.preferentialFlag,
-    regOrderInfo?.totalRealFee,
+    regOrderInfo.payOrderId,
+    regOrderInfo.preferentialFlag,
+    regOrderInfo.totalRealFee,
   ]);
   const hanldeMedInsurePay = useCallback(async () => {
     setPaydisabled2(true);
