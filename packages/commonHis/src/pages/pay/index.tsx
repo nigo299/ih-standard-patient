@@ -235,10 +235,16 @@ export default () => {
       orderId: payOrderId,
     });
     if (code === 0) {
-      if (PLATFORM === 'wehcat' && data?.paySign) {
+      if (
+        (PLATFORM === 'wehcat' || getBrowserUa() === 'wechat') &&
+        data?.paySign
+      ) {
         chooseWechatAppPay(data);
       }
-      if (PLATFORM === 'ali' && data?.alipayTradeNo) {
+      if (
+        (PLATFORM === 'ali' || getBrowserUa() === 'alipay') &&
+        data?.alipayTradeNo
+      ) {
         chooseAliAppPay(data?.alipayTradeNo);
       }
     } else {
