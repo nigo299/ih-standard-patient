@@ -76,5 +76,6 @@ export const themeConfig: any = {
   }, //妇幼
 };
 export const HisTheme = {
-  '40030': 'CHS',
+  '2219': 'CHS',
+  '40064': 'MAC',
 };
