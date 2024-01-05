@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { View, navigateTo, Text, reLaunch, navigateBack } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { decrypt, getCurrentPageUrl, sleep } from '@/utils';
+import { decrypt, getCurrentPageUrl, isYuKangJianH5, sleep } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import {
   WhiteSpace,
@@ -215,7 +215,7 @@ export default () => {
         }
       } else {
         // 没有注册不允许挂号
-        if (!storage.get('openid')) {
+        if (!storage.get('openid') && !isYuKangJianH5()) {
           console.log('getCurrentPageUrl ', getCurrentPageUrl());
           showToast({
             icon: 'fail',
