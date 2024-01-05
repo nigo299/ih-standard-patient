@@ -367,8 +367,14 @@ export default () => {
       title: '收银台',
     });
     const medinsurePayOrderInfo = storage.get('medinsurePayOrderInfo');
+    let params: any = {};
+    try {
+      params = JSON.parse(medinsurePayOrderInfo || '{}') as OrderInfoType;
+    } catch (err) {
+      params = {};
+    }
     if (medinsurePayOrderInfo && !payOrderId) {
-      setOrderInfo(JSON.parse(medinsurePayOrderInfo) as OrderInfoType);
+      setOrderInfo(params);
     }
     if (!medinsurePayOrderInfo && !payOrderId) {
       showToast({
