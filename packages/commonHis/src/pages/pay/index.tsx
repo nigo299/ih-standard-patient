@@ -272,14 +272,14 @@ export default () => {
   }, [
     chooseAliAppPay,
     chooseWechatAppPay,
-    config.isOldManRegFree,
+    config?.isOldManRegFree,
     h5PayUrl,
     orderId,
     payOrderId,
     payRequest,
-    regOrderInfo.payOrderId,
-    regOrderInfo.preferentialFlag,
-    regOrderInfo.totalRealFee,
+    regOrderInfo?.payOrderId,
+    regOrderInfo?.preferentialFlag,
+    regOrderInfo?.totalRealFee,
   ]);
   const hanldeMedInsurePay = useCallback(async () => {
     setPaydisabled2(true);
