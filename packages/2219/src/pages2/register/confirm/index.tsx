@@ -368,7 +368,7 @@ export default () => {
           registerTime: `${scheduleDate} ${visitBeginTime}-${visitEndTime}`,
           totalFee: confirmInfo?.totalFee,
           orderId: data.orderId,
-          payOrderId: data.payOrderId,
+          payOrderId: data?.payOrderId,
           extFields: data?.extFields || '',
         };
         if (process.env.REMAX_APP_PLATFORM === 'app') {

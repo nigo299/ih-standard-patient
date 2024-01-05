@@ -354,14 +354,14 @@ export default () => {
           registerTime: `${scheduleDate} ${visitBeginTime}-${visitEndTime}`,
           totalFee: confirmInfo?.totalFee,
           orderId: data.orderId,
-          payOrderId: data.payOrderId,
+          payOrderId: data?.payOrderId,
           extFields: data?.extFields || '',
         };
         if (process.env.REMAX_APP_PLATFORM === 'app') {
           // 线上医保App
           const result = await useApi.医保下单.request({
             orderId: data.orderId,
-            payOrderId: data.payOrderId,
+            payOrderId: data?.payOrderId,
             uniqueCode: isTody ? 13 : 10,
             totalFee: 0,
             selfFee: 0,
@@ -381,7 +381,7 @@ export default () => {
           if (!isYuKangJianH5()) {
             // H5公众号 支付逻辑
             const result = await usePayApi.h5支付下单.request({
-              orderId: data.payOrderId,
+              orderId: data?.payOrderId,
               callbackUrl: `${returnUrl()}#/pages/waiting/index?bizType=${
                 isTody ? 'DBGH' : 'YYGH'
               }&orderId=${data.orderId}`,

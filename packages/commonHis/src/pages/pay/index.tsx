@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from 'react';
 import {
   View,
   navigateBack,
-  navigateTo,
+  // navigateTo,
   reLaunch,
   redirectTo,
 } from 'remax/one';
@@ -215,30 +215,30 @@ export default () => {
   const handlePay = useCallback(async () => {
     setPaydisabled2(true);
     setPaydisabled(true);
-    if (
-      config.isOldManRegFree &&
-      regOrderInfo?.totalRealFee == 0 &&
-      regOrderInfo?.preferentialFlag === 1 &&
-      !isYuKangJianH5()
-    ) {
-      // do something
-      const data = await useRegisterApi.零元单通知his.request({
-        payOrderId: regOrderInfo?.payOrderId,
-      });
-      if (data?.code === 0) {
-        showToast({
-          title: '支付成功!',
-          icon: 'success',
-        }).then(() => {
-          navigateTo({
-            url: `/pages2/register/order-detail/index?orderId=${orderId}`,
-          });
-        });
-      }
-      console.log('data', data);
-      return;
-    }
-
+    // if (
+    //   config.isOldManRegFree &&
+    //   regOrderInfo?.totalRealFee == 0 &&
+    //   regOrderInfo?.preferentialFlag === 1 &&
+    //   !isYuKangJianH5()
+    // ) {
+    //   // do something
+    //   const data = await useRegisterApi.零元单通知his.request({
+    //     payOrderId: regOrderInfo?.payOrderId,
+    //   });
+    //   if (data?.code === 0) {
+    //     showToast({
+    //       title: '支付成功!',
+    //       icon: 'success',
+    //     }).then(() => {
+    //       navigateTo({
+    //         url: `/pages2/register/order-detail/index?orderId=${orderId}`,
+    //       });
+    //     });
+    //   }
+    //   console.log('data', data);
+    //   return;
+    // }
+    console.log('pay页面', payOrderId);
     if (PLATFORM === 'web' && !isYuKangJianH5()) {
       window.location.href = h5PayUrl;
       return;
