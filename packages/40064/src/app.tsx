@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import StateProviders from '@/stores';
-import { ConfigProvider, Sentry } from '@kqinfo/ui';
+import { ConfigProvider, Sentry, debug } from '@kqinfo/ui';
 import eruda from 'eruda';
 import './app.less';
 import storage from '@/utils/storage';
+debug(true);
 Sentry.init({
   dsn: 'https://f053ab3d9f6546749b1a96989072dd3f@sentry.cqkqinfo.com/13',
   beforeSend(event) {
