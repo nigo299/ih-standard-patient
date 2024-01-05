@@ -15,10 +15,10 @@ Sentry.init({
     return event;
   },
 });
-if (window.location.href.includes('mdmis.cq12320.cn')) {
-  debug(true);
-}
-
+// if (window.location.href.includes('mdmis.cq12320.cn')) {
+//   debug(true);
+// }
+debug(true);
 const App: React.FC = (props) => {
   return (
     <StateProviders>
