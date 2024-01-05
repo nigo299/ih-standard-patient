@@ -129,77 +129,47 @@ export default () => {
     },
   ];
 
-  const homeSubNavConfig = [
-    // {
-    //   title: '当日挂号',
-    //   subTitle: '到院患者当日挂号',
-    //   url: '/pages2/register/department/index?type=day',
-    //   image: `${IMAGE_DOMIN}/home/drgh.png`,
-    // },
-    {
-      title: '来院导航',
-      subTitle: '导航前往医院',
-      url: '/pages2/register',
-      image: `${IMAGE_DOMIN}/home/new_lydh.png`,
-      onClick: () => openLocation(),
-    },
-    {
-      title: '住院服务',
-      subTitle: '住院患者贴心服务',
-      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
-      image: `${IMAGE_DOMIN}/home/zyfw.png`,
-    },
-  ];
+  const homeSubNavConfig =
+    PLATFORM === 'ali'
+      ? []
+      : [
+          // {
+          //   title: '当日挂号',
+          //   subTitle: '到院患者当日挂号',
+          //   url: '/pages2/register/department/index?type=day',
+          //   image: `${IMAGE_DOMIN}/home/drgh.png`,
+          // },
+          {
+            title: '来院导航',
+            subTitle: '导航前往医院',
+            url: '/pages2/register',
+            image: `${IMAGE_DOMIN}/home/new_lydh.png`,
+            onClick: () => openLocation(),
+          },
+          {
+            title: '住院服务',
+            subTitle: '住院患者贴心服务',
+            url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/inhosp/home/index',
+            image: `${IMAGE_DOMIN}/home/zyfw.png`,
+          },
+        ];
 
   const homeCardNavConfig =
     PLATFORM === 'ali'
       ? [
-          {
-            title: '核酸检测',
-            subTitle: '',
-            url: '/pages2/nucleic/select-combo/index?type=1',
-            image: `${IMAGE_DOMIN}/home/hsjc.png`,
-          },
-          {
-            title: '微官网',
-            subTitle: '医院信息门户',
-            url: '/pages/microsite/home/index',
-            image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
-          },
+          // {
+          //   title: '微官网',
+          //   subTitle: '医院信息门户',
+          //   url: '/pages/microsite/home/index',
+          //   image: `${IMAGE_DOMIN}/home/wgw.png`,
+          //   patientId: true,
+          // },
           {
             title: '来院导航',
             subTitle: '导航来院不迷路',
             url: '/pages2/register',
-            image: `${IMAGE_DOMIN}/home/lydh.png`,
+            image: `${IMAGE_DOMIN}/home/lydh_ali.png`,
             onClick: () => openLocation(),
-          },
-          {
-            title: '就医指南',
-            subTitle: '',
-            url: '/pages/microsite/article-detail/index?id=643',
-            image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
-          },
-          {
-            title: '医保电子凭证',
-            subTitle: '',
-            onClick: () => {
-              my.navigateToMiniProgram({
-                appId: '2021001123625885',
-              });
-            },
-            image: `${IMAGE_DOMIN}/home/ybdzpz2.png`,
-          },
-          {
-            title: '停车缴费',
-            subTitle: '',
-            onClick: () => {
-              my.ap.navigateToAlipayPage({
-                path: 'https://cloud.keytop.cn/stcfront/Payment/Query?lotId=8528&chInfo=ch_share__chsub_CopyLink&fxzjshareChinfo=ch_share__chsub_CopyLink&apshareid=B2B29C72-92A7-4CDE-9713-B92110DF4A87&shareBizType=mrfxzw',
-              });
-            },
-            image: `${IMAGE_DOMIN}/home/tcjf.png`,
           },
         ]
       : [
@@ -284,6 +254,11 @@ export default () => {
             nav.url.includes('register/department')
           ) {
             getDeptList('day');
+          } else if (
+            nav.url.includes('default') &&
+            nav.url.includes('register/department')
+          ) {
+            getDeptList('default');
           } else {
             navigateTo({
               url: nav.url,

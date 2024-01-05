@@ -37,6 +37,9 @@ include:
   - local: 'packages/40012/.gitlab-ci.yml'
     rules:
       - if: $CI_COMMIT_BRANCH =~ /^40012.*/ || $CI_COMMIT_TAG =~ /^release-40012.*/
+  - local: 'packages/40006/.gitlab-ci.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH =~ /^40006.*/ || $CI_COMMIT_TAG =~ /^release-40006.*/
 
 # 无用的ci，用来防止gitlab报错
 ci:

@@ -266,15 +266,15 @@ export default () => {
             onClick: () =>
               (window.location.href = 'https://cqkuanren.mike-x.com/NvvlEwJ'),
           },
-          {
-            title: '健康活动',
-            subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/jkhd.png`,
-            onClick: () =>
-              (window.location.href =
-                'https://cqkuanren.mike-x.com/mbrm/AXCQ3xCr'),
-          },
+          // {
+          //   title: '健康活动',
+          //   subTitle: '',
+          //   url: '',
+          //   image: `${IMAGE_DOMIN}/home/jkhd.png`,
+          //   onClick: () =>
+          //     (window.location.href =
+          //       'https://cqkuanren.mike-x.com/mbrm/AXCQ3xCr'),
+          // },
           {
             title: '办理会员',
             subTitle: '',
@@ -296,8 +296,7 @@ export default () => {
             subTitle: '',
             url: '',
             image: `${IMAGE_DOMIN}/home/shz.png`,
-            onClick: () =>
-              (window.location.href = 'https://cqkuanren.mike-x.com/GUbrv'),
+            onClick: () => (window.location.href = 'https://wsurl.cc/ig15c7'),
           },
 
           // {
@@ -446,7 +445,7 @@ export default () => {
               //   url: '/pages/microsite/hospital-summary/index',
               // });
               window.location.href =
-                'https://mp.weixin.qq.com/s/CG4ABUl0K0ySc2IY4JtCfQ';
+                'https://mp.weixin.qq.com/s/5F1JhYHeekZAFuzAuQAveQ';
             }}
           />
         </BackgroundImg>
