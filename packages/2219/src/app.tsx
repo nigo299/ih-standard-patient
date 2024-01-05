@@ -1,6 +1,6 @@
 import React from 'react';
 import StateProviders from '@/stores';
-import { ConfigProvider, Sentry } from '@kqinfo/ui';
+import { ConfigProvider, Sentry, debug } from '@kqinfo/ui';
 import './app.less';
 import storage from '@/utils/storage';
 Sentry.init({
@@ -15,6 +15,13 @@ Sentry.init({
     return event;
   },
 });
+const href = window?.location?.href;
+if (
+  href?.includes('isDebug=true') ||
+  window.location.href.includes('mdmis.cq12320.cn')
+) {
+  debug(true);
+}
 const App: React.FC = (props) => {
   return (
     <StateProviders>

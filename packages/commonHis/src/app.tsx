@@ -11,8 +11,11 @@ import './app.less';
 import '@/utils/setWeixinFontSize';
 
 const href = window?.location?.href;
-if (!href?.includes('isDebug=true')) {
-  debug();
+if (
+  href?.includes('isDebug=true') ||
+  window.location.href.includes('mdmis.cq12320.cn')
+) {
+  debug(true);
 }
 
 const App: React.FC = (props) => {
