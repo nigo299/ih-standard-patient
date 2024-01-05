@@ -1,5 +1,11 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { View, navigateBack, navigateTo, reLaunch } from 'remax/one';
+import {
+  View,
+  navigateBack,
+  navigateTo,
+  reLaunch,
+  redirectTo,
+} from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import {
   date2hour,
@@ -176,6 +182,12 @@ export default () => {
               c1: 'taSR_YL',
               time: 200,
             });
+          }
+          if (isYuKangJianH5()) {
+            redirectTo({
+              url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
+            });
+            return;
           }
           reLaunch({
             url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
