@@ -39,8 +39,8 @@ const subPackages = [
   {
     root: 'pages',
     pages: [
-      'pages/otherLogin/index', // 第三方登录
-      'pages/ykhome/index', // 就医一件事首页
+      '/otherLogin/index', // 第三方登录
+      '/ykhome/index', //渝康健首页
     ],
   },
   {
