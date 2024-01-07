@@ -78,4 +78,6 @@ export const themeConfig: any = {
 export const HisTheme = {
   '2219': 'CHS',
   '40064': 'MAC',
+  '40012': 'CHS',
+  '40013': 'MAC',
 };
