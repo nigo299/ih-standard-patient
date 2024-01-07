@@ -6,7 +6,7 @@
   ],
   "scripts": {
     "addHis": "ts-node scripts/index.ts",
-    "web": "lerna run --scope 40064 web",
+    "web": "lerna run --scope 40012 web",
     "postinstall": "patch-package"
   },
   "lint-staged": {
