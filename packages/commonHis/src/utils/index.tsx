@@ -422,6 +422,7 @@ const NODE_ENV = process.env.NODE_ENV;
 const ykjPreKey: any = {
   '2219': '/zykqykjsyyyd1',
   '40064': '/zqsspbqfybjyyygh1',
+  '40012': '/xykjyyghfw1',
 };
 export const getBaseUrl = () => {
   if (NODE_ENV === 'development' && PLATFORM === 'web') {
