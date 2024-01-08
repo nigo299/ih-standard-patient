@@ -423,6 +423,7 @@ const ykjPreKey: any = {
   '2219': '/zykqykjsyyyd1',
   '40064': '/zqsspbqfybjyyygh1',
   '40012': '/xykjyyghfw1',
+  '40013': '/dzqfybjyykjyygh1',
 };
 export const getBaseUrl = () => {
   if (NODE_ENV === 'development' && PLATFORM === 'web') {
