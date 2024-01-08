@@ -114,7 +114,8 @@ const ShowPrice = (data: any) => {
               ) : (
                 <View
                   className={classNames(styles.fullRests, {
-                    [styles.disable]: item?.status === 2,
+                    [styles.disable]:
+                      extFields?.timeFlag1?.split('|')[1] === '0',
                   })}
                 >
                   <Space
@@ -140,7 +141,8 @@ const ShowPrice = (data: any) => {
               {extFields?.timeFlag2?.split('|')[1] !== '0' ? (
                 <View
                   className={classNames(styles.rests, {
-                    [styles.disable]: item?.status === 2,
+                    [styles.disable]:
+                      extFields?.timeFlag2?.split('|')[1] === '0',
                   })}
                 >
                   <Space
@@ -193,7 +195,8 @@ const ShowPrice = (data: any) => {
               {extFields?.timeFlag3?.split('|')[1] !== '0' ? (
                 <View
                   className={classNames(styles.rests, {
-                    [styles.disable]: item?.status === 2,
+                    [styles.disable]:
+                      extFields?.timeFlag3?.split('|')[1] === '0',
                   })}
                 >
                   <Space
@@ -246,7 +249,8 @@ const ShowPrice = (data: any) => {
               {extFields?.timeFlag4?.split('|')[1] !== '0' ? (
                 <View
                   className={classNames(styles.rests, {
-                    [styles.disable]: item?.status === 2,
+                    [styles.disable]:
+                      extFields?.timeFlag4?.split('|')[1] === '0',
                   })}
                 >
                   <Space
@@ -299,7 +303,8 @@ const ShowPrice = (data: any) => {
               {extFields?.timeFlag5?.split('|')[1] !== '0' ? (
                 <View
                   className={classNames(styles.rests, {
-                    [styles.disable]: item?.status === 2,
+                    [styles.disable]:
+                      extFields?.timeFlag5?.split('|')[1] === '0',
                   })}
                 >
                   <Space
