@@ -184,12 +184,12 @@ export default () => {
               time: 200,
             });
           }
-          if (isYuKangJianH5()) {
-            redirectTo({
-              url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
-            });
-            return;
-          }
+          // if (isYuKangJianH5()) {
+          redirectTo({
+            url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
+          });
+          return;
+          // }
           reLaunch({
             url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
           });
