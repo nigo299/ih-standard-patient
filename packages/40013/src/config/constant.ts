@@ -9,7 +9,7 @@ export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
     : isYuKangJianH5()
-    ? `/zykqykjsyzsb1${process.env.REMAX_APP_IMAGE_DOMIN}` //正式环境上线时候换回来
+    ? `/dzqfybjyykjyygh1${process.env.REMAX_APP_IMAGE_DOMIN}` //正式环境上线时候换回来
     : process.env.REMAX_APP_IMAGE_DOMIN
 }`;
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
