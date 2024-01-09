@@ -9,7 +9,7 @@ import useGetParams from '@/utils/useGetParams';
 import { getBrowserUa } from '@/utils';
 
 export default () => {
-  console.log('href', window.location.href);
+  console.log('href123', window.location.href);
   const { jumpUrl } = useGetParams<{ jumpUrl: string }>();
   const { getPatientList } = patientState.useContainer();
   const { request: loginReg, loading } = useApi.通用登录授权({
@@ -29,20 +29,24 @@ export default () => {
       loginReg({
         code: code,
         platformSource: getBrowserUa() === 'alipay' ? '15' : '14', //渝康健 14
-      }).then((res) => {
-        if (res.data.token) {
-          // 登录成功，存储token
-          storage.set('login_access_token', res?.data?.token);
-          window.localStorage.setItem('ih-patient-token', res?.data?.token);
-          getPatientList();
-          const url = jumpUrl
-            ? decodeURIComponent(jumpUrl)
-            : '/pages/ykhome/index';
-          redirectTo({
-            url,
-          });
-        }
-      });
+      })
+        .then((res) => {
+          if (res.data.token) {
+            // 登录成功，存储token
+            storage.set('login_access_token', res?.data?.token);
+            window.localStorage.setItem('ih-patient-token', res?.data?.token);
+            getPatientList();
+            const url = jumpUrl
+              ? decodeURIComponent(jumpUrl)
+              : '/pages/ykhome/index';
+            redirectTo({
+              url,
+            });
+          }
+        })
+        .catch((err) => {
+          console.error('登录失败', err);
+        });
     }
   }, [getPatientList, jumpUrl, loginReg]);
 
