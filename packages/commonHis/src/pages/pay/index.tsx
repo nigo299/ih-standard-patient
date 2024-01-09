@@ -1,5 +1,11 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { View, navigateBack, navigateTo, reLaunch } from 'remax/one';
+import {
+  View,
+  navigateBack,
+  navigateTo,
+  reLaunch,
+  redirectTo,
+} from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import {
   date2hour,
@@ -177,7 +183,7 @@ export default () => {
               time: 200,
             });
           }
-          reLaunch({
+          redirectTo({
             url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
           });
           return;
