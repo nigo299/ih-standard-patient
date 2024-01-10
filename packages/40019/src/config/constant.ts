@@ -1,3 +1,5 @@
+import { isYuKangJianH5 } from 'commonHis/src/utils';
+
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
 export const THEME_COLOR = '#a7324e';
@@ -7,9 +9,9 @@ export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选�
 export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
-    : PLATFORM === 'web'
-    ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40019-his/images'
+    : isYuKangJianH5()
+    ? `/zqslpqzyyyyygh1${process.env.REMAX_APP_IMAGE_DOMIN}` //正式环境上线时候换回来
+    : process.env.REMAX_APP_IMAGE_DOMIN
 }`;
 export const HOSPITAL_NAME = '梁平中医院';
 export const HOSPITAL_TEL = '023-63110120';
