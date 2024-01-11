@@ -103,14 +103,19 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={deptList.map(({ name, children, no }) => ({
+          data={deptList.map(({ name, children, id }) => ({
             name,
-            id: no,
-            children: children.map(({ name, no }) => ({
+            id: id,
+            children: children.map(({ name, no, children }) => ({
               name,
               id: no,
+              children: children.map(({ name, no }) => ({
+                name,
+                id: no,
+              })),
             })),
           }))}
+          childrenMenuMode="collapse"
           className={styles.menu}
           leftActiveCls={styles.leftActive}
           leftItemCls={styles.leftItem}
