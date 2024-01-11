@@ -98,16 +98,11 @@ export default () => {
           data={deptList.map(({ name, children, no }) => ({
             name,
             id: no,
-            children: children.map(({ name, no, children }) => ({
+            children: children.map(({ name, no }) => ({
               name,
               id: no,
-              children: children.map(({ name, no }) => ({
-                name,
-                id: no,
-              })),
             })),
           }))}
-          childrenMenuMode="collapse"
           className={styles.menu}
           leftActiveCls={styles.leftActive}
           leftItemCls={styles.leftItem}
