@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Space, Button, showToast } from '@kqinfo/ui';
+import { Space, Button, showToast, Sentry } from '@kqinfo/ui';
 import { MedicallItem } from '@/components';
 import { APPID, HOSPITAL_NAME, IMAGE_DOMIN, PLATFORM } from '@/config/constant';
 import { Image, navigateBack, navigateTo, reLaunch, View } from 'remax/one';
@@ -16,6 +16,7 @@ import monitor from '@/alipaylog/monitor';
 import { useLockFn } from 'ahooks';
 import classNames from 'classnames';
 import showModal from '@/utils/showModal';
+import { Severity } from '@sentry/types/dist/severity';
 
 import Loading from '@/components/Loading';
 export default () => {
@@ -83,6 +84,15 @@ export default () => {
             console.log(patientFullIdNo, 'patientFullIdNo');
             console.log(data.userCardNo, 'data.userCardNo');
             if (patientFullIdNo !== data.userCardNo) {
+              Sentry.captureEvent({
+                message: '身份证比对失败',
+                level: Severity.Error,
+                extra: {
+                  localPatIdNo: patientFullIdNo,
+                  medicalIdNo: data.userCardNo,
+                  bizType,
+                },
+              });
               showModal({
                 title: '提示',
                 content: `非本人暂不支持医保在线支付, 请重新选择就诊人`,
