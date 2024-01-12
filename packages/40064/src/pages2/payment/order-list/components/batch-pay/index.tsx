@@ -221,6 +221,7 @@ export default () => {
             navigateTo({
               url: '/pages/pay/index',
             });
+            return;
           }
           // H5 支付逻辑
           const result = await usePayApi.h5支付下单.request({
