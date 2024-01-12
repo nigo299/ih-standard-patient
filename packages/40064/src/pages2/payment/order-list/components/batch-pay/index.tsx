@@ -216,6 +216,12 @@ export default () => {
             window.location.href = window.location.href?.split('&encData')[0];
           }
         } else if (PLATFORM === 'web') {
+          if (isYuKangJianH5()) {
+            setOrderInfo(orderInfo);
+            navigateTo({
+              url: '/pages/pay/index',
+            });
+          }
           // H5 支付逻辑
           const result = await usePayApi.h5支付下单.request({
             orderId: data.payOrderId,
