@@ -21,19 +21,20 @@ const ReportTab: React.FC<RestProps> = ({
       current={tabIndex}
       type={'card'}
       onChange={(v) => {
-        if (v === 3) {
-          window.location.href = `https://pacs.cqdent.com/pad/index.html#/examRecordList?username=${encryptDes(
-            'doctor',
-          )}&pwd=${encryptDes(`DJpacs@#2022$`)}&patientId=${encryptDes(
-            patHisNo,
-          )}`;
-        } else {
-          setTabIndex(v);
-        }
+        // if (v === 3) {
+        //   window.location.href = `https://pacs.cqdent.com/pad/index.html#/examRecordList?username=${encryptDes(
+        //     'doctor',
+        //   )}&pwd=${encryptDes(`DJpacs@#2022$`)}&patientId=${encryptDes(
+        //     patHisNo,
+        //   )}`;
+        // } else {
+        //   setTabIndex(v);
+        // }
+        setTabIndex(v);
       }}
       tabs={[
         { content: '检验报告', index: 1 },
-        { content: '检查报告', index: 2 },
+        // { content: '检查报告', index: 2 },
         { content: '检查影像', index: 3 },
       ]}
     />
