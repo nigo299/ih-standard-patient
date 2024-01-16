@@ -1,3 +1,5 @@
+import { getBrowserUa } from '@/utils';
+
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
 export const THEME_COLOR = '#2780D9';
@@ -16,7 +18,12 @@ export const HOSPITAL_TEL = '023-43780184';
 export const HIS_ID = '40064';
 export const REQUEST_QUERY = {
   hisId: HIS_ID,
-  platformId: PLATFORM === 'ali' ? `${HIS_ID}02` : `${HIS_ID}01`,
+  platformId:
+    PLATFORM === 'ali'
+      ? `${HIS_ID}04`
+      : getBrowserUa() === 'wechat'
+      ? `${HIS_ID}01`
+      : `${HIS_ID}02`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10
