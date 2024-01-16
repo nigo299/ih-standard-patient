@@ -120,12 +120,11 @@ export default () => {
                       )}&patientId=${patientId}&patCardNo=${patCardNo}`,
                     });
                   }
-                  if (tabIndex === 3) {
+                  if (tabIndex === 2) {
                     navigateTo({
-                      // url: `/pages/report/check-detail/index?reportId=${encodeURIComponent(
-                      //   item.reportId,
-                      // )}&patientId=${patientId}&patCardNo=${patCardNo}`,
-                      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
+                      url: `/pages/report/check-detail/index?reportId=${encodeURIComponent(
+                        item.reportId,
+                      )}&patientId=${patientId}&patCardNo=${patCardNo}`,
                     });
                   }
                 }}
