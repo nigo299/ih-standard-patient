@@ -78,6 +78,13 @@ const subPackages = [
       'imageCloud/index', // 影像云
     ],
   },
+  {
+    root: 'pages',
+    pages: [
+      '/otherLogin/index', // 第三方登录
+      '/ykhome/index', //渝康健首页
+    ],
+  },
   // 适老版页面
   {
     root: 'pages3',
@@ -120,7 +127,7 @@ const subPackages = [
 
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
 import { AppConfig as AliAppConfig } from 'remax/ali';
-import { THEME_COLOR } from './config/constant';
+export const THEME_COLOR = '#03933E';
 
 export const wechat: WechatAppConfig = {
   pages,

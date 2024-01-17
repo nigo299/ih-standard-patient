@@ -244,7 +244,13 @@ export default () => {
       window.location.href = h5PayUrl;
       return;
     }
-
+    if (getBrowserUa() === 'wechat' && isYuKangJianH5()) {
+      showToast({
+        title: '支付开发中，请使用公众号进行支付',
+        icon: 'fail',
+      });
+      return;
+    }
     const { data, code, msg } = await payRequest({
       orderId: payOrderId,
     });
