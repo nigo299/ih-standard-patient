@@ -253,6 +253,13 @@ export default () => {
         (PLATFORM === 'wehcat' || getBrowserUa() === 'wechat') &&
         data?.paySign
       ) {
+        if (isYuKangJianH5()) {
+          showToast({
+            title: '支付开发中，请使用公众号进行支付',
+            icon: 'fail',
+          });
+          return;
+        }
         chooseWechatAppPay(data);
       }
       if (
