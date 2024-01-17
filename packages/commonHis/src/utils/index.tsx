@@ -420,7 +420,7 @@ export const isYuKangJianH5 = () => {
 };
 const NODE_ENV = process.env.NODE_ENV;
 const ykjPreKey: any = {
-  '2219': '/zykqykjsyyyd1',
+  '2219': '/zykqykjsyywd1',
   '40064': '/zqsspbqfybjyyygh1',
   '40012': '/xykjyyghfw1',
   '40013': '/dzqfybjyykjyygh1',

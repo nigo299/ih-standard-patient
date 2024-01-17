@@ -11,7 +11,7 @@ export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
     : isYuKangJianH5()
-    ? `/zykqykjsyzsb1${process.env.REMAX_APP_IMAGE_DOMIN}` //正式环境上线时候换回来
+    ? `/zykqykjsyywd1${process.env.REMAX_APP_IMAGE_DOMIN}` //正式环境上线时候换回来
     : process.env.REMAX_APP_IMAGE_DOMIN
 }`;
 export const HOSPITAL_NAME = '重庆医科大学附属口腔医院';
