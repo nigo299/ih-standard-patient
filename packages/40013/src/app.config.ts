@@ -29,14 +29,19 @@ const pages = [
   'pages/sign/userList/index', // 取药签到选择就诊人
   'pages/sign/sign/index', // 取药签到
   'pages/sign/list/index', // 取药签到列表
-  'pages/otherLogin/index', // 第三方登录
-  'pages/ykhome/index', // 就医一件事首页
   // 'pages/sign/userList/index', // 取药签到选择就诊人
   // 'pages/sign/sign/index', // 取药签到
   // 'pages/sign/list/index', // 取药签到列表
 ];
 
 const subPackages = [
+  {
+    root: 'pages',
+    pages: [
+      'otherLogin/index', // 第三方登录
+      'ykhome/index', // 就医一件事首页
+    ],
+  },
   {
     root: 'pages2',
     pages: [
@@ -125,7 +130,7 @@ const subPackages = [
 
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
 import { AppConfig as AliAppConfig } from 'remax/ali';
-import { THEME_COLOR } from './config/constant';
+const THEME_COLOR = '#f77eae';
 
 export const wechat: WechatAppConfig = {
   pages,

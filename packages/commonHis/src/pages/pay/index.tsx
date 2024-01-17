@@ -3,6 +3,7 @@ import {
   View,
   navigateBack,
   navigateTo,
+  // navigateTo,
   reLaunch,
   redirectTo,
 } from 'remax/one';
@@ -212,7 +213,8 @@ export default () => {
     if (
       config.isOldManRegFree &&
       regOrderInfo?.totalRealFee == 0 &&
-      regOrderInfo?.preferentialFlag === 1
+      regOrderInfo?.preferentialFlag === 1 &&
+      !isYuKangJianH5()
     ) {
       // do something
       const data = await useRegisterApi.零元单通知his.request({
@@ -231,7 +233,7 @@ export default () => {
       console.log('data', data);
       return;
     }
-
+    console.log('pay页面', payOrderId);
     if (PLATFORM === 'web' && !isYuKangJianH5()) {
       window.location.href = h5PayUrl;
       return;
@@ -264,7 +266,7 @@ export default () => {
   }, [
     chooseAliAppPay,
     chooseWechatAppPay,
-    config.isOldManRegFree,
+    config?.isOldManRegFree,
     h5PayUrl,
     orderId,
     payOrderId,
@@ -359,8 +361,14 @@ export default () => {
       title: '收银台',
     });
     const medinsurePayOrderInfo = storage.get('medinsurePayOrderInfo');
+    let params: any = {};
+    try {
+      params = JSON.parse(medinsurePayOrderInfo || '{}') as OrderInfoType;
+    } catch (err) {
+      params = {};
+    }
     if (medinsurePayOrderInfo && !payOrderId) {
-      setOrderInfo(JSON.parse(medinsurePayOrderInfo) as OrderInfoType);
+      setOrderInfo(params);
     }
     if (!medinsurePayOrderInfo && !payOrderId) {
       showToast({

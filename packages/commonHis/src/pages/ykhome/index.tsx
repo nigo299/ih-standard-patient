@@ -63,7 +63,7 @@ export default () => {
     {
       name: '退号',
       src: themeConfig[styleConfig].imgs.th,
-      url: '',
+      url: '/pages2/register/order-list/index',
     },
     {
       name: '',

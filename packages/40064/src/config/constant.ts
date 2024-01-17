@@ -1,4 +1,4 @@
-import { isYuKangJianH5 } from 'commonHis/src/utils';
+import { getBrowserUa, isYuKangJianH5 } from 'commonHis/src/utils';
 
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
@@ -18,7 +18,12 @@ export const HIS_ID = '40064';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
   hisId: 40064,
-  platformId: PLATFORM === 'ali' ? 4006402 : 4006401,
+  platformId:
+    PLATFORM === 'ali'
+      ? `${HIS_ID}04`
+      : getBrowserUa() === 'alipay'
+      ? `${HIS_ID}02`
+      : `${HIS_ID}01`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10

@@ -78,6 +78,13 @@ const subPackages = [
       // 'nucleic/confirm/index', // 自助核酸检测确认订单
     ],
   },
+  {
+    root: 'pages',
+    pages: [
+      'otherLogin/index', // 第三方登录
+      'ykhome/index', // 就医一件事首页
+    ],
+  },
   // 适老版页面
   {
     root: 'pages3',
@@ -120,7 +127,7 @@ const subPackages = [
 
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
 import { AppConfig as AliAppConfig } from 'remax/ali';
-import { THEME_COLOR } from './config/constant';
+const THEME_COLOR = '#a7324e';
 
 export const wechat: WechatAppConfig = {
   pages,
