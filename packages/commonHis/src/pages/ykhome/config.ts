@@ -83,3 +83,4 @@ export const HisTheme = {
   '40019': 'TCM',
   '40011': 'TCM',
 };
+export const registerRoute = '/pages2/register/department/index?type=default';

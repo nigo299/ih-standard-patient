@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, Text, navigateTo } from 'remax/one';
 import { useTitle, Space, Icon, QrCode, showToast } from '@kqinfo/ui';
 import styles from './index.less';
-import { themeConfig, HisTheme } from './config';
+import { themeConfig, HisTheme, registerRoute } from '@/pages/ykhome/config';
 import { HIS_ID, IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
 import { QrCodeModal } from '@/components';
 import patientState from '@/stores/patient';
@@ -14,7 +14,7 @@ export default () => {
       name: '预约挂号',
       src: themeConfig[styleConfig].imgs.yygh,
       bg: themeConfig[styleConfig].navColor.bg1,
-      url: '/pages2/register/department/index?type=default',
+      url: registerRoute,
     },
     {
       name: '门诊签到',
