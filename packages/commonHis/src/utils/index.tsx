@@ -1,5 +1,5 @@
 import CryptoJS from 'crypto-js';
-import { PLATFORM } from '@/config/constant';
+import { PLATFORM, REQUEST_QUERY } from '@/config/constant';
 import { reLaunch, redirectTo } from 'remax/one';
 import dayjs from 'dayjs';
 import * as uuid from 'uuid';
@@ -412,12 +412,34 @@ export const isYuKangJianH5 = () => {
   if (process.env.REMAX_PLATFORM === 'web') {
     return (
       window.location.href.includes('localhost') ||
-      window.location.href.includes('http://219.152.51.51')
+      window.location.href.includes('mdmis.cq12320.cn')
     );
   } else {
     return false;
   }
 };
+const NODE_ENV = process.env.NODE_ENV;
+const ykjPreKey: any = {
+  '2219': '/zykqykjsyyyd1',
+  '40064': '/zqsspbqfybjyyygh1',
+  '40012': '/xykjyyghfw1',
+  '40013': '/dzqfybjyykjyygh1',
+  '40019': '/zqslpqzyyyyygh1',
+};
+export const getBaseUrl = () => {
+  if (NODE_ENV === 'development' && PLATFORM === 'web') {
+    return '';
+  } else {
+    if (isYuKangJianH5()) {
+      return `${ykjPreKey[REQUEST_QUERY.hisId]}${
+        process.env.REMAX_APP_REQUESET_DOMIN
+      }`;
+    } else {
+      return process.env.REMAX_APP_REQUESET_DOMIN;
+    }
+  }
+};
+
 export const goHealthUrl = (orderDetail: OrderDetailType) => {
   return `${
     window.location.href.includes('tihs')

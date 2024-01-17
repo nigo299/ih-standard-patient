@@ -1,4 +1,4 @@
-import { getBrowserUa } from 'commonHis/src/utils';
+import { getBrowserUa, isYuKangJianH5 } from 'commonHis/src/utils';
 
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
@@ -6,12 +6,13 @@ export const THEME_COLOR = '#0077BD';
 export const THEME_COLOR2 = '#FF9743';
 export const STEP_COLOR = '#80CFD6';
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
+
 export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
-    : PLATFORM === 'web' || PLATFORM === 'ali'
-    ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p2219-his/images'
+    : isYuKangJianH5()
+    ? `/zykqykjsyzsb1${process.env.REMAX_APP_IMAGE_DOMIN}` //正式环境上线时候换回来
+    : process.env.REMAX_APP_IMAGE_DOMIN
 }`;
 export const HOSPITAL_NAME = '重庆医科大学附属口腔医院';
 export const HOSPITAL_TEL = '023-88860111';
@@ -21,9 +22,9 @@ export const REQUEST_QUERY = {
   platformId:
     PLATFORM === 'ali'
       ? `${HIS_ID}04`
-      : getBrowserUa() === 'wechat'
-      ? `${HIS_ID}01`
-      : `${HIS_ID}02`,
+      : getBrowserUa() === 'alipay'
+      ? `${HIS_ID}02`
+      : `${HIS_ID}01`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10

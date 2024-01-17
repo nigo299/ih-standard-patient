@@ -1,7 +1,20 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { View, navigateBack, navigateTo, reLaunch } from 'remax/one';
+import {
+  View,
+  navigateBack,
+  navigateTo,
+  // navigateTo,
+  reLaunch,
+  redirectTo,
+} from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { date2hour, decrypt, getBrowserUa, reLaunchUrl } from '@/utils';
+import {
+  date2hour,
+  decrypt,
+  getBrowserUa,
+  isYuKangJianH5,
+  reLaunchUrl,
+} from '@/utils';
 import { useDownCount } from 'parsec-hooks';
 import { Price } from '@/components';
 import useApi, { ChoosepayType } from '@/apis/pay';
@@ -171,6 +184,12 @@ export default () => {
               time: 200,
             });
           }
+          if (isYuKangJianH5()) {
+            redirectTo({
+              url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
+            });
+            return;
+          }
           reLaunch({
             url: `/pages/waiting/index?bizType=${bizType}&orderId=${orderId}`,
           });
@@ -200,7 +219,8 @@ export default () => {
     if (
       config.isOldManRegFree &&
       regOrderInfo?.totalRealFee == 0 &&
-      regOrderInfo?.preferentialFlag === 1
+      regOrderInfo?.preferentialFlag === 1 &&
+      !isYuKangJianH5()
     ) {
       // do something
       const data = await useRegisterApi.零元单通知his.request({
@@ -219,19 +239,26 @@ export default () => {
       console.log('data', data);
       return;
     }
-
-    if (PLATFORM === 'web') {
+    console.log('pay页面', payOrderId);
+    if (PLATFORM === 'web' && !isYuKangJianH5()) {
       window.location.href = h5PayUrl;
       return;
     }
+
     const { data, code, msg } = await payRequest({
       orderId: payOrderId,
     });
     if (code === 0) {
-      if (PLATFORM === 'wehcat' && data?.paySign) {
+      if (
+        (PLATFORM === 'wehcat' || getBrowserUa() === 'wechat') &&
+        data?.paySign
+      ) {
         chooseWechatAppPay(data);
       }
-      if (PLATFORM === 'ali' && data?.alipayTradeNo) {
+      if (
+        (PLATFORM === 'ali' || getBrowserUa() === 'alipay') &&
+        data?.alipayTradeNo
+      ) {
         chooseAliAppPay(data?.alipayTradeNo);
       }
     } else {
@@ -245,7 +272,7 @@ export default () => {
   }, [
     chooseAliAppPay,
     chooseWechatAppPay,
-    config.isOldManRegFree,
+    config?.isOldManRegFree,
     h5PayUrl,
     orderId,
     payOrderId,
@@ -340,8 +367,14 @@ export default () => {
       title: '收银台',
     });
     const medinsurePayOrderInfo = storage.get('medinsurePayOrderInfo');
+    let params: any = {};
+    try {
+      params = JSON.parse(medinsurePayOrderInfo || '{}') as OrderInfoType;
+    } catch (err) {
+      params = {};
+    }
     if (medinsurePayOrderInfo && !payOrderId) {
-      setOrderInfo(JSON.parse(medinsurePayOrderInfo) as OrderInfoType);
+      setOrderInfo(params);
     }
     if (!medinsurePayOrderInfo && !payOrderId) {
       showToast({
@@ -438,6 +471,7 @@ export default () => {
       <View className={styles.buttons}>
         {/* 先隐藏移动医保支付 */}
         {mode === 'medical' &&
+          !isYuKangJianH5() &&
           hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 &&
           getBrowserUa() === 'wechat' && (
             <Button
@@ -452,6 +486,7 @@ export default () => {
           )}
 
         {mode === 'medical' &&
+          !isYuKangJianH5() &&
           hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
           PLATFORM === 'ali' && (
             <Button
@@ -490,7 +525,7 @@ export default () => {
             disabled={payDisabled}
             loading={payLoading}
           >
-            {mode === 'medical' ? '自费支付' : '立即支付'}
+            {mode === 'medical' && !isYuKangJianH5() ? '自费支付' : '立即支付'}
           </Button>
         )}
       </View>

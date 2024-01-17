@@ -34,7 +34,8 @@ export type keys =
   | 'patientId'
   | 'debugger'
   | 'canApplyRefund'
-  | 'teamInfo';
+  | 'teamInfo'
+  | 'cookieCode';
 
 const prefixKey = (key: string) => {
   return `fe-his-${REQUEST_QUERY.hisId}-` + key;

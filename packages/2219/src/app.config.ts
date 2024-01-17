@@ -21,6 +21,7 @@ const pages = [
   'pages/maintain/index', // 系统维护
   'pages/redirect/index', // 重定向中转页
   'pages/otherLogin/index', // 第三方登录
+  'pages/ykhome/index', // 就医一件事首页
 ];
 
 const subAliPages = [
@@ -141,6 +142,7 @@ const subPackages = [
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
 import { AppConfig as AliAppConfig } from 'remax/ali';
 const THEME_COLOR = '#0077BD';
+
 export const wechat: WechatAppConfig = {
   pages,
   subpackages: subPackages,
