@@ -81,4 +81,5 @@ export const HisTheme = {
   '40012': 'CHS',
   '40013': 'MAC',
   '40019': 'TCM',
+  '40011': 'TCM',
 };

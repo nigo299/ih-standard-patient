@@ -78,6 +78,13 @@ const subPackages = [
       'imageCloud/index', // 影像云
     ],
   },
+  {
+    root: 'pages',
+    pages: [
+      '/otherLogin/index', // 第三方登录
+      '/ykhome/index', //渝康健首页
+    ],
+  },
   // 适老版页面
   {
     root: 'pages3',
