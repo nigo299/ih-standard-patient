@@ -547,6 +547,7 @@ export default {
       doctorName?: string /** 模糊搜索 */;
       pageNum?: number;
       numPerPage?: number;
+      doctorTag?: string;
     }) => {
       return request.get<DeptDoctorlistType>('/api/ihis/his/doctorMain', {
         params: {
