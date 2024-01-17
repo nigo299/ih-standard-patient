@@ -238,6 +238,11 @@ export default () => {
             nav.url.includes('register/department')
           ) {
             getDeptList('day');
+          } else if (
+            nav.url.includes('default') &&
+            nav.url.includes('register/department')
+          ) {
+            getDeptList('default');
           } else {
             navigateTo({
               url: nav.url,
@@ -469,6 +474,11 @@ export default () => {
             registerMode.includes('register/department')
           ) {
             getDeptList('day');
+          } else if (
+            registerMode.includes('default') &&
+            registerMode.includes('register/department')
+          ) {
+            getDeptList('default');
           } else {
             navigateTo({
               url: registerMode,

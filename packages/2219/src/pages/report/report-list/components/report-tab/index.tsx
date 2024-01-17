@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tab } from '@kqinfo/ui';
-import { encryptDes } from 'commonHis/src/utils';
+// import { encryptDes } from 'commonHis/src/utils';
+import { navigateTo } from 'remax/one';
 
 type RestProps = {
   patCardNo?: string;
@@ -22,18 +23,16 @@ const ReportTab: React.FC<RestProps> = ({
       type={'card'}
       onChange={(v) => {
         if (v === 3) {
-          window.location.href = `https://pacs.cqdent.com/pad/index.html#/examRecordList?username=${encryptDes(
-            'doctor',
-          )}&pwd=${encryptDes(`DJpacs@#2022$`)}&patientId=${encryptDes(
-            patHisNo,
-          )}`;
+          navigateTo({
+            url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
+          });
         } else {
           setTabIndex(v);
         }
       }}
       tabs={[
         { content: '检验报告', index: 1 },
-        { content: '检查报告', index: 2 },
+        // { content: '检查报告', index: 2 },
         { content: '检查影像', index: 3 },
       ]}
     />
