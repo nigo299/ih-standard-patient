@@ -95,7 +95,14 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={(deptList || []).map(({ name, children, id }) => ({
+          data={[
+            {
+              name: '名医名诊',
+              id: -999,
+              children: [{ name: '名医名诊', no: '-9999', children: [] }],
+            },
+            ...(deptList ?? []),
+          ].map(({ name, children, id }) => ({
             name,
             id: id,
             children: (children || []).map(({ name, children, no }) => ({
@@ -120,6 +127,12 @@ export default () => {
             }
           }}
           onSelect={(dept) => {
+            if (dept.id === '-9999') {
+              navigateTo({
+                url: `/pages2/register/famous-doctors/index`,
+              });
+              return;
+            }
             navigateTo({
               url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
             });

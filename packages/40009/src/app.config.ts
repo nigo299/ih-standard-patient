@@ -77,6 +77,7 @@ const subPackages = [
       'nucleic/confirm/index', // 自助核酸检测确认订单
       'debugger/index', //debug页面
       'clearstorage/index', //清除缓存页面
+      'register/famous-doctors/index', // 名医名诊
     ],
   },
   // 适老版页面
