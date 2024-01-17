@@ -44,6 +44,9 @@ export default () => {
   const [jumpUrl, setJumpUrl] = useState('');
   const [show, setShow] = useState(false);
   usePageEvent('onShow', () => {
+    setNavigationBar({
+      title: '名医列表',
+    });
     let params: any = {
       doctorTag: 'FAMOUS',
     };
@@ -51,9 +54,6 @@ export default () => {
       params.doctorName = searchQ;
     }
     doctorRequest(params);
-    setNavigationBar({
-      title: '搜索',
-    });
   });
   return (
     <View>
