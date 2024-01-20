@@ -24,12 +24,16 @@ export default () => {
   });
   usePageEvent('onLoad', () => {
     setFaceInfo({
-      idNo: isChild
-        ? (defaultPatientInfo?.parentIdNo as string)
-        : (decrypt(defaultPatientInfo?.encryptIdNo) as string),
-      name: isChild
-        ? (defaultPatientInfo?.parentName as string)
-        : (decrypt(defaultPatientInfo?.encryptPatientName) as string),
+      idNo: decrypt(
+        isChild
+          ? defaultPatientInfo?.encryptParentIdNo
+          : defaultPatientInfo?.encryptIdNo,
+      ) as string,
+      name: decrypt(
+        isChild
+          ? defaultPatientInfo?.encryptParentName
+          : defaultPatientInfo?.encryptPatientName,
+      ) as string,
       success: false,
       checkMedical: false,
     });
