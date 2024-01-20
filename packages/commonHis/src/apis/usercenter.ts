@@ -43,6 +43,8 @@ export interface PatientType {
   healthCardId: string;
   patientNameSimple: string;
   encryptPatientIdNo: string;
+  encryptParentName?: string;
+  encryptParentIdNo?: string;
 }
 export interface CardProfileType extends API.ResponseDataType {
   data: {
