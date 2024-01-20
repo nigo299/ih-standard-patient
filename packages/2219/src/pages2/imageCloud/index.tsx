@@ -13,6 +13,9 @@ export default () => {
   const { patientId } = useGetParams<{
     patientId: string;
   }>();
+  const isChild = defaultPatientInfo?.patientAge
+    ? defaultPatientInfo.patientAge <= 14
+    : false;
   const { data, loading, request } = useApi.获取应用管理系统授权页({
     params: {
       patientId,
@@ -21,8 +24,12 @@ export default () => {
   });
   usePageEvent('onLoad', () => {
     setFaceInfo({
-      idNo: decrypt(defaultPatientInfo?.encryptIdNo) as string,
-      name: decrypt(defaultPatientInfo?.encryptPatientName) as string,
+      idNo: isChild
+        ? (defaultPatientInfo?.parentIdNo as string)
+        : (decrypt(defaultPatientInfo?.encryptIdNo) as string),
+      name: isChild
+        ? (defaultPatientInfo?.parentName as string)
+        : (decrypt(defaultPatientInfo?.encryptPatientName) as string),
       success: false,
       checkMedical: false,
     });
