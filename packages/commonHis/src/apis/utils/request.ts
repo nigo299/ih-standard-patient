@@ -29,7 +29,7 @@ const instance = axios.create({
     process.env.REMAX_APP_PLATFORM === 'development'
       ? {
           'Content-Type': 'application/json;charset=UTF-8',
-          'ih-version': '3.22.69', //'3.24.0', //todo in-version是否有影响
+          'ih-version': '3.24.0',  //todo in-version是否有影响
         }
       : {
           'Content-Type': 'application/json;charset=UTF-8',
