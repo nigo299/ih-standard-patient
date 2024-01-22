@@ -1,0 +1,153 @@
+@import '@/styles/index.less';
+
+.content {
+  padding: 24px 20px;
+}
+
+.radiosWrap {
+  overflow: hidden;
+}
+
+.radios {
+  flex-wrap: nowrap !important;
+  overflow: auto;
+}
+
+.radios::-webkit-scrollbar {
+  display: none;
+}
+
+.radio {
+  display: inline-block;
+  line-height: 85px;
+}
+
+.doctor {
+  display: flex;
+  width: 710px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  // border: 1px solid red;
+  flex-wrap: wrap;
+}
+
+.photo {
+  width: 118px;
+  height: 118px;
+  margin-right: 26px;
+  border-radius: 50%;
+  background-size: cover !important;
+  background-position: initial !important;
+}
+
+.doctorInfo {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  // border: 1px solid red;
+}
+
+.doctorText {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  color: #999999;
+  margin-top: 10px;
+}
+
+.name {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #333333;
+  display: flex;
+  align-items: center;
+  min-width: 76px;
+  width: 100px;
+}
+
+.price {
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: 400;
+  margin-left: 16px;
+  color: #d95e38;
+}
+
+.subtitle {
+  font-size: 28px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  margin-top: 22px;
+  color: #333333;
+  // border: 1px solid red;
+}
+
+.left {
+  padding-top: 18px;
+  flex: 1;
+}
+.timeSort {
+  width: 100%;
+  border-bottom: 1px solid #ededed;
+  justify-content: space-between;
+  margin-top: 30px;
+  align-items: center;
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  font-weight: bold;
+  color: #333333;
+  display: flex;
+  align-items: center;
+}
+.rightSource {
+  margin-left: 10px;
+  color: #f58726;
+}
+.source {
+  margin-left: 30px !important;
+}
+.rests {
+  // margin-top: 50px;
+  // margin-left: -140px;
+  width: 280px;
+  border-radius: 10px;
+  height: 72px;
+  display: flex;
+}
+.fullRests {
+  width: 140px;
+  border-radius: 10px;
+  height: 72px;
+  display: flex;
+}
+.restPrice {
+  width: 124px;
+  position: relative;
+  height: 100%;
+  font-size: 26px;
+  color: #999999;
+  text-decoration: line-through;
+}
+
+.restNum {
+  flex: 1;
+  height: 100%;
+  font-size: 26px;
+  background-color: @theme-color;
+  font-weight: bold;
+  color: #ffffff;
+  border-radius: 10px;
+}
+
+.disable {
+  border: 1px solid #b4b4b4;
+}
+
+.disable > .restNum {
+  color: #fff;
+  background: #b4b4b4;
+}
