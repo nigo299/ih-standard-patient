@@ -343,8 +343,7 @@ export default memo(() => {
             bindcardProdiles?.isFace === 1 &&
             !faceInfo.success &&
             faceInfo.idNo !== idNo &&
-            faceInfo.name !== name &&
-            !ocrInfo.num // ocr 人脸二选一
+            faceInfo.name !== name
           ) {
             setFaceInfo({
               idNo,
