@@ -112,6 +112,7 @@ export default () => {
           leftActiveCls={styles.leftActive}
           leftItemCls={styles.leftItem}
           rightItemCls={styles.rightItem}
+          rightActiveCls={styles.leftActive}
           onChange={(id, children) => {
             if (children.length === 0) {
               navigateTo({
