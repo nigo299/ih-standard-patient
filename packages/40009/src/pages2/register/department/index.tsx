@@ -109,9 +109,11 @@ export default () => {
           }))}
           childrenMenuMode="collapse"
           className={styles.menu}
+          autoFlexChildren={true}
           leftActiveCls={styles.leftActive}
           leftItemCls={styles.leftItem}
           rightItemCls={styles.rightItem}
+          rightActiveCls={styles.leftActive}
           onChange={(id, children) => {
             if (children.length === 0) {
               navigateTo({
@@ -120,6 +122,13 @@ export default () => {
             }
           }}
           onSelect={(dept) => {
+            const name = dept?.name as string;
+            if (name?.includes('MDT')) {
+              navigateTo({
+                url: `/pages4/home/index`,
+              });
+              return;
+            }
             navigateTo({
               url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
             });

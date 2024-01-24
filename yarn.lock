@@ -2337,10 +2337,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kqinfo/ui@^1.16.44":
-  version "1.16.44"
-  resolved "https://registry.npmmirror.com/@kqinfo/ui/-/ui-1.16.44.tgz#a1afc496e000530f7b8f46538746e156b8a95ed3"
-  integrity sha512-H42aVa0WU6YtriTs+ZJF78hCETTdTr+YqCMtFkrzhuXDq6ETp1ts57s2mFp+0qEgrpVYLknGyN92/hfWRNkf0w==
+"@kqinfo/ui@^1.16.50":
+  version "1.16.50"
+  resolved "https://registry.npmmirror.com/@kqinfo/ui/-/ui-1.16.50.tgz#27fa5fc7f965ddf92def41516b5b5577fd456f86"
+  integrity sha512-bWqXyVCrvbkRf+kcF3KWBZbnxOyukJ0bxKlHw/1fL+dPu/KgzuzLy2TM22qKSxZiQbV71GUD1e1SIdL04DgG0w==
   dependencies:
     "@antv/f2" "^3.8.10-beta.1"
     "@flyskywhy/react-native-gcanvas" "^2.3.7"
