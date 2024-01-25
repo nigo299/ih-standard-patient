@@ -89,7 +89,7 @@ export default () => {
                   <View key={item.deptId} className={styles.doctorItem}>
                     <ListItem
                       img={item.image || `${IMAGE_DOMIN}/register/doctor.png`}
-                      title={item.name}
+                      title={item?.deptName}
                       subtitle=""
                       onTap={() => {
                         const scheduleDate =
@@ -115,8 +115,8 @@ export default () => {
                           });
                         }
                       }}
-                      text={`${item.deptName || '暂无'} | ${item.level}`}
-                      footer={HOSPITAL_NAME}
+                      text={item?.name}
+                      footer={item?.level}
                       after={<Icon name={'kq-right'} color={'#666'} />}
                     />
                   </View>
