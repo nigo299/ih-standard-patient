@@ -41,9 +41,14 @@ export default () => {
   const { config } = useHisConfig();
 
   const { setDeptDetail } = registerState.useContainer();
-  const { deptId, type = 'default' } = useGetParams<{
+  const {
+    deptId,
+    type = 'default',
+    oneDeptNo,
+  } = useGetParams<{
     deptId: string;
     type: 'reserve' | 'day' | 'default';
+    oneDeptNo?: string;
   }>();
   const {
     request: requestScheduleList,
@@ -55,6 +60,9 @@ export default () => {
     },
     params: {
       deptId,
+      extFields: {
+        firstDeptNo: oneDeptNo,
+      },
     },
     needInit: !!deptId,
   });
@@ -110,6 +118,9 @@ export default () => {
     params: {
       scheduleDate: date?.format('YYYY-MM-DD'),
       deptId,
+      extFields: {
+        firstDeptNo: oneDeptNo,
+      },
     },
     needInit: !!deptId && !!date,
   });
