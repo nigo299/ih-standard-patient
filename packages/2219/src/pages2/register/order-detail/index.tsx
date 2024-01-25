@@ -87,18 +87,29 @@ export default () => {
   });
   const checkTime = useMemo(() => {
     if (orderDetail && orderDetail.visitBeginTime) {
-      const time = new Date(`2000-01-01T${orderDetail.visitBeginTime}`);
-      time.setMinutes(time.getMinutes() - 10);
+      // 将时间字符串分割成小时和分钟
+      const parts = orderDetail?.visitBeginTime?.split(':');
+      let hours = parseInt(parts[0], 10);
+      let minutes = parseInt(parts[1], 10);
 
-      const hour = time.getHours();
-      const minute = time.getMinutes();
+      minutes -= 10;
 
-      const formattedHour = String(hour).padStart(2, '0');
-      const formattedMinute = String(minute).padStart(2, '0');
+      if (minutes < 0) {
+        minutes += 60;
+        hours -= 1;
+      }
 
-      const period = hour < 12 ? '上午' : '下午';
+      if (hours < 0) {
+        hours = 23;
+      }
 
-      return `${period} ${formattedHour}:${formattedMinute}`;
+      // 根据小时数决定输出格式
+      const period = hours < 12 ? '上午' : '下午';
+      const formattedHours =
+        hours < 12 ? hours.toString().padStart(2, '0') : hours.toString();
+      const formattedMinutes = minutes.toString().padStart(2, '0');
+
+      return `${period} ${formattedHours}:${formattedMinutes}`;
     }
     return '';
   }, [orderDetail]);
