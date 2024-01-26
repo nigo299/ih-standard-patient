@@ -40,6 +40,7 @@ import usePayApi from '@/apis/pay';
 import usePatientApi from '@/apis/usercenter';
 import useCommApi from '@/apis/common';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import styles from './index.less';
 import socialPayAuth from '@/utils/socialPayAuth';
 import storage from '@/utils/storage';
@@ -87,18 +88,16 @@ export default () => {
   });
   const checkTime = useMemo(() => {
     if (orderDetail && orderDetail.visitBeginTime) {
-      const time = new Date(`2000-01-01T${orderDetail.visitBeginTime}`);
-      time.setMinutes(time.getMinutes() - 10);
+      dayjs.extend(customParseFormat);
+      // 将时间字符串转换为 dayjs 对象
+      let time = dayjs(orderDetail.visitBeginTime, 'HH:mm');
+      // 减去 10 分钟
+      time = time.subtract(10, 'minute');
+      // 根据小时数决定输出格式
+      const period = time.hour() <= 12 ? '上午' : '下午';
+      const formattedTime = time.format('HH:mm');
 
-      const hour = time.getHours();
-      const minute = time.getMinutes();
-
-      const formattedHour = String(hour).padStart(2, '0');
-      const formattedMinute = String(minute).padStart(2, '0');
-
-      const period = hour < 12 ? '上午' : '下午';
-
-      return `${period} ${formattedHour}:${formattedMinute}`;
+      return `${period} ${formattedTime}`;
     }
     return '';
   }, [orderDetail]);
