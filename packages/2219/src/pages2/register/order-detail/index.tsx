@@ -40,6 +40,7 @@ import usePayApi from '@/apis/pay';
 import usePatientApi from '@/apis/usercenter';
 import useCommApi from '@/apis/common';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import styles from './index.less';
 import socialPayAuth from '@/utils/socialPayAuth';
 import storage from '@/utils/storage';
@@ -87,29 +88,16 @@ export default () => {
   });
   const checkTime = useMemo(() => {
     if (orderDetail && orderDetail.visitBeginTime) {
-      // 将时间字符串分割成小时和分钟
-      const parts = orderDetail?.visitBeginTime?.split(':');
-      let hours = parseInt(parts[0], 10);
-      let minutes = parseInt(parts[1], 10);
-
-      minutes -= 10;
-
-      if (minutes < 0) {
-        minutes += 60;
-        hours -= 1;
-      }
-
-      if (hours < 0) {
-        hours = 23;
-      }
-
+      dayjs.extend(customParseFormat);
+      // 将时间字符串转换为 dayjs 对象
+      let time = dayjs(orderDetail.visitBeginTime, 'HH:mm');
+      // 减去 10 分钟
+      time = time.subtract(10, 'minute');
       // 根据小时数决定输出格式
-      const period = hours < 12 ? '上午' : '下午';
-      const formattedHours =
-        hours < 12 ? hours.toString().padStart(2, '0') : hours.toString();
-      const formattedMinutes = minutes.toString().padStart(2, '0');
+      const period = time.hour() <= 12 ? '上午' : '下午';
+      const formattedTime = time.format('HH:mm');
 
-      return `${period} ${formattedHours}:${formattedMinutes}`;
+      return `${period} ${formattedTime}`;
     }
     return '';
   }, [orderDetail]);
