@@ -30,7 +30,8 @@ export default () => {
   const [show, setShow] = useState(false);
   const deptListAdd: DeptType[] = useMemo(() => {
     if (deptList?.length) {
-      [...deptList].push({
+      const data = [...deptList];
+      data.push({
         name: '多学科联合门诊（MDT）',
         no: 'first3',
         children: [
@@ -41,7 +42,7 @@ export default () => {
           },
         ],
       });
-      return deptList;
+      return data;
     }
     return [];
   }, [deptList]);
