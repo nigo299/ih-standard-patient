@@ -371,6 +371,7 @@ export default () => {
             if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
               return (
                 <ShowPrice
+                  oneDeptNo={oneDeptNo}
                   data={{ item, date, deptId, type }}
                   key={item.doctorId}
                 />
@@ -379,6 +380,7 @@ export default () => {
             if (config.registerDoctorTagType === 'SOURCE_AND_PRICE') {
               return (
                 <ShowSource
+                  oneDeptNo={oneDeptNo}
                   data={{ item, date, deptId, type }}
                   key={item.doctorId}
                 />
@@ -387,6 +389,7 @@ export default () => {
             if (config.registerDoctorTagType === 'SHOW_DOC_TAGS') {
               return (
                 <ShowDocTags
+                  oneDeptNo={oneDeptNo}
                   data={{ item, date, deptId, type }}
                   key={item.doctorId}
                 />

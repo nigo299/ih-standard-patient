@@ -19,6 +19,7 @@ const TIME_FLAG_ENUM = {
 const ShowPrice = (data: any) => {
   const {
     data: { item, date, deptId, type },
+    oneDeptNo,
   } = data;
   const {
     image,
@@ -44,7 +45,7 @@ const ShowPrice = (data: any) => {
                 item?.doctorId
               }&scheduleDate=${date.format(
                 'YYYY-MM-DD',
-              )}&doctorName=${name}&sourceType=${sourceType}&type=${type}&level=${level}&title=${title}`,
+              )}&doctorName=${name}&sourceType=${sourceType}&type=${type}&level=${level}&title=${title}&oneDeptNo=${oneDeptNo}`,
             });
           } else {
             showToast({
