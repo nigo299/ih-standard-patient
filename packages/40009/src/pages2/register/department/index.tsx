@@ -28,6 +28,8 @@ export default () => {
   const { setSearchQ } = globalState.useContainer();
   const { deptList, getDeptList } = regsiterState.useContainer();
   const [show, setShow] = useState(false);
+  // 保存一级科室 no (夜间门诊定制需求)
+  const [oneNo, setOneNo] = useState<string>();
   const deptListAdd: DeptType[] = useMemo(() => {
     if (deptList?.length) {
       const data = [...deptList];
@@ -135,9 +137,11 @@ export default () => {
           rightItemCls={styles.rightItem}
           rightActiveCls={styles.leftActive}
           onChange={(id, children) => {
+            const no = deptList.find((v) => v.id === id)?.no;
+            setOneNo(no);
             if (children.length === 0) {
               navigateTo({
-                url: `/pages2/register/select-doctor/index?deptId=${id}&type=${type}`,
+                url: `/pages2/register/select-doctor/index?deptId=${id}&type=${type}&oneDeptNo=${no}`,
               });
             }
           }}
@@ -150,7 +154,7 @@ export default () => {
               return;
             }
             navigateTo({
-              url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
+              url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
             });
           }}
         />
