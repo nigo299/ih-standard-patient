@@ -320,6 +320,7 @@ export default () => {
           showDoctor
           disabledCanChoose={true}
           deptId={deptId}
+          oneDeptNo={oneDeptNo}
           onChange={(
             day:
               | dayjs.Dayjs
