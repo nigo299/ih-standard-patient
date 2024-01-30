@@ -3,24 +3,24 @@ import createApiHooks from 'create-api-hooks';
 import { PatientType } from './usercenter';
 import { NUCLEIC_HID } from '@/config/constant';
 export interface DeptType {
-  createTime: string;
-  employeeCount: number;
-  hisId: number;
-  hisType: number;
-  id: number;
-  isSummary: number;
-  name: string;
-  no: string;
-  pathCode: string;
-  pid: number;
-  sortNo: number;
-  status: number;
-  tel: string;
-  updateTime: string;
+  createTime?: string;
+  employeeCount?: number;
+  hisId?: number;
+  hisType?: number;
+  id?: number;
+  isSummary?: number;
+  name?: string;
+  no?: string;
+  pathCode?: string;
+  pid?: number;
+  sortNo?: number;
+  status?: number;
+  tel?: string;
+  updateTime?: string;
   address?: string;
-  children: DeptType[];
-  img: string;
-  summary: string;
+  children?: DeptType[];
+  img?: string;
+  summary?: string;
 }
 
 export interface RegisterDeptListType extends API.ResponseDataType {

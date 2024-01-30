@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
@@ -19,6 +19,7 @@ import reportCmPV from '@/alipaylog/reportCmPV';
 import Search from '@/pages2/register/search-doctor/search';
 import useApi from '@/apis/common';
 import { useHisConfig } from '@/hooks';
+import { DeptType } from 'commonHis/src/apis/register';
 export default () => {
   const { config } = useHisConfig();
   const { type = 'default' } = useGetParams<{
@@ -27,8 +28,27 @@ export default () => {
   const { setSearchQ } = globalState.useContainer();
   const { deptList, getDeptList } = regsiterState.useContainer();
   const [show, setShow] = useState(false);
-  // 保存一级科室 no (夜间模式定制需求)
+  // 保存一级科室 no (夜间门诊定制需求)
   const [oneNo, setOneNo] = useState<string>();
+  const deptListAdd: DeptType[] = useMemo(() => {
+    if (deptList?.length) {
+      const data = [...deptList];
+      [...deptList]?.splice(1, 0, {
+        name: '多学科联合门诊（MDT）',
+        no: 'first3',
+        children: [
+          {
+            name: '多学科联合门诊（MDT）',
+            no: 'MDT123',
+            children: [],
+          },
+        ],
+      });
+      return data;
+    }
+
+    return [];
+  }, [deptList]);
   const {
     data: { data: infoData },
   } = useApi.注意事项内容查询({
@@ -97,7 +117,7 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={(deptList || []).map(({ name, children, id }) => ({
+          data={(deptListAdd || []).map(({ name, children, id }) => ({
             name,
             id: id,
             children: (children || []).map(({ name, children, no }) => ({
