@@ -78,9 +78,6 @@ export default () => {
     params: {
       deptId,
       doctorId,
-      extFields: {
-        firstDeptNo: oneDeptNo,
-      },
     },
     needInit: !!deptId && !!doctorId,
   });
@@ -116,6 +113,9 @@ export default () => {
       scheduleDate: date.format('YYYY-MM-DD'),
       doctorId,
       deptId,
+      extFields: {
+        firstDeptNo: oneDeptNo,
+      },
     },
     needInit: !!deptId && !!doctorId && !!date,
   });

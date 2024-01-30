@@ -579,6 +579,7 @@ export default {
       deptId: string | number;
       doctorId: string | number;
       scheduleDate: string;
+      extFields?: any
     }) => {
       return request.post<RegisterSchedulelistType>(
         '/api/intelligent/api/register/schedule-list',
