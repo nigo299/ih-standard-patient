@@ -15,6 +15,7 @@ export default ({
   deptId,
   type,
   isHealth,
+  oneDeptNo,
   ...props
 }: Props & {
   current: Dayjs;
@@ -23,6 +24,7 @@ export default ({
   deptId: string;
   type: 'reserve' | 'day' | 'default';
   isHealth?: string;
+  oneDeptNo?: string;
 }) => {
   const { config } = useHisConfig();
 
@@ -77,7 +79,7 @@ export default ({
                         navigateTo({
                           url: `/pages2/register/choose-doctor/index?deptId=${deptId}&scheduleDate=${current?.format(
                             'YYYY-MM-DD',
-                          )}&type=${type}isHealth=${isHealth}`,
+                          )}&type=${type}&isHealth=${isHealth}&oneDeptNo=${oneDeptNo}`,
                         });
                       }}
                       className={styles.tabItem2}

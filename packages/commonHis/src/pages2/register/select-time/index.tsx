@@ -28,6 +28,7 @@ export default () => {
     title,
     level,
     type = 'default',
+    oneDeptNo,
   } = useGetParams<{
     deptId: string;
     title: string;
@@ -37,6 +38,7 @@ export default () => {
     doctorId: string;
     scheduleDate: string;
     type: 'reserve' | 'day' | 'default';
+    oneDeptNo?: string;
   }>();
 
   /** 当前是否是门诊医生，门诊缴费医生不能关注 */
@@ -76,6 +78,9 @@ export default () => {
     params: {
       deptId,
       doctorId,
+      extFields: {
+        firstDeptNo: oneDeptNo,
+      },
     },
     needInit: !!deptId && !!doctorId,
   });
