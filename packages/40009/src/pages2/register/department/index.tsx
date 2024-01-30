@@ -30,23 +30,21 @@ export default () => {
   const [show, setShow] = useState(false);
   const deptListAdd: DeptType[] = useMemo(() => {
     if (deptList?.length) {
-      const data = [
-        {
-          name: '多学科联合门诊（MDT）',
-          no: 'first3',
-          children: [
-            {
-              name: '多学科联合门诊（MDT）',
-              no: 'MDT123',
-              children: [],
-            },
-          ],
-        },
-        ...deptList,
-      ];
-
+      const data = [...deptList];
+      [...deptList]?.splice(1, 0, {
+        name: '多学科联合门诊（MDT）',
+        no: 'first3',
+        children: [
+          {
+            name: '多学科联合门诊（MDT）',
+            no: 'MDT123',
+            children: [],
+          },
+        ],
+      });
       return data;
     }
+
     return [];
   }, [deptList]);
   const {
