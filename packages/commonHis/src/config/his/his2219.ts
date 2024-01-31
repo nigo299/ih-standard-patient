@@ -20,6 +20,7 @@ export default class His2219 extends HisBase {
       registerCardChange: '2219_STYLE',
       showRegisterNoticeScrollText: false,
       isMergeIndex: true,
+      isOldManRegFree: true,
     });
   }
 }
