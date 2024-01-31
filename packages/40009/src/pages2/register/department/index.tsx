@@ -31,7 +31,7 @@ export default () => {
   const deptListAdd: DeptType[] = useMemo(() => {
     if (deptList?.length) {
       const data = [...deptList];
-      [...deptList]?.splice(1, 0, {
+      data?.splice(1, 0, {
         name: '多学科联合门诊（MDT）',
         no: 'first3',
         children: [
