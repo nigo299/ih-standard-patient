@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { NoData, Icon, Shadow, Space, ListItem } from '@kqinfo/ui';
+import { NoData, Icon, Shadow, Space, ListItem, Exceed } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import useGetParams from '@/utils/useGetParams';
 import { RegisterNotice, WhiteSpace } from '@/components';
@@ -89,7 +89,7 @@ export default () => {
                   <View key={item.deptId} className={styles.doctorItem}>
                     <ListItem
                       img={item.image || `${IMAGE_DOMIN}/register/doctor.png`}
-                      title={item?.deptName}
+                      title={item?.name}
                       subtitle=""
                       onTap={() => {
                         const scheduleDate =
@@ -115,10 +115,12 @@ export default () => {
                           });
                         }
                       }}
-                      text={item?.name}
-                      footer={item?.level}
+                      text={item?.deptName}
                       after={<Icon name={'kq-right'} color={'#666'} />}
                     />
+                    <View>
+                      擅长：<Exceed>{item?.specialty}</Exceed>{' '}
+                    </View>
                   </View>
                 ))
               ) : (
