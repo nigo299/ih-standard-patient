@@ -642,16 +642,15 @@ export default () => {
                     <Text>(元)</Text>
                   </Space>
                 ),
-                dataIndex: 'visits',
+                dataIndex: 'deptAmount',
               },
               {
                 title: (
                   <Space vertical alignItems={'center'} justify="center">
-                    <Text>出院人次</Text>
-                    <Text>(元)</Text>
+                    <Text>人次</Text>
                   </Space>
                 ),
-                dataIndex: 'deptAmount',
+                dataIndex: 'visits',
               },
               // { title: '就诊人次', dataIndex: 'visits' },
               {
