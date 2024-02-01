@@ -85,6 +85,7 @@ export interface DeptDoctorType {
   regFee: number;
   name: string;
   specialty: string;
+  id: string;
 }
 export interface DeptDoctorlistType extends API.ResponseDataType {
   data: {

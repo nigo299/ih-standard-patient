@@ -18,7 +18,7 @@ import useGetParams from '@/utils/useGetParams';
 import { RegisterNotice, WhiteSpace } from '@/components';
 import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
 import globalState from '@/stores/global';
-import useApi from '@/apis/register';
+import useApi, { DeptDoctorType } from '@/apis/register';
 import dayjs from 'dayjs';
 import styles from './index.less';
 import Search from './search';
@@ -39,6 +39,7 @@ export default () => {
         recordList: [],
       },
     },
+
     needInit: false,
   });
   console.log('recordData?.recordList======>', recordData?.recordList);
@@ -64,6 +65,12 @@ export default () => {
     }
     doctorRequest(params);
   });
+
+  function handleUnique(arr: DeptDoctorType[]): DeptDoctorType[] {
+    const m = new Map();
+    const newArr = arr.filter((v) => !m.has(v.id) && m.set(v.id, v));
+    return newArr;
+  }
   return (
     <View>
       <WhiteSpace />
@@ -94,7 +101,7 @@ export default () => {
           <Space vertical className={styles.card}>
             <>
               {recordData?.recordList?.length >= 1 ? (
-                recordData?.recordList.map((item) => (
+                handleUnique(recordData?.recordList).map((item) => (
                   <View key={item.deptId} className={styles.doctorItem}>
                     {/* <ListItem
                       img={item.image || `${IMAGE_DOMIN}/register/doctor.png`}
@@ -133,7 +140,7 @@ export default () => {
                         alignItems="center"
                         onTap={() => {
                           navigateTo({
-                            url: '/pages2/register/famous-doctors/chooseDept/index',
+                            url: `/pages2/register/famous-doctors/chooseDept/index?doctorId=${item?.doctorId}`,
                           });
                         }}
                       >
