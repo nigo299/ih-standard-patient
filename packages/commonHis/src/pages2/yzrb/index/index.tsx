@@ -37,19 +37,19 @@ export default () => {
         outHospitaData: [],
       },
     });
-  const { data: othersDepartmentInfo1, request: othersDepartmentInfoRequest } =
-    Apis.postApiDeansDailyOthersDepartmentInfo({
-      needInit: false,
-      initValue: {
-        inHospitaData: [],
-        outHospitaData: [],
-      },
-    });
-  const othersDepartmentInfo = useMemo(() => {
-    if (othersDepartmentInfo1) {
-      return othersDepartmentInfo1?.data?.data;
-    }
-  }, [othersDepartmentInfo1]);
+  // const { data: othersDepartmentInfo1, request: othersDepartmentInfoRequest } =
+  //   Apis.postApiDeansDailyOthersDepartmentInfo({
+  //     needInit: false,
+  //     initValue: {
+  //       inHospitaData: [],
+  //       outHospitaData: [],
+  //     },
+  //   });
+  // const othersDepartmentInfo = useMemo(() => {
+  //   if (othersDepartmentInfo1) {
+  //     return othersDepartmentInfo1?.data?.data;
+  //   }
+  // }, [othersDepartmentInfo1]);
   const inDepartmentInfo = useMemo(() => {
     if (inDepartmentInfo1) {
       return inDepartmentInfo1?.data?.data;
@@ -102,79 +102,79 @@ export default () => {
     console.log('dateTypeChange2', selectDate);
     updateDateData(selectDate.inSelectDate, '3');
   }, [selectDate.inSelectDate]);
-  const [switchIncome, setSwitchIncome] = useState<boolean>(true);
-  const incomeCategoriesVoList = useMemo(() => {
-    let dataSource = othersDepartmentInfo?.incomeCategoriesVoList ?? [];
-    if (switchIncome) {
-      dataSource = [...dataSource]?.splice(0, 6);
-    }
-    return [
-      ...dataSource,
-      {
-        incomeType: '合计',
-        amount: othersDepartmentInfo?.incomeCategoriesAmount,
-      },
-    ];
-  }, [
-    othersDepartmentInfo?.incomeCategoriesAmount,
-    othersDepartmentInfo?.incomeCategoriesVoList,
-    switchIncome,
-  ]);
-  const [switchPharmacy] = useState<boolean>(true);
-  const pharmacyRevenueVoList = useMemo(() => {
-    let dataSource = othersDepartmentInfo?.pharmacyRevenueVoList ?? [];
-    if (switchPharmacy) {
-      dataSource = [...dataSource]?.splice(0, 6);
-    }
-    return [
-      ...dataSource,
-      { drugType: '合计', amount: othersDepartmentInfo?.pharmacyRevenueAmount },
-    ];
-  }, [
-    othersDepartmentInfo?.pharmacyRevenueAmount,
-    othersDepartmentInfo?.pharmacyRevenueVoList,
-    switchPharmacy,
-  ]);
-  const [switchAuxiliary, setSwitchAuxiliary] = useState<boolean>(true);
-  const auxiliaryDepartmentExpensesVoList = useMemo(() => {
-    let dataSource =
-      othersDepartmentInfo?.auxiliaryDepartmentExpensesVoList ?? [];
-    if (switchAuxiliary) {
-      dataSource = [...dataSource]?.splice(0, 6);
-    }
-    return [
-      ...dataSource,
-      {
-        physicalTherapyProject: '合计',
-        amount: othersDepartmentInfo?.auxiliaryDepartmentExpensesAmount,
-      },
-    ];
-  }, [
-    othersDepartmentInfo?.auxiliaryDepartmentExpensesAmount,
-    othersDepartmentInfo?.auxiliaryDepartmentExpensesVoList,
-    switchAuxiliary,
-  ]);
-  const [switchPhysicalTherapy, setSwitchPhysicalTherapy] =
-    useState<boolean>(true);
-  const physicalTherapyIncomeVoList = useMemo(() => {
-    let dataSource = othersDepartmentInfo?.physicalTherapyIncomeVoList ?? [];
-    if (switchPhysicalTherapy) {
-      dataSource = [...dataSource]?.splice(0, 6);
-    }
-    return [
-      ...dataSource,
-      {
-        deptName: '合计',
-        personNum: othersDepartmentInfo?.physicalTherapyIncomeNum,
-        amount: othersDepartmentInfo?.physicalTherapyIncomeAmount,
-      },
-    ];
-  }, [
-    othersDepartmentInfo?.physicalTherapyIncomeAmount,
-    othersDepartmentInfo?.physicalTherapyIncomeNum,
-    othersDepartmentInfo?.physicalTherapyIncomeVoList,
-    switchPhysicalTherapy,
-  ]);
+  // const [switchIncome, setSwitchIncome] = useState<boolean>(true);
+  // const incomeCategoriesVoList = useMemo(() => {
+  //   let dataSource = othersDepartmentInfo?.incomeCategoriesVoList ?? [];
+  //   if (switchIncome) {
+  //     dataSource = [...dataSource]?.splice(0, 6);
+  //   }
+  //   return [
+  //     ...dataSource,
+  //     {
+  //       incomeType: '合计',
+  //       amount: othersDepartmentInfo?.incomeCategoriesAmount,
+  //     },
+  //   ];
+  // }, [
+  //   othersDepartmentInfo?.incomeCategoriesAmount,
+  //   othersDepartmentInfo?.incomeCategoriesVoList,
+  //   switchIncome,
+  // ]);
+  // const [switchPharmacy] = useState<boolean>(true);
+  // const pharmacyRevenueVoList = useMemo(() => {
+  //   let dataSource = othersDepartmentInfo?.pharmacyRevenueVoList ?? [];
+  //   if (switchPharmacy) {
+  //     dataSource = [...dataSource]?.splice(0, 6);
+  //   }
+  //   return [
+  //     ...dataSource,
+  //     { drugType: '合计', amount: othersDepartmentInfo?.pharmacyRevenueAmount },
+  //   ];
+  // }, [
+  //   othersDepartmentInfo?.pharmacyRevenueAmount,
+  //   othersDepartmentInfo?.pharmacyRevenueVoList,
+  //   switchPharmacy,
+  // ]);
+  // const [switchAuxiliary, setSwitchAuxiliary] = useState<boolean>(true);
+  // const auxiliaryDepartmentExpensesVoList = useMemo(() => {
+  //   let dataSource =
+  //     othersDepartmentInfo?.auxiliaryDepartmentExpensesVoList ?? [];
+  //   if (switchAuxiliary) {
+  //     dataSource = [...dataSource]?.splice(0, 6);
+  //   }
+  //   return [
+  //     ...dataSource,
+  //     {
+  //       physicalTherapyProject: '合计',
+  //       amount: othersDepartmentInfo?.auxiliaryDepartmentExpensesAmount,
+  //     },
+  //   ];
+  // }, [
+  //   othersDepartmentInfo?.auxiliaryDepartmentExpensesAmount,
+  //   othersDepartmentInfo?.auxiliaryDepartmentExpensesVoList,
+  //   switchAuxiliary,
+  // ]);
+  // const [switchPhysicalTherapy, setSwitchPhysicalTherapy] =
+  //   useState<boolean>(true);
+  // const physicalTherapyIncomeVoList = useMemo(() => {
+  //   let dataSource = othersDepartmentInfo?.physicalTherapyIncomeVoList ?? [];
+  //   if (switchPhysicalTherapy) {
+  //     dataSource = [...dataSource]?.splice(0, 6);
+  //   }
+  //   return [
+  //     ...dataSource,
+  //     {
+  //       deptName: '合计',
+  //       personNum: othersDepartmentInfo?.physicalTherapyIncomeNum,
+  //       amount: othersDepartmentInfo?.physicalTherapyIncomeAmount,
+  //     },
+  //   ];
+  // }, [
+  //   othersDepartmentInfo?.physicalTherapyIncomeAmount,
+  //   othersDepartmentInfo?.physicalTherapyIncomeNum,
+  //   othersDepartmentInfo?.physicalTherapyIncomeVoList,
+  //   switchPhysicalTherapy,
+  // ]);
   // useEffect(() => {
   //   if (dataType === '3') {
   //     othersDepartmentInfoRequest({
@@ -201,11 +201,11 @@ export default () => {
       });
     } else if (type === '3') {
       console.log('xxx');
-      othersDepartmentInfoRequest({
-        startDate,
-        endDate,
-        compareType: dateType.inSelectDate,
-      });
+      // othersDepartmentInfoRequest({
+      //   startDate,
+      //   endDate,
+      //   compareType: dateType.inSelectDate,
+      // });
     } else {
       inDepartmentInfoRequest({
         startDate,
@@ -660,7 +660,7 @@ export default () => {
           />
         </>
       )}
-      {dataType === '3' && (
+      {/* {dataType === '3' && (
         <>
           <View>
             <View className={styles.dateSearch}>
@@ -847,7 +847,7 @@ export default () => {
             {switchPhysicalTherapy ? '展开' : '收起'}
           </Button>
         </>
-      )}
+      )} */}
       {/* {dataType === '3' && (
         <>
           <Ptitle title={'病人区域分析'} />

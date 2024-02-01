@@ -43,7 +43,7 @@ export default (props: Iprops) => {
         <Image src={tab1on} className={styles.tabsIco} />
         住院数据
       </Space>
-      <Space
+      {/* <Space
         onTap={() => {
           onTap?.('3');
         }}
@@ -56,7 +56,7 @@ export default (props: Iprops) => {
       >
         <Image src={tab1on} className={styles.tabsIco} />
         其他数据
-      </Space>
+      </Space> */}
     </Space>
   );
 };
