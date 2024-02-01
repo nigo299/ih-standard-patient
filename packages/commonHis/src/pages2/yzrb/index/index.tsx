@@ -590,7 +590,7 @@ export default () => {
             datas={[
               {
                 lable: '住院总金额',
-                value: Number(inDepartmentInfo?.totalAmount || ''),
+                value: Number(inDepartmentInfo?.outHospitalAmount || ''),
               },
               {
                 lable: '出院人数',

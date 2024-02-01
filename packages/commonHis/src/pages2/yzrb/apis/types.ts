@@ -54,6 +54,7 @@ export interface PostInpatientDepartmentInfoRes {
       amountMOM: string; //总金额环比
       patientYOY: string; //总人数同比
       patientMOM: string; //总人数环比
+      outHospitalAmount: string; // 出院总金额
       inHospitalData: {
         //在院数据
         totalAmount: string; //住院总金额
