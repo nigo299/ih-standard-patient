@@ -148,6 +148,7 @@ export default () => {
       subTitle: '实时查看排队进度',
       url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
       image: `${IMAGE_DOMIN}/home/new_pdjd.png`,
+      open: true,
     },
   ];
 
