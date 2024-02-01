@@ -78,6 +78,7 @@ const subPackages = [
       'debugger/index', //debug页面
       'clearstorage/index', //清除缓存页面
       'register/famous-doctors/index', // 名医名诊
+      'register/famous-doctors/chooseDept/index', // 名医名诊科室选择
     ],
   },
   // 适老版页面

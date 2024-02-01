@@ -4,7 +4,15 @@
 import React, { useState } from 'react';
 import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { NoData, Icon, Shadow, Space, ListItem, Exceed } from '@kqinfo/ui';
+import {
+  NoData,
+  Icon,
+  Shadow,
+  Space,
+  ListItem,
+  Exceed,
+  Image,
+} from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
 import useGetParams from '@/utils/useGetParams';
 import { RegisterNotice, WhiteSpace } from '@/components';
@@ -33,6 +41,7 @@ export default () => {
     },
     needInit: false,
   });
+  console.log('recordData?.recordList======>', recordData?.recordList);
   const {
     data: { data: infoData2 },
   } = useApi2.注意事项内容查询({
@@ -87,7 +96,7 @@ export default () => {
               {recordData?.recordList?.length >= 1 ? (
                 recordData?.recordList.map((item) => (
                   <View key={item.deptId} className={styles.doctorItem}>
-                    <ListItem
+                    {/* <ListItem
                       img={item.image || `${IMAGE_DOMIN}/register/doctor.png`}
                       title={item?.name}
                       subtitle=""
@@ -117,10 +126,37 @@ export default () => {
                       }}
                       text={item?.deptName}
                       after={<Icon name={'kq-right'} color={'#666'} />}
-                    />
-                    <View>
-                      擅长：<Exceed>{item?.specialty}</Exceed>{' '}
-                    </View>
+                    /> */}
+                    <Space vertical className={styles.newItem}>
+                      <Space
+                        justify="space-between"
+                        alignItems="center"
+                        onTap={() => {
+                          navigateTo({
+                            url: '/pages2/register/famous-doctors/chooseDept/index',
+                          });
+                        }}
+                      >
+                        <Space size={24}>
+                          <Image
+                            className={styles.avatarIcon}
+                            src={
+                              item.image || `${IMAGE_DOMIN}/register/doctor.png`
+                            }
+                          />
+                          <Space vertical size={24}>
+                            <View>{item?.name}</View>
+                            <View className={styles.subTitle}>
+                              {item?.deptName}
+                            </View>
+                          </Space>
+                        </Space>
+                        <Icon name={'kq-right'} color={'#666'} />
+                      </Space>
+                    </Space>
+                    <Space className={styles.note}>
+                      <Exceed>擅长：{item?.specialty}</Exceed>
+                    </Space>
                   </View>
                 ))
               ) : (

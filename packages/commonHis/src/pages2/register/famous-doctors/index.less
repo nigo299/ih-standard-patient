@@ -9,9 +9,21 @@
   padding: 0 !important;
 }
 
+.chooseDept {
+  padding: 20px 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+}
+
 .card {
   height: 80vh;
   overflow: auto;
+}
+.chooseDeptCard {
+  overflow: auto;
+  background-color: #fff;
+  border-radius: 16px;
 }
 
 .tab {
@@ -62,7 +74,8 @@
 .doctorItem {
   position: relative;
   padding: 0 20px;
-  height: 210px;
+  // height: 210px;
+  padding-bottom: 20px;
 
   &::before {
     position: absolute;
@@ -118,4 +131,23 @@
       background: @theme-color;
     }
   }
+}
+
+.newItem {
+  padding: 24px 0px;
+  box-sizing: border-box;
+}
+
+.avatarIcon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.subTitle {
+  font-size: 28px;
+}
+
+.note {
+  font-size: 24px;
 }
