@@ -300,6 +300,7 @@ export default memo(() => {
           const submitBirthDay = `${
             analyzeIDCard(values['idNo']).analyzeBirth
           } 00:00:00`;
+          console.log('submitBirthDay======>', submitBirthDay);
 
           if (!patientAge && submitBirthDay) {
             patientAge = getAgeByBirthDay(submitBirthDay) || 0;
@@ -314,10 +315,9 @@ export default memo(() => {
             ...values,
             yibaoNo: '',
             patCardType: 21,
-            birthday:
-              values['idType'] === '1'
-                ? submitBirthDay
-                : `${values['brithdayed']} 00:00:00`,
+            birthday: ['1', '15'].includes(values['idType'])
+              ? submitBirthDay
+              : `${values['brithdayed']} 00:00:00`,
             patientSex: submitPatientSex,
             isNewCard: btnSubType === 'add' ? 1 : 0,
             patientType: values['patientType']

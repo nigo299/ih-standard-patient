@@ -216,12 +216,7 @@ export default () => {
             image: `${IMAGE_DOMIN}/home/new_zndz.png`,
             open: true,
           },
-          {
-            title: '数字影像',
-            subTitle: '',
-            url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
-            image: `${IMAGE_DOMIN}/home/new_szyx.png`,
-          },
+          // {w
         ];
 
   const onNavClick = useCallback(
