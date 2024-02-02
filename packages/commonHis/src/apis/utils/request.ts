@@ -9,26 +9,27 @@ import {
 import { REQUEST_QUERY, PLATFORM } from '@/config/constant';
 import storage from '@/utils/storage';
 import {
+  getBaseUrl,
+  getBrowserUa,
   getCurrentPageUrl,
   isYuKangJianH5,
   jsonToQueryString,
   reLaunchUrl,
 } from '@/utils';
 import qs from 'qs';
-
 /** 如果为true则无需跳转 */
 let navFlag = false;
-const NODE_ENV = process.env.NODE_ENV;
-const DOMIN = isYuKangJianH5()
-  ? 'http://219.152.51.51:9096/test-api'
-  : process.env.REMAX_APP_REQUESET_DOMIN;
+const sourceId = getBrowserUa() === 'alipay' ? '15' : '14';
+const platformSource = isYuKangJianH5()
+  ? sourceId
+  : REQUEST_QUERY.platformSource;
 const instance = axios.create({
-  baseURL: NODE_ENV === 'development' && PLATFORM === 'web' ? '' : DOMIN,
+  baseURL: getBaseUrl(),
   headers:
     process.env.REMAX_APP_PLATFORM === 'development'
       ? {
           'Content-Type': 'application/json;charset=UTF-8',
-          'ih-version': '3.22.74', //'3.24.0', //todo in-version是否有影响
+          'ih-version': '3.24.0',  //todo in-version是否有影响
         }
       : {
           'Content-Type': 'application/json;charset=UTF-8',
@@ -51,10 +52,12 @@ instance.interceptors.request.use((config) => {
   if (config.url) {
     const params = qs.stringify({
       ...REQUEST_QUERY,
+      platformSource,
     });
     config.data = {
       ...config.data,
       ...REQUEST_QUERY,
+      platformSource,
     };
     config.url = `${config.url}${
       config.url.indexOf('?') > -1 ? '&' : '?'
@@ -142,9 +145,11 @@ instance.interceptors.response.use(
         navFlag = true;
         const authUrl =
           PLATFORM === 'web'
-            ? `/pages/auth/getuserinfo/index?jumpUrl=${encodeURIComponent(
-                window.location.hash.slice(1),
-              )}`
+            ? isYuKangJianH5()
+              ? '/pages/otherLogin/index'
+              : `/pages/auth/getuserinfo/index?jumpUrl=${encodeURIComponent(
+                  window.location.hash.slice(1),
+                )}`
             : '/pages/auth/getuserinfo/index';
         setTimeout(() => {
           navFlag = false;

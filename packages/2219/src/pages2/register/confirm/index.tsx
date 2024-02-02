@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { View, navigateTo, Text, reLaunch, navigateBack } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { decrypt, getCurrentPageUrl, sleep } from '@/utils';
+import { decrypt, getCurrentPageUrl, isYuKangJianH5, sleep } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
 import {
   WhiteSpace,
@@ -215,7 +215,7 @@ export default () => {
         }
       } else {
         // 没有注册不允许挂号
-        if (!storage.get('openid')) {
+        if (!storage.get('openid') && !isYuKangJianH5()) {
           console.log('getCurrentPageUrl ', getCurrentPageUrl());
           showToast({
             icon: 'fail',
@@ -368,7 +368,7 @@ export default () => {
           registerTime: `${scheduleDate} ${visitBeginTime}-${visitEndTime}`,
           totalFee: confirmInfo?.totalFee,
           orderId: data.orderId,
-          payOrderId: data.payOrderId,
+          payOrderId: data?.payOrderId,
           extFields: data?.extFields || '',
         };
         if (process.env.REMAX_APP_PLATFORM === 'app') {
@@ -392,23 +392,31 @@ export default () => {
             window.location.href = window.location.href.split('&encData')[0];
           }
         } else if (PLATFORM === 'web') {
-          // H5公众号 支付逻辑
-          const result = await usePayApi.h5支付下单.request({
-            orderId: data.payOrderId,
-            callbackUrl: `${returnUrl()}#/pages/waiting/index?bizType=${
-              isTody ? 'DBGH' : 'YYGH'
-            }&orderId=${data.orderId}`,
-          });
-          if (result.code === 0 && result.data) {
-            if (medicalPay) {
-              setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
-              navigateTo({
-                url: `/pages/pay/index?mode=medical`,
-              });
-              return;
-            } else {
-              window.location.href = result.data;
+          if (!isYuKangJianH5()) {
+            // H5公众号 支付逻辑
+            const result = await usePayApi.h5支付下单.request({
+              orderId: data.payOrderId,
+              callbackUrl: `${returnUrl()}#/pages/waiting/index?bizType=${
+                isTody ? 'DBGH' : 'YYGH'
+              }&orderId=${data.orderId}`,
+            });
+            if (result.code === 0 && result.data) {
+              if (medicalPay) {
+                setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
+                navigateTo({
+                  url: `/pages/pay/index?mode=medical`,
+                });
+                return;
+              } else {
+                window.location.href = result.data;
+              }
             }
+          } else {
+            // 小程序收银台
+            setOrderInfo(orderInfo);
+            navigateTo({
+              url: '/pages/pay/index',
+            });
           }
         } else {
           // 小程序收银台

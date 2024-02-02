@@ -6,6 +6,7 @@ import {
   checkPhoneForm,
   decrypt,
   getAgeByBirthDay,
+  isYuKangJianH5,
   parseAge,
 } from '@/utils';
 import setNavigationBar from '@/utils/setNavigationBar';
@@ -279,8 +280,7 @@ export default memo(() => {
             bindcardProdiles?.isFace === 1 &&
             !faceInfo.success &&
             faceInfo.idNo !== idNo &&
-            faceInfo.name !== name &&
-            !ocrInfo.num // ocr 人脸二选一
+            faceInfo.name !== name
           ) {
             setFaceInfo({
               idNo,
@@ -300,6 +300,7 @@ export default memo(() => {
           const submitBirthDay = `${
             analyzeIDCard(values['idNo']).analyzeBirth
           } 00:00:00`;
+          console.log('submitBirthDay======>', submitBirthDay);
 
           if (!patientAge && submitBirthDay) {
             patientAge = getAgeByBirthDay(submitBirthDay) || 0;
@@ -314,10 +315,9 @@ export default memo(() => {
             ...values,
             yibaoNo: '',
             patCardType: 21,
-            birthday:
-              values['idType'] === '1'
-                ? submitBirthDay
-                : `${values['brithdayed']} 00:00:00`,
+            birthday: ['1', '15'].includes(values['idType'])
+              ? submitBirthDay
+              : `${values['brithdayed']} 00:00:00`,
             patientSex: submitPatientSex,
             isNewCard: btnSubType === 'add' ? 1 : 0,
             patientType: values['patientType']
@@ -434,7 +434,11 @@ export default memo(() => {
 
   usePageEvent('onShow', (query) => {
     reportCmPV({ title: '在线建档', query });
-    if (!storage.get('openid') && process.env.REMAX_APP_PLATFORM !== 'app') {
+    if (
+      !storage.get('openid') &&
+      process.env.REMAX_APP_PLATFORM !== 'app' &&
+      !isYuKangJianH5()
+    ) {
       storage.set('jumpUrl', window.location.href?.split('#')?.[1]);
       navigateTo({
         url: '/pages/auth/login/index', //?callback=1

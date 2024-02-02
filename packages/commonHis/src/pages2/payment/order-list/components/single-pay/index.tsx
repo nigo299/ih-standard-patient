@@ -34,7 +34,13 @@ import {
   PAYMENT_SELECTALL_PAY,
   PAY_TYPE,
 } from '@/config/constant';
-import { decrypt, formDate, getPatientAge, returnUrl } from '@/utils';
+import {
+  decrypt,
+  formDate,
+  getPatientAge,
+  isYuKangJianH5,
+  returnUrl,
+} from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Tip } from '@/components';
 import styles from '@/pages2/payment/order-list/components/single-pay/index.less';
@@ -198,7 +204,7 @@ export default () => {
             }`,
           });
           if (result.code === 0 && result.data) {
-            if (medicalPay) {
+            if (medicalPay || isYuKangJianH5()) {
               console.log(orderInfo, 'orderinfo');
               setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
               navigateTo({

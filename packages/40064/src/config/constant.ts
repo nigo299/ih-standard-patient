@@ -1,3 +1,5 @@
+import { getBrowserUa, isYuKangJianH5 } from 'commonHis/src/utils';
+
 export const isDev = process.env.NODE_ENV !== 'production';
 export const PLATFORM = process.env.REMAX_PLATFORM;
 export const THEME_COLOR = '#2780D9';
@@ -6,9 +8,9 @@ export const STEP_COLOR = '#ffffff';
 export const IMAGE_DOMIN = `${
   isDev
     ? '/images'
-    : PLATFORM === 'web'
-    ? process.env.REMAX_APP_IMAGE_DOMIN
-    : 'https://tihs.cqkqinfo.com/patients/p40064-his/images'
+    : isYuKangJianH5()
+    ? `/zqsspbqfybjyyygh1${process.env.REMAX_APP_IMAGE_DOMIN}` //正式环境上线时候换回来
+    : process.env.REMAX_APP_IMAGE_DOMIN
 }`;
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
 export const HOSPITAL_NAME = '重庆沙坪坝区妇幼保健院';
@@ -16,7 +18,12 @@ export const HIS_ID = '40064';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
   hisId: 40064,
-  platformId: PLATFORM === 'ali' ? 4006402 : 4006401,
+  platformId:
+    PLATFORM === 'ali'
+      ? `${HIS_ID}04`
+      : getBrowserUa() === 'alipay'
+      ? `${HIS_ID}02`
+      : `${HIS_ID}01`,
   platformSource:
     process.env.REMAX_APP_PLATFORM === 'app'
       ? 10

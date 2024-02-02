@@ -26,7 +26,7 @@ import registerState from '@/stores/register';
 import { useUpdateEffect } from 'ahooks';
 import styles from './index.less';
 import { useHisConfig } from '@/hooks';
-import ShowPrice from 'commonHis/src/pages2/register/select-doctor/components/show-price';
+import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
 import ShowSource from 'commonHis/src/pages2/register/select-doctor/components/show-source';
 import ShowDocTags from 'commonHis/src/pages2/register/select-doctor/components/show-doc-tags';
 enum DoctorType {
@@ -41,9 +41,14 @@ export default () => {
   const { config } = useHisConfig();
 
   const { setDeptDetail } = registerState.useContainer();
-  const { deptId, type = 'default' } = useGetParams<{
+  const {
+    deptId,
+    type = 'default',
+    oneDeptNo,
+  } = useGetParams<{
     deptId: string;
     type: 'reserve' | 'day' | 'default';
+    oneDeptNo?: string;
   }>();
   const {
     request: requestScheduleList,
@@ -55,6 +60,9 @@ export default () => {
     },
     params: {
       deptId,
+      extFields: {
+        firstDeptNo: oneDeptNo,
+      },
     },
     needInit: !!deptId,
   });
@@ -110,6 +118,9 @@ export default () => {
     params: {
       scheduleDate: date?.format('YYYY-MM-DD'),
       deptId,
+      extFields: {
+        firstDeptNo: oneDeptNo,
+      },
     },
     needInit: !!deptId && !!date,
   });
@@ -309,6 +320,7 @@ export default () => {
           showDoctor
           disabledCanChoose={true}
           deptId={deptId}
+          oneDeptNo={oneDeptNo}
           onChange={(
             day:
               | dayjs.Dayjs
@@ -359,6 +371,7 @@ export default () => {
             if (config.registerDoctorTagType === 'ORIGINAL_AND_CURRENT_PRICE') {
               return (
                 <ShowPrice
+                  oneDeptNo={oneDeptNo}
                   data={{ item, date, deptId, type }}
                   key={item.doctorId}
                 />
@@ -367,6 +380,7 @@ export default () => {
             if (config.registerDoctorTagType === 'SOURCE_AND_PRICE') {
               return (
                 <ShowSource
+                  oneDeptNo={oneDeptNo}
                   data={{ item, date, deptId, type }}
                   key={item.doctorId}
                 />
@@ -375,6 +389,7 @@ export default () => {
             if (config.registerDoctorTagType === 'SHOW_DOC_TAGS') {
               return (
                 <ShowDocTags
+                  oneDeptNo={oneDeptNo}
                   data={{ item, date, deptId, type }}
                   key={item.doctorId}
                 />

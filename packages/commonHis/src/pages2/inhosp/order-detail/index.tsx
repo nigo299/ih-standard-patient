@@ -17,7 +17,7 @@ export default () => {
   const { orderId } = useGetParams<{ orderId: string }>();
   const {
     data: { data: orderDetail },
-  } = useApi.查询住院订单详情({
+  } = useApi.新的查询住院订单详情({
     params: {
       orderId,
     },

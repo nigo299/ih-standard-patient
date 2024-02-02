@@ -28,6 +28,8 @@ const pages = [
   'pages/maintain/index', // 系统维护
   'pages/covid19/adult/index', // 核酸检测列表
   'pages/covid19/confirm/index', // 核酸检测确认
+  'pages/otherLogin/index', // 第三方登录
+  'pages/ykhome/index', // 就医一件事首页
 ];
 
 const subPackages = [
@@ -132,8 +134,7 @@ const subPackages = [
 
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
 import { AppConfig as AliAppConfig } from 'remax/ali';
-import { THEME_COLOR } from './config/constant';
-
+const THEME_COLOR = '#2780D9';
 export const wechat: WechatAppConfig = {
   pages,
   subpackages: subPackages,

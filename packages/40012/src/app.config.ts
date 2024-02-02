@@ -26,12 +26,23 @@ const pages = [
   'pages/waiting/index', // 支付结果等待页
   'pages/webview/index', // 第三方业务链接
   'pages/maintain/index', // 系统维护
+  'pages/sign/userList/index', // 取药签到选择就诊人
+  'pages/sign/sign/index', // 取药签到
+  'pages/sign/list/index', // 取药签到列表
+
   // 'pages/sign/userList/index', // 取药签到选择就诊人
   // 'pages/sign/sign/index', // 取药签到
   // 'pages/sign/list/index', // 取药签到列表
 ];
 
 const subPackages = [
+  {
+    root: 'pages',
+    pages: [
+      '/otherLogin/index', // 第三方登录
+      '/ykhome/index', //渝康健首页
+    ],
+  },
   {
     root: 'pages2',
     pages: [
@@ -120,7 +131,7 @@ const subPackages = [
 
 import { AppConfig as WechatAppConfig } from 'remax/wechat';
 import { AppConfig as AliAppConfig } from 'remax/ali';
-import { THEME_COLOR } from './config/constant';
+const THEME_COLOR = '#008dd9';
 
 export const wechat: WechatAppConfig = {
   pages,

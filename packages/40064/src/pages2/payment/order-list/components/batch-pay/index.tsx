@@ -31,7 +31,7 @@ import showModal from '@/utils/showModal';
 import payState, { OrderInfoType } from '@/stores/pay';
 import setNavigationBar from '@/utils/setNavigationBar';
 import { IMAGE_DOMIN, PLATFORM, PAY_TYPE } from '@/config/constant';
-import { decrypt, formDate, returnUrl } from '@/utils';
+import { decrypt, formDate, isYuKangJianH5, returnUrl } from '@/utils';
 import useGetParams from '@/utils/useGetParams';
 import { Dialog, Tip } from '@/components';
 import styles from 'commonHis/src/pages2/payment/order-list/index.less';
@@ -216,6 +216,13 @@ export default () => {
             window.location.href = window.location.href?.split('&encData')[0];
           }
         } else if (PLATFORM === 'web') {
+          if (isYuKangJianH5()) {
+            setOrderInfo(orderInfo);
+            navigateTo({
+              url: '/pages/pay/index',
+            });
+            return;
+          }
           // H5 支付逻辑
           const result = await usePayApi.h5支付下单.request({
             orderId: data.payOrderId,
@@ -537,7 +544,7 @@ export default () => {
           </View>
         </Space>
         <Space size={20} justify={'space-between'}>
-          {medicalPay && (
+          {medicalPay && !isYuKangJianH5() && (
             <Button
               block={false}
               type="primary"

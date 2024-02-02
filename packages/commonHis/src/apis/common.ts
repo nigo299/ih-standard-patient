@@ -468,4 +468,20 @@ export default {
       },
     }),
   ),
+  通用登录授权: createApiHooks(
+    (data: { platformSource: string; code: string }) =>
+      request.post<{
+        data: {
+          token: string;
+          user: {
+            username: string;
+            openid: string;
+          };
+        };
+      }>('/api/oauth/login', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }),
+  ),
 };
