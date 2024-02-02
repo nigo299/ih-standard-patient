@@ -29,6 +29,8 @@ export default () => {
     },
     params: {
       doctorTag: 'FAMOUS',
+      pageNum: 1,
+      numPerPage: 500,
     },
     needInit: true,
   });

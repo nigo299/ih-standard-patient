@@ -39,7 +39,6 @@ export default () => {
         recordList: [],
       },
     },
-
     needInit: false,
   });
   console.log('recordData?.recordList======>', recordData?.recordList);
@@ -57,8 +56,10 @@ export default () => {
     setNavigationBar({
       title: '名医列表',
     });
-    let params: any = {
+    const params: any = {
       doctorTag: 'FAMOUS',
+      pageNum: 1,
+      numPerPage: 500,
     };
     if (searchQ) {
       params.doctorName = searchQ;
