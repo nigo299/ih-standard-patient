@@ -85,6 +85,7 @@ export interface DeptDoctorType {
   regFee: number;
   name: string;
   specialty: string;
+  id: string;
 }
 export interface DeptDoctorlistType extends API.ResponseDataType {
   data: {
@@ -547,6 +548,7 @@ export default {
       doctorName?: string /** 模糊搜索 */;
       pageNum?: number;
       numPerPage?: number;
+      doctorTag?: string;
     }) => {
       return request.get<DeptDoctorlistType>('/api/ihis/his/doctorMain', {
         params: {
