@@ -145,7 +145,7 @@ export default () => {
                           });
                         }}
                       >
-                        <Space size={24}>
+                        <Space size={24} alignItems="center">
                           <Image
                             className={styles.avatarIcon}
                             src={
