@@ -32,11 +32,14 @@ export default () => {
   const [oneNo, setOneNo] = useState<string>();
   const deptListAdd: DeptType[] = useMemo(() => {
     if (deptList?.length) {
-      const data = [{
-              name: '名医名诊',
-              id: -999,
-              children: [{ name: '名医名诊', no: '-9999', children: [] }],
-            },...deptList];
+      const data = [
+        {
+          name: '名医名诊',
+          id: -999,
+          children: [{ name: '名医名诊', no: '-9999', children: [] }],
+        },
+        ...deptList,
+      ];
       data?.splice(1, 0, {
         name: '多学科联合门诊（MDT）',
         no: 'first3',
@@ -150,16 +153,16 @@ export default () => {
             }
           }}
           onSelect={(dept) => {
-<<<<<<< HEAD
             if (dept.id === '-9999') {
               navigateTo({
                 url: `/pages2/register/famous-doctors/index`,
-=======
+              });
+              return;
+            }
             const name = dept?.name as string;
             if (name?.includes('MDT')) {
               navigateTo({
                 url: `/pages4/home/index`,
->>>>>>> master
               });
               return;
             }
