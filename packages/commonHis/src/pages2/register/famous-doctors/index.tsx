@@ -16,20 +16,18 @@ import {
 import setNavigationBar from '@/utils/setNavigationBar';
 import useGetParams from '@/utils/useGetParams';
 import { RegisterNotice, WhiteSpace } from '@/components';
-import { IMAGE_DOMIN, HOSPITAL_NAME } from '@/config/constant';
+import { IMAGE_DOMIN } from '@/config/constant';
 import globalState from '@/stores/global';
 import useApi, { DeptDoctorType } from '@/apis/register';
-import dayjs from 'dayjs';
 import styles from './index.less';
 import Search from './search';
 import useApi2 from '@/apis/common';
-import setPageStyle from '@/utils/setPageStyle';
 
 export default () => {
   const { setSearchQ, searchQ } = globalState.useContainer();
-  const { type } = useGetParams<{
-    type: 'reserve' | 'day' | 'default';
-  }>();
+  // const { type } = useGetParams<{
+  //   type: 'reserve' | 'day' | 'default';
+  // }>();
   const {
     request: doctorRequest,
     data: { data: recordData }, // 解决未授权返回数据为空 导致解构报错
@@ -41,7 +39,6 @@ export default () => {
     },
     needInit: false,
   });
-  console.log('recordData?.recordList======>', recordData?.recordList);
   const {
     data: { data: infoData2 },
   } = useApi2.注意事项内容查询({
@@ -155,7 +152,7 @@ export default () => {
                           <Space vertical size={24}>
                             <View>{item?.name}</View>
                             <View className={styles.subTitle}>
-                              {item?.deptName}
+                              {item?.level}
                             </View>
                           </Space>
                         </Space>

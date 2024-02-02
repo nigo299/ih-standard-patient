@@ -3,7 +3,7 @@
  */
 import React, { useState } from 'react';
 import { View, navigateTo } from 'remax/one';
-import { NoData, Icon, Shadow, Space, ListItem } from '@kqinfo/ui';
+import { NoData, Icon, Space, ListItem } from '@kqinfo/ui';
 import { usePageEvent } from 'remax/macro';
 import useGetParams from '@/utils/useGetParams';
 import { IMAGE_DOMIN } from '@/config/constant';
