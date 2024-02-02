@@ -647,6 +647,14 @@ export default () => {
               {
                 title: (
                   <Space vertical alignItems={'center'} justify="center">
+                    <Text>在院人数</Text>
+                  </Space>
+                ),
+                dataIndex: 'enterNum',
+              },
+              {
+                title: (
+                  <Space vertical alignItems={'center'} justify="center">
                     <Text>人次</Text>
                   </Space>
                 ),
