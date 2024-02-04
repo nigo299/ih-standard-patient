@@ -87,6 +87,7 @@ const subPackages = [
       'nucleic/upload/index', // 网约出租车核酸上传图片
       'nucleic/confirm/index', // 自助核酸检测确认订单
       'imageCloud/index',
+      'yzrb/index/index', //院长日报
     ],
   },
   // 适老版页面

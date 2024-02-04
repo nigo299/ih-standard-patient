@@ -1,0 +1,34 @@
+.tabs {
+  height: 90px;
+  font-size: 36px;
+  font-weight: 400;
+  color: #fff;
+  width: 100%;
+}
+.tabsIco {
+  width: 58px;
+  height: 58px;
+}
+.activeItem {
+  height: 90px;
+  position: relative;
+  opacity: 1 !important;
+  &:after {
+    content: '';
+    width: 49px;
+    height: 8px;
+    background: #ffafd7;
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: 28px;
+    z-index: 9;
+  }
+}
+.tabItem {
+  cursor: pointer;
+  position: relative;
+  opacity: 0.5;
+}
