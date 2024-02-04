@@ -393,15 +393,15 @@ export default () => {
                 }&orderId=${data.orderId}`,
               });
               if (result.code === 0 && result.data) {
-                if (medicalPay) {
-                  setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
-                  navigateTo({
-                    url: `/pages/pay/index?mode=medical`,
-                  });
-                  return;
-                } else {
-                  window.location.href = result.data;
-                }
+                // if (medicalPay) {
+                setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
+                navigateTo({
+                  url: `/pages/pay/index?mode=medical`,
+                });
+                return;
+                // } else {
+                //   window.location.href = result.data;
+                // }
               }
             } else {
               // 小程序收银台

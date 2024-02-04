@@ -8,6 +8,7 @@ export default class His40011 extends HisBase {
       clinicPayBatchType: 'JOINT',
       isShowOutPayDetails: true,
       isPaymentDefaultSelectAll: true,
+      isOldManRegFree: true,
     });
   }
 }
