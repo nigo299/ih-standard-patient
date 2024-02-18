@@ -34,9 +34,9 @@ export default () => {
     if (deptList?.length) {
       const data = [
         {
-          name: '名医名诊',
+          name: '名医门诊',
           id: -999,
-          children: [{ name: '名医名诊', no: '-9999', children: [] }],
+          children: [{ name: '名医门诊', no: '-9999', children: [] }],
         },
         ...deptList,
       ];
