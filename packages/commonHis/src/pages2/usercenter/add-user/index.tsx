@@ -292,14 +292,14 @@ export default memo(() => {
             });
             return;
           }
+          console.log('values======>', values);
           let patientAge =
             btnSubType === 'add'
               ? analyzeIDCard(values['idNo']).analyzeAge
               : selectCard.patientAge;
-
-          const submitBirthDay = analyzeIDCard(values['idNo'])?.analyzeBirth
-            ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
-            : `${values['birthday']} 00:00:00`;
+          const submitBirthDay = `${
+            analyzeIDCard(values['idNo']).analyzeBirth
+          } 00:00:00`;
 
           if (!patientAge && submitBirthDay) {
             patientAge = getAgeByBirthDay(submitBirthDay) || 0;
@@ -316,7 +316,7 @@ export default memo(() => {
             patCardType: 21,
             birthday: ['1', '15'].includes(values['idType'])
               ? submitBirthDay
-              : `${values['brithdayed']} 00:00:00`,
+              : `${values['birthday'] ?? values['brithdayed']} 00:00:00`,
             patientSex: submitPatientSex,
             isNewCard: btnSubType === 'add' ? 1 : 0,
             patientType: values['patientType']
@@ -326,6 +326,7 @@ export default memo(() => {
               ? '0'
               : '1',
           };
+          console.log('params======>', params);
           const { code } = await handleAdd(
             btnSubType === 'bind'
               ? params
