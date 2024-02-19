@@ -297,10 +297,9 @@ export default memo(() => {
               ? analyzeIDCard(values['idNo']).analyzeAge
               : selectCard.patientAge;
 
-          const submitBirthDay = `${
-            analyzeIDCard(values['idNo']).analyzeBirth
-          } 00:00:00`;
-          console.log('submitBirthDay======>', submitBirthDay);
+          const submitBirthDay = analyzeIDCard(values['idNo'])?.analyzeBirth
+            ? `${analyzeIDCard(values['idNo']).analyzeBirth} 00:00:00`
+            : `${values['birthday']} 00:00:00`;
 
           if (!patientAge && submitBirthDay) {
             patientAge = getAgeByBirthDay(submitBirthDay) || 0;
