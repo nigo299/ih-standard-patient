@@ -292,7 +292,6 @@ export default memo(() => {
             });
             return;
           }
-          console.log('values======>', values);
           let patientAge =
             btnSubType === 'add'
               ? analyzeIDCard(values['idNo']).analyzeAge
@@ -326,7 +325,6 @@ export default memo(() => {
               ? '0'
               : '1',
           };
-          console.log('params======>', params);
           const { code } = await handleAdd(
             btnSubType === 'bind'
               ? params
