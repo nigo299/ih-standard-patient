@@ -15,6 +15,7 @@ import useApi, { WaitpayType } from '@/apis/payment';
 import usePatientApi from '@/apis/usercenter';
 import useRegisterApi from '@/apis/register';
 import usePayApi from '@/apis/pay';
+import Dialog from '@/components/dialog';
 import {
   FormItem,
   Form,
@@ -50,6 +51,7 @@ import socialPayAuth from '@/utils/socialPayAuth';
 import { useUpdateEffect } from 'ahooks';
 import { PatGender } from '@/config/dict';
 import { useHisConfig } from '@/hooks';
+import { showPaymentDialog } from '@/pages2/payment/order-list/utils';
 
 export default () => {
   const { config } = useHisConfig();
@@ -67,6 +69,7 @@ export default () => {
   const { data: hospitialConfigData } = usePatientApi.获取医院挷卡配置信息({
     needInit: true,
   });
+  const [showDialog, setShowDialog] = useState(false);
   const {
     data: { data: patientInfo },
   } = usePatientApi.查询就诊人详情({
@@ -328,6 +331,9 @@ export default () => {
       }
     }
   }, [waitOpList]);
+  usePageEvent('onLoad', () => {
+    setShowDialog(true);
+  });
   usePageEvent('onShow', (query) => {
     reportCmPV({ title: '门诊缴费', query });
     if (!patientId && !patCardNo) {
@@ -533,6 +539,25 @@ export default () => {
           立即缴费
         </Button>
       </View>
+      {showPaymentDialog && (
+        <Dialog
+          show={showDialog}
+          hideFail
+          successText="我知道了"
+          title="缴费须知"
+          onSuccess={() => {
+            setShowDialog(false);
+          }}
+        >
+          <View className={styles.dialogContent}>
+            <View>1、军人及军人家属，请到窗口办理挂号、缴费业务！</View>
+            <View>2、“特病”请到人工窗口缴费！</View>
+            <View>
+              3、职工医保请使用医保卡缴费，如使用其它方式缴费不再更换发票。
+            </View>
+          </View>
+        </Dialog>
+      )}
     </View>
   );
 };
