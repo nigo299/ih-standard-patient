@@ -132,7 +132,7 @@ const ShowPrice = (data: any) => {
                     alignItems="center"
                     justify="center"
                   >
-                    满诊
+                    约满
                   </Space>
                 </View>
               )}
