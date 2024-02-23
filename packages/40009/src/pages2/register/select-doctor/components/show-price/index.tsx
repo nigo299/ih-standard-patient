@@ -87,9 +87,9 @@ const ShowPrice = (data: any) => {
             }`}
           </Exceed>
         </View>
-        {(detailsVoList ?? []).map((v: any) => {
+        {(detailsVoList ?? []).map((v: any, i: number) => {
           return (
-            <Space className={styles.timeSort}>
+            <Space className={styles.timeSort} key={i}>
               <View className={styles.source}>
                 {TIME_FLAG_ENUM[v.timeFlag as keyof typeof TIME_FLAG_ENUM]} 总号
                 {v?.totalSource} |
@@ -98,7 +98,7 @@ const ShowPrice = (data: any) => {
               {v?.leftSource !== 0 ? (
                 <View
                   className={classNames(styles.rests, {
-                    [styles.disable]: item?.status === 2,
+                    [styles.disable]: v?.status === 2,
                   })}
                 >
                   <Space
@@ -124,7 +124,7 @@ const ShowPrice = (data: any) => {
               ) : (
                 <View
                   className={classNames(styles.fullRests, {
-                    [styles.disable]: item?.status === 2,
+                    [styles.disable]: v?.status === 2,
                   })}
                 >
                   <Space
@@ -132,7 +132,7 @@ const ShowPrice = (data: any) => {
                     alignItems="center"
                     justify="center"
                   >
-                    满诊
+                    约满
                   </Space>
                 </View>
               )}
