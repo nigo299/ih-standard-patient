@@ -655,7 +655,7 @@ export default memo(() => {
             <ReInput
               placeholder="请输入真实姓名"
               type="text"
-              maxLength={15}
+              maxLength={30}
               className={styles.reInput}
               placeholderClassName={styles.placeholder}
             />
