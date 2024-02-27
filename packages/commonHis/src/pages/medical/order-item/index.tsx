@@ -80,12 +80,6 @@ export default () => {
             bizChannel: 'insuranceWxPay',
           });
           setSloading(false);
-          showModal({
-            title: '测试 payAuthNo',
-            content: `data: ${JSON.stringify(data)}
-            payAuthNo: ${data?.payAuthNo} `,
-            showCancel: false,
-          });
           if (code === 0 && data?.payAuthNo) {
             console.log(patientFullIdNo, 'patientFullIdNo');
             console.log(data.userCardNo, 'data.userCardNo');
