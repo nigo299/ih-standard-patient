@@ -53,7 +53,8 @@ export const H5_PAY = false;
 // 是否有支付宝小程序
 export const IS_ALIPAY = false;
 // 支付宝小程序appid
-export const APPID = PLATFORM === 'ali' ? '' : '';
+export const APPID =
+  PLATFORM === 'ali' ? '2021002128610895' : '2021002128610895';
 // 是否开启意见反馈（小桥医助小程序）
 export const IS_FEEDBACL = PLATFORM === 'web';
 export const IS_DEPT = false; // PLATFORM !== 'ali'
