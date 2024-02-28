@@ -20,7 +20,7 @@ export const REQUEST_QUERY = {
   hisId: 40013,
   platformId:
     PLATFORM === 'ali'
-      ? `${HIS_ID}04`
+      ? `${HIS_ID}02`
       : getBrowserUa() === 'alipay'
       ? `${HIS_ID}02`
       : `${HIS_ID}01`,
