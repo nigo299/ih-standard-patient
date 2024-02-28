@@ -487,9 +487,10 @@ export default () => {
           )
         }
 
-        {mode === 'medical' &&
-          !isYuKangJianH5() &&
-          hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
+        {
+          // mode === 'medical' &&
+          // !isYuKangJianH5() &&
+          // hospitialConfigData?.data?.medicalPay?.indexOf('Alipay') > -1 &&
           PLATFORM === 'ali' && (
             <Button
               type="primary"
@@ -517,7 +518,8 @@ export default () => {
             >
               医保移动支付
             </Button>
-          )}
+          )
+        }
 
         {hidden !== '1' && (
           <Button
