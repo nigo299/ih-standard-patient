@@ -94,7 +94,7 @@ export default memo(() => {
         />
         <Space vertical className={styles.title}>
           <View>欢迎登录{HOSPITAL_NAME}</View>
-          <View>智慧医院</View>
+          <View>智慧医院1</View>
         </Space>
         <Form
           form={form}
