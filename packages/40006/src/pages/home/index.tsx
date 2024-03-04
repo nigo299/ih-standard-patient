@@ -226,12 +226,6 @@ export default () => {
           //   open: true,
           // },
           {
-            title: '排队进度',
-            subTitle: '',
-            url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
-            image: `${IMAGE_DOMIN}/home/pdjd.png`,
-          },
-          {
             title: '数字影像',
             subTitle: '',
             url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/imageCloud/index',
