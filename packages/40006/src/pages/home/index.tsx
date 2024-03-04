@@ -103,7 +103,7 @@ export default () => {
           患者提前<Text style={{ color: '#FF9743' }}>预约号源</Text>
         </View>
       ),
-      url: '',
+      url: '/pages2/register/department/index?type=default',
       image: `${IMAGE_DOMIN}/home/yygh.png`,
       new: true,
     },
@@ -114,7 +114,7 @@ export default () => {
           手机缴费<Text style={{ color: '#FF9743' }}>不用等</Text>
         </View>
       ),
-      url: '',
+      url: '/pages2/usercenter/select-user/index?pageRoute=/pages2/payment/order-list/index',
       image: `${IMAGE_DOMIN}/home/mzjf.png`,
     },
     {
@@ -124,32 +124,32 @@ export default () => {
           报告结果<Text style={{ color: '#FF9743' }}>实时查询</Text>
         </View>
       ),
-      url: ``,
+      url: `/pages/report/report-list/index`,
       image: `${IMAGE_DOMIN}/home/bgcx.png`,
       new: PLATFORM === 'ali' && true,
     },
   ];
 
-  const homeSubNavConfig = [
+  const homeSubNavConfig: any[] = [
     // {
     //   title: '当日挂号',
     //   subTitle: '到院患者当日挂号',
     //   url: '/pages2/register/department/index?type=day',
     //   image: `${IMAGE_DOMIN}/home/drgh.png`,
     // },
-    {
-      title: '来院导航',
-      subTitle: '导航前往医院',
-      url: '/pages2/register',
-      image: `${IMAGE_DOMIN}/home/new_lydh.png`,
-      onClick: () => openLocation(),
-    },
-    {
-      title: '住院预缴',
-      subTitle: '住院费用预缴',
-      url: '',
-      image: `${IMAGE_DOMIN}/home/zyfw.png`,
-    },
+    // {
+    //   title: '来院导航',
+    //   subTitle: '导航前往医院',
+    //   url: '/pages2/register',
+    //   image: `${IMAGE_DOMIN}/home/new_lydh.png`,
+    //   onClick: () => openLocation(),
+    // },
+    // {
+    //   title: '住院预缴',
+    //   subTitle: '住院费用预缴',
+    //   url: '',
+    //   image: `${IMAGE_DOMIN}/home/zyfw.png`,
+    // },
   ];
 
   const homeCardNavConfig =
@@ -210,20 +210,26 @@ export default () => {
           },
         ]
       : [
+          // {
+          //   title: '微官网',
+          //   subTitle: '',
+          //   url: '',
+          //   image: `${IMAGE_DOMIN}/home/wgw.png`,
+          //   patientId: true,
+          //   open: true,
+          // },
+          // {
+          //   title: '智能导诊',
+          //   subTitle: '',
+          //   url: '',
+          //   image: `${IMAGE_DOMIN}/home/zndz.png`,
+          //   open: true,
+          // },
           {
-            title: '微官网',
+            title: '排队进度',
             subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/wgw.png`,
-            patientId: true,
-            open: true,
-          },
-          {
-            title: '智能导诊',
-            subTitle: '',
-            url: '',
-            image: `${IMAGE_DOMIN}/home/zndz.png`,
-            open: true,
+            url: '/pages2/usercenter/select-user/index?pageRoute=/pages/queue/index',
+            image: `${IMAGE_DOMIN}/home/pdjd.png`,
           },
           {
             title: '数字影像',

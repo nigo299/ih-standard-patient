@@ -50,7 +50,7 @@ export default memo(() => {
   const jumpToUrl = useCallback(() => {
     if (isHealth === '1' || storage.get('isHealth') === '1') {
       window.location.replace(
-        `https://healthmall.cqkqinfo.com/H5App-p40012/#/pages/index/index?openId=${storage.get(
+        `https://healthmall.cqkqinfo.com/H5App-p40006/#/pages/index/index?openId=${storage.get(
           'openid',
         )}`,
       );
@@ -84,17 +84,20 @@ export default memo(() => {
     };
   }, [clearCountdownTimer]);
   return (
-    <BackgroundImg className={styles.page}>
+    <BackgroundImg
+      img={`${IMAGE_DOMIN}/auth/newbg.png`}
+      className={styles.page}
+    >
       <Modal />
       <Space vertical className={styles.content}>
         <Image
-          src={`${IMAGE_DOMIN}/auth/logo.png`}
+          src={`${IMAGE_DOMIN}/auth/newlogo.png`}
           className={styles.logo}
           mode="aspectFill"
         />
         <Space vertical className={styles.title}>
           <View>欢迎登录{HOSPITAL_NAME}</View>
-          <View>智慧医院1</View>
+          <View>智慧医院</View>
         </Space>
         <Form
           form={form}
