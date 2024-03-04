@@ -22,6 +22,7 @@ import patientState from '@/stores/patient';
 import styles from '@/pages/auth/login/index.less';
 import classNames from 'classnames';
 import useGetParams from '@/utils/useGetParams';
+import { DisableCacheImage } from '@/components';
 
 export default memo(() => {
   const { callback = '0', isHealth } = useGetParams<{
@@ -90,8 +91,8 @@ export default memo(() => {
     >
       <Modal />
       <Space vertical className={styles.content}>
-        <Image
-          src={`${IMAGE_DOMIN}/auth/newlogo.png`}
+        <DisableCacheImage
+          src={`${IMAGE_DOMIN}/auth/logo.png`}
           className={styles.logo}
           mode="aspectFill"
         />
