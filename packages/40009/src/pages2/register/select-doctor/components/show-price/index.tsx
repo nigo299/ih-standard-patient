@@ -102,7 +102,10 @@ const ShowPrice = (data: any) => {
                   })}
                 >
                   <Space
-                    className={styles.restPrice}
+                    className={classNames(styles.restPrice, {
+                      [styles.hidden]:
+                        v?.doctorInitialRegFee === v?.registerFee,
+                    })}
                     alignItems="center"
                     justify="center"
                   >
