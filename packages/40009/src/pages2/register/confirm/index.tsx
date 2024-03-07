@@ -226,78 +226,6 @@ export default () => {
           return;
         }
         // 核酸问卷调查判断
-        if (NUCLEIC_INVESTIGATION) {
-          if (PLATFORM === 'ali') {
-            // if (!storage.get(`${selectedPatient.patientId}`)) {
-            //   navigateToMiniProgram({
-            //     appId: NUCLEIC_APPID,
-            //     path: `/pages/index/index?${nucleicJumpParams}`,
-            //     success: () => {
-            //       storage.set(`${selectedPatient.patientId}`, 'true');
-            //       const defaultPatient = confirmInfo?.patientList?.filter(
-            //         (item) => item.patientId === selectedPatient.patientId,
-            //       )[0];
-            //       if (defaultPatient.isDefault !== 1) {
-            //         usePatientApi.设置默认就诊人.request({
-            //           patientId: selectedPatient.patientId,
-            //         });
-            //       }
-            //     },
-            //     fail: () =>
-            //       showToast({
-            //         title: '跳转小程序失败，请重试!',
-            //       }),
-            //   });
-            //   return;
-            // }
-            const resultData = await useApi.查询是否填写流调问卷.request({
-              userId: selectedPatient?.patientId,
-              formId: '4',
-            });
-            if (
-              !resultData?.data ||
-              dayjs(resultData.data.createTime).format('YYYY-MM-DD') !==
-                dayjs().format('YYYY-MM-DD')
-            ) {
-              jumpNucleic().then(() => {
-                const defaultPatient = confirmInfo?.patientList?.filter(
-                  (item) => item.patientId === selectedPatient?.patientId,
-                )[0];
-                if (defaultPatient.isDefault !== 1) {
-                  usePatientApi.设置默认就诊人.request({
-                    patientId: selectedPatient?.patientId,
-                  });
-                }
-              });
-              return;
-            }
-          } else {
-            const resultData = await useApi.查询是否填写问卷.request({
-              patientId: selectedPatient?.patientId,
-            });
-            if (resultData?.data?.length === 0) {
-              // 没填写问卷
-              if (PLATFORM === 'web') {
-                setShow(true);
-                getPatientQuestionnaire();
-                setCountdown(180).then(() => {
-                  clearTimer();
-                });
-              } else if (PLATFORM === 'wechat') {
-                showModal({
-                  title: '提示',
-                  content:
-                    '遵照有关部门疫情防控要求，需要您填写一份流行病调查登记，感谢您的配合！',
-                }).then(({ confirm }) => {
-                  if (confirm) {
-                    jumpNucleic();
-                  }
-                });
-              }
-              return;
-            }
-          }
-        }
       }
       setPayFlag(true);
       try {
@@ -395,15 +323,21 @@ export default () => {
                 }&orderId=${data.orderId}`,
               });
               if (result.code === 0 && result.data) {
-                // if (medicalPay) {
-                setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
-                navigateTo({
-                  url: `/pages/pay/index?mode=medical`,
-                });
-                return;
-                // } else {
-                //   window.location.href = result.data;
-                // }
+                if (medicalPay) {
+                  setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
+                  if (confirmInfo?.deptName?.includes('分院')) {
+                    navigateTo({
+                      url: `/pages/pay/index`,
+                    });
+                    return;
+                  }
+                  navigateTo({
+                    url: `/pages/pay/index?mode=medical`,
+                  });
+                  return;
+                } else {
+                  window.location.href = result.data;
+                }
               }
             } else {
               // 小程序收银台
@@ -416,6 +350,12 @@ export default () => {
             // 小程序收银台
             setOrderInfo(orderInfo);
             if (medicalPay) {
+              if (confirmInfo?.deptName?.includes('分院')) {
+                navigateTo({
+                  url: `/pages/pay/index`,
+                });
+                return;
+              }
               navigateTo({
                 url: `/pages/pay/index?mode=medical`,
               });
