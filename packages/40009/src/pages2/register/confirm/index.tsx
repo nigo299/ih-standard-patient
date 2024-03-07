@@ -530,7 +530,7 @@ export default () => {
     return result + '门诊部';
   };
   useEffect(() => {
-    if (confirmInfo?.deptName?.includes('口腔科门诊')) {
+    if (confirmInfo?.deptName?.includes('分院')) {
       setVisible1(true);
     }
   }, [confirmInfo]);
