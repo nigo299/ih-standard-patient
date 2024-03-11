@@ -22,6 +22,7 @@ module.exports = class DynamicImportPlugin {
             const regText = /(.*packages.*src).*/;
             if (result.request.includes('@/') && regText.test(result.context)) {
               const pathDir = result.context.match(regText);
+
               let rootPath = pathDir[1];
               if (rootPath && this.opts.hisId) {
                 rootPath = rootPath.replace('commonHis', this.opts.hisId);
@@ -52,6 +53,9 @@ module.exports = class DynamicImportPlugin {
   }
 
   tryExist(pathDir) {
+    if (pathDir.includes('?modules')) {
+      pathDir = pathDir.split('?')[0];
+    }
     if (fs.existsSync(pathDir)) {
       return true;
     }

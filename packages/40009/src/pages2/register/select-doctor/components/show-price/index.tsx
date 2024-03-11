@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { View, navigateTo, Text } from 'remax/one';
 import { Exceed, Shadow, Space, showToast } from '@kqinfo/ui';
 import { IMAGE_DOMIN } from '@/config/constant';
-import styles from './index.less';
+import styles from '@/pages2/register/select-doctor/components/show-price/index.less';
 import { PreviewImage } from '@/components';
 
 const TIME_FLAG_ENUM = {
