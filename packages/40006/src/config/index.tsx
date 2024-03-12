@@ -27,11 +27,11 @@ export const mineMainNavConfig = [
     url: '/pages2/payment/paymented-list/index',
     image: `${IMAGE_DOMIN}/mine/mzjfdd.png`,
   },
-  {
-    title: '住院预缴订单',
-    url: '/pages2/inhosp/order-list/index',
-    image: `${IMAGE_DOMIN}/mine/zyyjdd.png`,
-  },
+  // {
+  //   title: '住院预缴订单',
+  //   url: '/pages2/inhosp/order-list/index',
+  //   image: `${IMAGE_DOMIN}/mine/zyyjdd.png`,
+  // },
 ];
 
 export const mineNavListConfig = [
@@ -40,12 +40,12 @@ export const mineNavListConfig = [
     url: '/pages/collect/index',
     image: `${IMAGE_DOMIN}/mine/gzsc.png`,
   },
-  {
-    title: '意见反馈',
-    url: '/pages2/feedback/feedback-list/index',
-    image: `${IMAGE_DOMIN}/mine/yjfk.png`,
-    open: false,
-  },
+  // {
+  //   title: '意见反馈',
+  //   url: '/pages2/feedback/feedback-list/index',
+  //   image: `${IMAGE_DOMIN}/mine/yjfk.png`,
+  //   open: false,
+  // },
 ];
 
 export const inhospMoneys = [

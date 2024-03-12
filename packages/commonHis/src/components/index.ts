@@ -34,3 +34,7 @@ export { default as FloatingBall } from '@/components/floatingBall';
 export { default as Feedback } from '@/components/feedback';
 export { default as MedicallItem } from '@/components/medicalItem';
 export { default as Dots } from '@/components/dots';
+export {
+  DisableCacheImage,
+  DisableCachePreviewImage,
+} from '@/components/disableCacheImg';
