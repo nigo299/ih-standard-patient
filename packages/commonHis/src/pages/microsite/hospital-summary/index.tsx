@@ -15,7 +15,7 @@ import setNavigationBar from '@/utils/setNavigationBar';
 import useApi from '@/apis/microsite';
 import styles from './index.less';
 import callPhone from '@/utils/callPhone';
-import { PreviewImage } from '@/components';
+import { DisableCachePreviewImage } from '@/components';
 import reportCmPV from '@/alipaylog/reportCmPV';
 
 export default () => {
@@ -64,7 +64,7 @@ export default () => {
       <View className={styles.card}>
         <Shadow card>
           <Space alignItems="center" className={styles.cardWrap}>
-            <PreviewImage
+            <DisableCachePreviewImage
               url={`${IMAGE_DOMIN}/auth/logo.png`}
               className={styles.logo}
             />
