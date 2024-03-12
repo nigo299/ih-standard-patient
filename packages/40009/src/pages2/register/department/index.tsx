@@ -111,7 +111,6 @@ export default () => {
       setnoticeContent(infoDataYJMZ?.[0]?.noticeInfo);
     }
     if (id == 213) {
-      console.log('便民门诊服务说明');
       setShowPop(true);
       // setShowPopTitle('便民门诊服务说明');
       setShowPopTitle(infoDataBMMZT?.[0]?.noticeTypeName);
@@ -119,7 +118,6 @@ export default () => {
     }
   }
   function onConfirmBtn() {
-    console.log('dept?.id', dept?.id);
     setShowPop(false);
     if (showPopTitle == infoDataBMMZT?.[0]?.noticeTypeName) {
       navigateTo({
@@ -219,7 +217,6 @@ export default () => {
               return;
             }
             if (dept.id === '213') {
-              console.log('便民', dept.id);
               onShowPop(dept.id);
               //   navigateTo({
               //     url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
