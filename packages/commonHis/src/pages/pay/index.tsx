@@ -469,7 +469,6 @@ export default () => {
         </View>
       </View>
       <View className={styles.buttons}>
-        {/* 先隐藏移动医保支付 */}
         {mode === 'medical' &&
           !isYuKangJianH5() &&
           hospitialConfigData?.data?.medicalPay?.indexOf('WeChat') > -1 &&
