@@ -470,25 +470,25 @@ export default () => {
           </View>
         </Space>
         <Space size={20} justify={'space-between'}>
-          {medicalPay && !isYuKangJianH5() && (
-            <Button
-              block={false}
-              type="primary"
-              className={styles.btn}
-              loading={payFlag}
-              disabled={
-                payFlag || selectList.length === 0 || waitOpList.length === 0
-              }
-              onTap={() => {
-                storage.set('payment_selectList', JSON.stringify(selectList));
-                socialPayAuth().then(() => {
-                  handlePay(true);
-                });
-              }}
-            >
-              医保移动支付
-            </Button>
-          )}
+          {/* {medicalPay && !isYuKangJianH5() && ( */}
+          <Button
+            block={false}
+            type="primary"
+            className={styles.btn}
+            loading={payFlag}
+            disabled={
+              payFlag || selectList.length === 0 || waitOpList.length === 0
+            }
+            onTap={() => {
+              storage.set('payment_selectList', JSON.stringify(selectList));
+              socialPayAuth().then(() => {
+                handlePay(true);
+              });
+            }}
+          >
+            医保移动支付
+          </Button>
+          {/* )} */}
           <Button
             block={false}
             type="primary"
