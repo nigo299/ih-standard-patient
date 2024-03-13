@@ -45,9 +45,9 @@ export const ORDER_INVOICE = false;
 export const CHILDREN_DEPTLIST = false;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
-  process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
+  process.env.REMAX_APP_PLATFORM === 'app' ? true : true;
 // 门诊缴费必须全部支付
-export const PAYMENT_SELECTALL_PAY = true;
+export const PAYMENT_SELECTALL_PAY = false;
 // 是否启用H5支付(flase为立即缴费小程序支付)
 export const H5_PAY = false;
 // 是否有支付宝小程序
