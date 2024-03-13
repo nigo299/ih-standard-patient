@@ -3,8 +3,13 @@ import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { CopyRight, Dialog, Step, WhiteSpace } from '@/components';
-import RegisterNotice from './components/registerNotice';
+import {
+  CopyRight,
+  Dialog,
+  Step,
+  WhiteSpace,
+  RegisterNotice,
+} from '@/components';
 import {
   CHILDREN_DEPTLIST,
   IMAGE_DOMIN,
@@ -255,7 +260,8 @@ export default () => {
         </>
       )}
       <RegisterNotice
-        cancelBtn={
+        countdownNum={0}
+        isShowCancel={
           showPopTitle == infoDataYJMZ?.[0]?.noticeTypeName ? false : true
         }
         title={showPopTitle}
