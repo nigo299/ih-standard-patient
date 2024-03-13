@@ -8,6 +8,7 @@ import styles from './index.less';
 import { PreviewImage } from '@/components';
 import useApi from '@/apis/register';
 import useGetParams from '@/utils/useGetParams';
+import { getHisName } from '@/pages2/register/order-detail/utils';
 
 export default () => {
   const { deptId, doctorId, reg, scheduleDate, type } = useGetParams<{
@@ -48,7 +49,9 @@ export default () => {
               <Text>{`${doctorDetail?.deptName || ''} | ${
                 doctorDetail?.level || ''
               }`}</Text>
-              <Text style={{ color: '#666' }}>{doctorDetail?.hisName}</Text>
+              <Text style={{ color: '#666' }}>
+                {getHisName(doctorDetail as any)}
+              </Text>
             </Space>
           </Space>
         </Shadow>
@@ -58,7 +61,7 @@ export default () => {
           执业点
         </PartTitle>
         <Space alignItems="center">
-          <TextWrap text={doctorDetail?.hisName || HOSPITAL_NAME} />
+          <TextWrap text={getHisName(doctorDetail as any)} />
           <Text className={styles.tag}>{doctorDetail?.hisDistrict}</Text>
         </Space>
         <PartTitle className={styles.partTitle} bold full>

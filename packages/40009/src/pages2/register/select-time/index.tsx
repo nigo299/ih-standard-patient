@@ -15,6 +15,7 @@ import registerState from '@/stores/register';
 import { useUpdateEffect, useLockFn } from 'ahooks';
 import styles from 'commonHis/src/pages2/register/select-time/index.less';
 import { useHisConfig } from '@/hooks';
+import { getDeptName } from '../confirm';
 
 export default () => {
   const { config } = useHisConfig();
@@ -329,7 +330,13 @@ export default () => {
           doctorImg={
             doctorDetail?.image || `${IMAGE_DOMIN}/register/doctor.png`
           }
-          hospitalName={doctorDetail?.hisName}
+          hospitalName={
+            doctorDetail?.deptName?.includes('分院')
+              ? `重庆松山医院口腔医共体 (${getDeptName(
+                  doctorDetail?.deptName,
+                )})`
+              : doctorDetail?.hisName
+          }
           doctorTitle={`${doctorDetail?.deptName || ''} | ${
             doctorDetail?.level || ''
           }`}
