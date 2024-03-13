@@ -29,6 +29,7 @@ import { useHisConfig } from '@/hooks';
 import ShowPrice from '@/pages2/register/select-doctor/components/show-price';
 import ShowSource from 'commonHis/src/pages2/register/select-doctor/components/show-source';
 import ShowDocTags from 'commonHis/src/pages2/register/select-doctor/components/show-doc-tags';
+import { getDeptName } from '../confirm';
 enum DoctorType {
   all = '当日出诊医生',
   normal = '急诊号',
@@ -301,7 +302,11 @@ export default () => {
       <View className={styles.content}>
         <DeptInfo
           deptImg={deptDetail?.img || `${IMAGE_DOMIN}/register/dept.png`}
-          hospitalName={HOSPITAL_NAME || '暂无'}
+          hospitalName={
+            deptDetail?.name?.includes('分院')
+              ? `重庆松山医院口腔医共体(${getDeptName(deptDetail?.name)})`
+              : HOSPITAL_NAME || '暂无'
+          }
           deptName={deptDetail?.name || '暂无'}
           tag={deptDetail?.hisDistrict || '本院'}
           summary={`简介: ${deptDetail?.summary || '暂无'}`}
