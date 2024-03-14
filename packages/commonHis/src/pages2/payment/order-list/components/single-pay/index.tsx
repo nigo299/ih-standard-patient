@@ -207,7 +207,9 @@ export default () => {
             }`,
           });
           if (result.code === 0 && result.data) {
-            if (medicalPay || isYuKangJianH5()) {
+            // medicalPay || isYuKangJianH5()
+            const flag = true;
+            if (flag) {
               console.log(orderInfo, 'orderinfo');
               setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
               navigateTo({
