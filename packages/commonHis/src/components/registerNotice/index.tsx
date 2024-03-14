@@ -11,14 +11,20 @@ import { useDownCount } from 'parsec-hooks';
 import { useUpdateEffect } from 'ahooks';
 
 interface Props {
+  countdownNum?: number;
   show: boolean;
   confirm: () => void;
   close: () => void;
   content: string;
   confirmButtonStyle?: React.CSSProperties;
+  isShowCancel?: boolean;
+  title?: string;
 }
 
 export default ({
+  title = '挂号服务须知',
+  countdownNum = 5,
+  isShowCancel = true,
   show,
   confirm,
   close,
@@ -32,8 +38,8 @@ export default ({
     };
   }, [clearCountdownTimer]);
   useUpdateEffect(() => {
-    setCountdown(5);
-  }, [show]);
+    setCountdown(countdownNum);
+  }, [show, countdownNum]);
   return (
     <Mask
       show={show}
@@ -46,7 +52,7 @@ export default ({
       }}
     >
       <Space vertical alignItems="center" className={styles.notice}>
-        <View className={styles.noticeTitle}>挂号服务须知</View>
+        <View className={styles.noticeTitle}>{title}</View>
         <View className={styles.noticeText}>
           <RichText nodes={content || ''} />
 
@@ -145,21 +151,23 @@ export default ({
         </View>
         <Space
           className={styles.buttons}
-          justify="space-between"
+          justify={isShowCancel ? 'space-between' : 'center'}
           alignItems="center"
         >
-          <Button
-            className={styles.cancelBtn}
-            onTap={() => {
-              setPageStyle({
-                overflow: 'inherit',
-              });
-              close();
-              showTabBar();
-            }}
-          >
-            取消
-          </Button>
+          {isShowCancel && (
+            <Button
+              className={styles.cancelBtn}
+              onTap={() => {
+                setPageStyle({
+                  overflow: 'inherit',
+                });
+                close();
+                showTabBar();
+              }}
+            >
+              取消
+            </Button>
+          )}
           <Button
             type={'primary'}
             className={classNames(styles.confirmBtn, {

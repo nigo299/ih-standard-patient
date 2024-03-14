@@ -3,7 +3,7 @@ import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { CopyRight, RegisterNotice, Step, WhiteSpace } from '@/components';
+import { CopyRight, Step, WhiteSpace, RegisterNotice } from '@/components';
 import {
   CHILDREN_DEPTLIST,
   IMAGE_DOMIN,
@@ -30,6 +30,11 @@ export default () => {
   const [show, setShow] = useState(false);
   // 保存一级科室 no (夜间门诊定制需求)
   const [oneNo, setOneNo] = useState<string>();
+  // 弹窗变量
+  const [showPop, setShowPop] = useState<boolean>(false);
+  const [showPopTitle, setShowPopTitle] = useState<string>('');
+  const [dept, setDept] = useState<any>('');
+  const [noticeContent, setnoticeContent] = useState<any>('');
   const deptListAdd: DeptType[] = useMemo(() => {
     if (deptList?.length) {
       const data = [
@@ -65,6 +70,24 @@ export default () => {
     },
     needInit: config.showChooseDeptDialog,
   });
+  // 夜间门诊
+  const {
+    data: { data: infoDataYJMZ },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'YJMZTS',
+      noticeMethod: 'WBK',
+    },
+  });
+  // 便民门诊
+  const {
+    data: { data: infoDataBMMZT },
+  } = useApi.注意事项内容查询({
+    params: {
+      noticeType: 'BMMZTS',
+      noticeMethod: 'WBK',
+    },
+  });
   usePageEvent('onShow', async () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
@@ -78,6 +101,31 @@ export default () => {
   useEffect(() => {
     if (config.showChooseDeptDialog && infoData?.[0]?.noticeInfo) setShow(true);
   }, [config.showChooseDeptDialog, infoData]);
+  // 夜间门诊，便民门诊弹窗
+  function onShowPop(type: any) {
+    const PopObj: any = {
+      YJMZ: {
+        showPopTitle: infoDataYJMZ?.[0]?.noticeTypeName,
+        noticeContent: infoDataYJMZ?.[0]?.noticeInfo,
+      },
+      BMMZ: {
+        showPopTitle: infoDataBMMZT?.[0]?.noticeTypeName,
+        noticeContent: infoDataBMMZT?.[0]?.noticeInfo,
+      },
+    };
+    setShowPop(true);
+    setShowPopTitle(PopObj[type].showPopTitle);
+    setnoticeContent(PopObj[type].noticeContent);
+  }
+  function onConfirmBtn() {
+    setShowPop(false);
+    if (showPopTitle == infoDataBMMZT?.[0]?.noticeTypeName) {
+      navigateTo({
+        url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}`,
+      });
+    }
+    return;
+  }
   return (
     <View>
       <Step step={STEP_ITEMS.findIndex((i) => i === '选择科室') + 1} />
@@ -124,15 +172,18 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={(deptListAdd || []).map(({ name, children, id }) => ({
+          data={(deptListAdd || []).map(({ name, children, id, pid }) => ({
             name,
             id: id,
-            children: (children || []).map(({ name, children, no }) => ({
+            pid: pid,
+            children: (children || []).map(({ name, children, no, pid }) => ({
               name,
               id: no,
-              children: (children || []).map(({ name, no }) => ({
+              pid: pid,
+              children: (children || []).map(({ name, no, pid }) => ({
                 name,
                 id: no,
+                pid: pid,
               })),
             })),
           }))}
@@ -152,7 +203,9 @@ export default () => {
               });
             }
           }}
-          onSelect={(dept) => {
+          onSelect={(dept: any) => {
+            console.log('dept', dept); // 选择的科室
+            setDept(dept);
             if (dept.id === '-9999') {
               navigateTo({
                 url: `/pages2/register/famous-doctors/index`,
@@ -166,6 +219,15 @@ export default () => {
               });
               return;
             }
+            if (dept.pid === 451) {
+              onShowPop('YJMZ');
+              return;
+            }
+            if (dept.pid === 563) {
+              onShowPop('BMMZ');
+              return;
+            }
+
             navigateTo({
               url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
             });
@@ -181,7 +243,7 @@ export default () => {
             className={styles.list}
             onTap={() =>
               navigateTo({
-                url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}`,
+                url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
               })
             }
           >
@@ -201,14 +263,15 @@ export default () => {
         </>
       )}
       <RegisterNotice
-        show={show}
-        close={() => {
-          setShow(false);
-        }}
-        content={infoData?.[0]?.noticeInfo || ''}
-        confirm={() => {
-          setShow(false);
-        }}
+        countdownNum={0}
+        isShowCancel={
+          showPopTitle == infoDataYJMZ?.[0]?.noticeTypeName ? false : true
+        }
+        title={showPopTitle}
+        show={showPop}
+        close={() => setShowPop(false)}
+        content={noticeContent}
+        confirm={onConfirmBtn}
       />
     </View>
   );
