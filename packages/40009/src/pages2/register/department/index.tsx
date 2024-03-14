@@ -193,8 +193,8 @@ export default () => {
           rightItemCls={styles.rightItem}
           rightActiveCls={styles.leftActive}
           onChange={(id, children) => {
-            onShowPop(id);
             const no = deptList.find((v) => v.id === id)?.no;
+            onShowPop(no);
             setOneNo(no);
             if (children.length === 0) {
               navigateTo({
@@ -203,6 +203,7 @@ export default () => {
             }
           }}
           onSelect={(dept) => {
+            console.log('dept', dept); // 选择的科室
             setDept(dept);
             if (dept.id === '-9999') {
               navigateTo({
