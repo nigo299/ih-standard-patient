@@ -103,20 +103,19 @@ export default () => {
   }, [config.showChooseDeptDialog, infoData]);
   // 夜间门诊，便民门诊弹窗
   function onShowPop(id: any) {
-    if (id == 451 || id == '452') {
-      setShowPop(true);
-      // setShowPopTitle('夜间门诊服务说明');
-      setShowPopTitle(infoDataYJMZ?.[0]?.noticeTypeName);
-      setnoticeContent(infoDataYJMZ?.[0]?.noticeInfo);
-      return;
-    }
-    if (id == 213 || id == '213') {
-      setShowPop(true);
-      // setShowPopTitle('便民门诊服务说明');
-      setShowPopTitle(infoDataBMMZT?.[0]?.noticeTypeName);
-      setnoticeContent(infoDataBMMZT?.[0]?.noticeInfo);
-      return;
-    }
+    const PopObj: any = {
+      '451': {
+        showPopTitle: infoDataYJMZ?.[0]?.noticeTypeName,
+        noticeContent: infoDataYJMZ?.[0]?.noticeInfo,
+      },
+      '213': {
+        showPopTitle: infoDataBMMZT?.[0]?.noticeTypeName,
+        noticeContent: infoDataBMMZT?.[0]?.noticeInfo,
+      },
+    };
+    setShowPop(true);
+    setShowPopTitle(PopObj[id].showPopTitle);
+    setnoticeContent(PopObj[id].noticeContent);
   }
   function onConfirmBtn() {
     setShowPop(false);
@@ -194,7 +193,11 @@ export default () => {
           rightActiveCls={styles.leftActive}
           onChange={(id, children) => {
             const no = deptList.find((v) => v.id === id)?.no;
-            onShowPop(no);
+            if (no === '451' || no === '213') {
+              onShowPop(no);
+              return;
+            }
+
             setOneNo(no);
             if (children.length === 0) {
               navigateTo({
@@ -218,7 +221,11 @@ export default () => {
               });
               return;
             }
-            onShowPop(dept.id);
+            if (dept.id === '451' || dept.id === '213') {
+              onShowPop(dept.id);
+              return;
+            }
+
             navigateTo({
               url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
             });
