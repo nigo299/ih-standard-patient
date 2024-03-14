@@ -119,11 +119,10 @@ export default () => {
   }
   function onConfirmBtn() {
     setShowPop(false);
-    if (showPopTitle == infoDataBMMZT?.[0]?.noticeTypeName) {
-      navigateTo({
-        url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}`,
-      });
-    }
+    navigateTo({
+      url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
+    });
+
     return;
   }
   return (
