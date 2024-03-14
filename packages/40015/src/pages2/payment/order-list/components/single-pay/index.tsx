@@ -198,9 +198,7 @@ export default () => {
             }`,
           });
           if (result.code === 0 && result.data) {
-            // medicalPay
-            const flag = true;
-            if (flag) {
+            if (medicalPay) {
               console.log(orderInfo, 'orderinfo');
               setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
               navigateTo({
