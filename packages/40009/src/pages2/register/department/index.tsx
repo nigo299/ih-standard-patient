@@ -223,7 +223,7 @@ export default () => {
               onShowPop('YJMZ');
               return;
             }
-            if (dept.pid === 213) {
+            if (dept.pid === 563) {
               onShowPop('BMMZ');
               return;
             }
