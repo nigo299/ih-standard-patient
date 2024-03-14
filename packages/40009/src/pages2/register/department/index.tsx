@@ -102,20 +102,20 @@ export default () => {
     if (config.showChooseDeptDialog && infoData?.[0]?.noticeInfo) setShow(true);
   }, [config.showChooseDeptDialog, infoData]);
   // 夜间门诊，便民门诊弹窗
-  function onShowPop(id: any) {
+  function onShowPop(type: any) {
     const PopObj: any = {
-      '451': {
+      YJMZ: {
         showPopTitle: infoDataYJMZ?.[0]?.noticeTypeName,
         noticeContent: infoDataYJMZ?.[0]?.noticeInfo,
       },
-      '213': {
+      BMMZ: {
         showPopTitle: infoDataBMMZT?.[0]?.noticeTypeName,
         noticeContent: infoDataBMMZT?.[0]?.noticeInfo,
       },
     };
     setShowPop(true);
-    setShowPopTitle(PopObj[id].showPopTitle);
-    setnoticeContent(PopObj[id].noticeContent);
+    setShowPopTitle(PopObj[type].showPopTitle);
+    setnoticeContent(PopObj[type].noticeContent);
   }
   function onConfirmBtn() {
     setShowPop(false);
@@ -172,15 +172,18 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={(deptListAdd || []).map(({ name, children, id }) => ({
+          data={(deptListAdd || []).map(({ name, children, id, pid }) => ({
             name,
             id: id,
-            children: (children || []).map(({ name, children, no }) => ({
+            pid: pid,
+            children: (children || []).map(({ name, children, no, pid }) => ({
               name,
               id: no,
-              children: (children || []).map(({ name, no }) => ({
+              pid: pid,
+              children: (children || []).map(({ name, no, pid }) => ({
                 name,
                 id: no,
+                pid: pid,
               })),
             })),
           }))}
@@ -193,11 +196,6 @@ export default () => {
           rightActiveCls={styles.leftActive}
           onChange={(id, children) => {
             const no = deptList.find((v) => v.id === id)?.no;
-            if (no === '451' || no === '213') {
-              onShowPop(no);
-              return;
-            }
-
             setOneNo(no);
             if (children.length === 0) {
               navigateTo({
@@ -205,7 +203,7 @@ export default () => {
               });
             }
           }}
-          onSelect={(dept) => {
+          onSelect={(dept: any) => {
             console.log('dept', dept); // 选择的科室
             setDept(dept);
             if (dept.id === '-9999') {
@@ -221,8 +219,12 @@ export default () => {
               });
               return;
             }
-            if (dept.id === '451' || dept.id === '213') {
-              onShowPop(dept.id);
+            if (dept.pid === 451) {
+              onShowPop('YJMZ');
+              return;
+            }
+            if (dept.pid === 213) {
+              onShowPop('BMMZ');
               return;
             }
 
