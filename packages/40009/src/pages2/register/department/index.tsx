@@ -1,15 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
-import {
-  CopyRight,
-  Dialog,
-  Step,
-  WhiteSpace,
-  RegisterNotice,
-} from '@/components';
+import { CopyRight, Step, WhiteSpace, RegisterNotice } from '@/components';
 import {
   CHILDREN_DEPTLIST,
   IMAGE_DOMIN,

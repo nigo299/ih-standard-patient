@@ -57,6 +57,7 @@ import {
   visitTime,
   registerSuccessTips,
   RegisterCardPatientNo,
+  getHisName,
 } from '@/pages2/register/order-detail/utils';
 
 const cancelItems = [
@@ -118,7 +119,7 @@ export default () => {
   const clinicList = [
     {
       label: '就诊医院',
-      text: orderDetail?.hisName || HOSPITAL_NAME,
+      text: getHisName(orderDetail),
     },
     {
       label: '就诊科室',
@@ -574,7 +575,7 @@ export default () => {
 
       <RegisterCard
         payName="register"
-        hospitalName={orderDetail?.hisName || HOSPITAL_NAME}
+        hospitalName={getHisName(orderDetail) || HOSPITAL_NAME}
         healthCardNo={jkkInfo?.healthCardId}
         patCardNo={orderDetail?.[RegisterCardPatientNo]}
       />

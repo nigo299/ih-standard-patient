@@ -96,7 +96,8 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     <View className={styles.restPriceAfter} />
-                    {extFields.doctorInitialRegFee === '0'
+                    {extFields.doctorInitialRegFee === '0' ||
+                    !extFields?.doctorInitialRegFee
                       ? ''
                       : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
                   </Space>
@@ -151,7 +152,8 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     <View className={styles.restPriceAfter} />
-                    {extFields.doctorInitialRegFee === '0'
+                    {extFields.doctorInitialRegFee === '0' ||
+                    !extFields?.doctorInitialRegFee
                       ? ''
                       : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
                   </Space>
@@ -205,7 +207,8 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     <View className={styles.restPriceAfter} />
-                    {extFields.doctorInitialRegFee === '0'
+                    {extFields.doctorInitialRegFee === '0' ||
+                    !extFields?.doctorInitialRegFee
                       ? ''
                       : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
                   </Space>
@@ -259,7 +262,8 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     <View className={styles.restPriceAfter} />
-                    {extFields.doctorInitialRegFee === '0'
+                    {extFields.doctorInitialRegFee === '0' ||
+                    !extFields?.doctorInitialRegFee
                       ? ''
                       : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
                   </Space>
@@ -313,7 +317,8 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     <View className={styles.restPriceAfter} />
-                    {extFields.doctorInitialRegFee === '0'
+                    {extFields.doctorInitialRegFee === '0' ||
+                    !extFields?.doctorInitialRegFee
                       ? ''
                       : `¥${(extFields?.doctorInitialRegFee / 100).toFixed(2)}`}
                   </Space>

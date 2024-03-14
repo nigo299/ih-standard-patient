@@ -353,7 +353,7 @@ export interface OrderDetailType {
   encryptIdNo: string;
   encryptPatientIdNo: string;
 }
-interface RegisterOrderDetialType extends API.ResponseDataType {
+export interface RegisterOrderDetialType extends API.ResponseDataType {
   data: OrderDetailType;
 }
 
@@ -581,7 +581,7 @@ export default {
       deptId: string | number;
       doctorId: string | number;
       scheduleDate: string;
-      extFields?: any
+      extFields?: any;
     }) => {
       return request.post<RegisterSchedulelistType>(
         '/api/intelligent/api/register/schedule-list',
