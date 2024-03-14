@@ -206,17 +206,8 @@ export default () => {
               data.orderId
             }`,
           });
-          // 开始
-          setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
-          navigateTo({
-            url: `/pages/pay/index?mode=medical`,
-          });
-          return;
-          // 取消
           if (result.code === 0 && result.data) {
-            // medicalPay || isYuKangJianH5()
-            const flag = true;
-            if (flag) {
+            if (medicalPay || isYuKangJianH5()) {
               console.log(orderInfo, 'orderinfo');
               setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
               navigateTo({
