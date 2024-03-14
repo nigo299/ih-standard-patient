@@ -118,10 +118,15 @@ export default () => {
     setnoticeContent(PopObj[type].noticeContent);
   }
   function onConfirmBtn() {
-    setShowPop(false);
+    // console.log(
+    //   'dept',
+    //   `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
+    // ); // 选择的科室
+    // return;
     navigateTo({
       url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
     });
+    setShowPop(false);
 
     return;
   }
@@ -263,9 +268,6 @@ export default () => {
       )}
       <RegisterNotice
         countdownNum={0}
-        isShowCancel={
-          showPopTitle == infoDataYJMZ?.[0]?.noticeTypeName ? false : true
-        }
         title={showPopTitle}
         show={showPop}
         close={() => setShowPop(false)}
