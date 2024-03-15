@@ -124,7 +124,7 @@ export default () => {
     // ); // 选择的科室
     // return;
     navigateTo({
-      url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
+      url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
     });
     setShowPop(false);
 
