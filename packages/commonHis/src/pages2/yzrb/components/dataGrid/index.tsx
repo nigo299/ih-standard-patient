@@ -46,50 +46,54 @@ export default (props: Iprops) => {
   };
   return (
     <Space className={styles.databox} flexWrap={'wrap'}>
-      {datas.map((item, index) => {
-        return (
-          <Space
-            key={index}
-            className={styles.dataItem}
-            alignItems={'center'}
-            justify={'center'}
-            vertical
-          >
-            <Space className={styles.itemTitle}>{item.title}</Space>
-            <Space className={styles.itemValue}>{showNumVal(item.value)}</Space>
-            {item?.extra && (
-              <Space
-                alignItems={'center'}
-                justify={'space-between'}
-                className={styles.itemBottom}
-              >
-                {item?.extra?.tb && (
-                  <Space alignItems={'center'}>
-                    同比 {item.extra?.tb?.value}
-                    {item?.extra?.tb?.change === 1 && (
-                      <Image src={S} className={styles.change} />
-                    )}
-                    {item?.extra?.tb?.change === 2 && (
-                      <Image src={J} className={styles.change} />
-                    )}
-                  </Space>
-                )}
-                {item?.extra?.hb && (
-                  <Space alignItems={'center'}>
-                    环比 {item.extra?.hb?.value}
-                    {item?.extra?.hb?.change === 1 && (
-                      <Image src={S} className={styles.change} />
-                    )}
-                    {item?.extra?.hb?.change === 2 && (
-                      <Image src={J} className={styles.change} />
-                    )}
-                  </Space>
-                )}
+      {datas
+        .filter((item) => item)
+        .map((item, index) => {
+          return (
+            <Space
+              key={index}
+              className={styles.dataItem}
+              alignItems={'center'}
+              justify={'center'}
+              vertical
+            >
+              <Space className={styles.itemTitle}>{item.title}</Space>
+              <Space className={styles.itemValue}>
+                {showNumVal(item.value)}
               </Space>
-            )}
-          </Space>
-        );
-      })}
+              {item?.extra && (
+                <Space
+                  alignItems={'center'}
+                  justify={'space-between'}
+                  className={styles.itemBottom}
+                >
+                  {item?.extra?.tb && (
+                    <Space alignItems={'center'}>
+                      同比 {item.extra?.tb?.value}
+                      {item?.extra?.tb?.change === 1 && (
+                        <Image src={S} className={styles.change} />
+                      )}
+                      {item?.extra?.tb?.change === 2 && (
+                        <Image src={J} className={styles.change} />
+                      )}
+                    </Space>
+                  )}
+                  {item?.extra?.hb && (
+                    <Space alignItems={'center'}>
+                      环比 {item.extra?.hb?.value}
+                      {item?.extra?.hb?.change === 1 && (
+                        <Image src={S} className={styles.change} />
+                      )}
+                      {item?.extra?.hb?.change === 2 && (
+                        <Image src={J} className={styles.change} />
+                      )}
+                    </Space>
+                  )}
+                </Space>
+              )}
+            </Space>
+          );
+        })}
     </Space>
   );
 };
