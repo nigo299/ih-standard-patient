@@ -274,6 +274,16 @@ export default () => {
         content={noticeContent}
         confirm={onConfirmBtn}
       />
+      <RegisterNotice
+        show={show}
+        close={() => {
+          setShow(false);
+        }}
+        content={infoData?.[0]?.noticeInfo || ''}
+        confirm={() => {
+          setShow(false);
+        }}
+      />
     </View>
   );
 };
