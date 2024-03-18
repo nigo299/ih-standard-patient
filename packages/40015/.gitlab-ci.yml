@@ -9,3 +9,4 @@ variables:
   WORK_DIR: 'packages/40015'
   DIST_PATH: 'packages/40015/dist'
   ENABLE_ALI: 'true'
+  ENABLE_PROD_PREVIEW: 'true'
