@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View, Image, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
 import { Space, Menu, Icon, showToast } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { CopyRight, Dialog, Step, WhiteSpace } from '@/components';
-import RegisterNotice from './components/registerNotice';
+import { CopyRight, Step, WhiteSpace, RegisterNotice } from '@/components';
 import {
   CHILDREN_DEPTLIST,
   IMAGE_DOMIN,
@@ -103,27 +102,32 @@ export default () => {
     if (config.showChooseDeptDialog && infoData?.[0]?.noticeInfo) setShow(true);
   }, [config.showChooseDeptDialog, infoData]);
   // 夜间门诊，便民门诊弹窗
-  function onShowPop(id: any) {
-    if (id == 451) {
-      setShowPop(true);
-      // setShowPopTitle('夜间门诊服务说明');
-      setShowPopTitle(infoDataYJMZ?.[0]?.noticeTypeName);
-      setnoticeContent(infoDataYJMZ?.[0]?.noticeInfo);
-    }
-    if (id == 213) {
-      setShowPop(true);
-      // setShowPopTitle('便民门诊服务说明');
-      setShowPopTitle(infoDataBMMZT?.[0]?.noticeTypeName);
-      setnoticeContent(infoDataBMMZT?.[0]?.noticeInfo);
-    }
+  function onShowPop(type: any) {
+    const PopObj: any = {
+      YJMZ: {
+        showPopTitle: infoDataYJMZ?.[0]?.noticeTypeName,
+        noticeContent: infoDataYJMZ?.[0]?.noticeInfo,
+      },
+      BMMZ: {
+        showPopTitle: infoDataBMMZT?.[0]?.noticeTypeName,
+        noticeContent: infoDataBMMZT?.[0]?.noticeInfo,
+      },
+    };
+    setShowPop(true);
+    setShowPopTitle(PopObj[type].showPopTitle);
+    setnoticeContent(PopObj[type].noticeContent);
   }
   function onConfirmBtn() {
+    // console.log(
+    //   'dept',
+    //   `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
+    // ); // 选择的科室
+    // return;
+    navigateTo({
+      url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
+    });
     setShowPop(false);
-    if (showPopTitle == infoDataBMMZT?.[0]?.noticeTypeName) {
-      navigateTo({
-        url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}`,
-      });
-    }
+
     return;
   }
   return (
@@ -172,15 +176,18 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={(deptListAdd || []).map(({ name, children, id }) => ({
+          data={(deptListAdd || []).map(({ name, children, id, pid }) => ({
             name,
             id: id,
-            children: (children || []).map(({ name, children, no }) => ({
+            pid: pid,
+            children: (children || []).map(({ name, children, no, pid }) => ({
               name,
               id: no,
-              children: (children || []).map(({ name, no }) => ({
+              pid: pid,
+              children: (children || []).map(({ name, no, pid }) => ({
                 name,
                 id: no,
+                pid: pid,
               })),
             })),
           }))}
@@ -192,7 +199,6 @@ export default () => {
           rightItemCls={styles.rightItem}
           rightActiveCls={styles.leftActive}
           onChange={(id, children) => {
-            onShowPop(id);
             const no = deptList.find((v) => v.id === id)?.no;
             setOneNo(no);
             if (children.length === 0) {
@@ -201,7 +207,8 @@ export default () => {
               });
             }
           }}
-          onSelect={(dept) => {
+          onSelect={(dept: any) => {
+            console.log('dept', dept); // 选择的科室
             setDept(dept);
             if (dept.id === '-9999') {
               navigateTo({
@@ -216,13 +223,18 @@ export default () => {
               });
               return;
             }
-            if (dept.id === '213') {
-              onShowPop(dept.id);
-              //   navigateTo({
-              //     url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
-              //   });
+            if (dept.pid === 451) {
+              onShowPop('YJMZ');
               return;
             }
+            if (dept.pid === 563) {
+              onShowPop('BMMZ');
+              return;
+            }
+
+            navigateTo({
+              url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}&oneDeptNo=${oneNo}`,
+            });
           }}
         />
       ) : (
@@ -255,14 +267,22 @@ export default () => {
         </>
       )}
       <RegisterNotice
-        cancelBtn={
-          showPopTitle == infoDataYJMZ?.[0]?.noticeTypeName ? false : true
-        }
+        countdownNum={0}
         title={showPopTitle}
         show={showPop}
         close={() => setShowPop(false)}
         content={noticeContent}
         confirm={onConfirmBtn}
+      />
+      <RegisterNotice
+        show={show}
+        close={() => {
+          setShow(false);
+        }}
+        content={infoData?.[0]?.noticeInfo || ''}
+        confirm={() => {
+          setShow(false);
+        }}
       />
     </View>
   );

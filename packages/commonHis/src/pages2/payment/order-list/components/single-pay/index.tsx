@@ -208,7 +208,6 @@ export default () => {
           });
           if (result.code === 0 && result.data) {
             if (medicalPay || isYuKangJianH5()) {
-              console.log(orderInfo, 'orderinfo');
               setOrderInfo({ ...orderInfo, h5PayUrl: result?.data });
               navigateTo({
                 url: `/pages/pay/index?mode=medical`,

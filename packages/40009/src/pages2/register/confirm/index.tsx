@@ -53,7 +53,15 @@ import useNucleicJump from '@/utils/useNucleicJump';
 import useCommonApi from '@/apis/common';
 import { PatGender } from '@/config/dict';
 import { consultationPeriod } from '@/pages2/register/confirm/utils';
-
+export const getDeptName = (str: string) => {
+  let result = '口腔科门诊';
+  const startIndex = str?.indexOf('（') + 1;
+  const endIndex = str?.indexOf('）');
+  if (startIndex !== -1 && endIndex !== -1) {
+    result = str?.substring(startIndex, endIndex);
+  }
+  return result;
+};
 export default () => {
   const {
     deptId,
@@ -460,15 +468,7 @@ export default () => {
       title: '确认信息',
     });
   });
-  const getDeptName = (str: string) => {
-    let result = '口腔科门诊';
-    const startIndex = str?.indexOf('（') + 1;
-    const endIndex = str?.indexOf('）');
-    if (startIndex !== -1 && endIndex !== -1) {
-      result = str?.substring(startIndex, endIndex);
-    }
-    return result + '门诊部';
-  };
+
   useEffect(() => {
     if (confirmInfo?.deptName?.includes('分院')) {
       setVisible1(true);
@@ -611,7 +611,7 @@ export default () => {
       >
         <Text style={{ lineHeight: 1.2, padding: 20 }}>
           您当前选择的号源就诊地点在
-          <Text>{getDeptName(confirmInfo?.deptName)}</Text>
+          <Text>{getDeptName(confirmInfo?.deptName)}门诊部</Text>
           ，不在松山院本部，请注意就诊地点的变化
         </Text>
       </Dialog>

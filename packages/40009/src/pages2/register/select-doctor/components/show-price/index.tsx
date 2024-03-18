@@ -110,7 +110,9 @@ const ShowPrice = (data: any) => {
                     justify="center"
                   >
                     <View className={styles.restPriceAfter} />
-                    {v?.doctorInitialRegFee === '0'
+                    {v?.doctorInitialRegFee === '0' ||
+                    v?.doctorInitialRegFee === 0 ||
+                    !v?.doctorInitialRegFee
                       ? ''
                       : `¥${(v?.doctorInitialRegFee / 100).toFixed(2)}`}
                   </Space>

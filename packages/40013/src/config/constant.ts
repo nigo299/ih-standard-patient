@@ -20,7 +20,7 @@ export const REQUEST_QUERY = {
   hisId: 40013,
   platformId:
     PLATFORM === 'ali'
-      ? `${HIS_ID}04`
+      ? `${HIS_ID}02`
       : getBrowserUa() === 'alipay'
       ? `${HIS_ID}02`
       : `${HIS_ID}01`,
@@ -45,15 +45,16 @@ export const ORDER_INVOICE = false;
 export const CHILDREN_DEPTLIST = false;
 // 门诊缴费是否支持全选(false只能单选,true会显示全选按钮)
 export const PAYMENT_SELECTALL =
-  process.env.REMAX_APP_PLATFORM === 'app' ? false : true;
+  process.env.REMAX_APP_PLATFORM === 'app' ? true : true;
 // 门诊缴费必须全部支付
-export const PAYMENT_SELECTALL_PAY = true;
+export const PAYMENT_SELECTALL_PAY = false;
 // 是否启用H5支付(flase为立即缴费小程序支付)
 export const H5_PAY = false;
 // 是否有支付宝小程序
 export const IS_ALIPAY = false;
 // 支付宝小程序appid
-export const APPID = PLATFORM === 'ali' ? '' : '';
+export const APPID =
+  PLATFORM === 'ali' ? '2021002128610895' : '2021002128610895';
 // 是否开启意见反馈（小桥医助小程序）
 export const IS_FEEDBACL = PLATFORM === 'web';
 export const IS_DEPT = false; // PLATFORM !== 'ali'
