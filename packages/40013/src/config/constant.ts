@@ -13,7 +13,7 @@ export const IMAGE_DOMIN = `${
     : process.env.REMAX_APP_IMAGE_DOMIN
 }`;
 export const STEP_ITEMS = ['选择院区', '选择科室', '选择医生', '选择时间'];
-export const HOSPITAL_NAME = '大足妇幼';
+export const HOSPITAL_NAME = '重庆市大足区妇幼保健院';
 export const HIS_ID = '40013';
 export const HOSPITAL_TEL = '023-43780184';
 export const REQUEST_QUERY = {
@@ -47,7 +47,7 @@ export const CHILDREN_DEPTLIST = false;
 export const PAYMENT_SELECTALL =
   process.env.REMAX_APP_PLATFORM === 'app' ? true : true;
 // 门诊缴费必须全部支付
-export const PAYMENT_SELECTALL_PAY = false;
+export const PAYMENT_SELECTALL_PAY = true;
 // 是否启用H5支付(flase为立即缴费小程序支付)
 export const H5_PAY = false;
 // 是否有支付宝小程序
