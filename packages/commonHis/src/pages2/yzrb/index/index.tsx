@@ -13,6 +13,11 @@ import DataPane from '../components/dataPane';
 import Apis from '../apis/index';
 import dayjs from 'dayjs';
 import { usePageEvent } from '@remax/macro';
+import {
+  showAverageCost,
+  showOutpatient,
+  showInDepartment,
+} from '@/pages2/yzrb/index/utils';
 // import { usePageEvent } from '@remax/framework-shared';
 const dateTypeEnum = {
   day: '日',
@@ -347,42 +352,44 @@ export default () => {
                   {
                     title: '门诊总金额',
                     value: Number(outDepartmentInfo?.totalAmount || ''),
-                    extra: dateType.outSelectDate
-                      ? {
-                          tb: {
-                            value: outDepartmentInfo?.amountYOY || '',
-                            change: compareHandle(
-                              outDepartmentInfo?.amountYOY as string,
-                            ),
-                          },
-                          hb: {
-                            value: outDepartmentInfo?.amountMOM || '',
-                            change: compareHandle(
-                              outDepartmentInfo?.amountMOM as string,
-                            ),
-                          },
-                        }
-                      : undefined,
+                    extra:
+                      dateType.outSelectDate && showOutpatient
+                        ? {
+                            tb: {
+                              value: outDepartmentInfo?.amountYOY || '',
+                              change: compareHandle(
+                                outDepartmentInfo?.amountYOY as string,
+                              ),
+                            },
+                            hb: {
+                              value: outDepartmentInfo?.amountMOM || '',
+                              change: compareHandle(
+                                outDepartmentInfo?.amountMOM as string,
+                              ),
+                            },
+                          }
+                        : undefined,
                   },
                   {
                     title: '门诊总人数',
                     value: Number(outDepartmentInfo?.totalPatient || ''),
-                    extra: dateType.outSelectDate
-                      ? {
-                          tb: {
-                            value: outDepartmentInfo?.patientYOY || '',
-                            change: compareHandle(
-                              outDepartmentInfo?.patientYOY as string,
-                            ),
-                          },
-                          hb: {
-                            value: outDepartmentInfo?.patientMOM || '',
-                            change: compareHandle(
-                              outDepartmentInfo?.patientMOM as string,
-                            ),
-                          },
-                        }
-                      : undefined,
+                    extra:
+                      dateType.outSelectDate && showOutpatient
+                        ? {
+                            tb: {
+                              value: outDepartmentInfo?.patientYOY || '',
+                              change: compareHandle(
+                                outDepartmentInfo?.patientYOY as string,
+                              ),
+                            },
+                            hb: {
+                              value: outDepartmentInfo?.patientMOM || '',
+                              change: compareHandle(
+                                outDepartmentInfo?.patientMOM as string,
+                              ),
+                            },
+                          }
+                        : undefined,
                   },
                   {
                     title: '均次就诊费用',
@@ -397,36 +404,46 @@ export default () => {
                   {
                     title: '住院总金额',
                     value: Number(inDepartmentInfo?.totalAmount || ''),
-                    extra: dateType.inSelectDate
-                      ? {
-                          tb: {
-                            value: inDepartmentInfo?.amountYOY || '',
-                            change: compareHandle(inDepartmentInfo?.amountYOY),
-                          },
-                          hb: {
-                            value: inDepartmentInfo?.amountMOM,
-                            change: compareHandle(inDepartmentInfo?.amountMOM),
-                          },
-                        }
-                      : undefined,
+                    extra:
+                      dateType.inSelectDate && showInDepartment
+                        ? {
+                            tb: {
+                              value: inDepartmentInfo?.amountYOY || '',
+                              change: compareHandle(
+                                inDepartmentInfo?.amountYOY,
+                              ),
+                            },
+                            hb: {
+                              value: inDepartmentInfo?.amountMOM,
+                              change: compareHandle(
+                                inDepartmentInfo?.amountMOM,
+                              ),
+                            },
+                          }
+                        : undefined,
                   },
                   {
                     title: '住院总人数',
                     value: Number(inDepartmentInfo?.totalPatient || ''),
-                    extra: dateType.inSelectDate
-                      ? {
-                          tb: {
-                            value: inDepartmentInfo?.patientYOY,
-                            change: compareHandle(inDepartmentInfo?.patientYOY),
-                          },
-                          hb: {
-                            value: inDepartmentInfo?.patientMOM,
-                            change: compareHandle(inDepartmentInfo?.patientMOM),
-                          },
-                        }
-                      : undefined,
+                    extra:
+                      dateType.inSelectDate && showOutpatient
+                        ? {
+                            tb: {
+                              value: inDepartmentInfo?.patientYOY,
+                              change: compareHandle(
+                                inDepartmentInfo?.patientYOY,
+                              ),
+                            },
+                            hb: {
+                              value: inDepartmentInfo?.patientMOM,
+                              change: compareHandle(
+                                inDepartmentInfo?.patientMOM,
+                              ),
+                            },
+                          }
+                        : undefined,
                   },
-                  {
+                  showAverageCost && {
                     title: '均次住院费用',
                     value: Number(inDepartmentInfo?.averageCost || ''),
                   },
@@ -589,7 +606,7 @@ export default () => {
           <DataPane
             datas={[
               {
-                lable: '住院总金额',
+                lable: '出院总金额',
                 value: Number(inDepartmentInfo?.outHospitalAmount || ''),
               },
               {

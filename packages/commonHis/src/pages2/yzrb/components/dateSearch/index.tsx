@@ -121,7 +121,8 @@ export default (props: Iprops) => {
         { label: '日', value: 'day' },
         { label: '月', value: 'month' },
         { label: '季', value: 'quarter' },
-        { label: '年', value: 'year' },
+        // 后端接口太慢，先把年屏蔽掉，等待后端接口优化再放开
+        // { label: '年', value: 'year' },
       ].map((item) => {
         return (
           <Space
