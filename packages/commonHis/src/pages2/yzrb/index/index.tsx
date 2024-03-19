@@ -606,7 +606,7 @@ export default () => {
           <DataPane
             datas={[
               {
-                lable: '住院总金额',
+                lable: '出院总金额',
                 value: Number(inDepartmentInfo?.outHospitalAmount || ''),
               },
               {
