@@ -10,3 +10,6 @@ export const handleMineNavTap = (
 ) => {
   navigateTo({ url: list.url });
 };
+
+// 就诊号是否特殊名称 (目前针对大渡口妇幼特订)
+export const patCardSpecialKey = false;
