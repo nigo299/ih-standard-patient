@@ -24,7 +24,7 @@ import useApi from '@/apis/usercenter';
 import { useEffectState } from 'parsec-hooks';
 import hideTabBar from '@/utils/hideTabBar';
 import showTabBar from '@/utils/showTabBar';
-import { handleMineNavTap } from '@/pages/mine/index/utils';
+import { handleMineNavTap, patCardSpecialKey } from '@/pages/mine/index/utils';
 import useGetPatientInfos from '@/utils/useGetPatientInfos';
 import { useHisConfig } from '@/hooks';
 export default () => {
@@ -276,7 +276,11 @@ export default () => {
                                 />
                               </Space>
                               <Space className={styles.mediItem}>
-                                <FormItem label="就诊号" labelWidth={'4em'} />
+                                {patCardSpecialKey ? (
+                                  <FormItem label="ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号" />
+                                ) : (
+                                  <FormItem label="就诊号" labelWidth={'4em'} />
+                                )}
                                 {selectPatient?.[config?.patCardNoValue]}
                               </Space>
                             </Space>
@@ -333,7 +337,11 @@ export default () => {
                                 {selectPatName}
                               </Space>
                               <Space className={styles.mediItem}>
-                                <FormItem label="就诊号" labelWidth={'4em'} />
+                                {patCardSpecialKey ? (
+                                  <FormItem label="ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号" />
+                                ) : (
+                                  <FormItem label="就诊号" labelWidth={'4em'} />
+                                )}
                                 {selectPatient?.patCardNo}
                               </Space>
                             </Space>
