@@ -277,7 +277,7 @@ export default () => {
                               </Space>
                               <Space className={styles.mediItem}>
                                 {patCardSpecialKey ? (
-                                  <FormItem label="病&nbsp;&nbsp;人&nbsp;&nbsp;ID" />
+                                  <FormItem label="ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号" />
                                 ) : (
                                   <FormItem label="就诊号" labelWidth={'4em'} />
                                 )}
@@ -338,7 +338,7 @@ export default () => {
                               </Space>
                               <Space className={styles.mediItem}>
                                 {patCardSpecialKey ? (
-                                  <FormItem label="病&nbsp;&nbsp;人&nbsp;&nbsp;ID" />
+                                  <FormItem label="ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号" />
                                 ) : (
                                   <FormItem label="就诊号" labelWidth={'4em'} />
                                 )}
