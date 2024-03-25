@@ -410,10 +410,7 @@ export function filerName(last: string, dir = 'VOICE/'): string {
 //判断渝康健环境
 export const isYuKangJianH5 = () => {
   if (process.env.REMAX_PLATFORM === 'web') {
-    return (
-      window.location.href.includes('localhost') ||
-      window.location.href.includes('mdmis.cq12320.cn')
-    );
+    return window.location.href.includes('mdmis.cq12320.cn');
   } else {
     return false;
   }
