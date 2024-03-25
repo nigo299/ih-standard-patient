@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, navigateTo } from 'remax/one';
 import { usePageEvent } from 'remax/macro';
-import { Space, Menu, Icon } from '@kqinfo/ui';
+import { Space } from '@kqinfo/ui';
 import setNavigationBar from '@/utils/setNavigationBar';
-import { CopyRight, Step, WhiteSpace } from '@/components';
+import { CopyRight, Dialog, Step, WhiteSpace } from '@/components';
 import {
-  CHILDREN_DEPTLIST,
   STEP_ITEMS,
   deptChildrenRanJiaBa,
   deptChildrenShangQingSi,
@@ -21,6 +20,13 @@ import Search from '@/pages2/register/search-doctor/search';
 
 export default () => {
   // const { config } = useHisConfig();
+  const [folded, setFolded] = useState(false);
+  const [subItem, setSubItem] = useState<
+    {
+      name: string;
+      no: string;
+    }[]
+  >();
   const { type = 'default' } = useGetParams<{
     type: 'reserve' | 'day' | 'default';
   }>();
@@ -108,64 +114,59 @@ export default () => {
       />
       <WhiteSpace />
       {/* 二级科室 */}
-      {CHILDREN_DEPTLIST ? (
-        <Menu
-          data={realDeptList.map(({ name, children, no }) => ({
-            name,
-            id: no,
-            children: children.map(
-              ({ name, no }: { name: string; no: string }) => ({
-                name,
-                id: no,
-              }),
-            ),
-          }))}
-          menuMode="singleCol"
-          className={styles.menu}
-          leftActiveCls={styles.leftActive}
-          leftItemCls={styles.leftItem}
-          rightItemCls={styles.rightItem}
-          onChange={(id, children) => {
-            if (children.length === 0) {
-              navigateTo({
-                url: `/pages2/register/select-doctor/index?deptId=${id}&type=${type}`,
-              });
-            }
-          }}
-          onSelect={(dept) => {
-            console.log(dept);
-            // if (specilDeptS?.includes(dept?.id as string)) {
-            //   navigateTo({
-            //     url: `/pages2/register/select-doctor/index?deptId=${30312}&type=${type}`,
-            //   });
-            //   return;
-            // }
-            navigateTo({
-              url: `/pages2/register/select-doctor/index?deptId=${dept.id}&type=${type}`,
-            });
-          }}
-        />
-      ) : (
-        deptList?.length >= 1 &&
-        deptList?.map((dept) => (
-          <Space
-            justify="space-between"
-            alignItems="center"
-            key={dept.no}
-            className={styles.list}
-            onTap={() =>
-              navigateTo({
-                url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}`,
-              })
-            }
-          >
-            <View>{dept.name}</View>
-            <Icon name={'kq-right'} color={'#ccc'} size={34} />
-          </Space>
-        ))
-      )}
 
-      <WhiteSpace />
+      <Space flexWrap="wrap" justify="space-between">
+        {realDeptList?.length >= 1 &&
+          realDeptList?.map((dept) => (
+            <Space
+              justify="space-between"
+              alignItems="center"
+              key={dept.no}
+              className={styles.list}
+              onTap={() => {
+                if (dept?.children?.length) {
+                  setFolded(true);
+                  setSubItem(dept?.children as any);
+                  return;
+                }
+                navigateTo({
+                  url: `/pages2/register/select-doctor/index?deptId=${dept.no}&type=${type}`,
+                });
+              }}
+            >
+              <View>{dept.name}</View>
+            </Space>
+          ))}
+      </Space>
+
+      <Dialog
+        hideFail
+        show={folded}
+        title={'选择二级科室'}
+        successText={'关闭'}
+        onSuccess={() => {
+          setFolded(false);
+        }}
+      >
+        <Space style={{ lineHeight: 1.2, padding: 20 }} vertical>
+          {subItem?.map((item) => {
+            return (
+              <View
+                className={styles.subDept}
+                key={item?.no}
+                onTap={() => {
+                  setFolded(false);
+                  navigateTo({
+                    url: `/pages2/register/select-doctor/index?deptId=${item.no}&type=${type}`,
+                  });
+                }}
+              >
+                {item.name}
+              </View>
+            );
+          })}
+        </Space>
+      </Dialog>
 
       <WhiteSpace />
       {process.env.REMAX_APP_PLATFORM === 'app' && (
