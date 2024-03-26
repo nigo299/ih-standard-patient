@@ -10,3 +10,17 @@ variables:
   ENABLE_APP: 'true'
   WORK_DIR: 'packages/40009'
   DIST_PATH: 'packages/40009/dist'
+
+.app_prod_template:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG =~ /release-.*/ && $ENABLE_APP == "true"
+      when: manual
+  variables:
+    DEPLOY_ROOT_PATH: $PROTECTION_DEPLOY_ROOT_PATH
+  script:
+    - copyAndDeploy $DEPLOY_ROOT_PATH/p$HIS_ID-his-preview-app $DIST_PATH/web
+  dependencies:
+    - build_app_prod
+  tags:
+    - dxonlinenginx9
