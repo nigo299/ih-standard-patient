@@ -20,8 +20,6 @@ import Search from '@/pages2/register/search-doctor/search';
 import useApi from '@/apis/common';
 import { useHisConfig } from '@/hooks';
 import { DeptType } from 'commonHis/src/apis/register';
-import socialPayAuth from 'commonHis/src/utils/socialPayAuth';
-import { reLaunchUrl } from 'commonHis/src/utils';
 export default () => {
   const { config } = useHisConfig();
   const { type = 'default' } = useGetParams<{
