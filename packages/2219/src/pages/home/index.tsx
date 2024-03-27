@@ -15,7 +15,6 @@ import {
   HOSPITAL_NAME,
   PLATFORM,
   IS_FEEDBACL,
-  isDev,
 } from '@/config/constant';
 import { CopyRight, WxOpenLaunchWeapp } from '@/components';
 import patientState from '@/stores/patient';
@@ -330,7 +329,7 @@ export default () => {
         }
         // }
 
-        setRegisterMode(nav?.url);
+        // setRegisterMode(nav?.url);
         return;
       }
       if (!patientId && !nav.patientId) {

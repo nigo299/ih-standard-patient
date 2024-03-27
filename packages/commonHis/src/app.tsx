@@ -9,7 +9,6 @@ import storage from '@/utils/storage';
 import './promise.prototype.finally.js';
 import './app.less';
 import '@/utils/setWeixinFontSize';
-debug(true);
 const href = window?.location?.href;
 if (
   href?.includes('isDebug=true') ||
