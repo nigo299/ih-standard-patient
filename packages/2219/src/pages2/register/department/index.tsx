@@ -110,18 +110,16 @@ export default () => {
       {/* 二级科室 */}
       {CHILDREN_DEPTLIST ? (
         <Menu
-          data={
-            realDeptList.map(({ name, children, no }) => ({
-              name,
-              id: no,
-              children: children.map(
-                ({ name, no }: { name: string; no: string }) => ({
-                  name,
-                  id: no,
-                }),
-              ),
-            })) as any
-          }
+          data={realDeptList.map(({ name, children, no }) => ({
+            name,
+            id: no,
+            children: children.map(
+              ({ name, no }: { name: string; no: string }) => ({
+                name,
+                id: no,
+              }),
+            ),
+          }))}
           menuMode="singleCol"
           className={styles.menu}
           leftActiveCls={styles.leftActive}
