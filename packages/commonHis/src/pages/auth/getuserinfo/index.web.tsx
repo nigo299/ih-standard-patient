@@ -40,7 +40,7 @@ export default () => {
           getPatientList();
           reLaunchUrl(
             newJumpUrl[0]?.includes('?jumpUrl')
-              ? newJumpUrl[0]?.split('?jumpUrl=')[0]
+              ? newJumpUrl[0]?.split('?jumpUrl=')[1]
               : newJumpUrl[0],
           );
         }
