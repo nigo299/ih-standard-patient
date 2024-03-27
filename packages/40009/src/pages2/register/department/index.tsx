@@ -91,6 +91,7 @@ export default () => {
   usePageEvent('onShow', async () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
+
     if (deptList.length === 0) {
       getDeptList(type);
     }
