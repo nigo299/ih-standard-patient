@@ -35,9 +35,14 @@ export default () => {
         });
         if (codeData?.token) {
           storage.set('login_access_token', codeData?.token);
-          storage.set('testurl', newJumpUrl[0]);
+          // storage.set('testurl', newJumpUrl[0]);
+
           getPatientList();
-          reLaunchUrl(newJumpUrl[0]);
+          reLaunchUrl(
+            newJumpUrl[0]?.includes('?jumpUrl')
+              ? newJumpUrl[0]?.split('?jumpUrl=')[0]
+              : newJumpUrl[0],
+          );
         }
       }
       return;
