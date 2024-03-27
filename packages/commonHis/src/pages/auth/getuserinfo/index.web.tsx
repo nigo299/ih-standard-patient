@@ -35,6 +35,7 @@ export default () => {
         });
         if (codeData?.token) {
           storage.set('login_access_token', codeData?.token);
+          storage.set('testurl', newJumpUrl[0]);
           getPatientList();
           reLaunchUrl(newJumpUrl[0]);
         }
