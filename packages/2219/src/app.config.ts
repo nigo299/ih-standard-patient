@@ -85,6 +85,7 @@ const subPackages = [
       'cloudFlashPay/order-list/index', // 云闪付门诊待缴费列表
       'cloudFlashPay/order-detail/index', // 云闪付门门诊缴费订单详情
       'imageCloud/index', // 影像云
+      'clearstorage/index'
     ],
   },
   {
