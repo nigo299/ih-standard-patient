@@ -20,6 +20,8 @@ import Search from '@/pages2/register/search-doctor/search';
 import useApi from '@/apis/common';
 import { useHisConfig } from '@/hooks';
 import { DeptType } from 'commonHis/src/apis/register';
+import socialPayAuth from 'commonHis/src/utils/socialPayAuth';
+import { reLaunchUrl } from 'commonHis/src/utils';
 export default () => {
   const { config } = useHisConfig();
   const { type = 'default' } = useGetParams<{
@@ -91,6 +93,22 @@ export default () => {
   usePageEvent('onShow', async () => {
     setSearchQ('');
     reportCmPV({ title: '预约挂号' });
+    const href = window?.location?.href;
+    if (
+      href?.includes('encData=') &&
+      process.env.REMAX_APP_PLATFORM === 'app' &&
+      !href?.includes('/pages/auth/getuserinfo/index')
+    ) {
+      socialPayAuth(href, false).then((res) => {
+        if (!res?.payAuthNo) {
+          reLaunchUrl(
+            `/pages/auth/getuserinfo/index?jumpUrl=${encodeURIComponent(
+              window.location.hash.slice(1),
+            )}`,
+          );
+        }
+      });
+    }
     if (deptList.length === 0) {
       getDeptList(type);
     }
