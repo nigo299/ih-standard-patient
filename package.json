@@ -9,6 +9,11 @@
     "web": "lerna run --scope 2219 web",
     "postinstall": "patch-package"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*": [
       "pretty-quick --staged"
